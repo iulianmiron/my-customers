@@ -42,11 +42,17 @@
       					search clients
       				</md-button>
       			</md-list-item>
+      			<md-list-item>
+      				<md-button class="sidenavBtn" ui-sref="client" ng-click="appCtrl.status.isSidenavOpen = !appCtrl.status.isSidenavOpen">
+      					<md-icon>face</md-icon>
+      					Client
+      				</md-button>
+      			</md-list-item>
       		</md-list>
     	</md-sidenav>
 
     	<!--APP CONTENT-->
-    	<div flex layout-padding ui-view></div>
+    	<div flex ui-view></div>
 	
 
 
@@ -68,6 +74,9 @@
 	<script src="/components/components.js"></script>
 	<script src="/components/home/home.js"></script>
 	<script src="/components/home/search-clients/search-clients.js"></script>
-
+	<script src="/components/client/client.js"></script>
+	<script src="/components/client/client-profile/client-profile.js"></script>
+	<script src="/components/client/client-history/client-history.js"></script>
+	<script src="/components/client/client-history-detail/client-history-detail.js"></script>
 </html>
 

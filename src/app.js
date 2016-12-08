@@ -25,6 +25,14 @@
 							template: '<search-clients></search-clients>'
 						}
 					}
+				})
+				.state('client', {
+					url: '/client',
+					views: {
+						'': {
+							template: '<client></client>'
+						}
+					}
 				});
 		}
 
