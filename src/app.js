@@ -4,11 +4,13 @@
 	angular
 		.module('cm', [
 			'ngMaterial',
+			'ngMessages',
 			'ui.router',
 
+			'cm.services',
 			'cm.components'
 			])
-		.config(['$stateProvider', '$urlRouterProvider', appConfig])
+		.config(appConfig)
 		.controller('appController', appCtrl);
 
 		function appConfig($stateProvider, $urlRouterProvider) {
@@ -39,10 +41,18 @@
 		function appCtrl() {
 			var ctrl = this;
 
-			ctrl.data = {};
-			ctrl.actions = {};
-			ctrl.status = {};
+			ctrl.data 		= {};
+			ctrl.status 	= {};
+			ctrl.actions 	= {};
 
 			ctrl.status.isSidenavOpen = false;
+			ctrl.actions.controlSidenav = controlSidenav;
+
+			function controlSidenav(event) {
+				ctrl.status.isSidenavOpen = event.sidenavControl;
+			}
 		}
+
+		appConfig.$inject 	= ['$stateProvider', '$urlRouterProvider'];
+		appCtrl.$inject 	= [];
 })();

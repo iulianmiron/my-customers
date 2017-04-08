@@ -12,51 +12,20 @@
 	<body ng-controller="appController as appCtrl">
 
 		<!--APP HEADER-->
-		<md-toolbar>
-			<div class="md-toolbar-tools">
-				<md-button class="md-icon-button" aria-label="Settings">
-					<md-icon ng-click="appCtrl.status.isSidenavOpen = !appCtrl.status.isSidenavOpen">menu</md-icon>
-				</md-button>
-	        	<h2>
-	          		<span>Customer Management v0.0.1</span>
-	        	</h2>
-	        	<span flex></span>
-	        	<md-button class="md-icon-button" aria-label="Favorite">
-	          		<md-icon>favorite</md-icon>
-	        	</md-button>
-	        	<md-button class="md-icon-button" aria-label="More">
-	          		<md-icon>more_vert</md-icon>
-	        	</md-button>
-	      	</div>
-		</md-toolbar>
-
+		<app-header 
+			sidenav-control="appCtrl.status.isSidenavOpen"
+			on-sidenav-change="appCtrl.actions.controlSidenav($event)">
+			loading app-header...
+		</app-header>
 		<!--APP NAVIGATION-->
-		<md-sidenav class="md-sidenav-left" md-component-id="left" md-whiteframe="4" md-is-open="appCtrl.status.isSidenavOpen">
-			<md-toolbar class="md-theme-indigo">
-        		<h1 class="md-toolbar-tools">Logged in user</h1>
-      		</md-toolbar>
-      		<md-list>
-      			<md-list-item>
-      				<md-button class="sidenavBtn" ui-sref="home" ng-click="appCtrl.status.isSidenavOpen = !appCtrl.status.isSidenavOpen">
-      					<md-icon>search</md-icon>
-      					search clients
-      				</md-button>
-      			</md-list-item>
-      			<md-list-item>
-      				<md-button class="sidenavBtn" ui-sref="client" ng-click="appCtrl.status.isSidenavOpen = !appCtrl.status.isSidenavOpen">
-      					<md-icon>face</md-icon>
-      					Client
-      				</md-button>
-      			</md-list-item>
-      		</md-list>
-    	</md-sidenav>
-
-    	<!--APP CONTENT-->
+		<app-sidebar 
+			sidenav-control="appCtrl.status.isSidenavOpen"
+			on-sidenav-change="appCtrl.actions.controlSidenav($event)">
+			loading app-sidebar...
+		</app-sidebar>
+		<!--MAIN VIEW -->
     	<div flex ui-view></div>
 	
-
-
-
 	</body>
 
 	<!--EXTERNAL LIBS-->
@@ -70,8 +39,14 @@
 
 	<!-- Main app -->
 	<script src="app.js"></script>
+	<!--SERVICES-->
+	<script src="/services/services.js"></script>
 	<!-- COMPONENTS -->
 	<script src="/components/components.js"></script>
+	<!-- COMMON -->
+	<script src="/components/common/app-header/app-header.js"></script>
+	<script src="/components/common/app-sidebar/app-sidebar.js"></script>
+
 	<script src="/components/home/home.js"></script>
 	<script src="/components/home/search-clients/search-clients.js"></script>
 	<script src="/components/client/client.js"></script>

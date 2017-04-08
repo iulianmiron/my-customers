@@ -9,45 +9,22 @@
             bindings: {}
         });
 
-    function ClientHistoryController () {
-    	var ctrl = this;
+    function ClientHistoryController ($http, ClientHistoryService) {
+        var ctrl = this;
         
-        ctrl.data = {};
-        ctrl.status = {};
-        ctrl.actions = {};
+        ctrl.data     = {};
+        ctrl.status   = {};
+        ctrl.actions  = {};
+
+        ClientHistoryService.getHistory().then(function(rClientHistory) {
+            console.log("rClientHistory", rClientHistory);
+
+            ctrl.data.clientHistory = rClientHistory;
+        });
+
+
         
-        
-        ctrl.data.clientHistory = [{
-          							date: "12/02/2000",
-          							service: 'tratament',
-          							pictures: 4,
-          							movies: 6
-                                   },
-                                   {
-           							date: "12/02/2000",
-           							service: 'tratament',
-           							pictures: 4,
-           							movies: 6
-                                   },
-                                   {
-           							date: "12/02/2000",
-           							service: 'tratament',
-           							pictures: 4,
-           							movies: 6
-                                   },
-                                   {
-          							date: "12/02/2000",
-          							service: 'tratament',
-          							pictures: 4,
-          							movies: 6
-                                  },
-                                  {
-          							date: "12/02/2000",
-          							service: 'tratament',
-          							pictures: 4,
-          							movies: 6
-                                  }];
     }
 
-    ClientHistoryController.$inject = [];
+    ClientHistoryController.$inject = ['$http', 'ClientHistoryService'];
 })();

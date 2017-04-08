@@ -1,13 +1,152 @@
-<h2 class="md-flex">Profil client</h2>
-<md-content flex layout-padding>
-	<div>
-		<md-input-container>
-			<label>Prenume</label>
-			<input ng-model="$ctrl.data.client.firstName">
-		</md-input-container>
-		<md-input-container>
-			<label>Nume</label>
-			<input ng-model="$ctrl.data.client.lastName">
-		</md-input-container>
-	</div>
+<h2 flex>Profil client</h2>
+<md-content flex style="max-height: 80vh">
+	<md-card>
+		<md-card-content>
+
+			<form name="$ctrl.data.clientProfileForm" novalidate autocomplete="off">
+				<md-input-container class="md-block">
+					<label>Prenume</label>
+					<md-icon>person</md-icon>
+					<input 
+						name="clientFirstName" 
+						ng-model="$ctrl.data.client.firstName"
+						ng-readonly="!$ctrl.status.edit"
+						minlength="2" md-maxlength="50" required
+					>
+					<div ng-messages="$ctrl.data.clientProfileForm.clientFirstName.$error">
+						<div ng-message="required">Prenumele este obligatoriu</div>
+						<div ng-message="md-maxlength">Prenumele trebuie sa aiba sub 50 de caractere</div>
+						<div ng-message="minlength">Prenumele trebuie sa aiba peste 1 caracter</div>
+			        </div>
+				</md-input-container>
+
+				<md-input-container class="md-block">
+					<label>Nume</label>
+					<md-icon>person</md-icon>
+					<input 
+						name="clientLastName"
+						ng-model="$ctrl.data.client.lastName"
+						ng-readonly="!$ctrl.status.edit"
+						minlength="2" md-maxlength="50" required
+					>
+					<div ng-messages="$ctrl.data.clientProfileForm.clientLastName.$error">
+						<div ng-message="required">Numele este obligatoriu</div>
+						<div ng-message="md-maxlength">Numele trebuie sa aiba sub 50 de caractere</div>
+						<div ng-message="minlength">Numele trebuie sa aiba peste 1 caracter</div>
+			        </div>
+				</md-input-container>
+				<div layout="row">
+					<md-input-container flex="40">
+						<label>Varsta</label>
+						<md-icon>person</md-icon>
+						<input 
+							name="clientAge" type="number"
+							ng-model="$ctrl.data.client.age"
+							ng-readonly="!$ctrl.status.edit"
+							min="1" max="99" required 
+						>
+						<div ng-messages="$ctrl.data.clientProfileForm.clientAge.$error">
+							<div ng-message="required">Varsta este obligatorie</div>
+							<div ng-message="min">Varsta trebuie sa fie minim o cifra</div>
+							<div ng-message="max">Varsta trebuie sa fie maxim 2 cifre</div>
+			        	</div>
+					</md-input-container>
+
+					<md-input-container class="md-block">
+						<label>Telefon</label>
+						<md-icon>phone</md-icon>
+						<input 
+							name="clientPhoneNo" type="number"
+							ng-model="$ctrl.data.client.phoneNumber"
+							ng-readonly="!$ctrl.status.edit"
+							min="2" required 
+						>
+						<div ng-messages="$ctrl.data.clientProfileForm.clientPhoneNo.$error">
+							<div ng-message="required">Numarul de telefon este obligatoriu</div>
+							<div ng-message="min">Numarul trebuie sa fie minim 2 cifre</div>
+			        	</div>
+					</md-input-container>
+				</div>
+
+				<md-input-container class="md-block">
+					<label>Email</label>
+					<md-icon>email</md-icon>
+					<input 
+						name="clientEmail" type="email" 
+						ng-model="$ctrl.data.client.email"
+						ng-readonly="!$ctrl.status.edit"
+						ng-pattern="/[\wd\.]+@[\wd\.]+\.[\wd\.]+/" required 
+					>
+					<div ng-messages="$ctrl.data.clientProfileForm.clientEmail.$error">
+							<div ng-message="required">Adresa de email este obligatorie</div>
+							<div ng-message="pattern">Adresa trebuie sa fie in formatul: user.name@email.com</div>
+			        	</div>
+				</md-input-container>
+
+				<md-button ng-click="$ctrl.status.showMoreProfileDetails = !$ctrl.status.showMoreProfileDetails">
+					Mai {{$ctrl.status.showMoreProfileDetails ? 'putine' : 'multe'}} detalii 
+					<md-icon>keyboard_arrow_{{$ctrl.status.showMoreProfileDetails ? "up" : 'down'}}</md-icon>
+				</md-button>
+
+				<div ng-show="$ctrl.status.showMoreProfileDetails">
+					<md-input-container class="md-block">
+						<label>Tip ten</label>
+						<input 
+							ng-model="$ctrl.data.client.skinType"
+							ng-readonly="!$ctrl.status.edit"
+					>
+					</md-input-container>
+
+					<md-input-container class="md-block">
+						<label>Probleme medicale anterioare</label>
+						<textarea md-select-on-focus 
+							ng-model="$ctrl.data.client.previousMedicalConditions"
+							ng-readonly="!$ctrl.status.edit">
+						</textarea>
+					</md-input-container>
+
+					<md-input-container class="md-block">
+						<label>Tratamente anterioare</label>
+						<textarea md-select-on-focus 
+							ng-model="$ctrl.data.client.previousTreatments"
+							ng-readonly="!$ctrl.status.edit">
+						</textarea>
+					</md-input-container>
+
+					<md-input-container class="md-block">
+						<label>Produse de ingrijire folosite</label>
+						<textarea md-select-on-focus 
+							ng-model="$ctrl.data.client.skinCareProductsUsed"
+							ng-readonly="!$ctrl.status.edit">
+						</textarea>
+					</md-input-container>
+
+					<md-input-container class="md-block">
+						<label>Cum a auzit de mine</label>
+						<textarea md-select-on-focus 
+							ng-model="$ctrl.data.client.discovery"
+							ng-readonly="!$ctrl.status.edit">
+						</textarea>
+					</md-input-container>
+				</div>
+				<div layout="row" layout-align="end center">
+					<md-button 
+						class="md-raised md-primary" 
+						ng-show="$ctrl.status.edit"
+						ng-disabled="$ctrl.data.clientProfileForm.$invalid"
+						ng-click="$ctrl.actions.saveClientProfile($ctrl.data.client)">
+						<md-icon>save</md-icon>
+						Salveaza 
+					</md-button>
+					<md-button 
+						class="md-raised md-default" 
+						ng-show="!$ctrl.status.edit"
+						ng-click="$ctrl.actions.changeEditStatus(true)">
+						<md-icon>edit</md-icon>
+						Editeaza 
+					</md-button>
+				</div>
+			</form>
+		</md-card-content>
+	</md-card>
 </md-content>

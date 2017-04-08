@@ -3,6 +3,9 @@
 
 	angular.module('cm.components', 
 		[
+			'cm.components.common.appHeader',
+			'cm.components.common.appSidebar',
+
 			'cm.components.home',
 			'cm.components.home.searchClients',
 			'cm.components.client',

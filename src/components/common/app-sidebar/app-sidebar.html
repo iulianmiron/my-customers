@@ -1,0 +1,19 @@
+<md-sidenav class="md-sidenav-left" md-component-id="left" md-whiteframe="4" md-is-open="$ctrl.sidenavControl">
+	<md-toolbar class="md-tall">
+		<h1 class="md-toolbar-tools">Logged in user</h1>
+	</md-toolbar>
+	<md-list>
+		<md-list-item>
+			<md-button class="sidenavBtn" ui-sref="home" ng-click="$ctrl.actions.controlSidenav(!$ctrl.sidenavControl)">
+				<md-icon>search</md-icon>
+				search clients
+			</md-button>
+        </md-list-item>
+        <md-list-item>
+			<md-button class="sidenavBtn" ui-sref="client" ng-click="$ctrl.actions.controlSidenav(!$ctrl.sidenavControl)">
+				<md-icon>face</md-icon>
+				Client
+			</md-button>
+        </md-list-item>
+	</md-list>
+</md-sidenav>
