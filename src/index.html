@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html ng-app="cm">
 	<head>
+		<base href="/">
 		<title>Customer Management</title>
 
 		<!-- MAIN STYLES -->
@@ -10,19 +11,21 @@
 
 	</head>
 	<body ng-controller="appController as appCtrl">
-
+		
 		<!--APP HEADER-->
 		<app-header 
 			sidenav-control="appCtrl.status.isSidenavOpen"
 			on-sidenav-change="appCtrl.actions.controlSidenav($event)">
 			loading app-header...
 		</app-header>
+
 		<!--APP NAVIGATION-->
 		<app-sidebar 
 			sidenav-control="appCtrl.status.isSidenavOpen"
 			on-sidenav-change="appCtrl.actions.controlSidenav($event)">
 			loading app-sidebar...
 		</app-sidebar>
+
 		<!--MAIN VIEW -->
     	<div flex ui-view></div>
 	

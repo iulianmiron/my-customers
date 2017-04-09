@@ -13,28 +13,18 @@
 		.config(appConfig)
 		.controller('appController', appCtrl);
 
-		function appConfig($stateProvider, $urlRouterProvider) {
+		function appConfig($stateProvider, $urlRouterProvider, $locationProvider) {
+			$locationProvider.html5Mode(true);
 			$urlRouterProvider.otherwise('/home');
 
 			$stateProvider
 				.state('home', {
 					url: '/home',
-					views: {
-						'': {
-							template: '<home></home>'
-						},
-						'searchClients@home': {
-							template: '<search-clients></search-clients>'
-						}
-					}
+					component: 'home'
 				})
 				.state('client', {
 					url: '/client',
-					views: {
-						'': {
-							template: '<client></client>'
-						}
-					}
+					component: 'client'
 				});
 		}
 
@@ -53,6 +43,6 @@
 			}
 		}
 
-		appConfig.$inject 	= ['$stateProvider', '$urlRouterProvider'];
+		appConfig.$inject 	= ['$stateProvider', '$urlRouterProvider', '$locationProvider'];
 		appCtrl.$inject 	= [];
 })();

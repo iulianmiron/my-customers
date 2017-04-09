@@ -10,7 +10,7 @@
 					<input 
 						name="clientFirstName" 
 						ng-model="$ctrl.data.client.firstName"
-						ng-readonly="!$ctrl.status.edit"
+						ng-disabled="!$ctrl.status.edit"
 						minlength="2" md-maxlength="50" required
 					>
 					<div ng-messages="$ctrl.data.clientProfileForm.clientFirstName.$error">
@@ -26,7 +26,7 @@
 					<input 
 						name="clientLastName"
 						ng-model="$ctrl.data.client.lastName"
-						ng-readonly="!$ctrl.status.edit"
+						ng-disabled="!$ctrl.status.edit"
 						minlength="2" md-maxlength="50" required
 					>
 					<div ng-messages="$ctrl.data.clientProfileForm.clientLastName.$error">
@@ -42,7 +42,7 @@
 						<input 
 							name="clientAge" type="number"
 							ng-model="$ctrl.data.client.age"
-							ng-readonly="!$ctrl.status.edit"
+							ng-disabled="!$ctrl.status.edit"
 							min="1" max="99" required 
 						>
 						<div ng-messages="$ctrl.data.clientProfileForm.clientAge.$error">
@@ -58,7 +58,7 @@
 						<input 
 							name="clientPhoneNo" type="number"
 							ng-model="$ctrl.data.client.phoneNumber"
-							ng-readonly="!$ctrl.status.edit"
+							ng-disabled="!$ctrl.status.edit"
 							min="2" required 
 						>
 						<div ng-messages="$ctrl.data.clientProfileForm.clientPhoneNo.$error">
@@ -74,8 +74,8 @@
 					<input 
 						name="clientEmail" type="email" 
 						ng-model="$ctrl.data.client.email"
-						ng-readonly="!$ctrl.status.edit"
-						ng-pattern="/[\wd\.]+@[\wd\.]+\.[\wd\.]+/" required 
+						ng-disabled="!$ctrl.status.edit"
+						ng-pattern="/[\wd\-\_\.]+@[\wd\-\_\.]+\.[\wd\-\_\.]+/" required 
 					>
 					<div ng-messages="$ctrl.data.clientProfileForm.clientEmail.$error">
 							<div ng-message="required">Adresa de email este obligatorie</div>
@@ -93,7 +93,7 @@
 						<label>Tip ten</label>
 						<input 
 							ng-model="$ctrl.data.client.skinType"
-							ng-readonly="!$ctrl.status.edit"
+							ng-disabled="!$ctrl.status.edit"
 					>
 					</md-input-container>
 
@@ -101,7 +101,7 @@
 						<label>Probleme medicale anterioare</label>
 						<textarea md-select-on-focus 
 							ng-model="$ctrl.data.client.previousMedicalConditions"
-							ng-readonly="!$ctrl.status.edit">
+							ng-disabled="!$ctrl.status.edit">
 						</textarea>
 					</md-input-container>
 
@@ -109,7 +109,7 @@
 						<label>Tratamente anterioare</label>
 						<textarea md-select-on-focus 
 							ng-model="$ctrl.data.client.previousTreatments"
-							ng-readonly="!$ctrl.status.edit">
+							ng-disabled="!$ctrl.status.edit">
 						</textarea>
 					</md-input-container>
 
@@ -117,7 +117,7 @@
 						<label>Produse de ingrijire folosite</label>
 						<textarea md-select-on-focus 
 							ng-model="$ctrl.data.client.skinCareProductsUsed"
-							ng-readonly="!$ctrl.status.edit">
+							ng-disabled="!$ctrl.status.edit">
 						</textarea>
 					</md-input-container>
 
@@ -125,7 +125,7 @@
 						<label>Cum a auzit de mine</label>
 						<textarea md-select-on-focus 
 							ng-model="$ctrl.data.client.discovery"
-							ng-readonly="!$ctrl.status.edit">
+							ng-disabled="!$ctrl.status.edit">
 						</textarea>
 					</md-input-container>
 				</div>

@@ -3,7 +3,7 @@
 
 	angular
 		.module('cm.services', [])
-		.service('ClientHistoryService', ClientHistory);
+		.service('ClientHistoryService', ClientHistory)
 
 		function ClientHistory($http, $log) {
 			this.getHistory = function(){
