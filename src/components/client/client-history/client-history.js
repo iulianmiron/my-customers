@@ -9,11 +9,12 @@
             bindings: {
                 clientData: '<',
 				historyData: '<',
-                onAddHistoryItem: '&'
+                onAddHistoryItem: '&',
+                onSelectHistoryItem: '&'
             }
         });
 
-    function ClientHistoryController($element, SERVICES) {
+    function ClientHistoryController($element, moment, SERVICES) {
         var ctrl = this;
         ctrl.data       = {};
         ctrl.status     = {};
@@ -25,16 +26,15 @@
         }
         ctrl.$onInit = function() {
             ctrl.data.maxDate = new Date();
-            ctrl.data.newHistoryEntry = {};
-            ctrl.data.newHistoryEntry.date = ctrl.data.maxDate;
             ctrl.data.servicesTypes = prepareDropDown(SERVICES);
             ctrl.data.services = SERVICES;
 
-            ctrl.status.showNewHistoryItemForm = true;
-
             ctrl.actions.addNewHistoryItem = addNewHistoryItem;
+            ctrl.actions.selectHistoryItem = selectHistoryItem;
 
             $element.find('input').on('keydown', function(ev) { ev.stopPropagation(); });
+
+            resetNewHistoryItemForm();
 
         }
 
@@ -43,11 +43,22 @@
             return Array.from(new Set(services));
         }
 
-        function addNewHistoryItem(newHistoryEntry, client) {
+        function resetNewHistoryItemForm() {
             ctrl.status.showNewHistoryItemForm = false;
+            ctrl.data.newHistoryEntry = {};
+            ctrl.data.newHistoryEntry.date = new Date();
+        }
+
+        function addNewHistoryItem(newHistoryEntry, client) {
             ctrl.onAddHistoryItem({ $event: { newHistoryEntry: newHistoryEntry, client: client }});
-        }     
+            resetNewHistoryItemForm();
+        }   
+
+        function selectHistoryItem(historyItem) {
+            ctrl.onSelectHistoryItem({ $event: {historyItem: historyItem }});
+            resetNewHistoryItemForm();
+        }  
     }
 
-    ClientHistoryController.$inject = ['$element', 'SERVICES'];
+    ClientHistoryController.$inject = ['$element', 'moment', 'SERVICES'];
 })();

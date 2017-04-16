@@ -1,16 +1,19 @@
-<h2 class="md-flex">Istoric client</h2>
-<md-content flex style="max-height: 80vh">
-	<md-card>
+<h2>
+	<md-icon>history</md-icon>
+	Istoric client ({{ $ctrl.data.history.length || '0'}} sedinte)
+</h2>
+<md-content style="max-height: 80vh">
+	<md-card ng-show="$ctrl.data.history">
 		<md-card-header ng-click="$ctrl.status.showNewHistoryItemForm = true">
 			<md-card-header-text layout="row" layout-align="start center" >
-				<span class="md-title"><md-icon>add</md-icon> Sedinta noua</span>
+				<span class="md-title"><md-icon>add</md-icon> Adauga o sedinta</span>
 			</md-card-header-text>
 		</md-card-header>
 		<md-card-content ng-show="$ctrl.status.showNewHistoryItemForm">
 			<form name="$ctrl.data.newHistoryItemForm">
 				<div layout="row" layout-align="start center">
 					<md-input-container>
-						<label>Introdu data</label>
+						<label>Data sedintei</label>
 						<md-datepicker name="date" required
 							ng-model="$ctrl.data.newHistoryEntry.date"  
 							md-max-date="$ctrl.data.maxDate"
@@ -31,7 +34,7 @@
 				</div>
 				<div layout="row" layout-align="start center">
 					<md-input-container flex>
-						<label>Servicii prestate</label>
+						<label>Alege Servicii</label>
 						<md-select name="services"
 							ng-model="$ctrl.data.newHistoryEntry.services" multiple required
 							md-on-close="$ctrl.data.searchServices = ''; $ctrl.actions.showSelectedServices($ctrl.data.newHistoryEntry.services)"
@@ -53,9 +56,16 @@
 				</div>
 
 				<md-input-container class="md-block">
-					<label>Creme acasa</label>
+					<label>Produse acasa</label>
 					<textarea md-select-on-focus name="homeProducts"
 						ng-model="$ctrl.data.newHistoryEntry.homeProducts">
+					</textarea>
+				</md-input-container>
+
+				<md-input-container class="md-block">
+					<label>Observatii</label>
+					<textarea md-select-on-focus name="observations"
+						ng-model="$ctrl.data.newHistoryEntry.observations">
 					</textarea>
 				</md-input-container>
 			</form>
@@ -77,14 +87,23 @@
 		</md-card-actions>
 	</md-card>
 
-	<div ng-repeat="historyItem in $ctrl.data.history | orderBy: 'date' track by historyItem._id">
-		<md-card>
+	<div ng-repeat="historyItem in $ctrl.data.history | orderBy: '_id' track by historyItem._id">
+		<md-card 
+			ng-click="$ctrl.actions.selectHistoryItem(historyItem)"
+			>
 			<md-card-header>
 				<md-card-header-text>
-					<span class="md-title">Sedinta {{$index + 1}}</span>
-					<span class="md-subhead">Data: {{historyItem.date}}</span>
+					<span class="md-title">Sedinta {{ $index + 1 }}</span>
+					<span class="md-subhead">Data: {{ historyItem.date | amDateFormat:'Do MMMM YYYY, h:mm a' }}</span>
 				</md-card-header-text>
 			</md-card-header>
+			<md-card-content>
+				<p>Servicii: <span ng-repeat="service in historyItem.services">{{ !$last ? service.name + ', ' : service.name }} </span></p>
+				<p>Produse acasa: {{ historyItem.homeProducts || '-' }}</p>
+				<p>Interval: {{ historyItem.interval || '-' }}</p>
+				<p>Observatii: {{ historyItem.observations || '-' }}</p>
+			</md-card-content>
+
 		</md-card>
 	</div>
 </md-content>

@@ -104,6 +104,31 @@ app.put('/history', function(req, res) {
     });
 });
 
+//Update history item in db
+app.put('/history/:id', function(req, res) {
+    console.log("update history with id", req.params.id);
+    console.log("update history with data", req.body);
+    var updatedOn = new Date();
+
+    db.history.findAndModify({
+        query: {_id: mongojs.ObjectId(req.params.id)}, 
+        update: {$set: {
+            date: req.body.date,
+            services: req.body.services,
+            interval: req.body.interval,
+            homeProducts: req.body.homeProducts,
+            observations: req.body.observations,
+            _clientId: req.body._clientId,
+            updatedOn: updatedOn,
+            createdOn: req.body.createdOn
+            }
+        },
+        new: true
+    }, function(err, doc) {
+        res.json(doc);
+    });
+});
+
 
 
 

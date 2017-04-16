@@ -5,18 +5,38 @@
 		.module('cm', [
 			'ngMaterial',
 			'ngMessages',
+			'ngAnimate',
 			'ui.router',
+			'angularMoment',
+			'toastr',
 
 			'cm.constants',
 			'cm.services',
 			'cm.components'
 			])
 		.config(appConfig)
+		.run(appRun)
 		.controller('appController', appCtrl);
 
-		function appConfig($stateProvider, $urlRouterProvider, $locationProvider) {
+		function appConfig($stateProvider, $urlRouterProvider, $locationProvider, toastrConfig) {
 			// $locationProvider.html5Mode(true);
 			$urlRouterProvider.otherwise('/home');
+
+			 angular.extend(toastrConfig, {
+				closeButton: true,
+    			closeHtml: '<button>&times;</button>',
+				autoDismiss: true,
+				containerId: 'toast-container',
+				maxOpened: 5,    
+				newestOnTop: true,
+				positionClass: 'toast-bottom-right',
+				preventDuplicates: false,
+				preventOpenDuplicates: false,
+				progressBar: true,
+    			tapToDismiss: true,
+				extendedTimeOut: 5000,
+				target: 'body'
+			});
 
 			$stateProvider
 				.state('home', {
@@ -29,7 +49,11 @@
 				});
 		}
 
-		function appCtrl($http, $log) {
+		function appRun(amMoment) {
+			amMoment.changeLocale('ro');
+		}
+
+		function appCtrl($http, $log, toastr) {
 			var ctrl = this;
 
 			ctrl.data 		= {};
@@ -84,7 +108,7 @@
 				console.log('update client', ctrl.data.client._id);
 
 				$http.put('/clients/' + ctrl.data.client._id, ctrl.data.client).then(function(success) {
-					console.log('success', success);
+					
 					getClients();
 				}).catch(function(error) {
 					console.log('error', error);
@@ -101,6 +125,7 @@
 			}
 		}
 
-		appConfig.$inject 	= ['$stateProvider', '$urlRouterProvider', '$locationProvider'];
-		appCtrl.$inject 	= ['$http', '$log'];
+		appConfig.$inject 	= ['$stateProvider', '$urlRouterProvider', '$locationProvider', 'toastrConfig'];
+		appRun.$inject 		= ['amMoment'];
+		appCtrl.$inject 	= ['$http', '$log', 'toastr'];
 })();

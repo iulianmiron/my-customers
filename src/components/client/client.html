@@ -6,15 +6,21 @@
 		>
 		</client-profile>
 	</div>
-	<div flex="35" flex-offset="5"> 
+	<div flex> 
 		<client-history
 			client-data="$ctrl.data.client"
 			history-data="$ctrl.data.history"
 			on-add-history-item="$ctrl.actions.addHistoryItem($event)"
+			on-select-history-item="$ctrl.actions.selectHistoryItem($event)"
 		>
 		</client-history>
 	</div>
-	<div flex="35" flex-offset="5">
-		<client-history-detail></client-history-detail>
+	<div flex>
+		<client-history-detail
+			on-edit-hitory-item="$ctrl.actions.editHistoryItem($event)"
+			history-item-data="$ctrl.data.selectedHistoryItem"
+		>
+		</client-history-detail>
 	</div>
+	<div flex="5"></div>
 </div>

@@ -6,8 +6,9 @@
 
 		<!-- MAIN STYLES -->
 		<link rel='stylesheet' href="styles/styles.css" />
-		<link rel='stylesheet' href="../node_modules/angular-material/angular-material.min.css" />
-		<link rel='stylesheet' href="../node_modules/material-design-icons-iconfont/dist/material-design-icons.css" />
+		<link rel='stylesheet' href="./node_modules/angular-material/angular-material.min.css" />
+		<link rel='stylesheet' href="node_modules/material-design-icons-iconfont/dist/material-design-icons.css" />
+		<link rel="stylesheet" href="node_modules/angular-toastr/dist/angular-toastr.min.css" />
 
 	</head>
 	<body ng-controller="appController as appCtrl">
@@ -77,35 +78,38 @@
     	<div flex ui-view></div>
 
 		<!--EXTERNAL LIBS-->
-		<script src="../node_modules/angular/angular.min.js"></script>
-		<script src="../node_modules/angular-animate/angular-animate.min.js"></script>
-		<script src="../node_modules/angular-aria/angular-aria.min.js"></script>
-		<script src="../node_modules/angular-material/angular-material.min.js"></script>
-		<script src="../node_modules/angular-messages/angular-messages.min.js"></script>
-		<script src="../node_modules/angular-sanitize/angular-sanitize.min.js"></script>
-		<script src="../node_modules/angular-ui-router/release/angular-ui-router.min.js"></script>
-		<script src="../node_modules/moment/min/moment.min.js"></script>
+		<script src="node_modules/angular/angular.min.js"></script>
+		<script src="node_modules/angular-animate/angular-animate.min.js"></script>
+		<script src="node_modules/angular-aria/angular-aria.min.js"></script>
+		<script src="node_modules/angular-material/angular-material.min.js"></script>
+		<script src="node_modules/angular-messages/angular-messages.min.js"></script>
+		<script src="node_modules/angular-sanitize/angular-sanitize.min.js"></script>
+		<script src="node_modules/angular-ui-router/release/angular-ui-router.min.js"></script>
+		<script src="node_modules/moment/min/moment.min.js"></script>
+		<script src="node_modules/moment/locale/ro.js"></script>
+		<script src="node_modules/angular-moment/angular-moment.js"></script>
+		<script src="node_modules/angular-toastr/dist/angular-toastr.tpls.min.js"></script>
 
 		<!-- Main app -->
 		<script src="app.js"></script>
 		<!-- CONSTANTS -->
-		<script src="/constants/constants.js"></script>
+		<script src="constants/constants.js"></script>
 		<!--SERVICES-->
-		<script src="/services/services.js"></script>
-		<script src="/components/client/client.services.js"></script>
-		<script src="/components/home/search-clients/search-clients.services.js"></script>
+		<script src="services/services.js"></script>
+		<script src="components/client/client.services.js"></script>
+		<script src="components/home/search-clients/search-clients.services.js"></script>
 		<!-- COMPONENTS -->
-		<script src="/components/components.js"></script>
+		<script src="components/components.js"></script>
 		<!-- COMMON -->
-		<script src="/components/common/app-header/app-header.js"></script>
-		<script src="/components/common/app-sidebar/app-sidebar.js"></script>
+		<script src="components/common/app-header/app-header.js"></script>
+		<script src="components/common/app-sidebar/app-sidebar.js"></script>
 
-		<script src="/components/home/home.js"></script>
-		<script src="/components/home/search-clients/search-clients.js"></script>
-		<script src="/components/client/client.js"></script>
-		<script src="/components/client/client-profile/client-profile.js"></script>
-		<script src="/components/client/client-history/client-history.js"></script>
-		<script src="/components/client/client-history-detail/client-history-detail.js"></script>
+		<script src="components/home/home.js"></script>
+		<script src="components/home/search-clients/search-clients.js"></script>
+		<script src="components/client/client.js"></script>
+		<script src="components/client/client-profile/client-profile.js"></script>
+		<script src="components/client/client-history/client-history.js"></script>
+		<script src="components/client/client-history-detail/client-history-detail.js"></script>
 	
 	</body>
 </html>

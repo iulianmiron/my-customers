@@ -11,7 +11,7 @@
             }
         });
 
-    function ClientController ($q, $state, $log, ClientServices, HistoryServices) {
+    function ClientController ($q, $state, $log, ClientServices, HistoryServices, toastr) {
     	var ctrl = this;
 
         ctrl.$onInit = function() {
@@ -31,6 +31,8 @@
             ctrl.actions.saveClientProfile = saveClientProfile;
             ctrl.actions.getClientProfile = getClientProfile;
             ctrl.actions.addHistoryItem = addHistoryItem;
+            ctrl.actions.selectHistoryItem = selectHistoryItem;
+            ctrl.actions.editHistoryItem = editHistoryItem;
 
         }
 
@@ -49,12 +51,14 @@
         function addNewClient(client) {
             ClientServices.addClient(client).then(function(rClientAdded) {
                 console.log("success adding client:", rClientAdded);
+                toastr.success("Client adaugat","Succes");
                 $state.go('client', {id: rClientAdded._id});
             }); 
         }
 
         function updateClient(client) {
             ClientServices.updateClient(client).then(function(rSuccess) {
+                toastr.success("Client editat","Succes");
                 console.log("success updating client:", client);
             });
         }
@@ -65,7 +69,22 @@
             newHistoryEntry._clientId = clientData._id;
 
             HistoryServices.addHistoryItem(newHistoryEntry).then(function(rHistoryAdded) {
+                toastr.success("Sedinta adaugata","Succes");
+                getClientHistory(clientData._id);
                 console.log("success adding history Item:", rHistoryAdded);
+            });
+        }
+
+        function selectHistoryItem(event) {
+            ctrl.data.selectedHistoryItem = event.historyItem;
+        }
+
+        function editHistoryItem(event) {
+            console.log('on edit historyitem', event.historyItem);
+
+           HistoryServices.editHistoryItem(event.historyItem).then(function(rSuccess) {
+                toastr.success("Istoric editat","Succes");
+                getClientHistory(event.historyItem._clientId);
             });
         }
 
@@ -75,8 +94,7 @@
                 ctrl.data.history = rClientHistory;
             });
         }
-
     }
 
-    ClientController.$inject = ['$q', '$state', '$log', 'ClientServices', 'HistoryServices'];
+    ClientController.$inject = ['$q', '$state', '$log', 'ClientServices', 'HistoryServices', 'toastr'];
 })();

@@ -43,6 +43,7 @@
 
             service.addHistoryItem      = addHistoryItem;
             service.getClientHistory    = getClientHistory;
+            service.editHistoryItem     = editHistoryItem;
             service.getAllHistory 		= getAllHistory;
 
             function addHistoryItem(historyItem) {
@@ -59,6 +60,14 @@
                 }).catch(function(error) {
                     $log.error('Could not get historyItem', error);
                 });
+            }
+
+            function editHistoryItem(historyItem) {
+                return $http.put('/history/' + historyItem._id, historyItem).then(function(rSuccess) {
+                    return rSuccess.data;
+                }).catch(function(error) {
+                    $log.error('Could not edit historyItem', error);
+                });;
             }
 
             function getAllHistory() {
