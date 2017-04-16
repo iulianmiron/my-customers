@@ -1,9 +1,18 @@
 <div layout="row">
 	<div flex="20" flex-offset="5">
-		<client-profile></client-profile>
+		<client-profile
+			client-data="$ctrl.data.client"
+			on-save-client-profile="$ctrl.actions.saveClientProfile($event)"
+		>
+		</client-profile>
 	</div>
 	<div flex="35" flex-offset="5"> 
-		<client-history></client-history>
+		<client-history
+			client-data="$ctrl.data.client"
+			history-data="$ctrl.data.history"
+			on-add-history-item="$ctrl.actions.addHistoryItem($event)"
+		>
+		</client-history>
 	</div>
 	<div flex="35" flex-offset="5">
 		<client-history-detail></client-history-detail>

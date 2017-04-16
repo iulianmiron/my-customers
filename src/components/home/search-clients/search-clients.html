@@ -1,29 +1,48 @@
+<md-content class="md-padding">
+	<div layout="row" layout-align="center start">
+		<div flex="50">
+			<h1>Cauta Clienti</h1>
+		</div>
+	</div>
+	<div layout="row" layout-align="center start">
+		<form name="$ctrl.searchClientForm" flex="50">
+			<md-autocomplete
+				md-no-cache="true"
+				md-delay="500"
+				placeholder="Introdu nume, prenume, telefon sau email"
 
-  <md-content class="md-padding">
-    <form ng-submit="$event.preventDefault()">
-      <md-autocomplete
-          ng-disabled="$ctrl.isDisabled"
-          md-no-cache="$ctrl.noCache"
-          md-selected-item="$ctrl.selectedItem"
-          md-search-text-change="$ctrl.data.searchTextChange($ctrl.data.searchText)"
-          md-search-text="$ctrl.data.searchText"
-          md-selected-item-change="$ctrl.selectedResultChange(result)"
-          md-items="result in $ctrl.querySearch($ctrl.data.searchText)"
-          md-item-text="result.display"
-          md-min-length="0"
-          placeholder="Search clients">
-        <md-item-template>
-          <span md-highlight-text="$ctrl.data.searchText" md-highlight-flags="^i">{{result.display}}</span>
-        </md-item-template>
-        <md-not-found>
-          No states matching "{{$ctrl.data.searchText}}" were found.
-          <a ng-click="$ctrl.action.newClient($ctrl.data.searchText)">Create a new one!</a>
-        </md-not-found>
-      </md-autocomplete>
-      <br/>
-      <md-checkbox ng-model="$ctrl.simulateQuery">Simulate query for results?</md-checkbox>
-      <md-checkbox ng-model="$ctrl.noCache">Disable caching of queries?</md-checkbox>
-      <md-checkbox ng-model="$ctrl.isDisabled">Disable the input?</md-checkbox>
-
-    </form>
+				md-search-text="$ctrl.data.searchText"
+				md-selected-item-change="$ctrl.actions.openClientPage(client._id)"
+				md-items="client in $ctrl.actions.searchClients($ctrl.data.searchText)"
+				md-item-text="client.firstName"
+				>
+				<md-item-template>
+					<span layout="row">
+						<span flex="33">{{client.firstName}} {{client.lastName}}</span>
+						<span flex="33"> {{client.phoneNumber}} </span> 
+						<span flex="33"> {{client.email}} </span>
+					</span>
+				</md-item-template>
+				<md-not-found>
+					<div layout="row" layout-align="start center">
+						<span>0 rezultate</span>
+						<span flex></span>
+						<md-button ng-click="$ctrl.actions.openClientPage(0)" class="md-primary">
+							<md-icon>add</md-icon>
+							Adauga un client nou
+						</md-button>
+					</div>
+				</md-not-found>
+			</md-autocomplete>
+		</form>
+	</div>
+	<div layout="row" layout-align="center start">
+		<div flex="50" layout="row">
+			<div flex></div>
+			<md-button ng-click="$ctrl.actions.openClientPage(0)" class="md-primary">
+				<md-icon>add</md-icon>
+				Adauga un client nou
+			</md-button>
+		</div>
+	</div>
 </md-content>

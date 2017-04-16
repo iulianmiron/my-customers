@@ -28,10 +28,14 @@
     "express": "^4.15.2",
     "material-design-icons-iconfont": "^3.0.3",
     "method-override": "^2.3.8",
+    "moment": "^2.18.1",
+    "mongojs": "^2.4.0",
     "mongoose": "^4.9.3"
   },
   "devDependencies": {
     "browser-sync": "^2.18.2",
-    "gulp": "^3.9.1"
+    "gulp": "^3.9.1",
+    "webpack": "^2.3.3",
+    "webpack-dev-server": "^2.4.2"
   }
 }

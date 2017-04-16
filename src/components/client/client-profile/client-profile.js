@@ -6,37 +6,36 @@
         .component('clientProfile', {
             templateUrl: '/components/client/client-profile/client-profile.html',
             controller: ClientProfileController,
-            bindings: {}
+            bindings: {
+                clientData: '<',
+                onSaveClientProfile: '&'
+            }
         });
 
     function ClientProfileController ($log) {
     	var ctrl = this;
-        
         ctrl.data = {};
-        ctrl.status = {};
         ctrl.actions = {};
+        ctrl.status = {};
 
-        ctrl.data.client = {};
-        ctrl.status.edit = true;
-        ctrl.status.showMoreProfileDetails = false;
-
-        ctrl.actions.saveClientProfile = saveClientProfile;
-        ctrl.actions.changeEditStatus = changeEditStatus;
-
-        function saveClientProfile(client) {
-            ctrl.data.client = client;
-
-            $log.info('ctrl.data.client', ctrl.data.client);
-            changeEditStatus(false);
-            changeShowMoreProfileDetails(false);
+        ctrl.$onChanges = function(changes) {
+            if(changes.clientData) { ctrl.data.client = angular.copy(changes.clientData.currentValue); }
         }
+        ctrl.$onInit = function() {
+           
+            ctrl.status.editClient = false;
+            ctrl.status.showMoreProfileDetails = false;
 
-        function changeEditStatus(status) {
-            ctrl.status.edit = status;
-        }
+            ctrl.actions.saveClientProfile = saveClientProfile;
+        }   
 
-        function changeShowMoreProfileDetails(status) {
-            ctrl.status.showMoreProfileDetails = status;
+        function saveClientProfile(clientData) {
+            console.log('clientData', clientData);
+            ctrl.onSaveClientProfile({ 
+                $event: { clientData: clientData }
+            });
+            ctrl.status.editClient = false;
+            ctrl.status.showMoreProfileDetails = false;
         }
     }
 
