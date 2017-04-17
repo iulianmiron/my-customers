@@ -24,7 +24,6 @@
                 ctrl.data.historyItemBackup = angular.copy(changes.historyItemData.currentValue); 
                 ctrl.data.historyItem = angular.copy(changes.historyItemData.currentValue); 
                 ctrl.data.historyItem.date = new Date(ctrl.data.historyItem.date);
-
             }
         }
         ctrl.$onInit = function() {
@@ -57,7 +56,6 @@
             ctrl.data.historyItem = angular.copy(ctrl.data.historyItemBackup); 
             ctrl.data.historyItem.date = new Date(ctrl.data.historyItem.date);
         }
-
     }
 
     ClientHistoryDetailController.$inject = ['$element', 'SERVICES'];

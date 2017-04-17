@@ -21,8 +21,15 @@
         ctrl.actions    = {};
 
         ctrl.$onChanges = function(changes) {
-            if(changes.clientData) { ctrl.data.client = angular.copy(changes.clientData.currentValue); }
-			if(changes.historyData) { ctrl.data.history = angular.copy(changes.historyData.currentValue); }
+            if(changes.clientData && changes.clientData.currentValue && !changes.clientData.isFirstChange()) { 
+                ctrl.data.client = angular.copy(changes.clientData.currentValue); 
+            }
+			if(changes.historyData && changes.historyData.currentValue && !changes.historyData.isFirstChange()) { 
+                ctrl.data.history = angular.copy(changes.historyData.currentValue); 
+                angular.forEach(ctrl.data.history, function(iHistory) {
+                    iHistory.date = new Date(iHistory.date);
+                });
+            }
         }
         ctrl.$onInit = function() {
             ctrl.data.maxDate = new Date();

@@ -1,4 +1,4 @@
-<h2><md-icon>face</md-icon> Profil client</h2>
+<h2><md-icon>assignment_ind</md-icon> Profil client</h2>
 <md-content style="max-height: 80vh">
 	<md-card>
 		<md-card-content>
@@ -129,33 +129,36 @@
 						</textarea>
 					</md-input-container>
 				</div>
-				<div layout="row" layout-align="end center">
-					<md-button 
-						class="md-raised md-default" 
-						ng-show="$ctrl.status.editClient"
-						ng-click="$ctrl.status.editClient = !$ctrl.status.editClient">
-						<md-icon>cancel</md-icon>
-						Renunta 
-					</md-button>
-
-					<md-button 
-						class="md-raised md-primary" 
-						ng-show="$ctrl.status.editClient"
-						ng-disabled="$ctrl.data.clientProfileForm.$invalid"
-						ng-click="$ctrl.actions.saveClientProfile($ctrl.data.client)">
-						<md-icon>save</md-icon>
-						Salveaza 
-					</md-button>
-					
-					<md-button 
-						class="md-raised md-default" 
-						ng-show="!$ctrl.status.editClient"
-						ng-click="$ctrl.status.editClient = !$ctrl.status.editClient">
-						<md-icon>edit</md-icon>
-						Editeaza 
-					</md-button>
-				</div>
+				
 			</form>
 		</md-card-content>
+		<md-card-actions>
+			<div layout="row" layout-align="end center">
+				<md-button 
+					class="md-raised md-default" 
+					ng-show="$ctrl.status.editClient"
+					ng-click="$ctrl.status.editClient = !$ctrl.status.editClient">
+					<md-icon>cancel</md-icon>
+					Renunta 
+				</md-button>
+
+				<md-button 
+					class="md-raised md-primary" 
+					ng-show="$ctrl.status.editClient"
+					ng-disabled="$ctrl.data.clientProfileForm.$invalid"
+					ng-click="$ctrl.actions.saveClientProfile($ctrl.data.client)">
+					<md-icon>save</md-icon>
+					Salveaza 
+				</md-button>
+				
+				<md-button 
+					class="md-raised md-default" 
+					ng-show="!$ctrl.status.editClient"
+					ng-click="$ctrl.status.editClient = !$ctrl.status.editClient">
+					<md-icon>edit</md-icon>
+					Editeaza 
+				</md-button>
+			</div>
+		</md-card-actions>
 	</md-card>
 </md-content>

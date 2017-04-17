@@ -19,15 +19,17 @@
         ctrl.status = {};
 
         ctrl.$onChanges = function(changes) {
-            if(changes.clientData) { ctrl.data.client = angular.copy(changes.clientData.currentValue); }
+            if(changes.clientData && changes.clientData.currentValue && !changes.clientData.isFirstChange()) { 
+                ctrl.data.client = angular.copy(changes.clientData.currentValue); 
+            }
         }
         ctrl.$onInit = function() {
-           
+
             ctrl.status.editClient = false;
             ctrl.status.showMoreProfileDetails = false;
 
             ctrl.actions.saveClientProfile = saveClientProfile;
-        }   
+        }  
 
         function saveClientProfile(clientData) {
             console.log('clientData', clientData);

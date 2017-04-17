@@ -3,8 +3,10 @@ var app = express();
 var mongojs = require('mongojs');
 var db = mongojs('clients', ['clients', 'history']);
 var bodyParser = require('body-parser');
+var openurl = require('openurl');
 
 var PORT = process.env.PORT || 3500;
+var LOCATION = 'http://127.0.0.1'
 
 app.use(express.static(__dirname + '/'));
 app.use(bodyParser.json());
@@ -130,9 +132,8 @@ app.put('/history/:id', function(req, res) {
 });
 
 
-
-
-
 app.listen(PORT, function(){
+    openurl.open(LOCATION + ':' + PORT);
+	console.log("DO NOT CLOSE THIS WINDOW!");
     console.log("server running on port:", PORT);
 });
