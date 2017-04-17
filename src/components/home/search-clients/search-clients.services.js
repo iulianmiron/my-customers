@@ -5,7 +5,7 @@
         .module('cm.services.searchClients', [])
         .service('SearchClientsServices', SearchClientsServices);
 
-        function SearchClientsServices($http) {
+        function SearchClientsServices($http, $log) {
             var service = this;
 
             service.searchClients = searchClients;
@@ -21,5 +21,5 @@
             }
         }
 
-        SearchClientsServices.$inject = ['$http'];
+        SearchClientsServices.$inject = ['$http', '$log'];
 })();
