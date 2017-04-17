@@ -21,7 +21,9 @@ app.get('/clients', function(req, res) {
 
 //Search clients in clients collection
 app.get('/clients/search/:query', function(req, res) {
+    console.log("find client with id", req.params.query);
     db.clients.find({ $text: { $search: req.params.query}}, function(err, doc) {
+    console.log("find clients response", doc);
         res.json(doc);
     });
 });
