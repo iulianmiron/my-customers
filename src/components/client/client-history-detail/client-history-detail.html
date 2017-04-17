@@ -3,8 +3,11 @@
 	<h2>Selecteaza o sedinta din istoric client</h2>
 </md-content>
 
-<h2 ng-show="$ctrl.data.historyItem"><md-icon>assignment</md-icon>Sedinta</h2>
-<md-content layout-padding ng-show="$ctrl.data.historyItem">
+<h2 ng-show="$ctrl.data.historyItem">
+	<md-icon>assignment</md-icon>
+	Sedinta
+</h2>
+<md-content ng-show="$ctrl.data.historyItem" style="max-height: 80vh">
 	<div>
 
 		<form name="$ctrl.data.editHistoryItemForm">
