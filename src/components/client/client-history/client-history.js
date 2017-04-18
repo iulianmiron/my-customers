@@ -9,12 +9,13 @@
             bindings: {
                 clientData: '<',
 				historyData: '<',
+                services: '<',
                 onAddHistoryItem: '&',
                 onSelectHistoryItem: '&'
             }
         });
 
-    function ClientHistoryController($element, moment, SERVICES) {
+    function ClientHistoryController($element, moment, SERVICE_TYPES) {
         var ctrl = this;
         ctrl.data       = {};
         ctrl.status     = {};
@@ -30,11 +31,13 @@
                     iHistory.date = new Date(iHistory.date);
                 });
             }
+            if(changes.services && changes.services.currentValue && !changes.services.isFirstChange()) { 
+                ctrl.data.services = angular.copy(changes.services.currentValue); 
+            }
         }
         ctrl.$onInit = function() {
             ctrl.data.maxDate = new Date();
-            ctrl.data.servicesTypes = prepareDropDown(SERVICES);
-            ctrl.data.services = SERVICES;
+            ctrl.data.servicesTypes = prepareDropDown(SERVICE_TYPES);
 
             ctrl.actions.addNewHistoryItem = addNewHistoryItem;
             ctrl.actions.selectHistoryItem = selectHistoryItem;
@@ -45,9 +48,8 @@
 
         }
 
-        function prepareDropDown(services) {
-            services = services.map(function(iService) { return iService.type; });
-            return Array.from(new Set(services));
+        function prepareDropDown(servicesTypes) {
+            return servicesTypes.map(function(iServiceType) { return iServiceType.name; });
         }
 
         function resetNewHistoryItemForm() {
@@ -67,5 +69,5 @@
         }  
     }
 
-    ClientHistoryController.$inject = ['$element', 'moment', 'SERVICES'];
+    ClientHistoryController.$inject = ['$element', 'moment', 'SERVICE_TYPES'];
 })();

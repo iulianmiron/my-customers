@@ -44,8 +44,13 @@
 									placeholder="Cauta un serviciu"
 									class="demo-header-searchbox md-text">
 							</md-select-header>
-							<md-optgroup label="{{service}}" ng-repeat="service in $ctrl.data.servicesTypes track by service">
-								<md-option ng-value="service" ng-repeat="service in filteredServices = ($ctrl.data.services | filter: {type: service, name: $ctrl.data.searchServices } )  track by service.id">{{service.name}}</md-option>
+							<md-optgroup label="{{serviceType}}" ng-repeat="serviceType in $ctrl.data.servicesTypes track by serviceType">
+								<md-option 
+									ng-value="service" 
+									ng-repeat="service in filteredServices = ($ctrl.data.services | filter: {type: serviceType, name: $ctrl.data.searchServices } )  track by service._id">
+									{{service.name}}  
+									<small>Pret: {{service.price}} RON  Durata: {{service.duration}} min.</small>
+								</md-option>
 							</md-optgroup>
 						</md-select>
 						<div ng-messages="$ctrl.data.newHistoryItemForm.services.$error">

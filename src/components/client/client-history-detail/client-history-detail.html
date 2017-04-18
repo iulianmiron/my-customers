@@ -24,8 +24,7 @@
 						<div ng-message="maxdate">Data nu poate fi mai mare decat data curenta</div>
 					</div>
 				</md-input-container>
-				<div flex></div>
-				<md-input-container flex>
+				<md-input-container>
 					<label>Interval in saptamani</label>
 					<md-icon>timelapse</md-icon>
 					<input name="interval"
@@ -36,7 +35,7 @@
 			<div layout="row" layout-align="start center">
 				<md-input-container flex>
 					<label>Alege Servicii</label>
-					<md-select name="services" ng-model-options="{trackBy: '$value.id'}"
+					<md-select name="services" ng-model-options="{trackBy: '$value._id'}"
 						ng-model="$ctrl.data.historyItem.services" multiple required
 						ng-disabled="!$ctrl.status.editHistoryItemForm"
 						md-on-close="$ctrl.data.searchServices = '';"
@@ -48,9 +47,11 @@
 								class="demo-header-searchbox md-text">
 						</md-select-header>
 						<md-optgroup label="{{serviceType}}" ng-repeat="serviceType in $ctrl.data.servicesTypes track by serviceType">
-							<md-option ng-value="service" 
-								ng-repeat="service in filteredServices = ($ctrl.data.services | filter: {type: serviceType, name: $ctrl.data.searchServices })  track by service.id">
+							<md-option 
+								ng-value="service" 
+								ng-repeat="service in filteredServices = ($ctrl.data.services | filter: {type: serviceType, name: $ctrl.data.searchServices })  track by service._id">
 								{{service.name}}
+								<small>Pret: {{service.price}} RON  Durata: {{service.duration}} min.</small>
 							</md-option>
 						</md-optgroup>
 					</md-select>

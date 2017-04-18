@@ -11,7 +11,7 @@
             }
         });
 
-    function ClientController ($q, $state, $log, ClientServices, HistoryServices, toastr) {
+    function ClientController ($q, $state, $log, ClientServices, HistoryServices, AdminServices, toastr) {
     	var ctrl = this;
 
         ctrl.$onInit = function() {
@@ -27,6 +27,7 @@
 
                 });
             }
+            getAllServices();
 
             ctrl.actions.saveClientProfile = saveClientProfile;
             ctrl.actions.getClientProfile = getClientProfile;
@@ -40,6 +41,13 @@
             ClientServices.getClient(clientId).then(function(rClientProfile) {
                 $log.info("get client profile:", rClientProfile);
                 ctrl.data.client = rClientProfile;
+            });
+        }
+
+        function getAllServices() {
+            AdminServices.getAllServices().then(function(rServices) {
+                ctrl.data.allServices = rServices;
+                console.log('all services', rServices);
             });
         }
 
@@ -83,7 +91,7 @@
             console.log('on edit historyitem', event.historyItem);
 
            HistoryServices.editHistoryItem(event.historyItem).then(function(rSuccess) {
-                toastr.success("Istoric editat","Succes");
+                toastr.success("Sedinta editata","Succes");
                 getClientHistory(event.historyItem._clientId);
             });
         }
@@ -96,5 +104,5 @@
         }
     }
 
-    ClientController.$inject = ['$q', '$state', '$log', 'ClientServices', 'HistoryServices', 'toastr'];
+    ClientController.$inject = ['$q', '$state', '$log', 'ClientServices', 'HistoryServices', 'AdminServices', 'toastr'];
 })();

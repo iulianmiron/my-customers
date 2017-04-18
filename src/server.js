@@ -1,7 +1,7 @@
 var express = require('express');
 var app = express();
 var mongojs = require('mongojs');
-var db = mongojs('clients', ['clients', 'history']);
+var db = mongojs('clients', ['clients', 'history', 'services']);
 var bodyParser = require('body-parser');
 var openurl = require('openurl');
 
@@ -132,6 +132,57 @@ app.put('/history/:id', function(req, res) {
         res.json(doc);
     });
 });
+
+
+
+//////////////////// SERVICES collection //////////////////
+//Add clients in clients collection
+app.post('/services', function(req, res) {
+    req.body.createdOn = new Date();
+    req.body.updatedOn = new Date();
+
+    db.services.insert(req.body, function(error, doc) {
+        res.json(doc);
+    });
+});
+
+//Get all services in services collection
+app.get('/services', function(req, res) {
+    db.services.find(function(err, docs) {
+        res.json(docs);
+    });
+});
+
+//Update client in db
+app.put('/services/:id', function(req, res) {
+    console.log("update services with id", req.params.id);
+    console.log("update services with data", req.body);
+    var updatedOn = new Date();
+
+    db.services.findAndModify({
+        query: {_id: mongojs.ObjectId(req.params.id)}, 
+        update: {$set: {
+            name: req.body.name,
+            type: req.body.type,
+            price: req.body.price,
+            duration: req.body.duration,
+            updatedOn: updatedOn,
+            createdOn: req.body.createdOn
+            }
+        },
+        new: true
+    }, function(err, doc) {
+        res.json(doc);
+    });
+});
+
+app.delete('/services/:id', function(req, res) {
+    db.services.remove({_id: mongojs.ObjectId(req.params.id)}, function(err, doc) {
+        res.json(doc);
+    });
+
+});
+
 
 
 app.listen(PORT, function(){

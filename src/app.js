@@ -46,6 +46,10 @@
 				.state('client', {
 					url: '/client/:id',
 					component: 'client'
+				})
+				.state('admin', {
+					url: '/admin',
+					component: 'admin'
 				});
 		}
 
@@ -69,7 +73,7 @@
 			ctrl.actions.updateClient = updateClient;
 			ctrl.actions.clearForm = clearForm;
 
-			getClients();
+			// getClients();
 
 			function getClients() {
 				$http.get('/clients').then(function(rClients) {

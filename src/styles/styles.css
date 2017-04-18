@@ -29,3 +29,9 @@
     width: auto; }
   .selectdemoSelectHeader md-content._md {
     max-height: 240px; }
+
+
+.overflow {
+  max-height: 60vh;
+  overflow-y: auto;
+}

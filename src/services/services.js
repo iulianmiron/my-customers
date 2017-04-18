@@ -4,6 +4,7 @@
 	angular
 		.module('cm.services', [
 			'cm.services.searchClients',
-			'cm.services.client'			
+			'cm.services.client',
+			'cm.services.admin'			
 			]);
 })();

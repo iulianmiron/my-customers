@@ -8,11 +8,12 @@
             controller: ClientHistoryDetailController,
             bindings: {
                 historyItemData: '<',
+                services: '<',
                 onEditHitoryItem: '&'
             }
         });
 
-    function ClientHistoryDetailController ($element, SERVICES) {
+    function ClientHistoryDetailController ($element, SERVICE_TYPES) {
     	var ctrl = this;
         
         ctrl.data = {};
@@ -25,11 +26,13 @@
                 ctrl.data.historyItem = angular.copy(changes.historyItemData.currentValue); 
                 ctrl.data.historyItem.date = new Date(ctrl.data.historyItem.date);
             }
+            if(changes.services && changes.services.currentValue && !changes.services.isFirstChange()) { 
+                ctrl.data.services = angular.copy(changes.services.currentValue); 
+            }
         }
         ctrl.$onInit = function() {
             ctrl.data.maxDate = new Date();
-            ctrl.data.servicesTypes = prepareDropDown(SERVICES);
-            ctrl.data.services = SERVICES;
+            ctrl.data.servicesTypes = prepareDropDown(SERVICE_TYPES);
 
             ctrl.status.editHistoryItemForm = false;
 
@@ -39,9 +42,8 @@
             $element.find('input').on('keydown', function(ev) { ev.stopPropagation(); });
         }
 
-        function prepareDropDown(services) {
-            services = services.map(function(iService) { return iService.type; });
-            return Array.from(new Set(services));
+        function prepareDropDown(serviceTypes) {
+            return serviceTypes.map(function(iServiceType) { return iServiceType.name; });
         }
 
         function editHistoryItem(historyItem) {
@@ -58,5 +60,5 @@
         }
     }
 
-    ClientHistoryDetailController.$inject = ['$element', 'SERVICES'];
+    ClientHistoryDetailController.$inject = ['$element', 'SERVICE_TYPES'];
 })();
