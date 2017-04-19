@@ -41,6 +41,7 @@
             ClientServices.getClient(clientId).then(function(rClientProfile) {
                 $log.info("get client profile:", rClientProfile);
                 ctrl.data.client = rClientProfile;
+                ctrl.data.clientBackup = rClientProfile;
             });
         }
 

@@ -21,6 +21,7 @@
         ctrl.$onChanges = function(changes) {
             if(changes.clientData && changes.clientData.currentValue && !changes.clientData.isFirstChange()) { 
                 ctrl.data.client = angular.copy(changes.clientData.currentValue); 
+                ctrl.data.clientBackup = angular.copy(changes.clientData.currentValue); 
             }
         }
         ctrl.$onInit = function() {
@@ -29,6 +30,7 @@
             ctrl.status.showMoreProfileDetails = false;
 
             ctrl.actions.saveClientProfile = saveClientProfile;
+            ctrl.actions.resetForm = resetForm;
         }  
 
         function saveClientProfile(clientData) {
@@ -38,6 +40,11 @@
             });
             ctrl.status.editClient = false;
             ctrl.status.showMoreProfileDetails = false;
+        }
+
+        function resetForm() {
+            ctrl.status.editClient = false;
+            ctrl.data.client = angular.copy(ctrl.data.clientBackup);
         }
     }
 
