@@ -18,7 +18,11 @@
 		.run(appRun)
 		.controller('appController', appCtrl);
 
-		function appConfig($stateProvider, $urlRouterProvider, $locationProvider, toastrConfig) {
+		function appConfig($stateProvider, $urlRouterProvider, $locationProvider, $mdThemingProvider, toastrConfig) {
+			$mdThemingProvider.theme('default')
+    			.primaryPalette('blue')
+    			.accentPalette('orange');
+
 			// $locationProvider.html5Mode(true);
 			$urlRouterProvider.otherwise('/home');
 
@@ -129,7 +133,7 @@
 			}
 		}
 
-		appConfig.$inject 	= ['$stateProvider', '$urlRouterProvider', '$locationProvider', 'toastrConfig'];
+		appConfig.$inject 	= ['$stateProvider', '$urlRouterProvider', '$locationProvider', '$mdThemingProvider', 'toastrConfig'];
 		appRun.$inject 		= ['amMoment'];
 		appCtrl.$inject 	= ['$http', '$log', 'toastr'];
 })();

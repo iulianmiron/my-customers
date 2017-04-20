@@ -18,9 +18,21 @@
 				>
 				<md-item-template>
 					<span layout="row">
-						<span flex="33">{{client.firstName}} {{client.lastName}}</span>
-						<span flex="33"> {{client.phoneNumber}} </span> 
-						<span flex="33"> {{client.email}} </span>
+						<span flex="33" 
+							md-highlight-text="$ctrl.data.searchText" 
+							md-highlight-flags="i">
+							{{client.firstName}} {{client.lastName}}
+						</span>
+						<span flex="33" 
+							md-highlight-text="$ctrl.data.searchText" 
+							md-highlight-flags="i">
+							{{client.phoneNumber}} 
+						</span> 
+						<span flex="33" 
+							md-highlight-text="$ctrl.data.searchText" 
+							md-highlight-flags="i">
+							{{client.email}} 
+						</span>
 					</span>
 				</md-item-template>
 				<md-not-found>

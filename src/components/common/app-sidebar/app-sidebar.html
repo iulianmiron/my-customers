@@ -3,17 +3,17 @@
 		<h1 class="md-toolbar-tools">Elena Miron</h1>
 	</md-toolbar>
 	<md-list>
-		<md-list-item>
-			<md-button class="sidenavBtn" ui-sref="home" ng-click="$ctrl.actions.controlSidenav(!$ctrl.sidenavControl)">
+		<md-list-item class="sidebar-menu-item" ui-sref="home" ng-click="$ctrl.actions.controlSidenav(!$ctrl.sidenavControl)">
+			<div layout="row" layout-align="start center">
 				<md-icon>search</md-icon>
-				Cauta Clienti
-			</md-button>
+				<p>Cauta Clienti</p>
+			</div>
         </md-list-item>
-		<md-list-item>
-			<md-button class="sidenavBtn" ui-sref="admin" ng-click="$ctrl.actions.controlSidenav(!$ctrl.sidenavControl)">
+		<md-list-item class="sidebar-menu-item" ui-sref="admin" ng-click="$ctrl.actions.controlSidenav(!$ctrl.sidenavControl)">
+			<div layout="row" layout-align="start center">
 				<md-icon>settings</md-icon>
-				admin
-			</md-button>
+				<p>admin</p>
+			</div>
         </md-list-item>
 	</md-list>
 </md-sidenav>

@@ -7,8 +7,20 @@
 	width: 100%; 
 	text-align: left; 
 	padding: 10px 20px;
-}   
+} 
 
+.sidebar-menu-item .md-button {
+	margin: 0;
+	color: currentColor;
+}
+
+.sidebar-menu-item md-icon {
+	margin-right: 24px;
+}  
+
+.md-autocomplete-suggestions-container li .highlight {
+    color: rgb(128,0,128);
+}
 
 .selectdemoSelectHeader {
   /* Please note: All these selectors are only applied to children of elements with the 'selectdemoSelectHeader' class */ }
@@ -35,3 +47,4 @@
   max-height: 60vh;
   overflow-y: auto;
 }
+
