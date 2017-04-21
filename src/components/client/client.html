@@ -1,13 +1,27 @@
-<md-content>
-	<div layout="row">
-		<div flex="20">
-			<client-profile></client-profile>
-		</div>
-		<div flex="35" flex-offset="5"> 
-			<client-history></client-history>
-		</div>
-		<div flex="35" flex-offset="5">
-			<client-history-detail></client-history-detail>
-		</div>
+<div layout="row" class="md-padding">
+	<div flex="25">
+		<client-profile
+			client-data="$ctrl.data.client"
+			on-save-client-profile="$ctrl.actions.saveClientProfile($event)"
+		>
+		</client-profile>
 	</div>
-</md-content>
+	<div flex="35"> 
+		<client-history
+			client-data="$ctrl.data.client"
+			services="$ctrl.data.allServices"
+			history-data="$ctrl.data.history"
+			on-add-history-item="$ctrl.actions.addHistoryItem($event)"
+			on-select-history-item="$ctrl.actions.selectHistoryItem($event)"
+		>
+		</client-history>
+	</div>
+	<div flex="40">
+		<client-history-detail
+			history-item-data="$ctrl.data.selectedHistoryItem"
+			services="$ctrl.data.allServices"
+			on-edit-hitory-item="$ctrl.actions.editHistoryItem($event)"
+		>
+		</client-history-detail>
+	</div>
+</div>

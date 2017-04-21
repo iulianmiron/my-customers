@@ -1,0 +1,19 @@
+<md-sidenav class="md-sidenav-left" md-component-id="left" md-whiteframe="4" md-is-open="$ctrl.sidenavControl">
+	<md-toolbar class="md-tall">
+		<h1 class="md-toolbar-tools">Elena Miron</h1>
+	</md-toolbar>
+	<md-list>
+		<md-list-item class="sidebar-menu-item" ui-sref="home" ng-click="$ctrl.actions.controlSidenav(!$ctrl.sidenavControl)">
+			<div layout="row" layout-align="start center">
+				<md-icon>search</md-icon>
+				<p>Cauta Clienti</p>
+			</div>
+        </md-list-item>
+		<md-list-item class="sidebar-menu-item" ui-sref="admin" ng-click="$ctrl.actions.controlSidenav(!$ctrl.sidenavControl)">
+			<div layout="row" layout-align="start center">
+				<md-icon>settings</md-icon>
+				<p>admin</p>
+			</div>
+        </md-list-item>
+	</md-list>
+</md-sidenav>

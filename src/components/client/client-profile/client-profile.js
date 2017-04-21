@@ -6,22 +6,47 @@
         .component('clientProfile', {
             templateUrl: '/components/client/client-profile/client-profile.html',
             controller: ClientProfileController,
-            bindings: {}
+            bindings: {
+                clientData: '<',
+                onSaveClientProfile: '&'
+            }
         });
 
-    function ClientProfileController () {
+    function ClientProfileController ($log) {
     	var ctrl = this;
-        
         ctrl.data = {};
-        ctrl.status = {};
         ctrl.actions = {};
-        
-        ctrl.data.client = {
-        	firstName: 'first name',
-        	lastName: 'last name'
+        ctrl.status = {};
+
+        ctrl.$onChanges = function(changes) {
+            if(changes.clientData && changes.clientData.currentValue && !changes.clientData.isFirstChange()) { 
+                ctrl.data.client = angular.copy(changes.clientData.currentValue); 
+                ctrl.data.clientBackup = angular.copy(changes.clientData.currentValue); 
+            }
         }
-        
+        ctrl.$onInit = function() {
+
+            ctrl.status.editClient = false;
+            ctrl.status.showMoreProfileDetails = false;
+
+            ctrl.actions.saveClientProfile = saveClientProfile;
+            ctrl.actions.resetForm = resetForm;
+        }  
+
+        function saveClientProfile(clientData) {
+            console.log('clientData', clientData);
+            ctrl.onSaveClientProfile({ 
+                $event: { clientData: clientData }
+            });
+            ctrl.status.editClient = false;
+            ctrl.status.showMoreProfileDetails = false;
+        }
+
+        function resetForm() {
+            ctrl.status.editClient = false;
+            ctrl.data.client = angular.copy(ctrl.data.clientBackup);
+        }
     }
 
-    ClientProfileController.$inject = [];
+    ClientProfileController.$inject = ['$log'];
 })();
