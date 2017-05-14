@@ -7,6 +7,7 @@
             templateUrl: '/components/client/client-profile/client-profile.html',
             controller: ClientProfileController,
             bindings: {
+                newClient: '<',
                 clientData: '<',
                 onSaveClientProfile: '&'
             }
@@ -14,19 +15,24 @@
 
     function ClientProfileController ($log) {
     	var ctrl = this;
-        ctrl.data = {};
-        ctrl.actions = {};
-        ctrl.status = {};
+
+        ctrl.data       = {};
+        ctrl.actions    = {};
+        ctrl.status     = {};
 
         ctrl.$onChanges = function(changes) {
             if(changes.clientData && changes.clientData.currentValue && !changes.clientData.isFirstChange()) { 
                 ctrl.data.client = angular.copy(changes.clientData.currentValue); 
                 ctrl.data.clientBackup = angular.copy(changes.clientData.currentValue); 
             }
+            if(changes.newClient && changes.newClient.currentValue) { 
+                ctrl.data.newClient = angular.copy(changes.newClient.currentValue); 
+                if(ctrl.data.newClient) {
+                    ctrl.status.editClient = true;
+                }
+            }
         }
         ctrl.$onInit = function() {
-
-            ctrl.status.editClient = false;
             ctrl.status.showMoreProfileDetails = false;
 
             ctrl.actions.saveClientProfile = saveClientProfile;

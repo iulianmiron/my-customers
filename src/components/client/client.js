@@ -11,7 +11,7 @@
             }
         });
 
-    function ClientController ($q, $state, $log, ClientServices, HistoryServices, AdminServices, toastr) {
+    function ClientController ($q, $state, $log, ClientServices, HistoryServices, ServicesServices, toastr) {
     	var ctrl = this;
 
         ctrl.$onInit = function() {
@@ -21,11 +21,12 @@
             ctrl.actions = {};
 
             ctrl.data.clientId = ctrl.transition.params("to").id;
+            ctrl.data.newClient = false;
 
             if(ctrl.data.clientId != 0) {
-                $q.all([getClientProfile(ctrl.data.clientId), getClientHistory(ctrl.data.clientId)]).then(function() {
-
-                });
+                $q.all([getClientProfile(ctrl.data.clientId), getClientHistory(ctrl.data.clientId)]).then(function() {});
+            } else if(ctrl.data.clientId == 0) {
+                ctrl.data.newClient = true;
             }
             getAllServices();
 
@@ -39,16 +40,14 @@
 
         function getClientProfile(clientId) {
             ClientServices.getClient(clientId).then(function(rClientProfile) {
-                $log.info("get client profile:", rClientProfile);
                 ctrl.data.client = rClientProfile;
                 ctrl.data.clientBackup = rClientProfile;
             });
         }
 
         function getAllServices() {
-            AdminServices.getAllServices().then(function(rServices) {
+            ServicesServices.getAllServices().then(function(rServices) {
                 ctrl.data.allServices = rServices;
-                console.log('all services', rServices);
             });
         }
 
@@ -59,7 +58,6 @@
 
         function addNewClient(client) {
             ClientServices.addClient(client).then(function(rClientAdded) {
-                console.log("success adding client:", rClientAdded);
                 toastr.success("Client adaugat","Succes");
                 $state.go('client', {id: rClientAdded._id});
             }); 
@@ -68,7 +66,6 @@
         function updateClient(client) {
             ClientServices.updateClient(client).then(function(rSuccess) {
                 toastr.success("Client editat","Succes");
-                console.log("success updating client:", client);
             });
         }
 
@@ -80,7 +77,6 @@
             HistoryServices.addHistoryItem(newHistoryEntry).then(function(rHistoryAdded) {
                 toastr.success("Sedinta adaugata","Succes");
                 getClientHistory(clientData._id);
-                console.log("success adding history Item:", rHistoryAdded);
             });
         }
 
@@ -89,8 +85,6 @@
         }
 
         function editHistoryItem(event) {
-            console.log('on edit historyitem', event.historyItem);
-
            HistoryServices.editHistoryItem(event.historyItem).then(function(rSuccess) {
                 toastr.success("Sedinta editata","Succes");
                 getClientHistory(event.historyItem._clientId);
@@ -99,11 +93,10 @@
 
         function getClientHistory(clientId){
             HistoryServices.getClientHistory(clientId).then(function(rClientHistory) {
-                console.log("get client history", rClientHistory);
                 ctrl.data.history = rClientHistory;
             });
         }
     }
 
-    ClientController.$inject = ['$q', '$state', '$log', 'ClientServices', 'HistoryServices', 'AdminServices', 'toastr'];
+    ClientController.$inject = ['$q', '$state', '$log', 'ClientServices', 'HistoryServices', 'ServicesServices', 'toastr'];
 })();

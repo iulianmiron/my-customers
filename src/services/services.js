@@ -5,6 +5,7 @@
 		.module('cm.services', [
 			'cm.services.searchClients',
 			'cm.services.client',
-			'cm.services.admin'			
+			'cm.services.admin.services',
+			'cm.services.admin.products'			
 			]);
 })();

@@ -7,6 +7,9 @@
 			'cm.components.common.appSidebar',
 
 			'cm.components.admin',
+			'cm.components.admin.services',
+			'cm.components.admin.products',
+			'cm.components.admin.products.addProductDialog',
 
 			'cm.components.home',
 			'cm.components.home.searchClients',

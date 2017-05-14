@@ -1,7 +1,8 @@
 var express = require('express');
 var app = express();
 var mongojs = require('mongojs');
-var db = mongojs('clients', ['clients', 'history', 'services']);
+var db_clients = mongojs('clients', ['clients', 'history', 'services']);
+var db_products = mongojs('products', ['products']);
 var bodyParser = require('body-parser');
 var openurl = require('openurl');
 
@@ -14,7 +15,7 @@ app.use(bodyParser.json());
 ////////////////// CLIENTS Collection /////////////////////////
 //Get all clients in clients collection
 app.get('/clients', function(req, res) {
-    db.clients.find(function(err, docs) {
+    db_clients.clients.find(function(err, docs) {
         res.json(docs);
     });
 });
@@ -22,7 +23,7 @@ app.get('/clients', function(req, res) {
 //Search clients in clients collection
 app.get('/clients/search/:query', function(req, res) {
     console.log("find client with id", req.params.query);
-    db.clients.find({ $text: { $search: req.params.query}}, function(err, doc) {
+    db_clients.clients.find({ $text: { $search: req.params.query}}, function(err, doc) {
     console.log("find clients response", doc);
         res.json(doc);
     });
@@ -35,25 +36,25 @@ app.post('/clients', function(req, res) {
     req.body.createdOn = new Date();
     req.body.updatedOn = new Date();
 
-    db.clients.insert(req.body, function(error, doc) {
+    db_clients.clients.insert(req.body, function(error, doc) {
         res.json(doc);
     });
 });
 
 //Find client by id
 app.get('/clients/:id', function(req, res) {
-    db.clients.findOne({_id: mongojs.ObjectId(req.params.id)}, function(err, doc) {
+    db_clients.clients.findOne({_id: mongojs.ObjectId(req.params.id)}, function(err, doc) {
         res.json(doc);
     });
 });
 
-//Update client in db
+//Update client in db_clients
 app.put('/clients/:id', function(req, res) {
     console.log("update client with id", req.params.id);
     console.log("update client with data", req.body);
     var updatedOn = new Date();
 
-    db.clients.findAndModify({
+    db_clients.clients.findAndModify({
         query: {_id: mongojs.ObjectId(req.params.id)}, 
         update: {$set: {
             firstName: req.body.firstName,
@@ -78,7 +79,7 @@ app.put('/clients/:id', function(req, res) {
 });
 
 app.delete('/clients/:id', function(req, res) {
-    db.clients.remove({_id: mongojs.ObjectId(req.params.id)}, function(err, doc) {
+    db_clients.clients.remove({_id: mongojs.ObjectId(req.params.id)}, function(err, doc) {
         res.json(doc);
     });
 
@@ -87,14 +88,14 @@ app.delete('/clients/:id', function(req, res) {
 /////////////////// HISTORY collection /////////////////////////////////////
 //Get all history in history collection
 app.get('/history', function(req, res) {
-    db.history.find(function(err, docs) {
+    db_clients.history.find(function(err, docs) {
         res.json(docs);
     });
 });
 
 //Search clients in clients collection
 app.get('/history/client/:id', function(req, res) {
-    db.history.find({ "_clientId": req.params.id }, function(err, doc) {
+    db_clients.history.find({ "_clientId": req.params.id }, function(err, doc) {
         res.json(doc);
     });
 });
@@ -103,18 +104,18 @@ app.put('/history', function(req, res) {
     req.body.createdOn = new Date();
     req.body.updatedOn = new Date();
 
-    db.history.insert(req.body, function(err, docs) {
+    db_clients.history.insert(req.body, function(err, docs) {
         res.json(docs);
     });
 });
 
-//Update history item in db
+//Update history item in db_clients
 app.put('/history/:id', function(req, res) {
     console.log("update history with id", req.params.id);
     console.log("update history with data", req.body);
     var updatedOn = new Date();
 
-    db.history.findAndModify({
+    db_clients.history.findAndModify({
         query: {_id: mongojs.ObjectId(req.params.id)}, 
         update: {$set: {
             date: req.body.date,
@@ -141,25 +142,25 @@ app.post('/services', function(req, res) {
     req.body.createdOn = new Date();
     req.body.updatedOn = new Date();
 
-    db.services.insert(req.body, function(error, doc) {
+    db_clients.services.insert(req.body, function(error, doc) {
         res.json(doc);
     });
 });
 
 //Get all services in services collection
 app.get('/services', function(req, res) {
-    db.services.find(function(err, docs) {
+    db_clients.services.find(function(err, docs) {
         res.json(docs);
     });
 });
 
-//Update client in db
+//Update client in db_clients
 app.put('/services/:id', function(req, res) {
     console.log("update services with id", req.params.id);
     console.log("update services with data", req.body);
     var updatedOn = new Date();
 
-    db.services.findAndModify({
+    db_clients.services.findAndModify({
         query: {_id: mongojs.ObjectId(req.params.id)}, 
         update: {$set: {
             name: req.body.name,
@@ -177,10 +178,29 @@ app.put('/services/:id', function(req, res) {
 });
 
 app.delete('/services/:id', function(req, res) {
-    db.services.remove({_id: mongojs.ObjectId(req.params.id)}, function(err, doc) {
+    db_clients.services.remove({_id: mongojs.ObjectId(req.params.id)}, function(err, doc) {
         res.json(doc);
     });
 
+});
+
+
+//////////////////// PRODUCTS collection //////////////////
+//Add clients in clients collection
+app.post('/products', function(req, res) {
+    req.body.createdOn = new Date();
+    req.body.updatedOn = new Date();
+
+    db_products.products.insert(req.body, function(error, doc) {
+        res.json(doc);
+    });
+});
+
+//Get all services in services collection
+app.get('/products', function(req, res) {
+    db_products.products.find(function(err, docs) {
+        res.json(docs);
+    });
 });
 
 

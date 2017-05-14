@@ -1,11 +1,11 @@
 <md-content class="md-padding">
-	<div layout="row" layout-align="center start">
-		<div flex="50">
+	<div layout="column" layout-align="start center">
+		<div flex>
 			<h1>Cauta Clienti</h1>
 		</div>
 	</div>
 	<div layout="row" layout-align="center start">
-		<form name="$ctrl.searchClientForm" flex="50">
+		<form name="$ctrl.searchClientForm" flex flex-gt-sm="50">
 			<md-autocomplete
 				md-no-cache="true"
 				md-delay="500"
@@ -49,7 +49,7 @@
 		</form>
 	</div>
 	<div layout="row" layout-align="center start">
-		<div flex="50" layout="row">
+		<div flex flex-gt-sm="50" layout="row">
 			<div flex></div>
 			<md-button ng-click="$ctrl.actions.openClientPage(0)" class="md-primary">
 				<md-icon>add</md-icon>

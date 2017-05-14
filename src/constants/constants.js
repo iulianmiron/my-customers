@@ -9,4 +9,5 @@
 			{id: 3, name: 'Extensii Gene'},
 			{id: 4, name: 'Epilat'}
 		])
+		.constant('NO_PICTURE', 'img/no-picture.png');
 })();

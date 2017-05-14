@@ -2,6 +2,12 @@
   cursor: pointer;
 }
 
+
+.md-dialog-content md-input-container .md-input-message-animation:not(.ng-animate) { 
+  opacity: 1 !important; 
+  margin-top: 0px !important; 
+}
+
 .md-sidenav-left .sidenavBtn {
 	display: block; 
 	width: 100%; 
@@ -48,3 +54,8 @@
   overflow-y: auto;
 }
 
+.product-picture {
+	object-fit: cover;
+	width: 100%;
+	height: 100px;
+}
