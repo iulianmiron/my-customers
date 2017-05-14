@@ -2,30 +2,30 @@
     'use strict';
 
     angular
-        .module('cm.services.admin', [])
-        .service('AdminServices', AdminServices);
+        .module('cm.services.admin.products', [])
+        .service('ProductsServices', ProductsServices);
 
-        function AdminServices($http, $log) {
+        function ProductsServices($http, $log) {
             var service = this;
 
-            service.addService			= addService;
-            service.getAllServices		= getAllServices;
+            service.addProduct			= addProduct;
+            service.getAllProducts		= getAllProducts;
             service.updateService       = updateService;
 			service.deleteService 		= deleteService;
 
-            function addService(newService) {
-				return $http.post('/services', newService).then(function(rSuccess){
+            function addProduct(newProduct) {
+				return $http.post('/products', newProduct).then(function(rSuccess){
                     return rSuccess.data;
                 }).catch(function(error) {
-                    $log.error('Could not add service', error);
+                    $log.error('Could not add product', error);
                 });
             }
 
-			function getAllServices() {
-                return $http.get('/services').then(function(rServices) {
-                    return rServices.data;
+			function getAllProducts() {
+                return $http.get('/products').then(function(rProducts) {
+                    return rProducts.data;
                 }).catch(function(error) {
-					console.log('Could not get all services', error);
+					console.log('Could not get all products', error);
 				});
             }
 
@@ -46,5 +46,5 @@
 			}
         }
 
-        AdminServices.$inject  = ['$http', '$log'];
+        ProductsServices.$inject  = ['$http', '$log'];
 })();

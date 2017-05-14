@@ -16,15 +16,16 @@
     function ClientHistoryDetailController ($element, SERVICE_TYPES) {
     	var ctrl = this;
         
-        ctrl.data = {};
-        ctrl.status = {};
-        ctrl.actions = {};
+        ctrl.data       = {};
+        ctrl.status     = {};
+        ctrl.actions    = {};
 
         ctrl.$onChanges = function(changes) {
             if(changes.historyItemData && changes.historyItemData.currentValue && !changes.historyItemData.isFirstChange()) { 
                 ctrl.data.historyItemBackup = angular.copy(changes.historyItemData.currentValue); 
                 ctrl.data.historyItem = angular.copy(changes.historyItemData.currentValue); 
                 ctrl.data.historyItem.date = new Date(ctrl.data.historyItem.date);
+                ctrl.status.editHistoryItemForm = false;
             }
             if(changes.services && changes.services.currentValue && !changes.services.isFirstChange()) { 
                 ctrl.data.services = angular.copy(changes.services.currentValue); 
@@ -33,9 +34,6 @@
         ctrl.$onInit = function() {
             ctrl.data.maxDate = new Date();
             ctrl.data.servicesTypes = prepareDropDown(SERVICE_TYPES);
-
-            ctrl.status.editHistoryItemForm = false;
-
             ctrl.actions.editHistoryItem = editHistoryItem;
             ctrl.actions.revertChanges = revertChanges;
 
@@ -47,9 +45,8 @@
         }
 
         function editHistoryItem(historyItem) {
-            var dateString = historyItem.date.toString();
-            historyItem.date = dateString;
-            ctrl.onEditHitoryItem({ $event: { historyItem: historyItem} });
+            historyItem.date = historyItem.date.toString();
+            ctrl.onEditHitoryItem({ $event: { historyItem: historyItem } });
             ctrl.status.editHistoryItemForm = false;
         }
 

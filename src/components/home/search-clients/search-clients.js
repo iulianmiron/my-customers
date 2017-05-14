@@ -21,16 +21,20 @@
 		function searchClients(query) {
 			var deferred = $q.defer();
 
-			SearchClientsServices.searchClients(query).then(function(rClients) {
-				console.log(rClients);
+			SearchClientsServices
+				.searchClients(query)
+				.then(handleSuccess)
+				.catch(handleError);
+
+			function handleSuccess(rClients) {
 				deferred.resolve(rClients);
-			}).catch(function(rErrorMessage) {
+			}
+			function handleError(rErrorMessage) {
 				$log.error('Could not get clients', rErrorMessage);
 				deferred.reject(rErrorMessage);
-			});
+			}
 			return deferred.promise;
 		}
-
 
 		function openClientPage(clientId) {
 			$state.go('client', { id: clientId });

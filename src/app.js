@@ -71,63 +71,6 @@
 			ctrl.status.isSidenavOpen = false;
 			ctrl.actions.controlSidenav = controlSidenav;
 
-			ctrl.actions.addClient = addClient;
-			ctrl.actions.removeClient = removeClient;
-			ctrl.actions.editClient = editClient;
-			ctrl.actions.updateClient = updateClient;
-			ctrl.actions.clearForm = clearForm;
-
-			// getClients();
-
-			function getClients() {
-				$http.get('/clients').then(function(rClients) {
-					ctrl.data.clients = rClients.data;
-				});
-			}
-
-			function addClient(client) {
-				client._id = "";
-				console.log('new client', client);
-				$http.post('/clients', client).then(function(response) {
-					console.log(response);
-					getClients();
-				});
-			}
-
-			function removeClient(id) {
-				console.log('delete client', id);
-				$http.delete('/clients/' + id).then(function(rSuccess){
-					console.log('rSuccess', rSuccess);
-					getClients();
-				}).catch(function(rErrorMessage) {
-					console.log('rErrorMessage', rErrorMessage)
-				});
-			}
-
-			function editClient(id) {
-				console.log('edit client', id);
-
-				$http.get('/clients/' + id).then(function(response) {
-					ctrl.data.client = response.data;
-				});
-			}
-
-			function updateClient(client) {
-				console.log('update client', ctrl.data.client._id);
-
-				$http.put('/clients/' + ctrl.data.client._id, ctrl.data.client).then(function(success) {
-					
-					getClients();
-				}).catch(function(error) {
-					console.log('error', error);
-				});
-
-			}
-
-			function clearForm() {
-				ctrl.data.client = {};
-			}
-
 			function controlSidenav(event) {
 				ctrl.status.isSidenavOpen = event.sidenavControl;
 			}
