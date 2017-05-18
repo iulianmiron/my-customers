@@ -1,0 +1,43 @@
+
+	<div layout="row" layout-margin>
+		<h2>
+			<md-icon>store</md-icon>
+			Produse ({{$ctrl.data.allProducts.length}})
+		</h2>
+		<div flex></div>
+		<md-input-container>
+			<md-icon>search</md-icon>
+        	<label>Cauta produs</label>
+        	<input ng-model="$ctrl.data.searchProducts">
+      	</md-input-container>
+	</div>
+<md-content style="max-height: 75vh">
+
+
+	<div layout="row" layout-wrap>
+		<div flex="33" ng-repeat="product in $ctrl.data.allProducts | filter: $ctrl.data.searchProducts">
+			<md-card>
+				<img ng-src="{{imagePath || $ctrl.data.noPicture}}" class="md-card-image" alt="Product Image">
+				<md-card-title>
+					<md-card-title-text>
+						<span class="md-headline">{{product.name}} {{product.volume}}ml - {{product.range}} </span>
+						<span class="md-subhead">Producator: {{product.manufacturer}}</span>
+					</md-card-title-text>
+				</md-card-title>
+				<md-card-content>
+					<p>Descriere: {{product.description}}</p>
+					
+				</md-card-content>
+				<md-card-actions layout="row" layout-align="end center">
+					<div>Pret: {{product.price}} RON</div>
+					<md-button class="md-icon-button md-primary md-raised"
+						ng-click="$ctrl.actions.addToBasket(product)">
+						<md-icon>add_shopping_cart</md-icon>
+						<md-tooltip md-direction="top">Adauga in cos</md-tooltip>
+					</md-button>
+				</md-card-actions>
+			</md-card>
+		</div>
+	</div>
+
+</md-content>

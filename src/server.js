@@ -203,6 +203,38 @@ app.get('/products', function(req, res) {
     });
 });
 
+//Delete a specific product
+app.delete('/products/:id', function(req, res) {
+    db_products.products.remove({_id: mongojs.ObjectId(req.params.id)}, function(err, doc) {
+        res.json(doc);
+    });
+});
+
+//Update product in db_products
+app.put('/products/:id', function(req, res) {
+    console.log("update product with id", req.params.id);
+    console.log("update product with data", req.body);
+    var updatedOn = new Date();
+
+    db_products.products.findAndModify({
+        query: {_id: mongojs.ObjectId(req.params.id)}, 
+        update: {$set: {
+            manufacturer: req.body.manufacturer,
+            name: req.body.name,
+            range: req.body.range,
+            description: req.body.description,
+            volume: req.body.volume,
+            price: req.body.price,
+            updatedOn: updatedOn,
+            createdOn: req.body.createdOn
+            }
+        },
+        new: true
+    }, function(err, doc) {
+        res.json(doc);
+    });
+});
+
 
 
 app.listen(PORT, function(){
