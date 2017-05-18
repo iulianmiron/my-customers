@@ -54,6 +54,9 @@
 				.state('admin', {
 					url: '/admin',
 					component: 'admin'
+				}).state('shop', {
+					url: '/shop',
+					component: 'shop'
 				});
 		}
 

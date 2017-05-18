@@ -18,18 +18,14 @@
         ctrl.$onInit = function() {
             ctrl.data.noPicture = NO_PICTURE;
 
-            ctrl.actions.selectService = selectService;
-            ctrl.actions.editService = editService;
-            ctrl.actions.deleteService = deleteService;
-
-
             ctrl.actions.addProduct = addProduct;
             ctrl.actions.getAllProducts = getAllProducts;
+            ctrl.actions.deleteProduct = deleteProduct;
+            ctrl.actions.selectProduct = selectProduct;
+            ctrl.actions.editProduct = editProduct;
 
             getAllProducts();
         }
-
-
 
         function addProduct(event) {
              $mdDialog.show({
@@ -44,10 +40,9 @@
                 clickOutsideToClose: false,
                 fullscreen: false
             }).then(function(product) {
-                console.log('product', product);
                 saveNewProduct(product);
             }, function() {
-                console.log('no product');
+                //no product added
             });
         }
 
@@ -65,40 +60,40 @@
             });
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-        function selectService(service) {
-            ctrl.data.newService = angular.copy(service);
-            ctrl.status.showEditServiceControls = true;
-        }
-
-        function editService(service) {
-            ProductsServices.updateService(service).then(function(rSuccess) {
-                toastr.success("Serviciul editat cu succes");
+        function deleteProduct(productId) {
+            ProductsServices.deleteProduct(productId).then(function(rSuccess) {
+                toastr.success("Produsul sters cu succes");
                 return rSuccess.data;
             });
-            getAllServices();
-            
+            getAllProducts();
         }
 
-        function deleteService(serviceId) {
-            ProductsServices.deleteService(serviceId).then(function(rSuccess) {
-                toastr.success("Serviciul sters cu succes");
+        function selectProduct(event, product) {
+             $mdDialog.show({
+                controller: 'EditProductDialogController',
+                controllerAs: '$ctrl',
+                templateUrl: '/components/admin/products/edit-product/edit-product.dialog.html',
+                locals: {
+                    product: angular.copy(product)
+                },
+                parent: $rootElement,
+                targetEvent: event,
+                clickOutsideToClose: false,
+                fullscreen: false
+            }).then(function(product) {
+                editProduct(product);
+            }, function() {
+                //product edit cancelled
+            });
+        }
+
+        function editProduct(product) {
+            ProductsServices.updateProduct(product).then(function(rSuccess) {
+                toastr.success("Produsul editat cu succes");
                 return rSuccess.data;
             });
-            getAllServices();
+            getAllProducts();
         }
-
     }
 
     ProductsController.$inject = ['$mdDialog', '$rootElement', 'ProductsServices', 'toastr', 'NO_PICTURE'];

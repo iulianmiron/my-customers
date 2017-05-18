@@ -10,8 +10,8 @@
 
             service.addProduct			= addProduct;
             service.getAllProducts		= getAllProducts;
-            service.updateService       = updateService;
-			service.deleteService 		= deleteService;
+            service.updateProduct       = updateProduct;
+			service.deleteProduct 		= deleteProduct;
 
             function addProduct(newProduct) {
 				return $http.post('/products', newProduct).then(function(rSuccess){
@@ -29,19 +29,19 @@
 				});
             }
 
-            function updateService(service) {
-                return $http.put('/services/' + service._id, service).then(function(rSuccess) {
+            function updateProduct(product) {
+                return $http.put('/products/' + product._id, product).then(function(rSuccess) {
 					return rSuccess.data;
 				}).catch(function(error) {
-					console.log('Could not update client', error);
+					console.log('Could not update product', error);
 				});
             }
 
-			function deleteService(serviceId) {
-				return $http.delete('/services/' + serviceId).then(function(rSuccess){
+			function deleteProduct(productId) {
+				return $http.delete('/products/' + productId).then(function(rSuccess){
 					return rSuccess.data;
 				}).catch(function(error) {
-					console.log('Could not delete service', error);
+					console.log('Could not delete product', error);
 				});
 			}
         }

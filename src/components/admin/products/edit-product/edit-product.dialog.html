@@ -1,7 +1,7 @@
-<md-dialog aria-label="add Products">
+<md-dialog aria-label="edit Product">
 	<md-toolbar>
 		<div class="md-toolbar-tools">
-			<h2>Adaugati produs nou</h2>
+			<h2>Editati produsul</h2>
 			<span flex></span>
 			<md-button class="md-icon-button" ng-click="$ctrl.actions.cancel()">
 				<md-icon>close</md-icon>
@@ -117,7 +117,7 @@
 		<md-button class="md-raised md-primary" 
 			ng-click="$ctrl.actions.save($ctrl.data.product)" 
 			ng-disabled="$ctrl.data.productForm.$invalid">
-			Adauga Produs
+			Salveaza Produs
 		</md-button>
 	</md-dialog-actions>
 
