@@ -11,6 +11,9 @@
 			'cm.components.admin.products',
 			'cm.components.admin.products.addProductDialog',
 			'cm.components.admin.products.editProductDialog',
+			'cm.components.admin.consumables',
+			'cm.components.admin.consumables.editConsumableDialog',
+			'cm.components.admin.consumables.addConsumableDialog',
 
 			'cm.components.home',
 			'cm.components.home.searchClients',

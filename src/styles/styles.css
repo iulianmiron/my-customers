@@ -54,7 +54,8 @@
   overflow-y: auto;
 }
 
-.product-picture {
+.product-picture, 
+.consumable-picture {
 	object-fit: cover;
 	width: 100%;
 	height: 100px;

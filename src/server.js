@@ -1,8 +1,11 @@
 var express = require('express');
 var app = express();
 var mongojs = require('mongojs');
+
 var db_clients = mongojs('clients', ['clients', 'history', 'services']);
 var db_products = mongojs('products', ['products']);
+var db_consumables = mongojs('consumables', ['consumables']);
+
 var bodyParser = require('body-parser');
 var openurl = require('openurl');
 
@@ -186,7 +189,7 @@ app.delete('/services/:id', function(req, res) {
 
 
 //////////////////// PRODUCTS collection //////////////////
-//Add clients in clients collection
+//Add products in products collection
 app.post('/products', function(req, res) {
     req.body.createdOn = new Date();
     req.body.updatedOn = new Date();
@@ -217,6 +220,56 @@ app.put('/products/:id', function(req, res) {
     var updatedOn = new Date();
 
     db_products.products.findAndModify({
+        query: {_id: mongojs.ObjectId(req.params.id)}, 
+        update: {$set: {
+            manufacturer: req.body.manufacturer,
+            name: req.body.name,
+            range: req.body.range,
+            description: req.body.description,
+            volume: req.body.volume,
+            price: req.body.price,
+            updatedOn: updatedOn,
+            createdOn: req.body.createdOn
+            }
+        },
+        new: true
+    }, function(err, doc) {
+        res.json(doc);
+    });
+});
+
+//////////////////// Consumables collection //////////////////
+//Add consumables in consumables collection
+app.post('/consumables', function(req, res) {
+    req.body.createdOn = new Date();
+    req.body.updatedOn = new Date();
+
+    db_consumables.consumables.insert(req.body, function(error, doc) {
+        res.json(doc);
+    });
+});
+
+//Get all consumables in consumables collection
+app.get('/consumables', function(req, res) {
+    db_consumables.consumables.find(function(err, docs) {
+        res.json(docs);
+    });
+});
+
+//Delete a specific consumable
+app.delete('/consumables/:id', function(req, res) {
+    db_consumables.consumables.remove({_id: mongojs.ObjectId(req.params.id)}, function(err, doc) {
+        res.json(doc);
+    });
+});
+
+//Update consumable in db_consumables
+app.put('/consumables/:id', function(req, res) {
+    console.log("update consumable with id", req.params.id);
+    console.log("update consumable with data", req.body);
+    var updatedOn = new Date();
+
+    db_consumables.consumables.findAndModify({
         query: {_id: mongojs.ObjectId(req.params.id)}, 
         update: {$set: {
             manufacturer: req.body.manufacturer,
