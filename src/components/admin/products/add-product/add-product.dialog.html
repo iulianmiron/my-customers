@@ -1,124 +1,134 @@
 <md-dialog aria-label="add Products">
-	<md-toolbar>
-		<div class="md-toolbar-tools">
-			<h2>Adaugati produs nou</h2>
-			<span flex></span>
-			<md-button class="md-icon-button" ng-click="$ctrl.actions.cancel()">
-				<md-icon>close</md-icon>
-			</md-button>
-		</div>
-	</md-toolbar>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>Adaugati produs nou</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="$ctrl.actions.cancel()">
+                <md-icon>close</md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
 
-	<md-dialog-content>
-		<div class="md-dialog-content">
-			<form name="$ctrl.data.productForm">
-				<div layout="column">
-					<img class="product-picture" alt="poza produs" ng-src="{{ $ctrl.data.product.picture || $ctrl.data.noPicture }}">
-					<md-button>
-						<md-icon>add_a_photo</md-icon>
-						Adauga poza
-						<md-tooltip>Nu functioneaza deocamdata</md-tooltip>
-					</md-button>
-				</div>
-				<div layout="column">
-					<md-input-container class="md-block">
-						<label>Producator</label>
-						<md-icon>work</md-icon>
-						<input 
-							name="productManufacturer" 
-							ng-model="$ctrl.data.product.manufacturer"
-							minlength="2" md-maxlength="50" required
-						>
-						<div ng-messages="$ctrl.data.productForm.productManufacturer.$error" ng-show="$ctrl.data.productForm.productManufacturer.$touched">
-							<div ng-message="required">Producatorul este obligatoriu</div>
-							<div ng-message="md-maxlength">Producatorul trebuie sa aiba sub 50 de caractere</div>
-							<div ng-message="minlength">Producatorul trebuie sa aiba mai mult de 1 caracter</div>
-						</div>
-					</md-input-container>
+    <md-dialog-content>
+        <div class="md-dialog-content">
+            <form name="$ctrl.data.productForm">
+                <div layout="column">
+                    <img class="product-picture" alt="poza produs" ng-src="{{ $ctrl.data.product.picture || $ctrl.data.noPicture }}">
+                    <md-button>
+                        <md-icon>add_a_photo</md-icon>
+                        Adauga poza
+                        <md-tooltip>Nu functioneaza deocamdata</md-tooltip>
+                    </md-button>
+                </div>
+                <div layout="column">
 
-					<md-input-container class="md-block">
-						<label>Gama</label>
-						<md-icon>work</md-icon>
-						<input 
-							name="productRange" 
-							ng-model="$ctrl.data.product.range"
-							minlength="2" md-maxlength="50" required
-						>
-						<div ng-messages="$ctrl.data.productForm.productRange.$error" ng-show="$ctrl.data.productForm.productRange.$touched">
-							<div ng-message="required">Gama este obligatorie</div>
-							<div ng-message="md-maxlength">Gama trebuie sa aiba sub 50 de caractere</div>
-							<div ng-message="minlength">Gama trebuie sa aiba mai mult de 1 caracter</div>
-						</div>
-					</md-input-container>
+                    <md-input-container class="md-block">
+                        <label>Cod casa de marcat</label>
+                        <md-icon>code</md-icon>
+                        <input name="productCodeCashRegister" type="number" ng-model="$ctrl.data.product.codeCashRegister" min="0" max="100000" step="1" required>
+                        <div ng-messages="$ctrl.data.productForm.productCodeCashRegister.$error" ng-show="$ctrl.data.productForm.productCodeCashRegister.$touched">
+                            <div ng-message="required">Codul este obligatoriu</div>
+                            <div ng-message="min">Codul trebuie sa fie mai mare decat zero.</div>
+                            <div ng-message="max">Codul trebuie sa fie mai mic decat 10000.</div>
+                        </div>
+                    </md-input-container>
 
-					<md-input-container class="md-block">
-						<label>Denumire</label>
-						<md-icon>work</md-icon>
-						<input 
-							name="productName" 
-							ng-model="$ctrl.data.product.name"
-							minlength="2" md-maxlength="50" required
-						>
-						<div ng-messages="$ctrl.data.productForm.productName.$error" ng-show="$ctrl.data.productForm.productName.$touched">
-							<div ng-message="required">Denumirea este obligatorie</div>
-							<div ng-message="md-maxlength">Denumirea trebuie sa aiba sub 50 de caractere</div>
-							<div ng-message="minlength">Denumirea trebuie sa aiba mai mult de 1 caracter</div>
-						</div>
-					</md-input-container>
+                    <md-input-container class="md-block">
+                        <label>Cod Produs</label>
+                        <md-icon>code</md-icon>
+                        <input name="productCode" ng-model="$ctrl.data.product.code" minlength="2" md-maxlength="50" required>
+                        <div ng-messages="$ctrl.data.productForm.productCode.$error" ng-show="$ctrl.data.productForm.productCode.$touched">
+                            <div ng-message="required">Codul este obligatoriu</div>
+                            <div ng-message="md-maxlength">Codul trebuie sa aiba sub 50 de caractere</div>
+                            <div ng-message="minlength">Codul trebuie sa aiba mai mult de 1 caracter</div>
+                        </div>
+                    </md-input-container>
 
-					<md-input-container class="md-block">
-						<label>Descriere</label>
-						<md-icon>description</md-icon>
-						<textarea md-select-on-focus 
-							ng-model="$ctrl.data.product.description"
-						>
+                    <md-input-container class="md-block">
+                        <label>Producator</label>
+                        <md-icon>work</md-icon>
+                        <input name="productManufacturer" ng-model="$ctrl.data.product.manufacturer" minlength="2" md-maxlength="50" required>
+                        <div ng-messages="$ctrl.data.productForm.productManufacturer.$error" ng-show="$ctrl.data.productForm.productManufacturer.$touched">
+                            <div ng-message="required">Producatorul este obligatoriu</div>
+                            <div ng-message="md-maxlength">Producatorul trebuie sa aiba sub 50 de caractere</div>
+                            <div ng-message="minlength">Producatorul trebuie sa aiba mai mult de 1 caracter</div>
+                        </div>
+                    </md-input-container>
+
+                    <md-input-container class="md-block">
+                        <label>Gama</label>
+                        <md-icon>work</md-icon>
+                        <input name="productRange" ng-model="$ctrl.data.product.range" minlength="2" md-maxlength="50" required>
+                        <div ng-messages="$ctrl.data.productForm.productRange.$error" ng-show="$ctrl.data.productForm.productRange.$touched">
+                            <div ng-message="required">Gama este obligatorie</div>
+                            <div ng-message="md-maxlength">Gama trebuie sa aiba sub 50 de caractere</div>
+                            <div ng-message="minlength">Gama trebuie sa aiba mai mult de 1 caracter</div>
+                        </div>
+                    </md-input-container>
+
+                    <md-input-container class="md-block">
+                        <label>Denumire</label>
+                        <md-icon>work</md-icon>
+                        <input name="productName" ng-model="$ctrl.data.product.name" minlength="2" md-maxlength="50" required>
+                        <div ng-messages="$ctrl.data.productForm.productName.$error" ng-show="$ctrl.data.productForm.productName.$touched">
+                            <div ng-message="required">Denumirea este obligatorie</div>
+                            <div ng-message="md-maxlength">Denumirea trebuie sa aiba sub 50 de caractere</div>
+                            <div ng-message="minlength">Denumirea trebuie sa aiba mai mult de 1 caracter</div>
+                        </div>
+                    </md-input-container>
+
+                    <md-input-container class="md-block">
+                        <label>Descriere</label>
+                        <md-icon>description</md-icon>
+                        <textarea md-select-on-focus ng-model="$ctrl.data.product.description">
 						</textarea>
-					</md-input-container>
+                    </md-input-container>
 
-					<md-input-container class="md-block">
-						<label>Cantitate (ml)</label>
-						<md-icon>opacity</md-icon>
-						<input 
-							name="productVolume" type="number"
-							ng-model="$ctrl.data.product.volume"
-							min="0" max="10000" step="1" required
-						>
-						<div ng-messages="$ctrl.data.productForm.productVolume.$error" ng-show="$ctrl.data.productForm.productVolume.$touched">
-							<div ng-message="required">Cantitatea este obligatorie</div>
-							<div ng-message="min">Cantitatea trebuie sa fie mai mare decat zero.</div>
-							<div ng-message="max">Cantitatea trebuie sa fie mai mic decat 10000.</div>
-						</div>
-					</md-input-container>
+                    <md-input-container class="md-block">
+                        <label>Cantitate (ml)</label>
+                        <md-icon>opacity</md-icon>
+                        <input name="productVolume" type="number" ng-model="$ctrl.data.product.volume" min="0" max="10000" step="1">
+                        <div ng-messages="$ctrl.data.productForm.productVolume.$error" ng-show="$ctrl.data.productForm.productVolume.$touched">
+                            <div ng-message="required">Cantitatea este obligatorie</div>
+                            <div ng-message="min">Cantitatea trebuie sa fie mai mare decat zero.</div>
+                            <div ng-message="max">Cantitatea trebuie sa fie mai mic decat 10000.</div>
+                        </div>
+                    </md-input-container>
 
-					<md-input-container class="md-block">
-						<label>Pret (RON)</label>
-						<md-icon>attach_money</md-icon>
-						<input 
-							name="productPrice" type="number"
-							ng-model="$ctrl.data.product.price"
-							min="0" max="10000" step="1" required
-						>
-						<div ng-messages="$ctrl.data.productForm.productPrice.$error" ng-show="$ctrl.data.productForm.productPrice.$touched">
-							<div ng-message="required">Pretul este obligatoriu</div>
-							<div ng-message="min">Pretul trebuie sa fie mai mare decat zero.</div>
-							<div ng-message="max">Pretul trebuie sa fie mai mic decat 10000.</div>
-						</div>
-					</md-input-container>
-				</div>
-			</form>
+                    <md-input-container class="md-block">
+                        <label>Pret initial (RON)</label>
+                        <md-icon>attach_money</md-icon>
+                        <input name="productPriceInitial" type="number" ng-model="$ctrl.data.product.priceInitial" min="0" max="10000" step="1" required>
+                        <div ng-messages="$ctrl.data.productForm.productPriceInitial.$error" ng-show="$ctrl.data.productForm.productPriceInitial.$touched">
+                            <div ng-message="required">Pretul este obligatoriu</div>
+                            <div ng-message="min">Pretul initial trebuie sa fie mai mare decat zero.</div>
+                            <div ng-message="max">Pretul initial trebuie sa fie mai mic decat 10000.</div>
+                        </div>
+                    </md-input-container>
 
-		</div>
-	</md-dialog-content>
+                    <md-input-container class="md-block">
+                        <label>Pret vanzare (RON)</label>
+                        <md-icon>attach_money</md-icon>
+                        <input name="productPriceToSell" type="number" ng-model="$ctrl.data.product.priceToSell" min="0" max="10000" step="1" required>
+                        <div ng-messages="$ctrl.data.productForm.productPriceToSell.$error" ng-show="$ctrl.data.productForm.productPriceToSell.$touched">
+                            <div ng-message="required">Pretul este obligatoriu</div>
+                            <div ng-message="min">Pretul de vanzare trebuie sa fie mai mare decat zero.</div>
+                            <div ng-message="max">Pretul de vanzare trebuie sa fie mai mic decat 10000.</div>
+                        </div>
+                    </md-input-container>
+                </div>
+            </form>
 
-	<md-dialog-actions layout="row" layout-align="end center">
-		<md-button ng-click="$ctrl.actions.cancel()">
-			Renunta
-		</md-button>
-		<md-button class="md-raised md-primary" 
-			ng-click="$ctrl.actions.save($ctrl.data.product)" 
-			ng-disabled="$ctrl.data.productForm.$invalid">
-			Adauga Produs
-		</md-button>
-	</md-dialog-actions>
+        </div>
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row" layout-align="end center">
+        <md-button ng-click="$ctrl.actions.cancel()">
+            Renunta
+        </md-button>
+        <md-button class="md-raised md-primary" ng-click="$ctrl.actions.save($ctrl.data.product)" ng-disabled="$ctrl.data.productForm.$invalid">
+            Adauga Produs
+        </md-button>
+    </md-dialog-actions>
 
 </md-dialog>

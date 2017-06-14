@@ -26,8 +26,8 @@ app.get('/clients', function(req, res) {
 //Search clients in clients collection
 app.get('/clients/search/:query', function(req, res) {
     console.log("find client with id", req.params.query);
-    db_clients.clients.find({ $text: { $search: req.params.query}}, function(err, doc) {
-    console.log("find clients response", doc);
+    db_clients.clients.find({ $text: { $search: req.params.query } }, function(err, doc) {
+        console.log("find clients response", doc);
         res.json(doc);
     });
 });
@@ -46,7 +46,7 @@ app.post('/clients', function(req, res) {
 
 //Find client by id
 app.get('/clients/:id', function(req, res) {
-    db_clients.clients.findOne({_id: mongojs.ObjectId(req.params.id)}, function(err, doc) {
+    db_clients.clients.findOne({ _id: mongojs.ObjectId(req.params.id) }, function(err, doc) {
         res.json(doc);
     });
 });
@@ -58,21 +58,22 @@ app.put('/clients/:id', function(req, res) {
     var updatedOn = new Date();
 
     db_clients.clients.findAndModify({
-        query: {_id: mongojs.ObjectId(req.params.id)}, 
-        update: {$set: {
-            firstName: req.body.firstName,
-            lastName: req.body.lastName, 
-            age: req.body.age,
-            phoneNumber: req.body.phoneNumber,
-            email: req.body.email, 
-            skinType: req.body.skinType,
-            previousMedicalConditions: req.body.previousMedicalConditions,
-            previousTreatments: req.body.previousTreatments,
-            skinCareProductsUsed: req.body.skinCareProductsUsed,
-            discovery: req.body.discovery,
-            history: req.body.history,
-            updatedOn: updatedOn,
-            createdOn: req.body.createdOn
+        query: { _id: mongojs.ObjectId(req.params.id) },
+        update: {
+            $set: {
+                firstName: req.body.firstName,
+                lastName: req.body.lastName,
+                age: req.body.age,
+                phoneNumber: req.body.phoneNumber,
+                email: req.body.email,
+                skinType: req.body.skinType,
+                previousMedicalConditions: req.body.previousMedicalConditions,
+                previousTreatments: req.body.previousTreatments,
+                skinCareProductsUsed: req.body.skinCareProductsUsed,
+                discovery: req.body.discovery,
+                history: req.body.history,
+                updatedOn: updatedOn,
+                createdOn: req.body.createdOn
             }
         },
         new: true
@@ -82,7 +83,7 @@ app.put('/clients/:id', function(req, res) {
 });
 
 app.delete('/clients/:id', function(req, res) {
-    db_clients.clients.remove({_id: mongojs.ObjectId(req.params.id)}, function(err, doc) {
+    db_clients.clients.remove({ _id: mongojs.ObjectId(req.params.id) }, function(err, doc) {
         res.json(doc);
     });
 
@@ -119,16 +120,17 @@ app.put('/history/:id', function(req, res) {
     var updatedOn = new Date();
 
     db_clients.history.findAndModify({
-        query: {_id: mongojs.ObjectId(req.params.id)}, 
-        update: {$set: {
-            date: req.body.date,
-            services: req.body.services,
-            interval: req.body.interval,
-            homeProducts: req.body.homeProducts,
-            observations: req.body.observations,
-            _clientId: req.body._clientId,
-            updatedOn: updatedOn,
-            createdOn: req.body.createdOn
+        query: { _id: mongojs.ObjectId(req.params.id) },
+        update: {
+            $set: {
+                date: req.body.date,
+                services: req.body.services,
+                interval: req.body.interval,
+                homeProducts: req.body.homeProducts,
+                observations: req.body.observations,
+                _clientId: req.body._clientId,
+                updatedOn: updatedOn,
+                createdOn: req.body.createdOn
             }
         },
         new: true
@@ -164,14 +166,15 @@ app.put('/services/:id', function(req, res) {
     var updatedOn = new Date();
 
     db_clients.services.findAndModify({
-        query: {_id: mongojs.ObjectId(req.params.id)}, 
-        update: {$set: {
-            name: req.body.name,
-            type: req.body.type,
-            price: req.body.price,
-            duration: req.body.duration,
-            updatedOn: updatedOn,
-            createdOn: req.body.createdOn
+        query: { _id: mongojs.ObjectId(req.params.id) },
+        update: {
+            $set: {
+                name: req.body.name,
+                type: req.body.type,
+                price: req.body.price,
+                duration: req.body.duration,
+                updatedOn: updatedOn,
+                createdOn: req.body.createdOn
             }
         },
         new: true
@@ -181,7 +184,7 @@ app.put('/services/:id', function(req, res) {
 });
 
 app.delete('/services/:id', function(req, res) {
-    db_clients.services.remove({_id: mongojs.ObjectId(req.params.id)}, function(err, doc) {
+    db_clients.services.remove({ _id: mongojs.ObjectId(req.params.id) }, function(err, doc) {
         res.json(doc);
     });
 
@@ -208,7 +211,7 @@ app.get('/products', function(req, res) {
 
 //Delete a specific product
 app.delete('/products/:id', function(req, res) {
-    db_products.products.remove({_id: mongojs.ObjectId(req.params.id)}, function(err, doc) {
+    db_products.products.remove({ _id: mongojs.ObjectId(req.params.id) }, function(err, doc) {
         res.json(doc);
     });
 });
@@ -220,16 +223,20 @@ app.put('/products/:id', function(req, res) {
     var updatedOn = new Date();
 
     db_products.products.findAndModify({
-        query: {_id: mongojs.ObjectId(req.params.id)}, 
-        update: {$set: {
-            manufacturer: req.body.manufacturer,
-            name: req.body.name,
-            range: req.body.range,
-            description: req.body.description,
-            volume: req.body.volume,
-            price: req.body.price,
-            updatedOn: updatedOn,
-            createdOn: req.body.createdOn
+        query: { _id: mongojs.ObjectId(req.params.id) },
+        update: {
+            $set: {
+                codeCashRegister: req.body.codeCashRegister,
+                code: req.body.code,
+                manufacturer: req.body.manufacturer,
+                name: req.body.name,
+                range: req.body.range,
+                description: req.body.description,
+                volume: req.body.volume,
+                priceInitial: req.body.priceInitial,
+                priceToSell: req.body.priceToSell,
+                updatedOn: updatedOn,
+                createdOn: req.body.createdOn
             }
         },
         new: true
@@ -258,7 +265,7 @@ app.get('/consumables', function(req, res) {
 
 //Delete a specific consumable
 app.delete('/consumables/:id', function(req, res) {
-    db_consumables.consumables.remove({_id: mongojs.ObjectId(req.params.id)}, function(err, doc) {
+    db_consumables.consumables.remove({ _id: mongojs.ObjectId(req.params.id) }, function(err, doc) {
         res.json(doc);
     });
 });
@@ -270,16 +277,17 @@ app.put('/consumables/:id', function(req, res) {
     var updatedOn = new Date();
 
     db_consumables.consumables.findAndModify({
-        query: {_id: mongojs.ObjectId(req.params.id)}, 
-        update: {$set: {
-            manufacturer: req.body.manufacturer,
-            name: req.body.name,
-            range: req.body.range,
-            description: req.body.description,
-            volume: req.body.volume,
-            price: req.body.price,
-            updatedOn: updatedOn,
-            createdOn: req.body.createdOn
+        query: { _id: mongojs.ObjectId(req.params.id) },
+        update: {
+            $set: {
+                manufacturer: req.body.manufacturer,
+                name: req.body.name,
+                range: req.body.range,
+                description: req.body.description,
+                volume: req.body.volume,
+                price: req.body.price,
+                updatedOn: updatedOn,
+                createdOn: req.body.createdOn
             }
         },
         new: true
@@ -290,8 +298,8 @@ app.put('/consumables/:id', function(req, res) {
 
 
 
-app.listen(PORT, function(){
+app.listen(PORT, function() {
     openurl.open(LOCATION + ':' + PORT);
-	console.log("DO NOT CLOSE THIS WINDOW!");
+    console.log("DO NOT CLOSE THIS WINDOW!");
     console.log("server running on port:", PORT);
 });
