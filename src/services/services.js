@@ -6,6 +6,7 @@
 			'cm.services.searchClients',
 			'cm.services.client',
 			'cm.services.admin.services',
-			'cm.services.admin.products'			
+			'cm.services.admin.products',
+			'cm.services.admin.consumables'			
 			]);
 })();
