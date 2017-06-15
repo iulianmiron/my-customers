@@ -96,6 +96,17 @@
                     </md-input-container>
 
                     <md-input-container class="md-block">
+                        <label>Stoc</label>
+                        <md-icon>assessment</md-icon>
+                        <input name="productStock" type="number" ng-model="$ctrl.data.product.stock" min="0" max="10000" step="1">
+                        <div ng-messages="$ctrl.data.productForm.productStock.$error" ng-show="$ctrl.data.productForm.productStock.$touched">
+                            <div ng-message="required">Stocul este obligatoriu</div>
+                            <div ng-message="min">Stocul initial trebuie sa fie mai mare decat zero.</div>
+                            <div ng-message="max">Stocul initial trebuie sa fie mai mic decat 10000.</div>
+                        </div>
+                    </md-input-container>
+
+                    <md-input-container class="md-block">
                         <label>Pret initial (RON)</label>
                         <md-icon>attach_money</md-icon>
                         <input name="productPriceInitial" type="number" ng-model="$ctrl.data.product.priceInitial" min="0" max="10000" step="1" required>

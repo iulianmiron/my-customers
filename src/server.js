@@ -233,6 +233,7 @@ app.put('/products/:id', function(req, res) {
                 range: req.body.range,
                 description: req.body.description,
                 volume: req.body.volume,
+                stock: req.body.stock,
                 priceInitial: req.body.priceInitial,
                 priceToSell: req.body.priceToSell,
                 updatedOn: updatedOn,
