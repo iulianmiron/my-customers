@@ -1,4 +1,4 @@
-(function () {
+(function() {
     'use strict';
 
     angular
@@ -11,9 +11,9 @@
 
     function ProductsController($mdDialog, $rootElement, ProductsServices, toastr, NO_PICTURE) {
         var ctrl = this;
-        ctrl.data       = {};
-        ctrl.status     = {};
-        ctrl.actions    = {};
+        ctrl.data = {};
+        ctrl.status = {};
+        ctrl.actions = {};
 
         ctrl.$onInit = function() {
             ctrl.data.noPicture = NO_PICTURE;
@@ -28,7 +28,7 @@
         }
 
         function addProduct(event) {
-             $mdDialog.show({
+            $mdDialog.show({
                 controller: 'AddProductDialogController',
                 controllerAs: '$ctrl',
                 templateUrl: '/components/admin/products/add-product/add-product.dialog.html',
@@ -69,7 +69,7 @@
         }
 
         function selectProduct(event, product) {
-             $mdDialog.show({
+            $mdDialog.show({
                 controller: 'EditProductDialogController',
                 controllerAs: '$ctrl',
                 templateUrl: '/components/admin/products/edit-product/edit-product.dialog.html',

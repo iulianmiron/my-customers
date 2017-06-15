@@ -1,4 +1,4 @@
-(function () {
+(function() {
     'use strict';
 
     angular
@@ -8,7 +8,7 @@
             controller: ClientHistoryController,
             bindings: {
                 clientData: '<',
-				historyData: '<',
+                historyData: '<',
                 services: '<',
                 onAddHistoryItem: '&',
                 onSelectHistoryItem: '&'
@@ -17,22 +17,22 @@
 
     function ClientHistoryController($element, moment, SERVICE_TYPES) {
         var ctrl = this;
-        ctrl.data       = {};
-        ctrl.status     = {};
-        ctrl.actions    = {};
+        ctrl.data = {};
+        ctrl.status = {};
+        ctrl.actions = {};
 
         ctrl.$onChanges = function(changes) {
-            if(changes.clientData && changes.clientData.currentValue && !changes.clientData.isFirstChange()) { 
-                ctrl.data.client = angular.copy(changes.clientData.currentValue); 
+            if (changes.clientData && changes.clientData.currentValue && !changes.clientData.isFirstChange()) {
+                ctrl.data.client = angular.copy(changes.clientData.currentValue);
             }
-			if(changes.historyData && changes.historyData.currentValue && !changes.historyData.isFirstChange()) { 
-                ctrl.data.history = angular.copy(changes.historyData.currentValue); 
+            if (changes.historyData && changes.historyData.currentValue && !changes.historyData.isFirstChange()) {
+                ctrl.data.history = angular.copy(changes.historyData.currentValue);
                 angular.forEach(ctrl.data.history, function(iHistory) {
                     iHistory.date = new Date(iHistory.date);
                 });
             }
-            if(changes.services && changes.services.currentValue && !changes.services.isFirstChange()) { 
-                ctrl.data.services = angular.copy(changes.services.currentValue); 
+            if (changes.services && changes.services.currentValue && !changes.services.isFirstChange()) {
+                ctrl.data.services = angular.copy(changes.services.currentValue);
             }
         }
         ctrl.$onInit = function() {
@@ -59,14 +59,14 @@
         }
 
         function addNewHistoryItem(newHistoryEntry, client) {
-            ctrl.onAddHistoryItem({ $event: { newHistoryEntry: newHistoryEntry, client: client }});
+            ctrl.onAddHistoryItem({ $event: { newHistoryEntry: newHistoryEntry, client: client } });
             resetNewHistoryItemForm();
-        }   
+        }
 
         function selectHistoryItem(historyItem) {
-            ctrl.onSelectHistoryItem({ $event: {historyItem: historyItem }});
+            ctrl.onSelectHistoryItem({ $event: { historyItem: historyItem } });
             resetNewHistoryItemForm();
-        }  
+        }
     }
 
     ClientHistoryController.$inject = ['$element', 'moment', 'SERVICE_TYPES'];

@@ -1,15 +1,10 @@
 <div layout="row" class="md-padding">
-	<div flex>
-		<shop-products
-			products="$ctrl.data.allProducts"
-			on-add-to-basket="$ctrl.data.addToBasket($event)"
-		>
-		</shop-products>
-	</div>
-	<div flex="30"> 
-		<shop-basket
-			shop-basket="$ctrl.data.basket"
-		>
-		</shop-basket>
-	</div>
+    <div flex>
+        <shop-products products="$ctrl.data.allProducts" on-add-to-basket="$ctrl.data.addToBasket($event)">
+        </shop-products>
+    </div>
+    <div flex="30">
+        <shop-basket shop-basket="$ctrl.data.basket">
+        </shop-basket>
+    </div>
 </div>

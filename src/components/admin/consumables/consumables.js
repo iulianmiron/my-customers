@@ -1,4 +1,4 @@
-(function () {
+(function() {
     'use strict';
 
     angular
@@ -11,9 +11,9 @@
 
     function ConsumablesController($mdDialog, $rootElement, ConsumablesServices, toastr, NO_PICTURE) {
         var ctrl = this;
-        ctrl.data       = {};
-        ctrl.status     = {};
-        ctrl.actions    = {};
+        ctrl.data = {};
+        ctrl.status = {};
+        ctrl.actions = {};
 
         ctrl.$onInit = function() {
             ctrl.data.noPicture = NO_PICTURE;
@@ -28,7 +28,7 @@
         }
 
         function addConsumable(event) {
-             $mdDialog.show({
+            $mdDialog.show({
                 controller: 'AddConsumableDialogController',
                 controllerAs: '$ctrl',
                 templateUrl: '/components/admin/consumables/add-consumable/add-consumable.dialog.html',
@@ -69,7 +69,7 @@
         }
 
         function selectConsumable(event, consumable) {
-             $mdDialog.show({
+            $mdDialog.show({
                 controller: 'EditConsumableDialogController',
                 controllerAs: '$ctrl',
                 templateUrl: '/components/admin/consumables/edit-consumable/edit-consumable.dialog.html',

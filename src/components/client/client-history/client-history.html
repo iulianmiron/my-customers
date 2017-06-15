@@ -1,116 +1,96 @@
 <h2>
-	<md-icon>history</md-icon>
-	Istoric client ({{ $ctrl.data.history.length || '0'}} sedinte)
+    <md-icon>history</md-icon>
+    Istoric client ({{ $ctrl.data.history.length || '0'}} sedinte)
 </h2>
 <md-content style="max-height: 80vh">
-	<md-card ng-show="$ctrl.data.history">
-		<md-card-header ng-click="$ctrl.status.showNewHistoryItemForm = true">
-			<md-card-header-text layout="row" layout-align="start center" >
-				<span class="md-title"><md-icon>add</md-icon> Adauga o sedinta</span>
-			</md-card-header-text>
-		</md-card-header>
-		<md-card-content ng-show="$ctrl.status.showNewHistoryItemForm">
-			<form name="$ctrl.data.newHistoryItemForm">
-				<div layout="row" layout-align="start center">
-					<md-input-container>
-						<label>Data sedintei</label>
-						<md-datepicker name="date" required
-							ng-model="$ctrl.data.newHistoryEntry.date"  
-							md-max-date="$ctrl.data.maxDate"
-							md-open-on-focus>
-						</md-datepicker>
-						<div ng-messages="$ctrl.data.newHistoryItemForm.date.$error">
-							<div ng-message="valid">Valoarea introdusa nu este o data valida</div>
-							<div ng-message="required">Data este necesara</div>
-							<div ng-message="maxdate">Data nu poate fi mai mare decat data curenta</div>
-						</div>
-					</md-input-container>
-					<md-input-container>
-						<label>Interval in saptamani</label>
-						<md-icon>timelapse</md-icon>
-						<input ng-model="$ctrl.data.newHistoryEntry.interval" type="number" step="1">
-					</md-input-container>
-				</div>
-				<div layout="row" layout-align="start center">
-					<md-input-container flex>
-						<label>Alege Servicii</label>
-						<md-select name="services"
-							ng-model="$ctrl.data.newHistoryEntry.services" multiple required
-							md-on-close="$ctrl.data.searchServices = ''; $ctrl.actions.showSelectedServices($ctrl.data.newHistoryEntry.services)"
-							data-md-container-class="selectdemoSelectHeader">
-							<md-select-header class="demo-select-header">
-								<input
-									ng-model="$ctrl.data.searchServices"
-									placeholder="Cauta un serviciu"
-									class="demo-header-searchbox md-text">
-							</md-select-header>
-							<md-optgroup label="{{serviceType}}" ng-repeat="serviceType in $ctrl.data.servicesTypes track by serviceType">
-								<md-option 
-									ng-value="service" 
-									ng-repeat="service in filteredServices = ($ctrl.data.services | filter: {type: serviceType, name: $ctrl.data.searchServices } )  track by service._id">
-									{{service.name}}  
-									<small>Pret: {{service.price}} RON  Durata: {{service.duration}} min.</small>
-								</md-option>
-							</md-optgroup>
-						</md-select>
-						<div ng-messages="$ctrl.data.newHistoryItemForm.services.$error">
-							<div ng-message="required">Minim un serviciu trebuie introdus</div>
-						</div>
-					</md-input-container>
-				</div>
+    <md-card ng-show="$ctrl.data.history">
+        <md-card-header ng-click="$ctrl.status.showNewHistoryItemForm = true">
+            <md-card-header-text layout="row" layout-align="start center">
+                <span class="md-title"><md-icon>add</md-icon> Adauga o sedinta</span>
+            </md-card-header-text>
+        </md-card-header>
+        <md-card-content ng-show="$ctrl.status.showNewHistoryItemForm">
+            <form name="$ctrl.data.newHistoryItemForm">
+                <div layout="row" layout-align="start center">
+                    <md-input-container>
+                        <label>Data sedintei</label>
+                        <md-datepicker name="date" required ng-model="$ctrl.data.newHistoryEntry.date" md-max-date="$ctrl.data.maxDate" md-open-on-focus>
+                        </md-datepicker>
+                        <div ng-messages="$ctrl.data.newHistoryItemForm.date.$error">
+                            <div ng-message="valid">Valoarea introdusa nu este o data valida</div>
+                            <div ng-message="required">Data este necesara</div>
+                            <div ng-message="maxdate">Data nu poate fi mai mare decat data curenta</div>
+                        </div>
+                    </md-input-container>
+                    <md-input-container>
+                        <label>Interval in saptamani</label>
+                        <md-icon>timelapse</md-icon>
+                        <input ng-model="$ctrl.data.newHistoryEntry.interval" type="number" step="1">
+                    </md-input-container>
+                </div>
+                <div layout="row" layout-align="start center">
+                    <md-input-container flex>
+                        <label>Alege Servicii</label>
+                        <md-select name="services" ng-model="$ctrl.data.newHistoryEntry.services" multiple required md-on-close="$ctrl.data.searchServices = ''; $ctrl.actions.showSelectedServices($ctrl.data.newHistoryEntry.services)" data-md-container-class="selectdemoSelectHeader">
+                            <md-select-header class="demo-select-header">
+                                <input ng-model="$ctrl.data.searchServices" placeholder="Cauta un serviciu" class="demo-header-searchbox md-text">
+                            </md-select-header>
+                            <md-optgroup label="{{serviceType}}" ng-repeat="serviceType in $ctrl.data.servicesTypes track by serviceType">
+                                <md-option ng-value="service" ng-repeat="service in filteredServices = ($ctrl.data.services | filter: {type: serviceType, name: $ctrl.data.searchServices } )  track by service._id">
+                                    {{service.name}}
+                                    <small>Pret: {{service.price}} RON  Durata: {{service.duration}} min.</small>
+                                </md-option>
+                            </md-optgroup>
+                        </md-select>
+                        <div ng-messages="$ctrl.data.newHistoryItemForm.services.$error">
+                            <div ng-message="required">Minim un serviciu trebuie introdus</div>
+                        </div>
+                    </md-input-container>
+                </div>
 
-				<md-input-container class="md-block">
-					<label>Produse acasa</label>
-					<textarea md-select-on-focus name="homeProducts"
-						ng-model="$ctrl.data.newHistoryEntry.homeProducts">
+                <md-input-container class="md-block">
+                    <label>Produse acasa</label>
+                    <textarea md-select-on-focus name="homeProducts" ng-model="$ctrl.data.newHistoryEntry.homeProducts">
 					</textarea>
-				</md-input-container>
+                </md-input-container>
 
-				<md-input-container class="md-block">
-					<label>Observatii</label>
-					<textarea md-select-on-focus name="observations"
-						ng-model="$ctrl.data.newHistoryEntry.observations">
+                <md-input-container class="md-block">
+                    <label>Observatii</label>
+                    <textarea md-select-on-focus name="observations" ng-model="$ctrl.data.newHistoryEntry.observations">
 					</textarea>
-				</md-input-container>
-			</form>
-		</md-card-content>
-		<md-card-actions ng-show="$ctrl.status.showNewHistoryItemForm">
-			<div layout="row" layout-align="end center">
-				<md-button class="md-raised"
-					ng-click="$ctrl.status.showNewHistoryItemForm = false">
-					<md-icon>cancel</md-icon>
-					Renunta
-				</md-button>
-				<md-button class="md-primary md-raised" 
-					ng-disabled="$ctrl.data.newHistoryItemForm.$invalid"
-					ng-click="$ctrl.actions.addNewHistoryItem($ctrl.data.newHistoryEntry, $ctrl.data.client)">
-					<md-icon>add</md-icon>
-					Adauga sedinta
-				</md-button>
-			</div>
-		</md-card-actions>
-	</md-card>
+                </md-input-container>
+            </form>
+        </md-card-content>
+        <md-card-actions ng-show="$ctrl.status.showNewHistoryItemForm">
+            <div layout="row" layout-align="end center">
+                <md-button class="md-raised" ng-click="$ctrl.status.showNewHistoryItemForm = false">
+                    <md-icon>cancel</md-icon>
+                    Renunta
+                </md-button>
+                <md-button class="md-primary md-raised" ng-disabled="$ctrl.data.newHistoryItemForm.$invalid" ng-click="$ctrl.actions.addNewHistoryItem($ctrl.data.newHistoryEntry, $ctrl.data.client)">
+                    <md-icon>add</md-icon>
+                    Adauga sedinta
+                </md-button>
+            </div>
+        </md-card-actions>
+    </md-card>
 
-	<div ng-repeat="historyItem in $ctrl.data.history | orderBy: '_id' track by historyItem._id">
-		<md-card 
-			ng-click="$ctrl.actions.selectHistoryItem(historyItem)"
-			>
-			<md-card-header>
-				<md-card-header-text>
-					<span class="md-title">Sedinta {{ $index + 1 }}</span>
-					<span class="md-subhead">Data: {{ historyItem.date | amDateFormat:'Do MMMM YYYY, h:mm a' }}</span>
-				</md-card-header-text>
-			</md-card-header>
-			<md-card-content>
-				<p>Servicii: <span ng-repeat="service in historyItem.services">{{ !$last ? service.name + ', ' : service.name }} </span></p>
-				<p>Produse acasa: {{ historyItem.homeProducts || '-' }}</p>
-				<p>Interval: {{ historyItem.interval || '-' }}</p>
-				<p>Observatii: {{ historyItem.observations || '-' }}</p>
-				<p>Filmari: {{ historyItem.videos.length || '0' }}, Poze: {{historyItem.photos.length || '0'}}</p>
-			</md-card-content>
+    <div ng-repeat="historyItem in $ctrl.data.history | orderBy: '_id' track by historyItem._id">
+        <md-card ng-click="$ctrl.actions.selectHistoryItem(historyItem)">
+            <md-card-header>
+                <md-card-header-text>
+                    <span class="md-title">Sedinta {{ $index + 1 }}</span>
+                    <span class="md-subhead">Data: {{ historyItem.date | amDateFormat:'Do MMMM YYYY, h:mm a' }}</span>
+                </md-card-header-text>
+            </md-card-header>
+            <md-card-content>
+                <p>Servicii: <span ng-repeat="service in historyItem.services">{{ !$last ? service.name + ', ' : service.name }} </span></p>
+                <p>Produse acasa: {{ historyItem.homeProducts || '-' }}</p>
+                <p>Interval: {{ historyItem.interval || '-' }}</p>
+                <p>Observatii: {{ historyItem.observations || '-' }}</p>
+                <p>Filmari: {{ historyItem.videos.length || '0' }}, Poze: {{historyItem.photos.length || '0'}}</p>
+            </md-card-content>
 
-		</md-card>
-	</div>
+        </md-card>
+    </div>
 </md-content>
-
-

@@ -1,33 +1,33 @@
 <div layout="row" layout-margin>
-	<h2>
-		<md-icon>shopping_basket</md-icon>
-		Sumar cos produse ({{$ctrl.data.shopBasket.length}})
-	</h2>
+    <h2>
+        <md-icon>shopping_basket</md-icon>
+        Sumar cos produse ({{$ctrl.data.shopBasket.length}})
+    </h2>
 </div>
 
 <md-content style="max-height: 65vh" layout="column">
-	<md-list>
-		<md-list-item class="md-2-line" ng-repeat="product in $ctrl.data.shopBasket track by $index">
-			<img ng-src="{{product.picture || $ctrl.data.noPicture}}" class="md-avatar" alt="{{product.name}}"/>
-			<div class="md-list-item-text">
-				<h3>Produs: {{ product.name }} </h3>
-				<p>Pret: {{ product.price }} </p>
-			</div>
-			<md-button class="md-secondary md-icon-button" ng-click="$ctrl.actions.removeFromBasket(product)">
-				<md-icon>cancel</md-icon>
-			</md-button>
+    <md-list>
+        <md-list-item class="md-2-line" ng-repeat="product in $ctrl.data.shopBasket track by $index">
+            <img ng-src="{{product.picture || $ctrl.data.noPicture}}" class="md-avatar" alt="{{product.name}}" />
+            <div class="md-list-item-text">
+                <h3>Produs: {{ product.name }} </h3>
+                <p>Pret: {{ product.price }} </p>
+            </div>
+            <md-button class="md-secondary md-icon-button" ng-click="$ctrl.actions.removeFromBasket(product)">
+                <md-icon>cancel</md-icon>
+            </md-button>
         </md-list-item>
-	</md-list>
+    </md-list>
 </md-content>
 <md-card>
-	<md-card-content>
-		<p layout="row" layout-align="space-between">
-			<span>Cost total: </span>
-			<span flex></span>
-			<span>{{ $ctrl.data.totalPrice }} RON</span>
-		</p> 
-	</md-card-content>
-	<md-card-actions layout="row">
-		<md-button class="md-raised md-primary" flex>Plateste</md-button>
-	</md-card-actions>
+    <md-card-content>
+        <p layout="row" layout-align="space-between">
+            <span>Cost total: </span>
+            <span flex></span>
+            <span>{{ $ctrl.data.totalPrice }} RON</span>
+        </p>
+    </md-card-content>
+    <md-card-actions layout="row">
+        <md-button class="md-raised md-primary" flex>Plateste</md-button>
+    </md-card-actions>
 </md-card>

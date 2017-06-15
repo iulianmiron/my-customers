@@ -1,124 +1,100 @@
 <md-dialog aria-label="edit Consumable">
-	<md-toolbar>
-		<div class="md-toolbar-tools">
-			<h2>Editati consumabilul</h2>
-			<span flex></span>
-			<md-button class="md-icon-button" ng-click="$ctrl.actions.cancel()">
-				<md-icon>close</md-icon>
-			</md-button>
-		</div>
-	</md-toolbar>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>Editati consumabilul</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="$ctrl.actions.cancel()">
+                <md-icon>close</md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
 
-	<md-dialog-content>
-		<div class="md-dialog-content">
-			<form name="$ctrl.data.consumableForm">
-				<div layout="column">
-					<img class="consumable-picture" alt="poza consumabil" ng-src="{{ $ctrl.data.consumable.picture || $ctrl.data.noPicture }}">
-					<md-button>
-						<md-icon>add_a_photo</md-icon>
-						Adauga poza
-						<md-tooltip>Nu functioneaza deocamdata</md-tooltip>
-					</md-button>
-				</div>
-				<div layout="column">
-					<md-input-container class="md-block">
-						<label>Producator</label>
-						<md-icon>work</md-icon>
-						<input 
-							name="consumableManufacturer" 
-							ng-model="$ctrl.data.consumable.manufacturer"
-							minlength="2" md-maxlength="50" required
-						>
-						<div ng-messages="$ctrl.data.consumableForm.consumableManufacturer.$error" ng-show="$ctrl.data.consumableForm.consumableManufacturer.$touched">
-							<div ng-message="required">Producatorul este obligatoriu</div>
-							<div ng-message="md-maxlength">Producatorul trebuie sa aiba sub 50 de caractere</div>
-							<div ng-message="minlength">Producatorul trebuie sa aiba mai mult de 1 caracter</div>
-						</div>
-					</md-input-container>
+    <md-dialog-content>
+        <div class="md-dialog-content">
+            <form name="$ctrl.data.consumableForm">
+                <div layout="column">
+                    <img class="consumable-picture" alt="poza consumabil" ng-src="{{ $ctrl.data.consumable.picture || $ctrl.data.noPicture }}">
+                    <md-button>
+                        <md-icon>add_a_photo</md-icon>
+                        Adauga poza
+                        <md-tooltip>Nu functioneaza deocamdata</md-tooltip>
+                    </md-button>
+                </div>
+                <div layout="column">
+                    <md-input-container class="md-block">
+                        <label>Producator</label>
+                        <md-icon>work</md-icon>
+                        <input name="consumableManufacturer" ng-model="$ctrl.data.consumable.manufacturer" minlength="2" md-maxlength="50" required>
+                        <div ng-messages="$ctrl.data.consumableForm.consumableManufacturer.$error" ng-show="$ctrl.data.consumableForm.consumableManufacturer.$touched">
+                            <div ng-message="required">Producatorul este obligatoriu</div>
+                            <div ng-message="md-maxlength">Producatorul trebuie sa aiba sub 50 de caractere</div>
+                            <div ng-message="minlength">Producatorul trebuie sa aiba mai mult de 1 caracter</div>
+                        </div>
+                    </md-input-container>
 
-					<md-input-container class="md-block">
-						<label>Gama</label>
-						<md-icon>work</md-icon>
-						<input 
-							name="consumableRange" 
-							ng-model="$ctrl.data.consumable.range"
-							minlength="2" md-maxlength="50" required
-						>
-						<div ng-messages="$ctrl.data.consumableForm.consumableRange.$error" ng-show="$ctrl.data.consumableForm.consumableRange.$touched">
-							<div ng-message="required">Gama este obligatorie</div>
-							<div ng-message="md-maxlength">Gama trebuie sa aiba sub 50 de caractere</div>
-							<div ng-message="minlength">Gama trebuie sa aiba mai mult de 1 caracter</div>
-						</div>
-					</md-input-container>
+                    <md-input-container class="md-block">
+                        <label>Gama</label>
+                        <md-icon>work</md-icon>
+                        <input name="consumableRange" ng-model="$ctrl.data.consumable.range" minlength="2" md-maxlength="50" required>
+                        <div ng-messages="$ctrl.data.consumableForm.consumableRange.$error" ng-show="$ctrl.data.consumableForm.consumableRange.$touched">
+                            <div ng-message="required">Gama este obligatorie</div>
+                            <div ng-message="md-maxlength">Gama trebuie sa aiba sub 50 de caractere</div>
+                            <div ng-message="minlength">Gama trebuie sa aiba mai mult de 1 caracter</div>
+                        </div>
+                    </md-input-container>
 
-					<md-input-container class="md-block">
-						<label>Denumire</label>
-						<md-icon>work</md-icon>
-						<input 
-							name="consumableName" 
-							ng-model="$ctrl.data.consumable.name"
-							minlength="2" md-maxlength="50" required
-						>
-						<div ng-messages="$ctrl.data.consumableForm.consumableName.$error" ng-show="$ctrl.data.consumableForm.consumableName.$touched">
-							<div ng-message="required">Denumirea este obligatorie</div>
-							<div ng-message="md-maxlength">Denumirea trebuie sa aiba sub 50 de caractere</div>
-							<div ng-message="minlength">Denumirea trebuie sa aiba mai mult de 1 caracter</div>
-						</div>
-					</md-input-container>
+                    <md-input-container class="md-block">
+                        <label>Denumire</label>
+                        <md-icon>work</md-icon>
+                        <input name="consumableName" ng-model="$ctrl.data.consumable.name" minlength="2" md-maxlength="50" required>
+                        <div ng-messages="$ctrl.data.consumableForm.consumableName.$error" ng-show="$ctrl.data.consumableForm.consumableName.$touched">
+                            <div ng-message="required">Denumirea este obligatorie</div>
+                            <div ng-message="md-maxlength">Denumirea trebuie sa aiba sub 50 de caractere</div>
+                            <div ng-message="minlength">Denumirea trebuie sa aiba mai mult de 1 caracter</div>
+                        </div>
+                    </md-input-container>
 
-					<md-input-container class="md-block">
-						<label>Descriere</label>
-						<md-icon>description</md-icon>
-						<textarea md-select-on-focus 
-							ng-model="$ctrl.data.consumable.description"
-						>
+                    <md-input-container class="md-block">
+                        <label>Descriere</label>
+                        <md-icon>description</md-icon>
+                        <textarea md-select-on-focus ng-model="$ctrl.data.consumable.description">
 						</textarea>
-					</md-input-container>
+                    </md-input-container>
 
-					<md-input-container class="md-block">
-						<label>Cantitate (ml)</label>
-						<md-icon>opacity</md-icon>
-						<input 
-							name="consumableVolume" type="number"
-							ng-model="$ctrl.data.consumable.volume"
-							min="0" max="10000" step="1" required
-						>
-						<div ng-messages="$ctrl.data.consumableForm.consumableVolume.$error" ng-show="$ctrl.data.consumableForm.consumableVolume.$touched">
-							<div ng-message="required">Cantitatea este obligatorie</div>
-							<div ng-message="min">Cantitatea trebuie sa fie mai mare decat zero.</div>
-							<div ng-message="max">Cantitatea trebuie sa fie mai mic decat 10000.</div>
-						</div>
-					</md-input-container>
+                    <md-input-container class="md-block">
+                        <label>Cantitate (ml)</label>
+                        <md-icon>opacity</md-icon>
+                        <input name="consumableVolume" type="number" ng-model="$ctrl.data.consumable.volume" min="0" max="10000" step="1" required>
+                        <div ng-messages="$ctrl.data.consumableForm.consumableVolume.$error" ng-show="$ctrl.data.consumableForm.consumableVolume.$touched">
+                            <div ng-message="required">Cantitatea este obligatorie</div>
+                            <div ng-message="min">Cantitatea trebuie sa fie mai mare decat zero.</div>
+                            <div ng-message="max">Cantitatea trebuie sa fie mai mic decat 10000.</div>
+                        </div>
+                    </md-input-container>
 
-					<md-input-container class="md-block">
-						<label>Pret (RON)</label>
-						<md-icon>attach_money</md-icon>
-						<input 
-							name="consumablePrice" type="number"
-							ng-model="$ctrl.data.consumable.price"
-							min="0" max="10000" step="1" required
-						>
-						<div ng-messages="$ctrl.data.consumableForm.consumablePrice.$error" ng-show="$ctrl.data.consumableForm.consumablePrice.$touched">
-							<div ng-message="required">Pretul este obligatoriu</div>
-							<div ng-message="min">Pretul trebuie sa fie mai mare decat zero.</div>
-							<div ng-message="max">Pretul trebuie sa fie mai mic decat 10000.</div>
-						</div>
-					</md-input-container>
-				</div>
-			</form>
+                    <md-input-container class="md-block">
+                        <label>Pret (RON)</label>
+                        <md-icon>attach_money</md-icon>
+                        <input name="consumablePrice" type="number" ng-model="$ctrl.data.consumable.price" min="0" max="10000" step="1" required>
+                        <div ng-messages="$ctrl.data.consumableForm.consumablePrice.$error" ng-show="$ctrl.data.consumableForm.consumablePrice.$touched">
+                            <div ng-message="required">Pretul este obligatoriu</div>
+                            <div ng-message="min">Pretul trebuie sa fie mai mare decat zero.</div>
+                            <div ng-message="max">Pretul trebuie sa fie mai mic decat 10000.</div>
+                        </div>
+                    </md-input-container>
+                </div>
+            </form>
 
-		</div>
-	</md-dialog-content>
+        </div>
+    </md-dialog-content>
 
-	<md-dialog-actions layout="row" layout-align="end center">
-		<md-button ng-click="$ctrl.actions.cancel()">
-			Renunta
-		</md-button>
-		<md-button class="md-raised md-primary" 
-			ng-click="$ctrl.actions.save($ctrl.data.consumable)" 
-			ng-disabled="$ctrl.data.consumableForm.$invalid">
-			Salveaza Consumabil
-		</md-button>
-	</md-dialog-actions>
+    <md-dialog-actions layout="row" layout-align="end center">
+        <md-button ng-click="$ctrl.actions.cancel()">
+            Renunta
+        </md-button>
+        <md-button class="md-raised md-primary" ng-click="$ctrl.actions.save($ctrl.data.consumable)" ng-disabled="$ctrl.data.consumableForm.$invalid">
+            Salveaza Consumabil
+        </md-button>
+    </md-dialog-actions>
 
 </md-dialog>
