@@ -1,4 +1,4 @@
-(function () {
+(function() {
     'use strict';
 
     angular
@@ -13,22 +13,22 @@
             }
         });
 
-    function ClientHistoryDetailController ($element, SERVICE_TYPES) {
-    	var ctrl = this;
-        
-        ctrl.data       = {};
-        ctrl.status     = {};
-        ctrl.actions    = {};
+    function ClientHistoryDetailController($element, SERVICE_TYPES) {
+        var ctrl = this;
+
+        ctrl.data = {};
+        ctrl.status = {};
+        ctrl.actions = {};
 
         ctrl.$onChanges = function(changes) {
-            if(changes.historyItemData && changes.historyItemData.currentValue && !changes.historyItemData.isFirstChange()) { 
-                ctrl.data.historyItemBackup = angular.copy(changes.historyItemData.currentValue); 
-                ctrl.data.historyItem = angular.copy(changes.historyItemData.currentValue); 
+            if (changes.historyItemData && changes.historyItemData.currentValue && !changes.historyItemData.isFirstChange()) {
+                ctrl.data.historyItemBackup = angular.copy(changes.historyItemData.currentValue);
+                ctrl.data.historyItem = angular.copy(changes.historyItemData.currentValue);
                 ctrl.data.historyItem.date = new Date(ctrl.data.historyItem.date);
                 ctrl.status.editHistoryItemForm = false;
             }
-            if(changes.services && changes.services.currentValue && !changes.services.isFirstChange()) { 
-                ctrl.data.services = angular.copy(changes.services.currentValue); 
+            if (changes.services && changes.services.currentValue && !changes.services.isFirstChange()) {
+                ctrl.data.services = angular.copy(changes.services.currentValue);
             }
         }
         ctrl.$onInit = function() {
@@ -52,7 +52,7 @@
 
         function revertChanges() {
             ctrl.status.editHistoryItemForm = false;
-            ctrl.data.historyItem = angular.copy(ctrl.data.historyItemBackup); 
+            ctrl.data.historyItem = angular.copy(ctrl.data.historyItemBackup);
             ctrl.data.historyItem.date = new Date(ctrl.data.historyItem.date);
         }
     }

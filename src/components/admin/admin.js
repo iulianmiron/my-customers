@@ -1,4 +1,4 @@
-(function () {
+(function() {
     'use strict';
 
     angular
@@ -11,9 +11,9 @@
 
     function AdminController() {
         var ctrl = this;
-        ctrl.data       = {};
-        ctrl.status     = {};
-        ctrl.actions    = {};
+        ctrl.data = {};
+        ctrl.status = {};
+        ctrl.actions = {};
 
         ctrl.$onInit = function() {
             ctrl.data.selectedTab = 2;

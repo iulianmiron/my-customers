@@ -1,4 +1,4 @@
-(function () {
+(function() {
     'use strict';
 
     angular
@@ -13,21 +13,21 @@
             }
         });
 
-    function ClientProfileController ($log) {
-    	var ctrl = this;
+    function ClientProfileController($log) {
+        var ctrl = this;
 
-        ctrl.data       = {};
-        ctrl.actions    = {};
-        ctrl.status     = {};
+        ctrl.data = {};
+        ctrl.actions = {};
+        ctrl.status = {};
 
         ctrl.$onChanges = function(changes) {
-            if(changes.clientData && changes.clientData.currentValue && !changes.clientData.isFirstChange()) { 
-                ctrl.data.client = angular.copy(changes.clientData.currentValue); 
-                ctrl.data.clientBackup = angular.copy(changes.clientData.currentValue); 
+            if (changes.clientData && changes.clientData.currentValue && !changes.clientData.isFirstChange()) {
+                ctrl.data.client = angular.copy(changes.clientData.currentValue);
+                ctrl.data.clientBackup = angular.copy(changes.clientData.currentValue);
             }
-            if(changes.newClient && changes.newClient.currentValue) { 
-                ctrl.data.newClient = angular.copy(changes.newClient.currentValue); 
-                if(ctrl.data.newClient) {
+            if (changes.newClient && changes.newClient.currentValue) {
+                ctrl.data.newClient = angular.copy(changes.newClient.currentValue);
+                if (ctrl.data.newClient) {
                     ctrl.status.editClient = true;
                 }
             }
@@ -37,11 +37,11 @@
 
             ctrl.actions.saveClientProfile = saveClientProfile;
             ctrl.actions.resetForm = resetForm;
-        }  
+        }
 
         function saveClientProfile(clientData) {
             console.log('clientData', clientData);
-            ctrl.onSaveClientProfile({ 
+            ctrl.onSaveClientProfile({
                 $event: { clientData: clientData }
             });
             ctrl.status.editClient = false;

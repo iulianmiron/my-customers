@@ -1,4 +1,4 @@
-(function () {
+(function() {
     'use strict';
 
     angular
@@ -11,9 +11,9 @@
 
     function ServicesController(ServicesServices, SERVICE_TYPES, toastr) {
         var ctrl = this;
-        ctrl.data       = {};
-        ctrl.status     = {};
-        ctrl.actions    = {};
+        ctrl.data = {};
+        ctrl.status = {};
+        ctrl.actions = {};
 
         ctrl.$onInit = function() {
             ctrl.status.showEditServiceControls = false;

@@ -1,41 +1,41 @@
 (function() {
-	'use strict';
+    'use strict';
 
-	angular
-		.module('cm.components.shop', [])
-		.component('shop', {
-			templateUrl: '/components/shop/shop.html',
-			controller: ShopController,
-			bindings: {}
-		});
+    angular
+        .module('cm.components.shop', [])
+        .component('shop', {
+            templateUrl: '/components/shop/shop.html',
+            controller: ShopController,
+            bindings: {}
+        });
 
-		function ShopController(ProductsServices) {
-			var ctrl = this;
+    function ShopController(ProductsServices) {
+        var ctrl = this;
 
-			ctrl.data = {};
-			ctrl.status = {};
-			ctrl.actions = {};
+        ctrl.data = {};
+        ctrl.status = {};
+        ctrl.actions = {};
 
-			ctrl.$onInit = function() {
-				ctrl.data.basket = [];
+        ctrl.$onInit = function() {
+            ctrl.data.basket = [];
 
-				ctrl.actions.getAllProducts = getAllProducts;
-				ctrl.data.addToBasket = addToBasket;
+            ctrl.actions.getAllProducts = getAllProducts;
+            ctrl.data.addToBasket = addToBasket;
 
-				getAllProducts();
-			}
+            getAllProducts();
+        }
 
-			function getAllProducts() {
-				ProductsServices.getAllProducts().then(function(rProducts) {
-					ctrl.data.allProducts = rProducts;
-				});
-			}
+        function getAllProducts() {
+            ProductsServices.getAllProducts().then(function(rProducts) {
+                ctrl.data.allProducts = rProducts;
+            });
+        }
 
-			function addToBasket(event) {
-				ctrl.data.basket.push(event.product)
-				ctrl.data.basket = angular.copy(ctrl.data.basket);
-			}
-		}
+        function addToBasket(event) {
+            ctrl.data.basket.push(event.product)
+            ctrl.data.basket = angular.copy(ctrl.data.basket);
+        }
+    }
 
-		ShopController.$inject = ['ProductsServices'];
+    ShopController.$inject = ['ProductsServices'];
 })();

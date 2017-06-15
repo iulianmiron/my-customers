@@ -1,48 +1,47 @@
-(function(){
-	'use strict';
+(function() {
+    'use strict';
 
-	angular
-		.module('cm.components.home.searchClients', [])
-		.component('searchClients', {
-			templateUrl: '/components/home/search-clients/search-clients.html',
-			controller: SearchClientsController,
-			bindings: {}
-		});
+    angular
+        .module('cm.components.home.searchClients', [])
+        .component('searchClients', {
+            templateUrl: '/components/home/search-clients/search-clients.html',
+            controller: SearchClientsController,
+            bindings: {}
+        });
 
-	function SearchClientsController ($q, $state, $log, SearchClientsServices) {
-		var ctrl = this;
-		ctrl.data = {};
-		ctrl.status = {};
-		ctrl.actions = {};
+    function SearchClientsController($q, $state, $log, SearchClientsServices) {
+        var ctrl = this;
+        ctrl.data = {};
+        ctrl.status = {};
+        ctrl.actions = {};
 
-		ctrl.actions.searchClients = searchClients;
-		ctrl.actions.openClientPage = openClientPage;
+        ctrl.actions.searchClients = searchClients;
+        ctrl.actions.openClientPage = openClientPage;
 
-		function searchClients(query) {
-			var deferred = $q.defer();
+        function searchClients(query) {
+            var deferred = $q.defer();
 
-			SearchClientsServices
-				.searchClients(query)
-				.then(handleSuccess)
-				.catch(handleError);
+            SearchClientsServices
+                .searchClients(query)
+                .then(handleSuccess)
+                .catch(handleError);
 
-			function handleSuccess(rClients) {
-				deferred.resolve(rClients);
-			}
-			function handleError(rErrorMessage) {
-				$log.error('Could not get clients', rErrorMessage);
-				deferred.reject(rErrorMessage);
-			}
-			return deferred.promise;
-		}
+            function handleSuccess(rClients) {
+                deferred.resolve(rClients);
+            }
 
-		function openClientPage(clientId) {
-			$state.go('client', { id: clientId });
-		}
-	}
+            function handleError(rErrorMessage) {
+                $log.error('Could not get clients', rErrorMessage);
+                deferred.reject(rErrorMessage);
+            }
+            return deferred.promise;
+        }
+
+        function openClientPage(clientId) {
+            $state.go('client', { id: clientId });
+        }
+    }
 
 
-		SearchClientsController.$inject = ['$q', '$state', '$log', 'SearchClientsServices'];
+    SearchClientsController.$inject = ['$q', '$state', '$log', 'SearchClientsServices'];
 })();
-
-
