@@ -12,11 +12,13 @@
 
         function searchClients(query) {
             if (query) {
-                return $http.get('/clients/search/' + query).then(function(rClients) {
-                    return rClients.data;
-                }).catch(function(error) {
-                    $log.error('Could not get clients', error);
-                });
+                return $http.get('/clients/search/' + query)
+                    .then(function(rClients) {
+                        return rClients.data;
+                    })
+                    .catch(function(error) {
+                        $log.error('Could not get clients', error);
+                    });
             }
         }
     }

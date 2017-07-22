@@ -12,20 +12,30 @@
             }
         });
 
-    function AppSidebarController() {
+    function AppSidebarController(SIDEBAR_MENU_ITEMS) {
         var ctrl = this;
         ctrl.data = {};
         ctrl.status = {};
         ctrl.actions = {};
 
-        ctrl.actions.controlSidenav = controlSidenav;
+        ctrl.$onChanges = function(changes) {
+            if (changes.sidenavControl && changes.sidenavControl.currentValue) {
+                ctrl.data.sidenavControl = angular.copy(changes.sidenavControl.currentValue);
+            }
+        }
+        ctrl.$onInit = function() {
+            ctrl.data.sidebarMenuItems = SIDEBAR_MENU_ITEMS;
+
+            ctrl.actions.controlSidenav = controlSidenav;
+        }
 
         function controlSidenav(sidenavControl) {
+            ctrl.data.sidenavControl = sidenavControl;
             ctrl.onSidenavChange({
                 $event: { sidenavControl: sidenavControl }
             });
         }
     }
 
-    AppSidebarController.$inject = [];
+    AppSidebarController.$inject = ['SIDEBAR_MENU_ITEMS'];
 })();

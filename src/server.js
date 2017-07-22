@@ -142,7 +142,7 @@ app.put('/history/:id', function(req, res) {
 
 
 //////////////////// SERVICES collection //////////////////
-//Add clients in clients collection
+//Add services in services collection
 app.post('/services', function(req, res) {
     req.body.createdOn = new Date();
     req.body.updatedOn = new Date();
