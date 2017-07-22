@@ -72,12 +72,8 @@
         ctrl.status = {};
         ctrl.actions = {};
 
-        ctrl.status.isSidenavOpen = false;
-        ctrl.actions.controlSidenav = controlSidenav;
+        ctrl.status.showSidenav = false;
 
-        function controlSidenav(event) {
-            ctrl.status.isSidenavOpen = angular.copy(event.sidenavControl);
-        }
     }
 
     appConfig.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider', '$mdThemingProvider', 'toastrConfig'];

@@ -1,10 +1,10 @@
-<md-sidenav class="md-sidenav-left" md-component-id="left" md-whiteframe="4" md-is-open="$ctrl.data.sidenavControl">
+<md-sidenav class="md-sidenav-left" md-component-id="left" md-whiteframe="4" md-is-open="$ctrl.showSidenav">
     <md-toolbar class="md-tall">
         <h1 class="md-toolbar-tools">Elena Miron</h1>
     </md-toolbar>
     <md-list>
         <md-list-item class="sidebar-menu-item" ui-sref="{{ menuItem.url }}" 
-            ng-click="$ctrl.actions.controlSidenav(false)" 
+            ng-click="$ctrl.showSidenav = false" 
             ng-repeat="menuItem in $ctrl.data.sidebarMenuItems">
             <div layout="row" layout-align="start center">
                 <md-icon>{{ menuItem.icon }}</md-icon>

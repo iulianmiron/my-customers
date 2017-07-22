@@ -16,15 +16,13 @@
 		
 		<!--APP HEADER-->
 		<app-header 
-			sidenav-control="appCtrl.status.isSidenavOpen"
-			on-sidenav-change="appCtrl.actions.controlSidenav($event)">
+			show-sidenav="appCtrl.status.showSidenav">
 			loading app-header...
 		</app-header>
 
 		<!--APP NAVIGATION-->
 		<app-sidebar 
-			sidenav-control="appCtrl.status.isSidenavOpen"
-			on-sidenav-change="appCtrl.actions.controlSidenav($event)">
+			show-sidenav="appCtrl.status.showSidenav">
 			loading app-sidebar...
 		</app-sidebar>
 
