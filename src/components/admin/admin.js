@@ -16,7 +16,7 @@
         ctrl.actions = {};
 
         ctrl.$onInit = function() {
-            ctrl.data.selectedTab = 2;
+            ctrl.data.selectedTab = 3;
         }
     }
 
