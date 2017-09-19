@@ -72,6 +72,8 @@ app.put('/clients/:id', function(req, res) {
                 skinCareProductsUsed: req.body.skinCareProductsUsed,
                 discovery: req.body.discovery,
                 history: req.body.history,
+                isVip: req.body.isVip,
+                vip: req.body.vip,
                 updatedOn: updatedOn,
                 createdOn: req.body.createdOn
             }

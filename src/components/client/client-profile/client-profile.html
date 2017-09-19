@@ -92,6 +92,48 @@
                         <textarea md-select-on-focus ng-model="$ctrl.data.client.discovery" ng-readonly="!$ctrl.status.editClient">
 						</textarea>
                     </md-input-container>
+
+                    <div layout="column">
+                        <div>
+                            <md-checkbox 
+                                ng-model="$ctrl.data.client.isVip"
+                                ng-change="$ctrl.actions.setVIPData($ctrl.data.client)" 
+                                ng-disabled="!$ctrl.status.editClient"
+                                aria-label="Client vip">
+                                VIP?
+                            </md-checkbox>
+                        </div>
+                        <div layout="row">
+                            <md-input-container class="md-block">
+                                <label>Tipul</label>
+                                <md-select name="vipType" 
+                                    ng-model-options="{trackBy: '$value.id'}" 
+                                    ng-model="$ctrl.data.client.vip.type"
+                                    ng-disabled="!$ctrl.status.editClient || !$ctrl.data.client.isVip">
+                                    <md-option ng-value="clientVipType" ng-repeat="clientVipType in $ctrl.data.clientVip.types">
+                                        {{ clientVipType.label }}
+                                    </md-option>
+                                </md-select>
+                                <div ng-messages="$ctrl.data.clientProfileForm.vipType.$error">
+                                    <div ng-message="required">Tipul de VIP este necesar.</div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container class="md-block">
+                                <label>Nivel</label>
+                                <md-select name="vipLevel" 
+                                    ng-model-options="{trackBy: '$value.id'}" 
+                                    ng-model="$ctrl.data.client.vip.level"
+                                    ng-disabled="!$ctrl.status.editClient || !$ctrl.data.client.isVip">
+                                    <md-option ng-value="clientVipLevel" ng-repeat="clientVipLevel in $ctrl.data.clientVip.levels">
+                                        {{ clientVipLevel.label }}
+                                    </md-option>
+                                </md-select>
+                                <div ng-messages="$ctrl.data.clientProfileForm.vipLevel.$error">
+                                    <div ng-message="required">Nivelul de VIP este necesar.</div>
+                                </div>
+                            </md-input-container>
+                        </div>
+                    </div>
                 </div>
 
             </form>
