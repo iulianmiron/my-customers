@@ -126,6 +126,7 @@ app.put('/history/:id', function(req, res) {
         update: {
             $set: {
                 date: req.body.date,
+                servicesPerformedBy: req.body.servicesPerformedBy,
                 services: req.body.services,
                 interval: req.body.interval,
                 homeProducts: req.body.homeProducts,

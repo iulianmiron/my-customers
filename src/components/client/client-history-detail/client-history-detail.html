@@ -26,6 +26,24 @@
                     <input name="interval" ng-model="$ctrl.data.historyItem.interval" type="number" step="1" ng-disabled="!$ctrl.status.editHistoryItemForm">
                 </md-input-container>
             </div>
+
+            <div layout="row" layout-align="start center">
+                <md-input-container flex>
+                    <label>Sedinta efectuata de:</label>
+                    <md-select name="servicesPerformedBy" required
+                        ng-model-options="{trackBy: '$value.id'}" 
+                        ng-model="$ctrl.data.historyItem.servicesPerformedBy"
+                        ng-disabled="!$ctrl.status.editHistoryItemForm">
+                        <md-option ng-value="user" ng-repeat="user in $ctrl.data.users track by user.id">
+                            <md-icon>face</md-icon> {{ user.first_name }} {{ user.last_name }}
+                        </md-option>
+                    </md-select>
+                    <div ng-messages="$ctrl.data.editHistoryItemForm.servicesPerformedBy.$error">
+                        <div ng-message="required">O persoana trebuie selectata.</div>
+                    </div>
+                </md-input-container>
+            </div>
+
             <div layout="row" layout-align="start center">
                 <md-input-container flex>
                     <label>Alege Servicii</label>

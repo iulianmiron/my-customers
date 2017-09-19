@@ -15,7 +15,7 @@
             }
         });
 
-    function ClientHistoryController($element, moment, SERVICE_TYPES) {
+    function ClientHistoryController($element, moment, SERVICE_TYPES, USERS) {
         var ctrl = this;
         ctrl.data = {};
         ctrl.status = {};
@@ -36,6 +36,7 @@
             }
         }
         ctrl.$onInit = function() {
+            ctrl.data.users = USERS;
             ctrl.data.maxDate = new Date();
             ctrl.data.servicesTypes = prepareDropDown(SERVICE_TYPES);
 
@@ -69,5 +70,5 @@
         }
     }
 
-    ClientHistoryController.$inject = ['$element', 'moment', 'SERVICE_TYPES'];
+    ClientHistoryController.$inject = ['$element', 'moment', 'SERVICE_TYPES', 'USERS'];
 })();

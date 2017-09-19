@@ -13,7 +13,7 @@
             }
         });
 
-    function ClientHistoryDetailController($element, SERVICE_TYPES) {
+    function ClientHistoryDetailController($element, SERVICE_TYPES, USERS) {
         var ctrl = this;
 
         ctrl.data = {};
@@ -33,6 +33,7 @@
         }
         ctrl.$onInit = function() {
             ctrl.data.maxDate = new Date();
+            ctrl.data.users = USERS;
             ctrl.data.servicesTypes = prepareDropDown(SERVICE_TYPES);
             ctrl.actions.editHistoryItem = editHistoryItem;
             ctrl.actions.revertChanges = revertChanges;
@@ -57,5 +58,5 @@
         }
     }
 
-    ClientHistoryDetailController.$inject = ['$element', 'SERVICE_TYPES'];
+    ClientHistoryDetailController.$inject = ['$element', 'SERVICE_TYPES', 'USERS'];
 })();
