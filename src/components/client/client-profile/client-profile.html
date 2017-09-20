@@ -1,7 +1,8 @@
 <h2>
-    <md-icon>assignment_ind</md-icon> Profil client</h2>
+    <md-icon>assignment_ind</md-icon> Profil client
+</h2>
 <md-content style="max-height: 80vh">
-    <md-card>
+    <md-card class="vip-background {{ $ctrl.data.client.vip.level.label }}">
         <md-card-content>
 
             <form name="$ctrl.data.clientProfileForm" novalidate autocomplete="off">
@@ -95,12 +96,13 @@
 
                     <div layout="column">
                         <div>
-                            <md-checkbox 
+                            <md-checkbox layout="row" layout-align="start end"
                                 ng-model="$ctrl.data.client.isVip"
                                 ng-change="$ctrl.actions.setVIPData($ctrl.data.client)" 
                                 ng-disabled="!$ctrl.status.editClient"
                                 aria-label="Client vip">
-                                VIP?
+                                <md-icon>star</md-icon>
+                                <span>VIP?</span>
                             </md-checkbox>
                         </div>
                         <div layout="row">

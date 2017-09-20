@@ -24,6 +24,8 @@
 
         'cm.components.shop',
         'cm.components.shopProducts',
-        'cm.components.shopBasket'
+        'cm.components.shopBasket',
+
+        'cm.components.bankAccount'
     ]);
 })();

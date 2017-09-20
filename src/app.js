@@ -11,6 +11,7 @@
             'toastr',
 
             'cm.constants',
+            'cm.directives',
             'cm.services',
             'cm.components'
         ])
@@ -58,6 +59,10 @@
             .state('shop', {
                 url: '/shop',
                 component: 'shop'
+            })
+            .state('bankAccount', {
+                url: '/bank-account',
+                component: 'bankAccount'
             });
     }
 

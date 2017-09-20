@@ -24,7 +24,6 @@
             if (changes.clientData && changes.clientData.currentValue) {
                 ctrl.data.client = angular.copy(changes.clientData.currentValue);
                 ctrl.data.clientBackup = angular.copy(changes.clientData.currentValue);
-                console.log('clientBackup', ctrl.data.clientBackup);
             }
             if (changes.newClient && changes.newClient.currentValue) {
                 ctrl.data.newClient = angular.copy(changes.newClient.currentValue);
@@ -48,7 +47,6 @@
             ctrl.onSaveClientProfile({
                 $event: { clientData: clientData }
             });
-            console.log('saving clientData', clientData);
             ctrl.data.clientBackup = angular.copy(clientData);
             ctrl.status.editClient = false;
             ctrl.status.showMoreProfileDetails = false;
