@@ -13,7 +13,7 @@
             }
         });
 
-    function ClientProfileController($log) {
+    function ClientProfileController($log, CLIENT_VIP_LEVELS, CLIENT_VIP_TYPES) {
         var ctrl = this;
 
         ctrl.data = {};
@@ -21,31 +21,39 @@
         ctrl.status = {};
 
         ctrl.$onChanges = function(changes) {
-            if (changes.clientData && changes.clientData.currentValue && !changes.clientData.isFirstChange()) {
+            if (changes.clientData && changes.clientData.currentValue) {
                 ctrl.data.client = angular.copy(changes.clientData.currentValue);
                 ctrl.data.clientBackup = angular.copy(changes.clientData.currentValue);
             }
             if (changes.newClient && changes.newClient.currentValue) {
                 ctrl.data.newClient = angular.copy(changes.newClient.currentValue);
-                if (ctrl.data.newClient) {
-                    ctrl.status.editClient = true;
-                }
+                ctrl.status.editClient = !!ctrl.data.newClient;
             }
         }
         ctrl.$onInit = function() {
+            ctrl.data.clientVip = {
+                levels: CLIENT_VIP_LEVELS,
+                types: CLIENT_VIP_TYPES
+            };
+
             ctrl.status.showMoreProfileDetails = false;
 
+            ctrl.actions.setVIPData = setVIPData;
             ctrl.actions.saveClientProfile = saveClientProfile;
             ctrl.actions.resetForm = resetForm;
         }
 
         function saveClientProfile(clientData) {
-            console.log('clientData', clientData);
             ctrl.onSaveClientProfile({
                 $event: { clientData: clientData }
             });
+            ctrl.data.clientBackup = angular.copy(clientData);
             ctrl.status.editClient = false;
             ctrl.status.showMoreProfileDetails = false;
+        }
+
+        function setVIPData(client) {
+            client.vip = client.isVip ? client.vip : null;
         }
 
         function resetForm() {
@@ -54,5 +62,5 @@
         }
     }
 
-    ClientProfileController.$inject = ['$log'];
+    ClientProfileController.$inject = ['$log', 'CLIENT_VIP_LEVELS', 'CLIENT_VIP_TYPES'];
 })();

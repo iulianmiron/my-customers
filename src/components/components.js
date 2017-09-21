@@ -11,8 +11,8 @@
         'cm.components.admin.products.addProductDialog',
         'cm.components.admin.products.editProductDialog',
         'cm.components.admin.consumables',
-        'cm.components.admin.consumables.editConsumableDialog',
-        'cm.components.admin.consumables.addConsumableDialog',
+        'cm.components.admin.consumables.consumableDialog',
+        'cm.components.admin.activities',
 
         'cm.components.home',
         'cm.components.home.searchClients',
@@ -24,6 +24,8 @@
 
         'cm.components.shop',
         'cm.components.shopProducts',
-        'cm.components.shopBasket'
+        'cm.components.shopBasket',
+
+        'cm.components.bankAccount'
     ]);
 })();

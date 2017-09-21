@@ -18,31 +18,18 @@
         ctrl.$onInit = function() {
             ctrl.data.noPicture = NO_PICTURE;
 
-            ctrl.actions.addConsumable = addConsumable;
             ctrl.actions.getAllConsumables = getAllConsumables;
-            ctrl.actions.deleteConsumable = deleteConsumable;
-            ctrl.actions.selectConsumable = selectConsumable;
+            ctrl.actions.addConsumable = addConsumable;
             ctrl.actions.editConsumable = editConsumable;
-
+            ctrl.actions.deleteConsumable = deleteConsumable;
+            ctrl.actions.saveEditedConsumable = saveEditedConsumable;
+           
             getAllConsumables();
         }
 
-        function addConsumable(event) {
-            $mdDialog.show({
-                controller: 'AddConsumableDialogController',
-                controllerAs: '$ctrl',
-                templateUrl: '/components/admin/consumables/add-consumable/add-consumable.dialog.html',
-                locals: {
-                    serviceTypes: ctrl.data.serviceTypes
-                },
-                parent: $rootElement,
-                targetEvent: event,
-                clickOutsideToClose: false,
-                fullscreen: false
-            }).then(function(consumable) {
-                saveNewConsumable(consumable);
-            }, function() {
-                //no consumable added
+        function getAllConsumables() {
+            ConsumablesServices.getAllConsumables().then(function(rConsumables) {
+                ctrl.data.allConsumables = rConsumables;
             });
         }
 
@@ -53,11 +40,13 @@
             });
             getAllConsumables();
         }
-
-        function getAllConsumables() {
-            ConsumablesServices.getAllConsumables().then(function(rConsumables) {
-                ctrl.data.allConsumables = rConsumables;
+        
+        function saveEditedConsumable(consumable) {
+            ConsumablesServices.updateConsumable(consumable).then(function(rSuccess) {
+                toastr.success("Consumabilul editat cu succes");
+                return rSuccess.data;
             });
+            getAllConsumables();
         }
 
         function deleteConsumable(consumableId) {
@@ -68,31 +57,42 @@
             getAllConsumables();
         }
 
-        function selectConsumable(event, consumable) {
+        function editConsumable(event, consumable) {
+            var consumable = consumable;
+            var dialogData = {
+                consumable: consumable ? angular.copy(consumable) : null,
+                title: 'Editati consumabil'
+            };
+
+            showDialog(event, dialogData, saveEditedConsumable);
+        }
+
+        function addConsumable(event) {
+            var consumable = consumable;
+            var dialogData = {
+                consumable: consumable ? angular.copy(consumable) : null,
+                title: 'Adaugati consumabil nou'
+            };
+            showDialog(event, dialogData, saveNewConsumable);
+        }
+
+        function showDialog(event, dialogData, cb) {
             $mdDialog.show({
-                controller: 'EditConsumableDialogController',
+                controller: 'ConsumableDialogController',
                 controllerAs: '$ctrl',
-                templateUrl: '/components/admin/consumables/edit-consumable/edit-consumable.dialog.html',
+                templateUrl: '/components/admin/consumables/consumable-dialog/consumable-dialog.html',
                 locals: {
-                    consumable: angular.copy(consumable)
+                    dialogData: dialogData
                 },
                 parent: $rootElement,
                 targetEvent: event,
                 clickOutsideToClose: false,
                 fullscreen: false
             }).then(function(consumable) {
-                editConsumable(consumable);
+                cb(consumable);
             }, function() {
                 //consumable edit cancelled
             });
-        }
-
-        function editConsumable(consumable) {
-            ConsumablesServices.updateConsumable(consumable).then(function(rSuccess) {
-                toastr.success("Consumabilul editat cu succes");
-                return rSuccess.data;
-            });
-            getAllConsumables();
         }
     }
 
