@@ -298,9 +298,13 @@ app.put('/consumables/:id', function(req, res) {
 });
 
 
+//kill server
+app.get('/kill', function(req, res) {
+	setTimeout(() => process.exit(), 500);
+});
+
 
 app.listen(PORT, function() {
-    openurl.open(LOCATION + ':' + PORT);
     console.log("DO NOT CLOSE THIS WINDOW!");
     console.log("server running on port:", PORT);
 });
