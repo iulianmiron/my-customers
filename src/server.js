@@ -72,6 +72,8 @@ app.put('/clients/:id', function(req, res) {
                 skinCareProductsUsed: req.body.skinCareProductsUsed,
                 discovery: req.body.discovery,
                 history: req.body.history,
+                isVip: req.body.isVip,
+                vip: req.body.vip,
                 updatedOn: updatedOn,
                 createdOn: req.body.createdOn
             }
@@ -124,6 +126,7 @@ app.put('/history/:id', function(req, res) {
         update: {
             $set: {
                 date: req.body.date,
+                servicesPerformedBy: req.body.servicesPerformedBy,
                 services: req.body.services,
                 interval: req.body.interval,
                 homeProducts: req.body.homeProducts,
@@ -142,7 +145,7 @@ app.put('/history/:id', function(req, res) {
 
 
 //////////////////// SERVICES collection //////////////////
-//Add clients in clients collection
+//Add services in services collection
 app.post('/services', function(req, res) {
     req.body.createdOn = new Date();
     req.body.updatedOn = new Date();
@@ -298,9 +301,13 @@ app.put('/consumables/:id', function(req, res) {
 });
 
 
+//kill server
+app.get('/kill', function(req, res) {
+	setTimeout(() => process.exit(), 500);
+});
+
 
 app.listen(PORT, function() {
-    openurl.open(LOCATION + ':' + PORT);
     console.log("DO NOT CLOSE THIS WINDOW!");
     console.log("server running on port:", PORT);
 });

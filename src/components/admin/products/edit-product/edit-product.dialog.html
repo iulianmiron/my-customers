@@ -36,10 +36,10 @@
                     <md-input-container class="md-block">
                         <label>Cod Produs</label>
                         <md-icon>code</md-icon>
-                        <input name="productCode" ng-model="$ctrl.data.product.code" minlength="2" md-maxlength="50" required>
+                        <input name="productCode" ng-model="$ctrl.data.product.code" minlength="2" md-maxlength="250" required>
                         <div ng-messages="$ctrl.data.productForm.productCode.$error" ng-show="$ctrl.data.productForm.productCode.$touched">
                             <div ng-message="required">Codul este obligatoriu</div>
-                            <div ng-message="md-maxlength">Codul trebuie sa aiba sub 50 de caractere</div>
+                            <div ng-message="md-maxlength">Codul trebuie sa aiba sub 250 de caractere</div>
                             <div ng-message="minlength">Codul trebuie sa aiba mai mult de 1 caracter</div>
                         </div>
                     </md-input-container>
@@ -47,10 +47,10 @@
                     <md-input-container class="md-block">
                         <label>Producator</label>
                         <md-icon>work</md-icon>
-                        <input name="productManufacturer" ng-model="$ctrl.data.product.manufacturer" minlength="2" md-maxlength="50" required>
+                        <input name="productManufacturer" ng-model="$ctrl.data.product.manufacturer" minlength="2" md-maxlength="250" required>
                         <div ng-messages="$ctrl.data.productForm.productManufacturer.$error" ng-show="$ctrl.data.productForm.productManufacturer.$touched">
                             <div ng-message="required">Producatorul este obligatoriu</div>
-                            <div ng-message="md-maxlength">Producatorul trebuie sa aiba sub 50 de caractere</div>
+                            <div ng-message="md-maxlength">Producatorul trebuie sa aiba sub 250 de caractere</div>
                             <div ng-message="minlength">Producatorul trebuie sa aiba mai mult de 1 caracter</div>
                         </div>
                     </md-input-container>
@@ -58,10 +58,10 @@
                     <md-input-container class="md-block">
                         <label>Gama</label>
                         <md-icon>work</md-icon>
-                        <input name="productRange" ng-model="$ctrl.data.product.range" minlength="2" md-maxlength="50" required>
+                        <input name="productRange" ng-model="$ctrl.data.product.range" minlength="2" md-maxlength="250" required>
                         <div ng-messages="$ctrl.data.productForm.productRange.$error" ng-show="$ctrl.data.productForm.productRange.$touched">
                             <div ng-message="required">Gama este obligatorie</div>
-                            <div ng-message="md-maxlength">Gama trebuie sa aiba sub 50 de caractere</div>
+                            <div ng-message="md-maxlength">Gama trebuie sa aiba sub 250 de caractere</div>
                             <div ng-message="minlength">Gama trebuie sa aiba mai mult de 1 caracter</div>
                         </div>
                     </md-input-container>
@@ -69,10 +69,10 @@
                     <md-input-container class="md-block">
                         <label>Denumire</label>
                         <md-icon>work</md-icon>
-                        <input name="productName" ng-model="$ctrl.data.product.name" minlength="2" md-maxlength="50" required>
+                        <input name="productName" ng-model="$ctrl.data.product.name" minlength="2" md-maxlength="250" required>
                         <div ng-messages="$ctrl.data.productForm.productName.$error" ng-show="$ctrl.data.productForm.productName.$touched">
                             <div ng-message="required">Denumirea este obligatorie</div>
-                            <div ng-message="md-maxlength">Denumirea trebuie sa aiba sub 50 de caractere</div>
+                            <div ng-message="md-maxlength">Denumirea trebuie sa aiba sub 250 de caractere</div>
                             <div ng-message="minlength">Denumirea trebuie sa aiba mai mult de 1 caracter</div>
                         </div>
                     </md-input-container>

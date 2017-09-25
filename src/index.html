@@ -16,15 +16,13 @@
 		
 		<!--APP HEADER-->
 		<app-header 
-			sidenav-control="appCtrl.status.isSidenavOpen"
-			on-sidenav-change="appCtrl.actions.controlSidenav($event)">
+			show-sidenav="appCtrl.status.showSidenav">
 			loading app-header...
 		</app-header>
 
 		<!--APP NAVIGATION-->
 		<app-sidebar 
-			sidenav-control="appCtrl.status.isSidenavOpen"
-			on-sidenav-change="appCtrl.actions.controlSidenav($event)">
+			show-sidenav="appCtrl.status.showSidenav">
 			loading app-sidebar...
 		</app-sidebar>
 
@@ -38,7 +36,7 @@
 		<script src="node_modules/angular-material/angular-material.min.js?rev=73eda0b1b7597c8e6f9faf54df27ccd0"></script>
 		<script src="node_modules/angular-messages/angular-messages.min.js?rev=899421db80bb8b9659bc80c2a43fe816"></script>
 		<script src="node_modules/angular-sanitize/angular-sanitize.min.js?rev=87802e34bbb52d816cfd893662506bd0"></script>
-		<script src="node_modules/angular-ui-router/release/angular-ui-router.min.js?rev=44c7afa6eda534beb00526a7f673ebe9"></script>
+		<script src="node_modules/@uirouter/angularjs/release/angular-ui-router.min.js?rev=44c7afa6eda534beb00526a7f673ebe9"></script>
 		<script src="node_modules/moment/min/moment.min.js?rev=aeb7908241d9f6d5a45e504cc4f2ec15"></script>
 		<script src="node_modules/moment/locale/ro.js?rev=d5f894647d7d1f2926435af819243b44"></script>
 		<script src="node_modules/angular-moment/angular-moment.js?rev=5b4e705f875c13c54c867448173a7756"></script>
@@ -48,7 +46,9 @@
 		<script src="app.js?rev=c79e03d39c96e9e15d6157407b05097d"></script>
 		<!-- CONSTANTS -->
 		<script src="constants/constants.js?rev=146b187a15f6d8ddb5e49a45eba09352"></script>
-		<!--SERVICES-->
+		<!-- DIRECTIVES -->
+		<script src="directives/directives.js?rev=1"></script>
+		<!-- SERVICES -->
 		<script src="services/services.js?rev=11af395db5744f41cdab5bdc4329a6d0"></script>
 		<script src="components/client/client.services.js?rev=65cfa27f829b44f7b5cd0894d3b9db54"></script>
 		<script src="components/home/search-clients/search-clients.services.js?rev=e1ab38d2593f3adb3040bf78b5ed7cc8"></script>
@@ -70,12 +70,15 @@
 
 		<script src="components/admin/consumables/consumables.js?rev=59f995dfcdf661cd3fea5302bb878585"></script>
 		<script src="components/admin/consumables/consumables.services.js?rev=59f995dfcdf661cd3fea5302bb878585"></script>
-		<script src="components/admin/consumables/add-consumable/add-consumable.dialog.js?rev=a765967d6d27c2ca6374a7b0d3585ee2"></script>
-		<script src="components/admin/consumables/edit-consumable/edit-consumable.dialog.js?rev=d0097f790f1042aa9f1fb6d7c94911c2"></script>
+		<script src="components/admin/consumables/consumable-dialog/consumable-dialog.js?rev=d0097f790f1042aa9f1fb6d7c94911c2"></script>
+
+		<script src="components/admin/activities/activities.js?rev=59f995dfcdf661cd3fea5302bb878585"></script>
+		<script src="components/admin/activities/activities.services.js?rev=59f995dfcdf661cd3fea5302bb878585"></script>
 
 		<!-- HOME -->
 		<script src="components/home/home.js?rev=918e2e9db5e122e3fe99e4474a1f2f43"></script>
 		<script src="components/home/search-clients/search-clients.js?rev=8dc6e602b8e4fac27e5a22d39e3bfa35"></script>
+
 		<!-- CLIENT -->
 		<script src="components/client/client.js?rev=88a1db8f457c62699ceb754fd609df7b"></script>
 		<script src="components/client/client-profile/client-profile.js?rev=efe8e6d02d7415f30f197bd51f5d04da"></script>
@@ -86,6 +89,9 @@
 		<script src="components/shop/shop.js?rev=057ce3deeffa5960d35e8f5b7f6a9245"></script>
 		<script src="components/shop/shop-products/shop-products.js?rev=1127a78109d7e16da63a8971ec3ed304"></script>
 		<script src="components/shop/shop-basket/shop-basket.js?rev=4b796ab10e532ec9a66c87f2385c662d"></script>
+
+		<!-- BANK ACCOUNT -->
+		<script src="components/bank-account/bank-account.js?rev=1"></script>
 		
 	
 	</body>

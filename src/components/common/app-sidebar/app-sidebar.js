@@ -7,25 +7,21 @@
             templateUrl: '/components/common/app-sidebar/app-sidebar.html',
             controller: AppSidebarController,
             bindings: {
-                sidenavControl: '<',
-                onSidenavChange: '&'
+                showSidenav: '='
             }
         });
 
-    function AppSidebarController() {
+    function AppSidebarController(SIDEBAR_MENU_ITEMS) {
         var ctrl = this;
         ctrl.data = {};
         ctrl.status = {};
         ctrl.actions = {};
 
-        ctrl.actions.controlSidenav = controlSidenav;
-
-        function controlSidenav(sidenavControl) {
-            ctrl.onSidenavChange({
-                $event: { sidenavControl: sidenavControl }
-            });
+        ctrl.$onInit = function() {
+            ctrl.data.sidebarMenuItems = SIDEBAR_MENU_ITEMS;
         }
+
     }
 
-    AppSidebarController.$inject = [];
+    AppSidebarController.$inject = ['SIDEBAR_MENU_ITEMS'];
 })();

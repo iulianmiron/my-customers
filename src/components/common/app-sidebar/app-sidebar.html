@@ -1,24 +1,14 @@
-<md-sidenav class="md-sidenav-left" md-component-id="left" md-whiteframe="4" md-is-open="$ctrl.sidenavControl">
+<md-sidenav class="md-sidenav-left" md-component-id="left" md-whiteframe="4" md-is-open="$ctrl.showSidenav">
     <md-toolbar class="md-tall">
         <h1 class="md-toolbar-tools">Elena Miron</h1>
     </md-toolbar>
     <md-list>
-        <md-list-item class="sidebar-menu-item" ui-sref="home" ng-click="$ctrl.actions.controlSidenav(!$ctrl.sidenavControl)">
+        <md-list-item class="sidebar-menu-item" ui-sref="{{ menuItem.url }}" 
+            ng-click="$ctrl.showSidenav = false" 
+            ng-repeat="menuItem in $ctrl.data.sidebarMenuItems">
             <div layout="row" layout-align="start center">
-                <md-icon>search</md-icon>
-                <p>Cauta Clienti</p>
-            </div>
-        </md-list-item>
-        <md-list-item class="sidebar-menu-item" ui-sref="shop" ng-click="$ctrl.actions.controlSidenav(!$ctrl.sidenavControl)">
-            <div layout="row" layout-align="start center">
-                <md-icon>store</md-icon>
-                <p>Shop</p>
-            </div>
-        </md-list-item>
-        <md-list-item class="sidebar-menu-item" ui-sref="admin" ng-click="$ctrl.actions.controlSidenav(!$ctrl.sidenavControl)">
-            <div layout="row" layout-align="start center">
-                <md-icon>settings</md-icon>
-                <p>Admin</p>
+                <md-icon>{{ menuItem.icon }}</md-icon>
+                <p>{{ menuItem.label }}</p>
             </div>
         </md-list-item>
     </md-list>

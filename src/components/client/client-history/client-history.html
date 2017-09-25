@@ -12,7 +12,7 @@
         <md-card-content ng-show="$ctrl.status.showNewHistoryItemForm">
             <form name="$ctrl.data.newHistoryItemForm">
                 <div layout="row" layout-align="start center">
-                    <md-input-container>
+                    <md-input-container flex>
                         <label>Data sedintei</label>
                         <md-datepicker name="date" required ng-model="$ctrl.data.newHistoryEntry.date" md-max-date="$ctrl.data.maxDate" md-open-on-focus>
                         </md-datepicker>
@@ -22,12 +22,28 @@
                             <div ng-message="maxdate">Data nu poate fi mai mare decat data curenta</div>
                         </div>
                     </md-input-container>
-                    <md-input-container>
-                        <label>Interval in saptamani</label>
+                    <md-input-container flex>
+                        <label>Interval (sapt.)</label>
                         <md-icon>timelapse</md-icon>
                         <input ng-model="$ctrl.data.newHistoryEntry.interval" type="number" step="1">
                     </md-input-container>
                 </div>
+
+                <div layout="row" layout-align="start center">
+                    <md-input-container flex>
+                        <label>Sedinta efectuata de:</label>
+                        <md-select name="servicesPerformedBy" required
+                            ng-model="$ctrl.data.newHistoryEntry.servicesPerformedBy">
+                            <md-option ng-value="user" ng-repeat="user in $ctrl.data.users track by user.id">
+                                <md-icon>face</md-icon> {{ user.first_name }} {{ user.last_name }}
+                            </md-option>
+                        </md-select>
+                        <div ng-messages="$ctrl.data.newHistoryItemForm.servicesPerformedBy.$error">
+                            <div ng-message="required">O persoana trebuie selectata.</div>
+                        </div>
+                    </md-input-container>
+                </div>
+
                 <div layout="row" layout-align="start center">
                     <md-input-container flex>
                         <label>Alege Servicii</label>
@@ -85,6 +101,7 @@
             </md-card-header>
             <md-card-content>
                 <p>Servicii: <span ng-repeat="service in historyItem.services">{{ !$last ? service.name + ', ' : service.name }} </span></p>
+                <p>Efectuat de: {{ historyItem.servicesPerformedBy ? historyItem.servicesPerformedBy.first_name + ' ' + historyItem.servicesPerformedBy.last_name : '-' }}</p>
                 <p>Produse acasa: {{ historyItem.homeProducts || '-' }}</p>
                 <p>Interval: {{ historyItem.interval || '-' }}</p>
                 <p>Observatii: {{ historyItem.observations || '-' }}</p>
