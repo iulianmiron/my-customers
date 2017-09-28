@@ -91,7 +91,7 @@
         </md-card-actions>
     </md-card>
 
-    <div ng-repeat="historyItem in $ctrl.data.history | orderBy: '_id' track by historyItem._id">
+    <div ng-repeat="historyItem in $ctrl.data.history | orderBy: 'date' track by historyItem._id">
         <md-card ng-click="$ctrl.actions.selectHistoryItem(historyItem)">
             <md-card-header>
                 <md-card-header-text>

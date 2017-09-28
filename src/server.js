@@ -2,15 +2,19 @@ var express = require('express');
 var app = express();
 var mongojs = require('mongojs');
 
-var db_clients = mongojs('clients', ['clients', 'history', 'services']);
-var db_products = mongojs('products', ['products']);
-var db_consumables = mongojs('consumables', ['consumables']);
+var db_prod = '127.0.0.1:27017/';
+var db_dev = '127.0.0.1:27500/';
+
+db = PORT === 5000 ? db_dev : db_prod;
+
+var db_clients = mongojs(db + 'clients', ['clients', 'history', 'services']);
+var db_products = mongojs(db + 'products', ['products']);
+var db_consumables = mongojs(db + 'consumables', ['consumables']);
 
 var bodyParser = require('body-parser');
 var openurl = require('openurl');
 
-var PORT = process.env.PORT || 3500;
-var LOCATION = 'http://127.0.0.1'
+var PORT = process.env.PORT || 5000;
 
 app.use(express.static(__dirname + '/'));
 app.use(bodyParser.json());
