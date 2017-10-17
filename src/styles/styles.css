@@ -3,9 +3,8 @@
 }
 
 .md-tooltip {
-  font-size: 0.8em!important;
+  font-size: 1em!important;
 }
-
 
 .md-dialog-content md-input-container .md-input-message-animation:not(.ng-animate) { 
   opacity: 1 !important; 

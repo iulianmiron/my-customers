@@ -1,0 +1,46 @@
+<form name="$ctrl.searchClientForm" layout="row" layout-align="start center">
+    <md-autocomplete flex
+        placeholder="Cauta client dupa nume, prenume, telefon sau email" 
+        md-no-cache="true" 
+        md-delay="500" 
+        md-search-text="$ctrl.data.searchText" 
+        md-selected-item-change="$ctrl.actions.openClientPage(client._id)" 
+        md-items="client in $ctrl.actions.searchClients($ctrl.data.searchText)"
+        md-item-text="client.firstName + ' ' + client.lastName">
+        <md-item-template>
+            <span layout="row">
+                <md-icon ng-if="client.isVip" ng-class="['vip-text', client.vip.level.label]">
+                    star
+                    <md-tooltip>
+                        VIP: {{client.vip.type.label}}
+                    </md-tooltip>
+                </md-icon>
+                <span flex 
+                    md-highlight-text="$ctrl.data.searchText" 
+                    md-highlight-flags="i">
+                    {{client.firstName}} {{client.lastName}}
+                </span>
+                <span flex md-highlight-text="$ctrl.data.searchText" md-highlight-flags="i">
+                    {{client.phoneNumber}} 
+                </span>
+                <span flex md-highlight-text="$ctrl.data.searchText" md-highlight-flags="i">
+                    {{client.email}} 
+                </span>
+            </span>
+        </md-item-template>
+        <md-not-found>
+            <div layout="row" layout-align="start center">
+                <span>0 rezultate</span>
+                <span flex></span>
+                <md-button ng-click="$ctrl.actions.openClientPage(0)" class="md-primary">
+                    <md-icon>person_add</md-icon>
+                    Adauga un client nou
+                </md-button>
+            </div>
+        </md-not-found>
+    </md-autocomplete>
+    <md-button ng-click="$ctrl.actions.openClientPage(0)" class="md-default md-icon-button">
+        <md-icon>person_add</md-icon>
+        <md-tooltip>Adauga client nou</md-tooltip>
+    </md-button>
+</form>

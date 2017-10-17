@@ -4,6 +4,7 @@
     angular.module('cm.components', [
         'cm.components.common.appHeader',
         'cm.components.common.appSidebar',
+        'cm.components.common.clientSearch',
 
         'cm.components.admin',
         'cm.components.admin.services',
