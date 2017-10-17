@@ -41,7 +41,7 @@
         }
 
         function openClientPage(clientId) {
-            if(clientId) {
+            if(clientId || clientId === 0) {
                 $state.go('client', { id: clientId });
             }
         }
