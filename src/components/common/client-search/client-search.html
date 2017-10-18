@@ -8,25 +8,32 @@
         md-items="client in $ctrl.actions.searchClients($ctrl.data.searchText)"
         md-item-text="client.firstName + ' ' + client.lastName">
         <md-item-template>
-            <span layout="row">
-                <md-icon ng-if="client.isVip" ng-class="['vip-text', client.vip.level.label]">
-                    star
-                    <md-tooltip>
-                        VIP: {{client.vip.type.label}}
-                    </md-tooltip>
-                </md-icon>
-                <span flex 
+
+            <div layout="row" layout-align="start center">
+                <div 
                     md-highlight-text="$ctrl.data.searchText" 
                     md-highlight-flags="i">
                     {{client.firstName}} {{client.lastName}}
-                </span>
-                <span flex md-highlight-text="$ctrl.data.searchText" md-highlight-flags="i">
-                    {{client.phoneNumber}} 
-                </span>
-                <span flex md-highlight-text="$ctrl.data.searchText" md-highlight-flags="i">
-                    {{client.email}} 
-                </span>
-            </span>
+                </div>
+                <div>
+                    <md-icon ng-if="client.isVip" ng-class="['vip-text', client.vip.level.label]">
+                        star
+                        <md-tooltip>
+                            VIP: {{client.vip.type.label}}
+                        </md-tooltip>
+                    </md-icon>
+                </div>
+                <div flex></div>
+                <div layout="column" layout-align="start end">
+                    <div md-highlight-text="$ctrl.data.searchText" md-highlight-flags="i" ng-if="client.phoneNumber">
+                        {{client.phoneNumber}} 
+                    </div>
+                    <div md-highlight-text="$ctrl.data.searchText" md-highlight-flags="i" ng-if="client.email">
+                        {{client.email}} 
+                    </div>
+                </div>
+            </div>
+
         </md-item-template>
         <md-not-found>
             <div layout="row" layout-align="start center">

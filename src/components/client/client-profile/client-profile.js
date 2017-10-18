@@ -39,7 +39,7 @@
             ctrl.status.showMoreProfileDetails = false;
 
             ctrl.actions.setVIPData = setVIPData;
-            ctrl.actions.checkIfDuplicateNumber = checkIfDuplicateNumber;
+            ctrl.actions.checkIfDuplicate = checkIfDuplicate;
             ctrl.actions.saveClientProfile = saveClientProfile;
             ctrl.actions.resetForm = resetForm;
         }
@@ -53,16 +53,21 @@
             ctrl.status.showMoreProfileDetails = false;
         }
 
-        function checkIfDuplicateNumber(clientPhoneNumber) {
-            if(ctrl.data.newClient || (clientPhoneNumber && (ctrl.data.clientBackup && ctrl.data.clientBackup.phoneNumber !== clientPhoneNumber))) {
+        function checkIfDuplicate(fieldName, fieldValue) {
+            if(fieldName && fieldValue && (ctrl.data.newClient || (ctrl.data.clientBackup[fieldName] !== fieldValue))) {
                 SearchClientsServices
-                .searchClients(clientPhoneNumber)
-                .then(handleSuccess)
-                .catch(handleError);
+                    .searchClients(fieldValue)
+                    .then(handleSuccess)
+                    .catch(handleError);
 
                 function handleSuccess(rClients) {
                     if(rClients.length) {
-                        showDuplicateAccountDialog(null, rClients[0]);
+
+                        var client = rClients.filter(function(iClient) {
+                            return iClient[fieldName] === fieldValue;
+                        })[0];
+                        
+                        showDuplicateAccountDialog(null, client, fieldName);
                     }
                 }
 
@@ -72,10 +77,10 @@
             }
         }
 
-        function showDuplicateAccountDialog(ev, client) {
+        function showDuplicateAccountDialog(ev, client, fieldName) {
 
             var confirm = $mdDialog.confirm()
-                  .title('Clientul cu: ' + client.phoneNumber + ' exista deja.')
+                  .title('Clientul cu: ' + (fieldName === 'phoneNumber' ? client.phoneNumber : client.email ) + ' exista deja.')
                   .textContent('Detalii client: ' + client.firstName + ' ' + client.lastName)
                   .ariaLabel('Client existent.')
                   .targetEvent(ev)
@@ -85,10 +90,9 @@
             $mdDialog.show(confirm).then(function() {
                 $state.go('client', {id: client._id});
             }, function() {
-                debugger;
-                ctrl.data.client.phoneNumber = !!ctrl.data.newClient ? null : ctrl.data.clientBackup.phoneNumber;
+                ctrl.data.client[fieldName] = !!ctrl.data.newClient ? null : ctrl.data.clientBackup[fieldName];
             });
-          };
+        };
 
         function setVIPData(client) {
             client.vip = client.isVip ? client.vip : null;
