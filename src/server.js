@@ -2,15 +2,20 @@ var express = require('express');
 var app = express();
 var mongojs = require('mongojs');
 
-var db_clients = mongojs('clients', ['clients', 'history', 'services']);
-var db_products = mongojs('products', ['products']);
-var db_consumables = mongojs('consumables', ['consumables']);
+var db_prod = '127.0.0.1:27017/';
+var db_dev = '127.0.0.1:27500/';
+
+var PORT = process.env.PORT;
+var db = (PORT === '5000') ? db_dev : db_prod;
+
+var db_clients = mongojs(db + 'clients', ['clients', 'history', 'services']);
+var db_products = mongojs(db + 'products', ['products']);
+var db_consumables = mongojs(db + 'consumables', ['consumables']);
 
 var bodyParser = require('body-parser');
 var openurl = require('openurl');
 
-var PORT = process.env.PORT || 3500;
-var LOCATION = 'http://127.0.0.1'
+
 
 app.use(express.static(__dirname + '/'));
 app.use(bodyParser.json());
@@ -309,5 +314,6 @@ app.get('/kill', function(req, res) {
 
 app.listen(PORT, function() {
     console.log("DO NOT CLOSE THIS WINDOW!");
-    console.log("server running on port:", PORT);
+    console.log("server running on address: ", db);
+    console.log("app running on port: ", PORT);
 });

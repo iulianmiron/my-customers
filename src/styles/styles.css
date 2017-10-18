@@ -3,9 +3,13 @@
 }
 
 .md-tooltip {
-  font-size: 0.8em!important;
+  font-size: 1em!important;
 }
 
+.material-icons.md-18 { font-size: 18px; }
+.material-icons.md-24 { font-size: 24px; }
+.material-icons.md-36 { font-size: 36px; }
+.material-icons.md-48 { font-size: 48px; }
 
 .md-dialog-content md-input-container .md-input-message-animation:not(.ng-animate) { 
   opacity: 1 !important; 
@@ -30,6 +34,12 @@
 
 .md-autocomplete-suggestions-container li .highlight {
     color: rgb(128,0,128);
+}
+
+.md-autocomplete-suggestions-container .md-autocomplete-suggestions li {
+  line-height: inherit;
+  height: auto;
+  padding: 15px;
 }
 
 .selectdemoSelectHeader {
