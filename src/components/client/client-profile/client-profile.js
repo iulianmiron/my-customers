@@ -24,6 +24,7 @@
             if (changes.clientData && changes.clientData.currentValue) {
                 ctrl.data.client = angular.copy(changes.clientData.currentValue);
                 ctrl.data.clientBackup = angular.copy(changes.clientData.currentValue);
+                calculateClientAge(ctrl.data.client.dateOfBirth);
             }
             if (changes.newClient && changes.newClient.currentValue) {
                 ctrl.data.newClient = angular.copy(changes.newClient.currentValue);
@@ -35,13 +36,19 @@
                 levels: CLIENT_VIP_LEVELS,
                 types: CLIENT_VIP_TYPES
             };
+            ctrl.data.maxDateOfBirth = new Date();
 
             ctrl.status.showMoreProfileDetails = false;
 
             ctrl.actions.setVIPData = setVIPData;
             ctrl.actions.checkIfDuplicate = checkIfDuplicate;
+            ctrl.actions.calculateClientAge = calculateClientAge;
             ctrl.actions.saveClientProfile = saveClientProfile;
             ctrl.actions.resetForm = resetForm;
+        }
+
+        function calculateClientAge(dateOfBirth) {
+            ctrl.data.clientAge = moment().diff(moment(dateOfBirth), 'years') + ' ani';
         }
 
         function saveClientProfile(clientData) {
@@ -62,7 +69,6 @@
 
                 function handleSuccess(rClients) {
                     if(rClients.length) {
-
                         var client = rClients.filter(function(iClient) {
                             return iClient[fieldName] === fieldValue;
                         })[0];
@@ -101,6 +107,7 @@
         function resetForm() {
             ctrl.status.editClient = false;
             ctrl.data.client = angular.copy(ctrl.data.clientBackup);
+            calculateClientAge(ctrl.data.client.dateOfBirth);
         }
     }
 

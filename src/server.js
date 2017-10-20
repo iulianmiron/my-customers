@@ -68,7 +68,7 @@ app.put('/clients/:id', function(req, res) {
             $set: {
                 firstName: req.body.firstName,
                 lastName: req.body.lastName,
-                age: req.body.age,
+                dateOfBirth: req.body.dateOfBirth,
                 phoneNumber: req.body.phoneNumber,
                 email: req.body.email,
                 skinType: req.body.skinType,
