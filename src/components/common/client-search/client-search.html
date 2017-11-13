@@ -11,11 +11,20 @@
         <md-item-template>
 
             <div layout="row" layout-align="start center">
-                <div 
-                    md-highlight-text="$ctrl.data.searchText" 
-                    md-highlight-flags="i">
-                    {{client.firstName}} {{client.lastName}}
+                <div layout="column" layout-align="start start">
+                    <div 
+                        md-highlight-text="$ctrl.data.searchText" 
+                        md-highlight-flags="i">
+                        {{client.firstName}} {{client.lastName}}
+                    </div>
+                    <div md-highlight-text="$ctrl.data.searchText" md-highlight-flags="i" ng-if="client.email">
+                        {{client.email}} 
+                    </div>
+                    <div md-highlight-text="$ctrl.data.searchText" md-highlight-flags="i" ng-if="client.phoneNumber">
+                        {{client.phoneNumber}} 
+                    </div>
                 </div>
+                <div flex></div>
                 <div>
                     <md-icon ng-if="client.isVip" ng-class="['vip-text', client.vip.level.label]">
                         star
@@ -23,15 +32,6 @@
                             VIP: {{client.vip.type.label}}
                         </md-tooltip>
                     </md-icon>
-                </div>
-                <div flex></div>
-                <div layout="column" layout-align="start end">
-                    <div md-highlight-text="$ctrl.data.searchText" md-highlight-flags="i" ng-if="client.phoneNumber">
-                        {{client.phoneNumber}} 
-                    </div>
-                    <div md-highlight-text="$ctrl.data.searchText" md-highlight-flags="i" ng-if="client.email">
-                        {{client.email}} 
-                    </div>
                 </div>
             </div>
 

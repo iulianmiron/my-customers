@@ -20,8 +20,8 @@
 
         'cm.components.client',
         'cm.components.clientProfile',
-        'cm.components.clientHistoryDetail',
         'cm.components.clientHistory',
+        'cm.components.clientHistoryDialog',    
 
         'cm.components.shop',
         'cm.components.shopProducts',

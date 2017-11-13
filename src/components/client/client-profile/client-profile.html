@@ -1,8 +1,11 @@
-<h2>
-    <md-icon>assignment_ind</md-icon> Profil client
-</h2>
 <md-content style="max-height: 80vh">
     <md-card class="vip-background {{ $ctrl.data.client.vip.level.label }}">
+        <md-card-header>
+            <md-icon>assignment_ind</md-icon>
+            <md-card-header-text>
+                <span class="md-headline">Profil client</span>
+            </md-card-header-text>
+        </md-card-header>
         <md-card-content>
 
             <form name="$ctrl.data.clientProfileForm" novalidate autocomplete="off">

@@ -11,27 +11,27 @@
                 historyData: '<',
                 services: '<',
                 onAddHistoryItem: '&',
-                onSelectHistoryItem: '&'
+                onEditHistoryItem: '&'
             }
         });
 
-    function ClientHistoryController($element, moment, SERVICE_TYPES, USERS) {
+    function ClientHistoryController($element, $timeout, moment, SERVICE_TYPES, USERS) {
         var ctrl = this;
         ctrl.data = {};
         ctrl.status = {};
         ctrl.actions = {};
 
         ctrl.$onChanges = function(changes) {
-            if (changes.clientData && changes.clientData.currentValue && !changes.clientData.isFirstChange()) {
+            if (changes.clientData && changes.clientData.currentValue) {
                 ctrl.data.client = angular.copy(changes.clientData.currentValue);
             }
-            if (changes.historyData && changes.historyData.currentValue && !changes.historyData.isFirstChange()) {
+            if (changes.historyData && changes.historyData.currentValue) {
                 ctrl.data.history = angular.copy(changes.historyData.currentValue);
                 angular.forEach(ctrl.data.history, function(iHistory) {
                     iHistory.date = new Date(iHistory.date);
                 });
             }
-            if (changes.services && changes.services.currentValue && !changes.services.isFirstChange()) {
+            if (changes.services && changes.services.currentValue) {
                 ctrl.data.services = angular.copy(changes.services.currentValue);
             }
         }
@@ -40,8 +40,12 @@
             ctrl.data.maxDate = new Date();
             ctrl.data.servicesTypes = prepareDropDown(SERVICE_TYPES);
 
+            $timeout(function() {
+                ctrl.status.isOpen = false;
+            }, 500);
+
             ctrl.actions.addNewHistoryItem = addNewHistoryItem;
-            ctrl.actions.selectHistoryItem = selectHistoryItem;
+            ctrl.actions.editHistoryItem = editHistoryItem;
 
             $element.find('input').on('keydown', function(ev) { ev.stopPropagation(); });
 
@@ -64,11 +68,11 @@
             resetNewHistoryItemForm();
         }
 
-        function selectHistoryItem(historyItem) {
-            ctrl.onSelectHistoryItem({ $event: { historyItem: historyItem } });
+        function editHistoryItem(event, historyItem) {
+            ctrl.onEditHistoryItem({ $event: { historyItem: historyItem, event: event } });
             resetNewHistoryItemForm();
         }
     }
 
-    ClientHistoryController.$inject = ['$element', 'moment', 'SERVICE_TYPES', 'USERS'];
+    ClientHistoryController.$inject = ['$element', '$timeout', 'moment', 'SERVICE_TYPES', 'USERS'];
 })();
