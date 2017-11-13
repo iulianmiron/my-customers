@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('cm.services.admin.services', [])
+        .module('cm.services.settings.services', [])
         .service('ServicesServices', ServicesServices);
 
     function ServicesServices($http, $log) {

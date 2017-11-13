@@ -1,2 +1,2 @@
-set PORT=3500
-node "D:\!Aplicatia de cliente\my-customers\src\server.js"
+set PORT=5000
+node "D:\dev\my-customers\src\server.js"

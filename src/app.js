@@ -56,9 +56,9 @@
                 url: '/client/:id',
                 component: 'client'
             })
-            .state('admin', {
-                url: '/admin',
-                component: 'admin'
+            .state('settings', {
+                url: '/settings',
+                component: 'settings'
             })
             .state('shop', {
                 url: '/shop',

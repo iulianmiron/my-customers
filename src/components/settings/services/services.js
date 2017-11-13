@@ -2,9 +2,9 @@
     'use strict';
 
     angular
-        .module('cm.components.admin.services', [])
+        .module('cm.components.settings.services', [])
         .component('services', {
-            templateUrl: '/components/admin/services/services.html',
+            templateUrl: '/components/settings/services/services.html',
             controller: ServicesController,
             bindings: {}
         });

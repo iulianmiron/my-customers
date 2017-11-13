@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('cm.services.admin.consumables', [])
+        .module('cm.services.settings.consumables', [])
         .service('ConsumablesServices', ConsumablesServices);
 
     function ConsumablesServices($http, $log) {
