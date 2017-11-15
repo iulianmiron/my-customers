@@ -74,14 +74,17 @@
         }
 
         function addHistoryItem(event) {
-            var clientData = event.client;
-            var newHistoryEntry = event.newHistoryEntry;
-            newHistoryEntry._clientId = clientData._id;
 
-            HistoryServices.addHistoryItem(newHistoryEntry).then(function(rHistoryAdded) {
-                toastr.success("Sedinta adaugata", "Succes");
-                getClientHistory(clientData._id);
-            });
+            var dialogData = {
+                historyItem: {
+                    clientId: ctrl.data.clientId
+                },
+                title: 'Adaugati sedinta',
+                services: ctrl.data.allServices
+            };
+            debugger;
+            showDialog(event.event, dialogData, saveNewHistoryItem);
+
         }
 
         function editHistoryItem(event) {
@@ -91,8 +94,15 @@
                 title: 'Editati sedinta',
                 services: ctrl.data.allServices
             };
-
+            debugger;
             showDialog(event.event, dialogData, saveEditedHistoryItem);
+        }
+
+        function saveNewHistoryItem(historyItem) {
+            HistoryServices.addHistoryItem(newHistoryEntry).then(function(rHistoryAdded) {
+                toastr.success("Sedinta adaugata", "Succes");
+                getClientHistory(historyItem._clientId);
+            });
         }
 
         function saveEditedHistoryItem(historyItem) {
@@ -100,20 +110,6 @@
                 toastr.success("Sedinta editata", "Succes");
                 getClientHistory(historyItem._clientId);
             });
-        }
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-
-
-        function addConsumable(event) {
-            var consumable = consumable;
-            var dialogData = {
-                consumable: consumable ? angular.copy(consumable) : null,
-                title: 'Adaugati consumabil nou'
-            };
-            showDialog(event, dialogData, saveNewConsumable);
         }
 
         function showDialog(event, dialogData, cb) {
@@ -127,7 +123,7 @@
                 parent: $rootElement,
                 targetEvent: event,
                 clickOutsideToClose: false,
-                fullscreen: false
+                fullscreen: true
             }).then(function(historyItem) {
                 cb(historyItem);
             }, function() {

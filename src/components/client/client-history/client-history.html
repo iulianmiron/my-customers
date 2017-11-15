@@ -16,7 +16,7 @@
     </md-fab-trigger>
 
     <md-fab-actions>
-        <md-button class="md-fab md-raised">
+        <md-button class="md-fab md-raised" ng-click="$ctrl.actions.addNewHistoryItem($event)">
             <md-icon>assignment</md-icon>
             <md-tooltip md-direction="top">Adauga sedinta noua</md-tooltip>
         </md-button>
@@ -117,9 +117,6 @@
             </div>
         </md-card-actions>
     </md-card-->
-    <div layout="row" layout-align="end center">
-        
-    </div>
     
 
     <div ng-repeat="historyItem in $ctrl.data.history | orderBy: 'date' track by historyItem._id">

@@ -8,18 +8,9 @@
     </div>
     <div flex="50">
         <client-history 
-            client-data="$ctrl.data.client" 
-            services="$ctrl.data.allServices" 
             history-data="$ctrl.data.history" 
             on-add-history-item="$ctrl.actions.addHistoryItem($event)" 
             on-edit-history-item="$ctrl.actions.editHistoryItem($event)">
         </client-history>
     </div>
-    <!--div flex="30">
-        <client-history-detail 
-            history-item-data="$ctrl.data.selectedHistoryItem" 
-            services="$ctrl.data.allServices" 
-            on-edit-hitory-item="$ctrl.actions.editHistoryItem($event)">
-        </client-history-detail>
-    </div-->
 </div>
