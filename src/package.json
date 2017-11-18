@@ -8,7 +8,7 @@
     "app:dev": "set PORT=%npm_package_config_environments_dev_appPort% && set DEV_SERVER_PORT=%npm_package_config_environments_dev_serverPort% && node \"%npm_package_config_environments_dev_serverPath%\"",
     "app:prod": "node \"%npm_package_config_environments_dev_serverPath%\""
   },
-  "config" : {
+  "config": {
     "environments": {
       "prod": {
         "appPort": 3500,

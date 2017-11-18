@@ -11,7 +11,7 @@
             }
         });
 
-    function ClientController($q, $state, $log, $mdDialog, $rootElement, ClientServices, HistoryServices, ServicesServices, toastr) {
+    function ClientController($q, $state, $log, $mdDialog, $rootElement, ClientDataService, HistoryDataService, ServicesDataService, toastr) {
         var ctrl = this;
 
         ctrl.$onInit = function() {
@@ -38,53 +38,50 @@
         }
 
         function getClientProfile(clientId) {
-            ClientServices.getClient(clientId).then(function(rClientProfile) {
+            ClientDataService.getClient(clientId).then(function(rClientProfile) {
                 ctrl.data.client = rClientProfile;
                 ctrl.data.clientBackup = rClientProfile;
             });
         }
 
         function getAllServices() {
-            ServicesServices.getAllServices().then(function(rServices) {
+            ServicesDataService.getAllServices().then(function(rServices) {
                 ctrl.data.allServices = rServices;
             });
         }
 
         function saveClientProfile(event) {
-            if (!event.clientData._id) { addNewClient(event.clientData); } else { updateClient(event.clientData); }
+            event.clientData._id ? updateClient(event.clientData) : addNewClient(event.clientData);
         }
 
         function addNewClient(client) {
-            ClientServices.addClient(client).then(function(rClientAdded) {
+            ClientDataService.addClient(client).then(function(rClientAdded) {
                 toastr.success("Client adaugat", "Succes");
                 $state.go('client', { id: rClientAdded._id });
             });
         }
 
         function updateClient(client) {
-            ClientServices.updateClient(client).then(function(rSuccess) {
+            ClientDataService.updateClient(client).then(function(rSuccess) {
                 toastr.success("Client editat", "Succes");
             });
         }
 
         function getClientHistory(clientId) {
-            HistoryServices.getClientHistory(clientId).then(function(rClientHistory) {
+            HistoryDataService.getClientHistory(clientId).then(function(rClientHistory) {
                 ctrl.data.history = rClientHistory;
             });
         }
 
         function addHistoryItem(event) {
-
             var dialogData = {
                 historyItem: {
-                    clientId: ctrl.data.clientId
+                    _clientId: ctrl.data.clientId
                 },
                 title: 'Adaugati sedinta',
                 services: ctrl.data.allServices
             };
-            debugger;
             showDialog(event.event, dialogData, saveNewHistoryItem);
-
         }
 
         function editHistoryItem(event) {
@@ -94,19 +91,18 @@
                 title: 'Editati sedinta',
                 services: ctrl.data.allServices
             };
-            debugger;
             showDialog(event.event, dialogData, saveEditedHistoryItem);
         }
 
         function saveNewHistoryItem(historyItem) {
-            HistoryServices.addHistoryItem(newHistoryEntry).then(function(rHistoryAdded) {
+            HistoryDataService.addHistoryItem(historyItem).then(function(rSuccess) {
                 toastr.success("Sedinta adaugata", "Succes");
                 getClientHistory(historyItem._clientId);
             });
         }
 
         function saveEditedHistoryItem(historyItem) {
-            HistoryServices.editHistoryItem(historyItem).then(function(rSuccess) {
+            HistoryDataService.editHistoryItem(historyItem).then(function(rSuccess) {
                 toastr.success("Sedinta editata", "Succes");
                 getClientHistory(historyItem._clientId);
             });
@@ -130,9 +126,7 @@
                 //historyItem action cancelled
             });
         }
-
-
     }
 
-    ClientController.$inject = ['$q', '$state', '$log', '$mdDialog', '$rootElement', 'ClientServices', 'HistoryServices', 'ServicesServices', 'toastr'];
+    ClientController.$inject = ['$q', '$state', '$log', '$mdDialog', '$rootElement', 'ClientDataService', 'HistoryDataService', 'ServicesDataService', 'toastr'];
 })();

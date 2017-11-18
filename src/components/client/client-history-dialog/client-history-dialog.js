@@ -14,8 +14,7 @@
         ctrl.data.title = dialogData.title;
         ctrl.data.historyItem = dialogData.historyItem;
         ctrl.data.services = dialogData.services;
-        ctrl.data.historyItemBackup = angular.copy(dialogData.historyItem);
-        ctrl.data.historyItem.date = new Date(ctrl.data.historyItem.date);
+        ctrl.data.historyItem.date = ctrl.data.historyItem.date ? new Date(ctrl.data.historyItem.date) : new Date();
 
         ctrl.data.maxDate = new Date();
         ctrl.data.servicesTypes = prepareDropDown(SERVICE_TYPES);

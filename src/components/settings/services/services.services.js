@@ -3,9 +3,9 @@
 
     angular
         .module('cm.services.settings.services', [])
-        .service('ServicesServices', ServicesServices);
+        .service('ServicesDataService', ServicesDataService);
 
-    function ServicesServices($http, $log) {
+    function ServicesDataService($http, $log) {
         var service = this;
 
         service.addService = addService;
@@ -46,5 +46,5 @@
         }
     }
 
-    ServicesServices.$inject = ['$http', '$log'];
+    ServicesDataService.$inject = ['$http', '$log'];
 })();

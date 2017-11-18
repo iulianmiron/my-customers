@@ -158,14 +158,14 @@
             </form>
         </md-card-content>
         <md-card-actions>
-            <div layout="row" layout-align="end center">
+            <div layout="row" layout-wrap layout-align="end center">
                 <md-button class="md-raised md-default" ng-show="$ctrl.status.editClient" ng-click="$ctrl.actions.resetForm()">
                     <md-icon>cancel</md-icon>
                     Renunta
                 </md-button>
 
                 <md-button class="md-raised md-primary" ng-show="$ctrl.status.editClient" ng-disabled="$ctrl.data.clientProfileForm.$invalid" ng-click="$ctrl.actions.saveClientProfile($ctrl.data.client)">
-                    <md-icon>save</md-icon>
+                    <md-icon>done</md-icon>
                     Salveaza
                 </md-button>
 
