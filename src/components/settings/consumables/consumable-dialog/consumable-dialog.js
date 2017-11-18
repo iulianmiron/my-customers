@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('cm.components.admin.consumables.consumableDialog', [])
+        .module('cm.components.settings.consumables.consumableDialog', [])
         .controller('ConsumableDialogController', ConsumableDialogController);
 
     function ConsumableDialogController($mdDialog, NO_PICTURE, dialogData) {

@@ -2,9 +2,9 @@
     'use strict';
 
     angular
-        .module('cm.components.admin.consumables', [])
+        .module('cm.components.settings.consumables', [])
         .component('consumables', {
-            templateUrl: '/components/admin/consumables/consumables.html',
+            templateUrl: '/components/settings/consumables/consumables.html',
             controller: ConsumablesController,
             bindings: {}
         });
@@ -80,7 +80,7 @@
             $mdDialog.show({
                 controller: 'ConsumableDialogController',
                 controllerAs: '$ctrl',
-                templateUrl: '/components/admin/consumables/consumable-dialog/consumable-dialog.html',
+                templateUrl: '/components/settings/consumables/consumable-dialog/consumable-dialog.html',
                 locals: {
                     dialogData: dialogData
                 },

@@ -1,0 +1,2 @@
+Desktop PC
+sc.exe create MongoDB binPath= "\"C:\Program Files\MongoDB\Server\3.4\bin\mongod.exe\" --service --config=\"D:\dev\my-customers\config\dev\mongod.cfg\"" DisplayName= "MongoDBDEV" start= "auto"

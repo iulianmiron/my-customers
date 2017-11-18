@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('cm.components.admin.products.addProductDialog', [])
+        .module('cm.components.settings.products.addProductDialog', [])
         .controller('AddProductDialogController', AddProductDialogController);
 
     function AddProductDialogController($mdDialog, NO_PICTURE) {

@@ -3,10 +3,10 @@
 
     angular
         .module('cm.services.client', [])
-        .service('ClientServices', ClientServices)
-        .service('HistoryServices', HistoryServices);
+        .service('ClientDataService', ClientDataService)
+        .service('HistoryDataService', HistoryDataService);
 
-    function ClientServices($http, $log) {
+    function ClientDataService($http, $log) {
         var service = this;
 
         service.addClient = addClient;
@@ -38,7 +38,7 @@
         }
     }
 
-    function HistoryServices($http, $log) {
+    function HistoryDataService($http, $log) {
         var service = this;
 
         service.addHistoryItem = addHistoryItem;
@@ -79,6 +79,6 @@
         }
     }
 
-    ClientServices.$inject = ['$http', '$log'];
-    HistoryServices.$inject = ['$http', '$log'];
+    ClientDataService.$inject = ['$http', '$log'];
+    HistoryDataService.$inject = ['$http', '$log'];
 })();

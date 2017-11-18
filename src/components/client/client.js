@@ -11,7 +11,7 @@
             }
         });
 
-    function ClientController($q, $state, $log, ClientServices, HistoryServices, ServicesServices, toastr) {
+    function ClientController($q, $state, $log, $mdDialog, $rootElement, ClientDataService, HistoryDataService, ServicesDataService, toastr) {
         var ctrl = this;
 
         ctrl.$onInit = function() {
@@ -23,9 +23,9 @@
             ctrl.data.clientId = ctrl.transition.params("to").id;
             ctrl.data.newClient = false;
 
-            if (ctrl.data.clientId != 0) {
+            if (ctrl.data.clientId !== 0) {
                 $q.all([getClientProfile(ctrl.data.clientId), getClientHistory(ctrl.data.clientId)]).then(function() {});
-            } else if (ctrl.data.clientId == 0) {
+            } else if (ctrl.data.clientId === 0) {
                 ctrl.data.newClient = true;
             }
             getAllServices();
@@ -33,69 +33,100 @@
             ctrl.actions.saveClientProfile = saveClientProfile;
             ctrl.actions.getClientProfile = getClientProfile;
             ctrl.actions.addHistoryItem = addHistoryItem;
-            ctrl.actions.selectHistoryItem = selectHistoryItem;
             ctrl.actions.editHistoryItem = editHistoryItem;
 
         }
 
         function getClientProfile(clientId) {
-            ClientServices.getClient(clientId).then(function(rClientProfile) {
+            ClientDataService.getClient(clientId).then(function(rClientProfile) {
                 ctrl.data.client = rClientProfile;
                 ctrl.data.clientBackup = rClientProfile;
             });
         }
 
         function getAllServices() {
-            ServicesServices.getAllServices().then(function(rServices) {
+            ServicesDataService.getAllServices().then(function(rServices) {
                 ctrl.data.allServices = rServices;
             });
         }
 
         function saveClientProfile(event) {
-            if (!event.clientData._id) { addNewClient(event.clientData); } else { updateClient(event.clientData); }
+            event.clientData._id ? updateClient(event.clientData) : addNewClient(event.clientData);
         }
 
         function addNewClient(client) {
-            ClientServices.addClient(client).then(function(rClientAdded) {
+            ClientDataService.addClient(client).then(function(rClientAdded) {
                 toastr.success("Client adaugat", "Succes");
                 $state.go('client', { id: rClientAdded._id });
             });
         }
 
         function updateClient(client) {
-            ClientServices.updateClient(client).then(function(rSuccess) {
+            ClientDataService.updateClient(client).then(function(rSuccess) {
                 toastr.success("Client editat", "Succes");
             });
         }
 
-        function addHistoryItem(event) {
-            var clientData = event.client;
-            var newHistoryEntry = event.newHistoryEntry;
-            newHistoryEntry._clientId = clientData._id;
-
-            HistoryServices.addHistoryItem(newHistoryEntry).then(function(rHistoryAdded) {
-                toastr.success("Sedinta adaugata", "Succes");
-                getClientHistory(clientData._id);
+        function getClientHistory(clientId) {
+            HistoryDataService.getClientHistory(clientId).then(function(rClientHistory) {
+                ctrl.data.history = rClientHistory;
             });
         }
 
-        function selectHistoryItem(event) {
-            ctrl.data.selectedHistoryItem = event.historyItem;
+        function addHistoryItem(event) {
+            var dialogData = {
+                historyItem: {
+                    _clientId: ctrl.data.clientId
+                },
+                title: 'Adaugati sedinta',
+                services: ctrl.data.allServices
+            };
+            showDialog(event.event, dialogData, saveNewHistoryItem);
         }
 
         function editHistoryItem(event) {
-            HistoryServices.editHistoryItem(event.historyItem).then(function(rSuccess) {
-                toastr.success("Sedinta editata", "Succes");
-                getClientHistory(event.historyItem._clientId);
+            var historyItem = event.historyItem;
+            var dialogData = {
+                historyItem: historyItem ? angular.copy(historyItem) : null,
+                title: 'Editati sedinta',
+                services: ctrl.data.allServices
+            };
+            showDialog(event.event, dialogData, saveEditedHistoryItem);
+        }
+
+        function saveNewHistoryItem(historyItem) {
+            HistoryDataService.addHistoryItem(historyItem).then(function(rSuccess) {
+                toastr.success("Sedinta adaugata", "Succes");
+                getClientHistory(historyItem._clientId);
             });
         }
 
-        function getClientHistory(clientId) {
-            HistoryServices.getClientHistory(clientId).then(function(rClientHistory) {
-                ctrl.data.history = rClientHistory;
+        function saveEditedHistoryItem(historyItem) {
+            HistoryDataService.editHistoryItem(historyItem).then(function(rSuccess) {
+                toastr.success("Sedinta editata", "Succes");
+                getClientHistory(historyItem._clientId);
+            });
+        }
+
+        function showDialog(event, dialogData, cb) {
+            $mdDialog.show({
+                controller: 'ClientHistoryDialogController',
+                controllerAs: '$ctrl',
+                templateUrl: 'components/client/client-history-dialog/client-history-dialog.html',
+                locals: {
+                    dialogData: dialogData
+                },
+                parent: $rootElement,
+                targetEvent: event,
+                clickOutsideToClose: false,
+                fullscreen: true
+            }).then(function(historyItem) {
+                cb(historyItem);
+            }, function() {
+                //historyItem action cancelled
             });
         }
     }
 
-    ClientController.$inject = ['$q', '$state', '$log', 'ClientServices', 'HistoryServices', 'ServicesServices', 'toastr'];
+    ClientController.$inject = ['$q', '$state', '$log', '$mdDialog', '$rootElement', 'ClientDataService', 'HistoryDataService', 'ServicesDataService', 'toastr'];
 })();

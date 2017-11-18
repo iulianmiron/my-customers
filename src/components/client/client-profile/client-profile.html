@@ -1,8 +1,11 @@
-<h2>
-    <md-icon>assignment_ind</md-icon> Profil client
-</h2>
 <md-content style="max-height: 80vh">
     <md-card class="vip-background {{ $ctrl.data.client.vip.level.label }}">
+        <md-card-header>
+            <md-icon>assignment_ind</md-icon>
+            <md-card-header-text>
+                <span class="md-headline">Profil client</span>
+            </md-card-header-text>
+        </md-card-header>
         <md-card-content>
 
             <form name="$ctrl.data.clientProfileForm" novalidate autocomplete="off">
@@ -155,14 +158,14 @@
             </form>
         </md-card-content>
         <md-card-actions>
-            <div layout="row" layout-align="end center">
+            <div layout="row" layout-wrap layout-align="end center">
                 <md-button class="md-raised md-default" ng-show="$ctrl.status.editClient" ng-click="$ctrl.actions.resetForm()">
                     <md-icon>cancel</md-icon>
                     Renunta
                 </md-button>
 
                 <md-button class="md-raised md-primary" ng-show="$ctrl.status.editClient" ng-disabled="$ctrl.data.clientProfileForm.$invalid" ng-click="$ctrl.actions.saveClientProfile($ctrl.data.client)">
-                    <md-icon>save</md-icon>
+                    <md-icon>done</md-icon>
                     Salveaza
                 </md-button>
 

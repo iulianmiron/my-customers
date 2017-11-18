@@ -4,7 +4,22 @@
   "description": "Webapp for managing customers",
   "main": "index.html",
   "scripts": {
-    "test": "echo"
+    "test": "echo",
+    "app:dev": "set PORT=%npm_package_config_environments_dev_appPort% && set DEV_SERVER_PORT=%npm_package_config_environments_dev_serverPort% && node \"%npm_package_config_environments_dev_serverPath%\"",
+    "app:prod": "node \"%npm_package_config_environments_dev_serverPath%\""
+  },
+  "config": {
+    "environments": {
+      "prod": {
+        "appPort": 3500,
+        "serverPort": 27017
+      },
+      "dev": {
+        "appPort": 5000,
+        "serverPort": 27500,
+        "serverPath": "D:/dev/my-customers/src/server.js"
+      }
+    }
   },
   "repository": {
     "type": "git",
