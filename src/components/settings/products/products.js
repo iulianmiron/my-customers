@@ -2,9 +2,9 @@
     'use strict';
 
     angular
-        .module('cm.components.admin.products', [])
+        .module('cm.components.settings.products', [])
         .component('products', {
-            templateUrl: '/components/admin/products/products.html',
+            templateUrl: '/components/settings/products/products.html',
             controller: ProductsController,
             bindings: {}
         });
@@ -31,7 +31,7 @@
             $mdDialog.show({
                 controller: 'AddProductDialogController',
                 controllerAs: '$ctrl',
-                templateUrl: '/components/admin/products/add-product/add-product.dialog.html',
+                templateUrl: '/components/settings/products/add-product/add-product.dialog.html',
                 locals: {
                     serviceTypes: ctrl.data.serviceTypes
                 },
@@ -72,7 +72,7 @@
             $mdDialog.show({
                 controller: 'EditProductDialogController',
                 controllerAs: '$ctrl',
-                templateUrl: '/components/admin/products/edit-product/edit-product.dialog.html',
+                templateUrl: '/components/settings/products/edit-product/edit-product.dialog.html',
                 locals: {
                     product: angular.copy(product)
                 },

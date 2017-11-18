@@ -19,10 +19,14 @@
         .run(appRun)
         .controller('appController', appCtrl);
 
-    function appConfig($stateProvider, $urlRouterProvider, $locationProvider, $mdThemingProvider, toastrConfig) {
+    function appConfig($stateProvider, $urlRouterProvider, $locationProvider, $mdThemingProvider, $mdDateLocaleProvider, toastrConfig) {
         $mdThemingProvider.theme('default')
             .primaryPalette('blue')
             .accentPalette('orange');
+
+        $mdDateLocaleProvider.formatDate = function (date) {
+            return moment(date).format('DD/MM/YYYY');
+        };
 
         // $locationProvider.html5Mode(true);
         $urlRouterProvider.otherwise('/home');
@@ -52,9 +56,9 @@
                 url: '/client/:id',
                 component: 'client'
             })
-            .state('admin', {
-                url: '/admin',
-                component: 'admin'
+            .state('settings', {
+                url: '/settings',
+                component: 'settings'
             })
             .state('shop', {
                 url: '/shop',
@@ -81,7 +85,7 @@
 
     }
 
-    appConfig.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider', '$mdThemingProvider', 'toastrConfig'];
+    appConfig.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider', '$mdThemingProvider', '$mdDateLocaleProvider', 'toastrConfig'];
     appRun.$inject = ['amMoment'];
     appCtrl.$inject = ['$http', '$log', 'toastr'];
 })();

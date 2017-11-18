@@ -2,10 +2,10 @@
     'use strict';
 
     angular
-        .module('cm.services.admin.services', [])
-        .service('ServicesServices', ServicesServices);
+        .module('cm.services.settings.services', [])
+        .service('ServicesDataService', ServicesDataService);
 
-    function ServicesServices($http, $log) {
+    function ServicesDataService($http, $log) {
         var service = this;
 
         service.addService = addService;
@@ -46,5 +46,5 @@
         }
     }
 
-    ServicesServices.$inject = ['$http', '$log'];
+    ServicesDataService.$inject = ['$http', '$log'];
 })();

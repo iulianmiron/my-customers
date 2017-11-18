@@ -2,14 +2,14 @@
     'use strict';
 
     angular
-        .module('cm.components.admin', [])
-        .component('admin', {
-            templateUrl: '/components/admin/admin.html',
-            controller: AdminController,
+        .module('cm.components.settings', [])
+        .component('settings', {
+            templateUrl: '/components/settings/settings.html',
+            controller: SettingsController,
             bindings: {}
         });
 
-    function AdminController() {
+    function SettingsController() {
         var ctrl = this;
         ctrl.data = {};
         ctrl.status = {};
@@ -20,5 +20,5 @@
         }
     }
 
-    AdminController.$inject = [];
+    SettingsController.$inject = [];
 })();

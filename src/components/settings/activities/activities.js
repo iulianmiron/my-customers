@@ -2,9 +2,9 @@
 	'use strict';
 
 	angular
-		.module('cm.components.admin.activities', [])
+		.module('cm.components.settings.activities', [])
 		.component('activities', {
-			templateUrl: '/components/admin/activities/activities.html',
+			templateUrl: '/components/settings/activities/activities.html',
             controller: ActivitiesController,
             bindings: {}
 		});

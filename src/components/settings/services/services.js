@@ -2,14 +2,14 @@
     'use strict';
 
     angular
-        .module('cm.components.admin.services', [])
+        .module('cm.components.settings.services', [])
         .component('services', {
-            templateUrl: '/components/admin/services/services.html',
+            templateUrl: '/components/settings/services/services.html',
             controller: ServicesController,
             bindings: {}
         });
 
-    function ServicesController(ServicesServices, SERVICE_TYPES, toastr) {
+    function ServicesController(ServicesDataService, SERVICE_TYPES, toastr) {
         var ctrl = this;
         ctrl.data = {};
         ctrl.status = {};
@@ -42,7 +42,7 @@
         }
 
         function editService(service) {
-            ServicesServices.updateService(service).then(function(rSuccess) {
+            ServicesDataService.updateService(service).then(function(rSuccess) {
                 toastr.success("Serviciul editat cu succes");
                 return rSuccess.data;
             });
@@ -51,7 +51,7 @@
         }
 
         function saveNewService(newService) {
-            ServicesServices.addService(newService).then(function(rSuccess) {
+            ServicesDataService.addService(newService).then(function(rSuccess) {
                 toastr.success("Serviciul adaugat cu succes");
                 return rSuccess.data;
             });
@@ -60,7 +60,7 @@
         }
 
         function deleteService(serviceId) {
-            ServicesServices.deleteService(serviceId).then(function(rSuccess) {
+            ServicesDataService.deleteService(serviceId).then(function(rSuccess) {
                 toastr.success("Serviciul sters cu succes");
                 return rSuccess.data;
             });
@@ -68,11 +68,11 @@
         }
 
         function getAllServices() {
-            ServicesServices.getAllServices().then(function(rServices) {
+            ServicesDataService.getAllServices().then(function(rServices) {
                 ctrl.data.allServices = rServices;
             });
         }
     }
 
-    ServicesController.$inject = ['ServicesServices', 'SERVICE_TYPES', 'toastr'];
+    ServicesController.$inject = ['ServicesDataService', 'SERVICE_TYPES', 'toastr'];
 })();

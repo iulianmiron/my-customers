@@ -1,0 +1,2 @@
+mongorestore --drop -d <database-name> <directory-of-dumped-backup>
+mongorestore --drop D:\dev\db --port="27500"

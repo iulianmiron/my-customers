@@ -5,8 +5,8 @@
 		.module('cm.services', [
 			'cm.services.searchClients',
 			'cm.services.client',
-			'cm.services.admin.services',
-			'cm.services.admin.products',
-			'cm.services.admin.consumables'			
+			'cm.services.settings.services',
+			'cm.services.settings.products',
+			'cm.services.settings.consumables'			
 			]);
 })();

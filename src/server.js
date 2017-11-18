@@ -2,11 +2,11 @@ var express = require('express');
 var app = express();
 var mongojs = require('mongojs');
 
-var db_prod = '127.0.0.1:27017/';
-var db_dev = '127.0.0.1:27500/';
+var db_base = '127.0.0.1';
+var PORT = (process.env.PORT && process.env.PORT.trim()) || '3500';
+var db_port = process.env.DEV_SERVER_PORT || '27017';
 
-var PORT = process.env.PORT;
-var db = (PORT === '5000') ? db_dev : db_prod;
+var db = db_base + ':' + db_port.trim() + '/';
 
 var db_clients = mongojs(db + 'clients', ['clients', 'history', 'services']);
 var db_products = mongojs(db + 'products', ['products']);
@@ -68,7 +68,7 @@ app.put('/clients/:id', function(req, res) {
             $set: {
                 firstName: req.body.firstName,
                 lastName: req.body.lastName,
-                age: req.body.age,
+                dateOfBirth: req.body.dateOfBirth,
                 phoneNumber: req.body.phoneNumber,
                 email: req.body.email,
                 skinType: req.body.skinType,

@@ -13,7 +13,7 @@
         .constant('SIDEBAR_MENU_ITEMS', [
             { icon: 'search', label: 'Cauta Clienti', url: 'home'}, 
             { icon: 'store', label: 'Shop', url: 'shop'}, 
-            { icon: 'settings', label: 'Admin', url: 'admin'},
+            { icon: 'settings', label: 'Settings', url: 'settings'},
             { icon: 'account_balance', label: 'Plata', url: 'bankAccount'}
         ])
         .constant('CLIENT_VIP_TYPES', [

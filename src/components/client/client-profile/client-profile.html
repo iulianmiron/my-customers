@@ -1,52 +1,69 @@
-<h2>
-    <md-icon>assignment_ind</md-icon> Profil client
-</h2>
 <md-content style="max-height: 80vh">
     <md-card class="vip-background {{ $ctrl.data.client.vip.level.label }}">
+        <md-card-header>
+            <md-icon>assignment_ind</md-icon>
+            <md-card-header-text>
+                <span class="md-headline">Profil client</span>
+            </md-card-header-text>
+        </md-card-header>
         <md-card-content>
 
             <form name="$ctrl.data.clientProfileForm" novalidate autocomplete="off">
                 <md-input-container class="md-block">
                     <label>Prenume</label>
                     <md-icon>person</md-icon>
-                    <input name="clientFirstName" ng-model="$ctrl.data.client.firstName" ng-readonly="!$ctrl.status.editClient" minlength="2" md-maxlength="50" required>
+                    <input name="clientFirstName" ng-model="$ctrl.data.client.firstName" ng-readonly="!$ctrl.status.editClient" minlength="2" md-maxlength="100" required>
                     <div ng-messages="$ctrl.data.clientProfileForm.clientFirstName.$error">
                         <div ng-message="required">Prenumele este obligatoriu</div>
-                        <div ng-message="md-maxlength">Prenumele trebuie sa aiba sub 50 de caractere</div>
-                        <div ng-message="minlength">Prenumele trebuie sa aiba peste 1 caracter</div>
+                        <div ng-message="md-maxlength">Prenumele trebuie sa aiba sub 100 de caractere</div>
+                        <div ng-message="minlength">Prenumele trebuie sa aiba mai mult de 1 caracter</div>
                     </div>
                 </md-input-container>
 
                 <md-input-container class="md-block">
                     <label>Nume</label>
                     <md-icon>person</md-icon>
-                    <input name="clientLastName" ng-model="$ctrl.data.client.lastName" ng-readonly="!$ctrl.status.editClient" minlength="2" md-maxlength="50" required>
+                    <input name="clientLastName" ng-model="$ctrl.data.client.lastName" ng-readonly="!$ctrl.status.editClient" minlength="2" md-maxlength="100" required>
                     <div ng-messages="$ctrl.data.clientProfileForm.clientLastName.$error">
                         <div ng-message="required">Numele este obligatoriu</div>
-                        <div ng-message="md-maxlength">Numele trebuie sa aiba sub 50 de caractere</div>
-                        <div ng-message="minlength">Numele trebuie sa aiba peste 1 caracter</div>
+                        <div ng-message="md-maxlength">Numele trebuie sa aiba sub 100 de caractere</div>
+                        <div ng-message="minlength">Numele trebuie sa aiba mai mult de 1 caracter</div>
                     </div>
                 </md-input-container>
-                <div layout="row">
-                    <md-input-container flex="40">
-                        <label>Varsta</label>
-                        <md-icon>person</md-icon>
-                        <input name="clientAge" type="number" ng-model="$ctrl.data.client.age" ng-readonly="!$ctrl.status.editClient" min="1" max="99" required>
-                        <div ng-messages="$ctrl.data.clientProfileForm.clientAge.$error">
-                            <div ng-message="required">Varsta este obligatorie</div>
-                            <div ng-message="min">Varsta trebuie sa fie minim o cifra</div>
-                            <div ng-message="max">Varsta trebuie sa fie maxim 2 cifre</div>
+
+                <md-input-container class="md-block">
+                    <label>Telefon</label>
+                    <md-icon>phone</md-icon>
+                    <input name="clientPhoneNo" type="text" ng-model="$ctrl.data.client.phoneNumber" ng-model-options="{debounce: 500}" ng-change="$ctrl.actions.checkIfDuplicate('phoneNumber', $ctrl.data.client.phoneNumber)" ng-readonly="!$ctrl.status.editClient" minlength="10" md-maxlength="10" required>
+                    <div ng-messages="$ctrl.data.clientProfileForm.clientPhoneNo.$error">
+                        <div ng-message="required">Numarul de telefon este obligatoriu</div>
+                        <div ng-message="minlength, md-maxlength">Numarul de telefon trebuie sa inceapa cu zero si sa fie format din 10 cifre</div>
+                    </div>
+                </md-input-container>
+
+                <div layout="column" layout-gt-md="row">
+                    <md-input-container class="md-block">
+                        <label>Data nasterii</label>
+                        <md-datepicker flex
+                            name="clientDateOfBirth"
+                            ng-model="$ctrl.data.client.dateOfBirth" 
+                            md-current-view="year" 
+                            md-placeholder="Data Nasterii"
+                            md-max-date="$ctrl.data.maxDateOfBirth"
+                            md-open-on-focus
+                            required
+                            ng-blur="$ctrl.actions.calculateClientAge($ctrl.data.client.dateOfBirth)"
+                            ng-disabled="!$ctrl.status.editClient">
+                        </md-datepicker>
+                        <div ng-messages="$ctrl.data.clientProfileForm.clientDateOfBirth.$error">
+                            <div ng-message="required">Data nasterii este obligatorie</div>
                         </div>
                     </md-input-container>
 
-                    <md-input-container class="md-block" flex>
-                        <label>Telefon</label>
-                        <md-icon>phone</md-icon>
-                        <input name="clientPhoneNo" type="text" ng-model="$ctrl.data.client.phoneNumber" ng-model-options="{debounce: 500}" ng-change="$ctrl.actions.checkIfDuplicate('phoneNumber', $ctrl.data.client.phoneNumber)" ng-readonly="!$ctrl.status.editClient" minlength="10" md-maxlength="10" required>
-                        <div ng-messages="$ctrl.data.clientProfileForm.clientPhoneNo.$error">
-                            <div ng-message="required">Numarul de telefon este obligatoriu</div>
-                            <div ng-message="minlength, md-maxlength">Numarul de telefon trebuie sa inceapa cu zero si sa fie format din 10 cifre</div>
-                        </div>
+                    <md-input-container flex>
+                        <label>Varsta</label>
+                        <md-icon>person</md-icon>
+                        <input name="clientAge" type="text" ng-model="$ctrl.data.clientAge" ng-readonly="true">
                     </md-input-container>
                 </div>
 
@@ -141,14 +158,14 @@
             </form>
         </md-card-content>
         <md-card-actions>
-            <div layout="row" layout-align="end center">
+            <div layout="row" layout-wrap layout-align="end center">
                 <md-button class="md-raised md-default" ng-show="$ctrl.status.editClient" ng-click="$ctrl.actions.resetForm()">
                     <md-icon>cancel</md-icon>
                     Renunta
                 </md-button>
 
                 <md-button class="md-raised md-primary" ng-show="$ctrl.status.editClient" ng-disabled="$ctrl.data.clientProfileForm.$invalid" ng-click="$ctrl.actions.saveClientProfile($ctrl.data.client)">
-                    <md-icon>save</md-icon>
+                    <md-icon>done</md-icon>
                     Salveaza
                 </md-button>
 
