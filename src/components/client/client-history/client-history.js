@@ -7,19 +7,23 @@
             templateUrl: '/components/client/client-history/client-history.html',
             controller: ClientHistoryController,
             bindings: {
+                newClient: '<',
                 historyData: '<',
                 onAddHistoryItem: '&',
                 onEditHistoryItem: '&'
             }
         });
 
-    function ClientHistoryController($element, $timeout, moment, SERVICE_TYPES, USERS) {
+    function ClientHistoryController() {
         var ctrl = this;
         ctrl.data = {};
         ctrl.status = {};
         ctrl.actions = {};
 
         ctrl.$onChanges = function(changes) {
+            if(changes.newClient && changes.newClient.currentValue) {
+                ctrl.data.newClient = angular.copy(changes.newClient.currentValue);
+            }
             if (changes.historyData && changes.historyData.currentValue) {
                 ctrl.data.history = angular.copy(changes.historyData.currentValue);
                 angular.forEach(ctrl.data.history, function(iHistory) {
@@ -41,5 +45,5 @@
         }
     }
 
-    ClientHistoryController.$inject = ['$element', '$timeout', 'moment', 'SERVICE_TYPES', 'USERS'];
+    ClientHistoryController.$inject = [];
 })();

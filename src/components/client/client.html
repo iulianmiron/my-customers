@@ -8,6 +8,7 @@
     </div>
     <div flex="50">
         <client-history 
+            new-client="$ctrl.data.newClient"
             history-data="$ctrl.data.history" 
             on-add-history-item="$ctrl.actions.addHistoryItem($event)" 
             on-edit-history-item="$ctrl.actions.editHistoryItem($event)">
