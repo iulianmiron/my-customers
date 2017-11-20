@@ -106,9 +106,3 @@
 .vip-text.very-high {
   color: green;
 }
-
-/* possible fix for md-select behind mddialog */
-/* .md-select-menu-container, 
-.md-open-menu-container {
-    z-index:999999important;
-} */

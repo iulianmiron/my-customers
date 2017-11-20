@@ -17,7 +17,7 @@
                         return rClients.data;
                     })
                     .catch(function(error) {
-                        $log.error('Could not get clients', error);
+                        $log.error('Could not search clients', error);
                     });
             }
         }
