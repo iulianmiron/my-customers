@@ -23,9 +23,9 @@
             ctrl.data.clientId = ctrl.transition.params("to").id;
             ctrl.data.newClient = false;
 
-            if (ctrl.data.clientId !== 0) {
+            if (ctrl.data.clientId !== '0') {
                 $q.all([getClientProfile(ctrl.data.clientId), getClientHistory(ctrl.data.clientId)]).then(function() {});
-            } else if (ctrl.data.clientId === 0) {
+            } else if (ctrl.data.clientId === '0') {
                 ctrl.data.newClient = true;
             }
             getAllServices();
