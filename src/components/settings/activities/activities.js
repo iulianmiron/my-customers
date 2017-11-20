@@ -18,13 +18,13 @@
 		ctrl.$onInit = function() {
 			ctrl.data.noPicture = NO_PICTURE;
 
-			ctrl.actions.getAllActivities = getAllActivities;
-            ctrl.actions.addActivity = addActivity;
-            ctrl.actions.editActivity = editActivity;
-            ctrl.actions.deleteActivity = deleteActivity;
-            ctrl.actions.saveEditedActivity = saveEditedActivity;
+			// ctrl.actions.getAllActivities = getAllActivities;
+            // ctrl.actions.addActivity = addActivity;
+            // ctrl.actions.editActivity = editActivity;
+            // ctrl.actions.deleteActivity = deleteActivity;
+            // ctrl.actions.saveEditedActivity = saveEditedActivity;
            
-            getAllActivities();			
+            // getAllActivities();			
 		}
 
 		function getAllConsumables() {

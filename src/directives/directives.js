@@ -26,7 +26,6 @@
                     }
                 });
                 
-
                 attributes.$observe('vipColor', function(value){
                     if(value){
                         switch(attributes.vipColor) {

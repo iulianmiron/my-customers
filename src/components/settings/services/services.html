@@ -1,83 +1,5 @@
 <div layout="row">
-    <div flex="33">
-        <md-card style="max-height: 80vh">
-            <md-card-title>
-                <md-card-title-text>
-                    <span class="md-headline">
-						{{$ctrl.status.showEditServiceControls ? 'Editeaza Serviciul' : 'Adauga Serviciu Nou'}}
-					</span>
-                </md-card-title-text>
-            </md-card-title>
-            <md-card-content>
-                <form name="$ctrl.data.addServiceForm">
-                    <div layout="row">
-                        <md-input-container class="md-block" flex="50">
-                            <label>Denumire</label>
-                            <md-icon>work</md-icon>
-                            <input name="serviceName" ng-model="$ctrl.data.newService.name" minlength="2" md-maxlength="50" required>
-                            <div ng-messages="$ctrl.data.addServiceForm.serviceName.$error">
-                                <div ng-message="required">Denumirea este obligatorie</div>
-                                <div ng-message="md-maxlength">Denumirea trebuie sa aiba sub 50 de caractere</div>
-                                <div ng-message="minlength">Denumirea trebuie sa aiba mai mult de 1 caracter</div>
-                            </div>
-                        </md-input-container>
-
-                        <md-input-container class="md-block" flex="50">
-                            <label>Tip</label>
-                            <md-select name="serviceType" ng-model="$ctrl.data.newService.type" required>
-                                <md-option ng-value="serviceType.name" ng-repeat="serviceType in $ctrl.data.serviceTypes">{{serviceType.name}}</md-option>
-                            </md-select>
-                            <div ng-messages="$ctrl.data.addServiceForm.serviceType.$error">
-                                <div ng-message="required">Tipul este obligatoriu</div>
-                                <div ng-message="md-maxlength">Tipul trebuie sa aiba sub 50 de caractere</div>
-                                <div ng-message="minlength">Tipul trebuie sa aiba mai mult de 1 caracter</div>
-                            </div>
-                        </md-input-container>
-
-                    </div>
-                    <div layout="row">
-                        <md-input-container class="md-block" flex="50">
-                            <label>Durata (minute)</label>
-                            <md-icon>access_time</md-icon>
-                            <input name="serviceDuration" type="number" ng-model="$ctrl.data.newService.duration" min="0" max="360" step="1" required>
-                            <div ng-messages="$ctrl.data.addServiceForm.serviceDuration.$error">
-                                <div ng-message="required">Durata este obligatorie</div>
-                                <div ng-message="md-maxlength">Durata trebuie sa aiba sub 50 de caractere</div>
-                                <div ng-message="minlength">Durata trebuie sa aiba mai mult de 1 caracter</div>
-                            </div>
-                        </md-input-container>
-
-                        <md-input-container class="md-block" flex="50">
-                            <label>Pret (RON)</label>
-                            <md-icon>attach_money</md-icon>
-                            <input name="servicePrice" type="number" ng-model="$ctrl.data.newService.price" min="0" max="10000" step="1" required>
-                            <div ng-messages="$ctrl.data.addServiceForm.servicePrice.$error">
-                                <div ng-message="required">Pretul este obligatoriu</div>
-                                <div ng-message="min">Pretul trebuie sa fie mai mare decat zero.</div>
-                                <div ng-message="max">Pretul trebuie sa fie mai mic decat 10000.</div>
-                            </div>
-                        </md-input-container>
-                    </div>
-                </form>
-            </md-card-content>
-            <md-card-actions layout="row" layout-align="end center">
-                <md-button class="md-raised" ng-click="$ctrl.actions.cancelSaveNewService()">
-                    <md-icon>cancel</md-icon>
-                    Renunta
-                </md-button>
-                <md-button class="md-raised md-primary" ng-hide="$ctrl.status.showEditServiceControls" ng-disabled="$ctrl.data.addServiceForm.$invalid" ng-click="$ctrl.actions.saveNewService($ctrl.data.newService)">
-                    <md-icon>done</md-icon>
-                    Adauga
-                </md-button>
-                <md-button class="md-raised md-primary" ng-show="$ctrl.status.showEditServiceControls" ng-disabled="$ctrl.data.addServiceForm.$invalid" ng-click="$ctrl.actions.editService($ctrl.data.newService)">
-                    <md-icon>edit</md-icon>
-                    Editeaza
-                </md-button>
-            </md-card-actions>
-        </md-card>
-    </div>
-
-    <div flex="66">
+    <div flex>
         <md-card>
             <md-card-title>
                 <md-card-title-text>
@@ -87,15 +9,29 @@
                 </md-card-title-text>
             </md-card-title>
             <md-card-content class="overflow">
-                <md-list ng-show="$ctrl.data.allServices.length" ng-repeat="serviceType in $ctrl.data.serviceTypes track by serviceType.id">
-                    <md-subheader>{{serviceType.name}}</md-subheader>
-                    <md-list-item ng-repeat="service in filteredServices = ($ctrl.data.allServices | filter: {type: serviceType.name}) track by service._id" class="md-3-line" ng-click="$ctrl.actions.selectService(service)" ng-mouseover="showControl = true" ng-mouseleave="showControl = false">
+                <div layout="row" ng-hide="!$ctrl.data.allServices.length">
+                    <md-input-container flex="33">
+                        <md-icon>search</md-icon>
+                        <label>Cauta serviciu</label>
+                        <input ng-model="searchService" ng-model-options="{debounce: 400}">
+                    </md-input-container>
+                </div>
+                <md-list 
+                    ng-show="$ctrl.data.allServices.length" 
+                    ng-repeat="serviceType in $ctrl.data.serviceTypes track by serviceType.id">
+                    <md-subheader>{{ serviceType.name }}</md-subheader>
+                    <md-list-item 
+                        ng-repeat="service in filteredServices = ($ctrl.data.allServices | filter: {type: serviceType.name} | filter: searchService) track by service._id" 
+                        class="md-3-line" ng-click="$ctrl.actions.editService($event, service)" 
+                        ng-mouseover="showControl = true" 
+                        ng-mouseleave="showControl = false"
+                        >
                         <md-icon class="md-avatar-icon">work</md-icon>
                         <div class="md-list-item-text" layout="column">
                             <h3>Nume: {{ service.name }}</h3>
                             <h4>Tip: {{ service.type }}</h4>
                             <p>Pret: {{ service.price }} - Durata: {{service.duration}}</p>
-                            <md-button ng-click="$ctrl.actions.selectService(service)" ng-show="showControl" class="md-secondary md-icon-button">
+                            <md-button ng-click="$ctrl.actions.editService($event, service)" ng-show="showControl" class="md-secondary md-icon-button">
                                 <md-icon>edit</md-icon>
                                 <md-tooltip md-direction="top">Editeaza</md-tooltip>
                             </md-button>
@@ -113,3 +49,7 @@
         </md-card>
     </div>
 </div>
+
+<md-button class="md-fab md-primary md-fab-top-right" aria-label="add Service" ng-click="$ctrl.actions.addService($event)">
+    <md-icon>add</md-icon>
+</md-button>

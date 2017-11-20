@@ -8,6 +8,8 @@
 
         'cm.components.settings',
         'cm.components.settings.services',
+        'cm.components.settings.services.serviceDialog',
+
         'cm.components.settings.products',
         'cm.components.settings.products.addProductDialog',
         'cm.components.settings.products.editProductDialog',

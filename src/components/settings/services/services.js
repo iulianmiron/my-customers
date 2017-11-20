@@ -9,54 +9,36 @@
             bindings: {}
         });
 
-    function ServicesController(ServicesDataService, SERVICE_TYPES, toastr) {
+    function ServicesController($mdDialog, $rootElement, ServicesDataService, SERVICE_TYPES, toastr) {
         var ctrl = this;
         ctrl.data = {};
         ctrl.status = {};
         ctrl.actions = {};
 
         ctrl.$onInit = function() {
-            ctrl.status.showEditServiceControls = false;
-            ctrl.data.newService = {};
             ctrl.data.serviceTypes = SERVICE_TYPES;
 
-            ctrl.actions.cancelSaveNewService = resetForm;
-            ctrl.actions.saveNewService = saveNewService;
-            ctrl.actions.selectService = selectService;
             ctrl.actions.editService = editService;
             ctrl.actions.deleteService = deleteService;
+            ctrl.actions.addService = addService;
 
             getAllServices();
         }
 
-        function resetForm() {
-            ctrl.data.newService = {};
-            ctrl.status.showEditServiceControls = false;
-            ctrl.data.addServiceForm.$setPristine();
-            ctrl.data.addServiceForm.$setUntouched();
-        }
-
-        function selectService(service) {
-            ctrl.data.newService = angular.copy(service);
-            ctrl.status.showEditServiceControls = true;
-        }
-
-        function editService(service) {
+        function saveEditedService(service) {
             ServicesDataService.updateService(service).then(function(rSuccess) {
                 toastr.success("Serviciul editat cu succes");
                 return rSuccess.data;
             });
             getAllServices();
-            resetForm();
         }
 
-        function saveNewService(newService) {
+        function addNewService(newService) {
             ServicesDataService.addService(newService).then(function(rSuccess) {
                 toastr.success("Serviciul adaugat cu succes");
                 return rSuccess.data;
             });
-            getAllServices();
-            resetForm();
+            getAllServices(); 
         }
 
         function deleteService(serviceId) {
@@ -72,7 +54,46 @@
                 ctrl.data.allServices = rServices;
             });
         }
+
+        function addService(event) {
+            var service = service;
+            var dialogData = {
+                service: service ? angular.copy(service) : null,
+                serviceTypes: ctrl.data.serviceTypes,
+                title: 'Adaugati serviciu nou'
+            };
+            showDialog(event, dialogData, addNewService);
+        }
+
+        function editService(event, service) {
+            var service = service;
+            var dialogData = {
+                service: service ? angular.copy(service) : null,
+                serviceTypes: ctrl.data.serviceTypes,
+                title: 'Editati serviciul: ' + service.name
+            };
+            showDialog(event, dialogData, saveEditedService);
+        }
+
+        function showDialog(event, dialogData, cb) {
+            $mdDialog.show({
+                controller: 'ServiceDialogController',
+                controllerAs: '$ctrl',
+                templateUrl: '/components/settings/services/service-dialog/service-dialog.html',
+                locals: {
+                    dialogData: dialogData
+                },
+                parent: $rootElement,
+                targetEvent: event,
+                clickOutsideToClose: false,
+                fullscreen: true
+            }).then(function(service) {
+                cb(service);
+            }, function() {
+                //service edit cancelled
+            });
+        }
     }
 
-    ServicesController.$inject = ['ServicesDataService', 'SERVICE_TYPES', 'toastr'];
+    ServicesController.$inject = ['$mdDialog', '$rootElement', 'ServicesDataService', 'SERVICE_TYPES', 'toastr'];
 })();
