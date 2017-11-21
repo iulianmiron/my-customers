@@ -129,3 +129,11 @@ md-list-item p {
 .hide-scroll {
   overflow: hidden;
 }
+
+/* .sticky-toolbar {
+  position: fixed;
+}
+
+.app-content {
+  padding-top: 56px;
+} */

@@ -18,12 +18,12 @@
 	</head>
 	<body ng-controller="appController as $ctrl" ng-class="{ 'hide-scroll' : $ctrl.status.isAppLoading }">
 		<!--APP HEADER-->
-		<app-header 
+		<app-header
 			show-sidenav="$ctrl.status.showSidenav">
 		</app-header>
 
 		<!--APP NAVIGATION-->
-		<app-sidebar 
+		<app-sidebar
 			show-sidenav="$ctrl.status.showSidenav">
 		</app-sidebar>
 
@@ -34,7 +34,7 @@
 		</spinner>	
 
 		<!--MAIN VIEW -->
-    	<md-content flex ui-view>
+    	<md-content flex ui-view class="app-content">
 			Loading App...
 		</md-content>
 
