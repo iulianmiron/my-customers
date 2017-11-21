@@ -8,6 +8,7 @@
             'ngAnimate',
             'ui.router',
             'angularMoment',
+            'angularSpinners',
             'toastr',
 
             'cm.constants',

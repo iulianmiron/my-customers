@@ -3,7 +3,8 @@
 
     angular
         .module('cm.services.settings.services', [])
-        .service('ServicesDataService', ServicesDataService);
+        .service('ServicesDataService', ServicesDataService)
+        .service('ServiceTypesDataService', ServiceTypesDataService);
 
     function ServicesDataService($http, $log) {
         var service = this;
@@ -46,5 +47,47 @@
         }
     }
 
+    function ServiceTypesDataService($http, $log) {
+        var service = this;
+
+        service.addServiceType      = addServiceType;
+        service.getAllServiceTypes  = getAllServiceTypes;
+        service.updateServiceType   = updateServiceType;
+        service.deleteServiceType   = deleteServiceType;
+
+        function addServiceType(serviceType) {
+            return $http.post('/service-types', serviceType).then(function(rSuccess) {
+                return rSuccess.data;
+            }).catch(function(error) {
+                $log.error('Could not add service type', error);
+            });
+        }
+
+        function getAllServiceTypes() {
+            return $http.get('/service-types').then(function(rServiceTypes) {
+                return rServiceTypes.data;
+            }).catch(function(error) {
+                console.log('Could not get all service types', error);
+            });
+        }
+
+        function updateServiceType(serviceType) {
+            return $http.put('/service-types/' + serviceType._id, serviceType).then(function(rSuccess) {
+                return rSuccess.data;
+            }).catch(function(error) {
+                console.log('Could not update service type', error);
+            });
+        }
+
+        function deleteServiceType(serviceTypeId) {
+            return $http.delete('/service-types/' + serviceTypeId).then(function(rSuccess) {
+                return rSuccess.data;
+            }).catch(function(error) {
+                console.log('Could not delete service type', error);
+            });
+        }
+    }
+
     ServicesDataService.$inject = ['$http', '$log'];
+    ServiceTypesDataService.$inject = ['$http', '$log'];
 })();

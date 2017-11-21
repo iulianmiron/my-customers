@@ -1,6 +1,7 @@
 var express = require('express');
 var app = express();
 var mongojs = require('mongojs');
+var bodyParser = require('body-parser');
 
 var db_base = '127.0.0.1';
 var PORT = (process.env.PORT && process.env.PORT.trim()) || '3500';
@@ -8,13 +9,10 @@ var db_port = process.env.DEV_SERVER_PORT || '27017';
 
 var db = db_base + ':' + db_port.trim() + '/';
 
-var db_clients = mongojs(db + 'clients', ['clients', 'history', 'services']);
+var db_clients = mongojs(db + 'clients', ['clients', 'history']);
+var db_services = mongojs(db + 'services', ['services', 'types']);
 var db_products = mongojs(db + 'products', ['products']);
 var db_consumables = mongojs(db + 'consumables', ['consumables']);
-
-var bodyParser = require('body-parser');
-var openurl = require('openurl');
-
 
 
 app.use(express.static(__dirname + '/'));
@@ -147,22 +145,20 @@ app.put('/history/:id', function(req, res) {
     });
 });
 
-
-
 //////////////////// SERVICES collection //////////////////
 //Add services in services collection
 app.post('/services', function(req, res) {
     req.body.createdOn = new Date();
     req.body.updatedOn = new Date();
 
-    db_clients.services.insert(req.body, function(error, doc) {
+    db_services.services.insert(req.body, function(error, doc) {
         res.json(doc);
     });
 });
 
 //Get all services in services collection
 app.get('/services', function(req, res) {
-    db_clients.services.find(function(err, docs) {
+    db_services.services.find(function(err, docs) {
         res.json(docs);
     });
 });
@@ -173,14 +169,15 @@ app.put('/services/:id', function(req, res) {
     console.log("update services with data", req.body);
     var updatedOn = new Date();
 
-    db_clients.services.findAndModify({
+    db_services.services.findAndModify({
         query: { _id: mongojs.ObjectId(req.params.id) },
         update: {
             $set: {
                 name: req.body.name,
-                type: req.body.type,
                 price: req.body.price,
                 duration: req.body.duration,
+                _serviceTypeId: req.body._serviceTypeId,
+                isProtected: req.body.isProtected,
                 updatedOn: updatedOn,
                 createdOn: req.body.createdOn
             }
@@ -192,7 +189,55 @@ app.put('/services/:id', function(req, res) {
 });
 
 app.delete('/services/:id', function(req, res) {
-    db_clients.services.remove({ _id: mongojs.ObjectId(req.params.id) }, function(err, doc) {
+    db_services.services.remove({ _id: mongojs.ObjectId(req.params.id) }, function(err, doc) {
+        res.json(doc);
+    });
+
+});
+
+//////////////////// SERVICE TYPES collection //////////////////
+//Add service type
+app.post('/service-types', function(req, res) {
+    req.body.createdOn = new Date();
+    req.body.updatedOn = new Date();
+
+    db_services.types.insert(req.body, function(error, doc) {
+        res.json(doc);
+    });
+});
+
+//Get all service type
+app.get('/service-types', function(req, res) {
+    db_services.types.find(function(err, docs) {
+        res.json(docs);
+    });
+});
+
+//Update service type
+app.put('/service-types/:id', function(req, res) {
+    console.log("update service type with id", req.params.id);
+    console.log("update service type with data", req.body);
+    var updatedOn = new Date();
+
+    db_services.types.findAndModify({
+        query: { _id: mongojs.ObjectId(req.params.id) },
+        update: {
+            $set: {
+                name: req.body.name,
+                isProtected: req.body.isProtected,
+                updatedOn: updatedOn,
+                createdOn: req.body.createdOn
+            }
+        },
+        new: true
+    }, function(err, doc) {
+        res.json(doc);
+    });
+});
+
+//delete service type
+app.delete('/service-types/:id', function(req, res) {
+    db_services.types.remove({ _id: mongojs.ObjectId(req.params.id) }, function(err, doc) {
         res.json(doc);
     });
 

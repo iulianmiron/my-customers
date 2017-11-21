@@ -27,16 +27,20 @@
                     <md-input-container class="md-block" flex="50">
                         <label>Tip</label>
                         <md-icon>style</md-icon>
-                        <md-select name="serviceType" ng-model="$ctrl.data.service.type" required>
-                            <md-option ng-value="serviceType.name" ng-repeat="serviceType in $ctrl.data.serviceTypes">{{serviceType.name}}</md-option>
+                        <md-select 
+                            name="serviceType" required
+                            ng-model="$ctrl.data.service._serviceTypeId"
+                            ng-model-options="{trackby: '$value._id'}">
+                            <md-option 
+                                ng-repeat="serviceType in $ctrl.data.serviceTypes track by serviceType._id"
+                                ng-value="serviceType._id">
+                                {{serviceType.name}}
+                            </md-option>
                         </md-select>
-                        <div ng-messages="$ctrl.data.serviceForm.serviceType.$error">
+                        <div ng-messages="$ctrl.data.serviceForm.serviceName.$error">
                             <div ng-message="required">Tipul este obligatoriu</div>
-                            <div ng-message="md-maxlength">Tipul trebuie sa aiba sub 50 de caractere</div>
-                            <div ng-message="minlength">Tipul trebuie sa aiba mai mult de 1 caracter</div>
                         </div>
                     </md-input-container>
-
                 </div>
                 <div layout="row">
                     <md-input-container class="md-block" flex="50">
@@ -60,6 +64,11 @@
                             <div ng-message="max">Pretul trebuie sa fie mai mic decat 10000.</div>
                         </div>
                     </md-input-container>
+                </div>
+                <div layout="row">
+                    <md-switch ng-model="$ctrl.data.service.isProtected" aria-label="Can be deleted?">
+                        {{ $ctrl.data.service.isProtected ? 'Nu poate' : 'Poate'}} fi sters
+                    </md-switch>
                 </div>
             </form>
         </div>

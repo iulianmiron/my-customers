@@ -3,12 +3,6 @@
 
     angular
         .module('cm.constants', [])
-        .constant('SERVICE_TYPES', [
-            { id: 1, name: 'Stilizare Sprancene' },
-            { id: 2, name: 'Tratament Cosmetic' },
-            { id: 3, name: 'Extensii Gene' },
-            { id: 4, name: 'Epilat' }
-        ])
         .constant('NO_PICTURE', 'img/no-picture.png')
         .constant('SIDEBAR_MENU_ITEMS', [
             { icon: 'search', label: 'Cauta Clienti', url: 'home'}, 
@@ -35,3 +29,12 @@
             { id: 3, first_name: 'Madalina', last_name: 'Marc' }
         ]);
 })();
+
+
+// "5a13583dd024ec129cbef931", "Stilizare Sprancene"
+
+// "5a135d49d024ec129cbef932", "Tratament Cosmetic"
+
+// "5a135d55d024ec129cbef933", "Extensii Gene"
+
+// "5a135d5cd024ec129cbef934", "Epilat"

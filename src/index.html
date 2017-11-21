@@ -9,24 +9,29 @@
 		<link rel="icon" href="img/favicon.ico?rev=b83b9da784eb4b107ee22813d1ff7444">
 		<!-- MAIN STYLES -->
 
-		<link rel='stylesheet' href="styles/styles.css?rev=76d0b999bc269a9297a5f219508f9368" />
+		<link rel='stylesheet' href="styles/styles.css?rev=44c8f78e7ac639cfd0986db285c8ba3a" />
 
 		<link rel='stylesheet' href="./node_modules/angular-material/angular-material.min.css?rev=ab3c9a89820a9d0f664d6957fdfad5cb" />
 		<link rel='stylesheet' href="node_modules/material-design-icons-iconfont/dist/material-design-icons.css?rev=c25988089f59c8381e2b6c1cc1d627ab" />
 		<link rel="stylesheet" href="node_modules/angular-toastr/dist/angular-toastr.min.css?rev=8748148e10fb3ff62ac21e6b3ae720e4" />
 
 	</head>
-	<body ng-controller="appController as appCtrl">
-		
+	<body ng-controller="appController as $ctrl" ng-class="{ 'hide-scroll' : $ctrl.status.isAppLoading }">
 		<!--APP HEADER-->
 		<app-header 
-			show-sidenav="appCtrl.status.showSidenav">
+			show-sidenav="$ctrl.status.showSidenav">
 		</app-header>
 
 		<!--APP NAVIGATION-->
 		<app-sidebar 
-			show-sidenav="appCtrl.status.showSidenav">
+			show-sidenav="$ctrl.status.showSidenav">
 		</app-sidebar>
+
+		<spinner name="app-loading" activate-spinner
+			on-show="$ctrl.status.isAppLoading = true" 
+			on-hide="$ctrl.status.isAppLoading = false">
+			<app-loading></app-loading>
+		</spinner>	
 
 		<!--MAIN VIEW -->
     	<div flex ui-view>
@@ -45,6 +50,7 @@
 		<script src="node_modules/moment/locale/ro.js?rev=d5f894647d7d1f2926435af819243b44"></script>
 		<script src="node_modules/angular-moment/angular-moment.js?rev=94e8af11203e4a9df27b742000d0f817"></script>
 		<script src="node_modules/angular-toastr/dist/angular-toastr.tpls.min.js?rev=a64241e89e1dbc331198d15defff8ecb"></script>
+		<script src="node_modules/angular-spinners/dist/angular-spinners.min.js?rev=a64241e89e1dbc331198d15defff8ecb"></script>
 
 		<!-- Main app -->
 		<script src="app.js?rev=b09e61f89d0a058e5ad7bd50bb0970f9"></script>
@@ -55,7 +61,7 @@
 		<!-- SERVICES -->
 		<script src="services/services.js?rev=593cd75d8b5448063007a83a8b3e0910"></script>
 		<script src="components/client/client.services.js?rev=da7be37c8ec83ac7c042b31733ec94ae"></script>
-		<script src="components/home/search-clients/search-clients.services.js?rev=e05bf85f73916646b184400b6593ae9e"></script>
+		<script src="components/home/search-clients/search-clients.services.js?rev=6a3826138df3942358f24b8239b667e3"></script>
 		<script src="components/settings/services/services.services.js?rev=c0de7cc9a6d9c7687de4bcc60d2de51f"></script>
 		<script src="components/settings/products/products.services.js?rev=c39a05f666be86cb4f7fd48e45c6ddee"></script>
 
@@ -66,12 +72,14 @@
 		<script src="components/common/app-header/app-header.js?rev=57f22a141286f6fdafb090407811d855"></script>
 		<script src="components/common/app-sidebar/app-sidebar.js?rev=d77df53fa4fc76c86654712647b65f43"></script>
 		<script src="components/common/client-search/client-search.js?rev=285d0489000f7850a2992764c7cfb0bc"></script>
+		<script src="components/common/app-loading/app-loading.js?rev=285d0489000f7850a2992764c7cfb0bc"></script>
 
 		<!-- SETTINGS -->
 		<script src="components/settings/settings.js?rev=5614658b15ad1a29d44e0abfb25f94d9"></script>
 
 		<script src="components/settings/services/services.js?rev=5164ae9f9e598bf7968e5810c6c80a5f"></script>
 		<script src="components/settings/services/service-dialog/service-dialog.js?rev=f55e09ab1f602e3eae4ac46a257c30e3"></script>
+		<script src="components/settings/services/service-type-dialog/service-type-dialog.js?rev=f55e09ab1f602e3eae4ac46a257c30e3"></script>
 
 		<script src="components/settings/products/products.js?rev=4ffb80762800b1c062956a0c652e8ec0"></script>
 		<script src="components/settings/products/add-product/add-product.dialog.js?rev=18bdc7fa65feb377fbcd065f518839d2"></script>

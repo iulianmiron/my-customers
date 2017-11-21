@@ -11,7 +11,7 @@
             }
         });
 
-    function ClientController($q, $state, $log, $mdDialog, $rootElement, ClientDataService, HistoryDataService, ServicesDataService, toastr) {
+    function ClientController($q, $state, $log, $mdDialog, $rootElement, ClientDataService, HistoryDataService, ServicesDataService, ServiceTypesDataService, toastr) {
         var ctrl = this;
 
         ctrl.$onInit = function() {
@@ -29,6 +29,7 @@
                 ctrl.data.newClient = true;
             }
             getAllServices();
+            getAllServiceTypes();
 
             ctrl.actions.saveClientProfile = saveClientProfile;
             ctrl.actions.getClientProfile = getClientProfile;
@@ -47,6 +48,12 @@
         function getAllServices() {
             ServicesDataService.getAllServices().then(function(rServices) {
                 ctrl.data.allServices = rServices;
+            });
+        }
+
+        function getAllServiceTypes() {
+            ServiceTypesDataService.getAllServiceTypes().then(function(rServiceTypes) {
+                ctrl.data.allServiceTypes = rServiceTypes;
             });
         }
 
@@ -79,7 +86,8 @@
                     _clientId: ctrl.data.clientId
                 },
                 title: 'Adaugati sedinta',
-                services: ctrl.data.allServices
+                services: ctrl.data.allServices,
+                serviceTypes: ctrl.data.allServiceTypes
             };
             showDialog(event.event, dialogData, saveNewHistoryItem);
         }
@@ -89,7 +97,8 @@
             var dialogData = {
                 historyItem: historyItem ? angular.copy(historyItem) : null,
                 title: 'Editati sedinta',
-                services: ctrl.data.allServices
+                services: ctrl.data.allServices,
+                serviceTypes: ctrl.data.allServiceTypes
             };
             showDialog(event.event, dialogData, saveEditedHistoryItem);
         }
@@ -128,5 +137,5 @@
         }
     }
 
-    ClientController.$inject = ['$q', '$state', '$log', '$mdDialog', '$rootElement', 'ClientDataService', 'HistoryDataService', 'ServicesDataService', 'toastr'];
+    ClientController.$inject = ['$q', '$state', '$log', '$mdDialog', '$rootElement', 'ClientDataService', 'HistoryDataService', 'ServicesDataService', 'ServiceTypesDataService', 'toastr'];
 })();
