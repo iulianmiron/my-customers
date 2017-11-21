@@ -9,14 +9,13 @@
                 </md-card-title-text>
             </md-card-title>
             <md-card-content class="overflow">
-                <div layout="row">
+                <div layout="row" ng-hide="!$ctrl.data.allProducts.length">
                     <md-input-container flex="33">
                         <md-icon>search</md-icon>
                         <label>Cauta produs</label>
-                        <input ng-model="searchProduct">
+                        <input ng-model="searchProduct" ng-model-options="{debounce: 400}">
                     </md-input-container>
                 </div>
-
                 <md-list ng-show="$ctrl.data.allProducts.length">
                     <md-list-item ng-repeat="product in $ctrl.data.allProducts | filter:searchProduct  track by product._id" class="md-3-line" ng-click="$ctrl.actions.selectProduct($event, product)" ng-mouseover="showControl = true" ng-mouseleave="showControl = false">
                         <img ng-src="{{ $ctrl.data.noPicture }}" class="md-avatar" alt="poza produs" />

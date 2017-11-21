@@ -37,10 +37,13 @@
                 </md-card-header-text>
             </md-card-header>
             <md-card-content>
-                <p>Servicii: <span ng-repeat="service in historyItem.services">{{ !$last ? service.name + ', ' : service.name }} </span></p>
+                <p>Servicii:</p> 
+                <ul>
+                    <li ng-repeat="service in historyItem.services">{{ service.name }} </li>
+                </ul>
                 <p>Efectuat de: {{ historyItem.servicesPerformedBy ? historyItem.servicesPerformedBy.first_name + ' ' + historyItem.servicesPerformedBy.last_name : '-' }}</p>
-                <p>Produse acasa: {{ historyItem.homeProducts || '-' }}</p>
                 <p>Interval: {{ historyItem.interval || '-' }}</p>
+                <p>Produse acasa: {{ historyItem.homeProducts || '-' }}</p>
                 <p>Observatii: {{ historyItem.observations || '-' }}</p>
                 <p>Filmari: {{ historyItem.videos.length || '0' }}, Poze: {{historyItem.photos.length || '0'}}</p>
             </md-card-content>

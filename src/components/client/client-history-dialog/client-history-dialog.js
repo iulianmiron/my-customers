@@ -5,7 +5,7 @@
         .module('cm.components.clientHistoryDialog', [])
         .controller('ClientHistoryDialogController', ClientHistoryDialogController);
 
-    function ClientHistoryDialogController($element, $mdDialog, dialogData, SERVICE_TYPES, USERS) {
+    function ClientHistoryDialogController($element, $mdDialog, dialogData, USERS) {
         var ctrl = this;
         ctrl.data = {};
         ctrl.status = {};
@@ -14,20 +14,16 @@
         ctrl.data.title = dialogData.title;
         ctrl.data.historyItem = dialogData.historyItem;
         ctrl.data.services = dialogData.services;
+        ctrl.data.serviceTypes = dialogData.serviceTypes;
         ctrl.data.historyItem.date = ctrl.data.historyItem.date ? new Date(ctrl.data.historyItem.date) : new Date();
 
         ctrl.data.maxDate = new Date();
-        ctrl.data.servicesTypes = prepareDropDown(SERVICE_TYPES);
         ctrl.data.users = USERS;
 
         ctrl.actions.cancel = cancel;
         ctrl.actions.save = save;
 
         $element.find('input').on('keydown', function(ev) { ev.stopPropagation(); });
-
-        function prepareDropDown(serviceTypes) {
-            return serviceTypes.map(function(iServiceType) { return iServiceType.name; });
-        }
        
         function cancel() {
             $mdDialog.cancel();
@@ -38,5 +34,5 @@
         };
     }
 
-    ClientHistoryDialogController.$inject = ['$element', '$mdDialog', 'dialogData', 'SERVICE_TYPES', 'USERS'];
+    ClientHistoryDialogController.$inject = ['$element', '$mdDialog', 'dialogData', 'USERS'];
 })();
