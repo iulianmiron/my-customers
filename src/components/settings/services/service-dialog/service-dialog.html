@@ -1,0 +1,89 @@
+<md-dialog aria-label="{{ $ctrl.data.title }}">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>{{ $ctrl.data.title }}</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="$ctrl.actions.cancel()">
+                <md-icon>close</md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+
+    <md-dialog-content>
+        <div class="md-dialog-content">
+            <form name="$ctrl.data.serviceForm">
+                <div layout="column">
+                    <md-input-container class="md-block" flex="50">
+                        <label>Denumire</label>
+                        <md-icon>work</md-icon>
+                        <input name="serviceName" ng-model="$ctrl.data.service.name" minlength="2" md-maxlength="50" required>
+                        <div ng-messages="$ctrl.data.serviceForm.serviceName.$error">
+                            <div ng-message="required">Denumirea este obligatorie</div>
+                            <div ng-message="md-maxlength">Denumirea trebuie sa aiba sub 50 de caractere</div>
+                            <div ng-message="minlength">Denumirea trebuie sa aiba mai mult de 1 caracter</div>
+                        </div>
+                    </md-input-container>
+
+                    <md-input-container class="md-block" flex="50">
+                        <label>Tip</label>
+                        <md-icon>style</md-icon>
+                        <md-select 
+                            name="serviceType" required
+                            ng-model="$ctrl.data.service._serviceTypeId"
+                            ng-model-options="{trackby: '$value._id'}">
+                            <md-option 
+                                ng-repeat="serviceType in $ctrl.data.serviceTypes track by serviceType._id"
+                                ng-value="serviceType._id">
+                                {{serviceType.name}}
+                            </md-option>
+                        </md-select>
+                        <div ng-messages="$ctrl.data.serviceForm.serviceName.$error">
+                            <div ng-message="required">Tipul este obligatoriu</div>
+                        </div>
+                    </md-input-container>
+                </div>
+                <div layout="row">
+                    <md-input-container class="md-block" flex="50">
+                        <label>Durata (minute)</label>
+                        <md-icon>access_time</md-icon>
+                        <input name="serviceDuration" type="number" ng-model="$ctrl.data.service.duration" min="0" max="360" step="1" required>
+                        <div ng-messages="$ctrl.data.serviceForm.serviceDuration.$error">
+                            <div ng-message="required">Durata este obligatorie</div>
+                            <div ng-message="md-maxlength">Durata trebuie sa aiba sub 50 de caractere</div>
+                            <div ng-message="minlength">Durata trebuie sa aiba mai mult de 1 caracter</div>
+                        </div>
+                    </md-input-container>
+
+                    <md-input-container class="md-block" flex="50">
+                        <label>Pret (RON)</label>
+                        <md-icon>attach_money</md-icon>
+                        <input name="servicePrice" type="number" ng-model="$ctrl.data.service.price" min="0" max="10000" step="1" required>
+                        <div ng-messages="$ctrl.data.serviceForm.servicePrice.$error">
+                            <div ng-message="required">Pretul este obligatoriu</div>
+                            <div ng-message="min">Pretul trebuie sa fie mai mare decat zero.</div>
+                            <div ng-message="max">Pretul trebuie sa fie mai mic decat 10000.</div>
+                        </div>
+                    </md-input-container>
+                </div>
+                <div layout="row">
+                    <md-switch ng-model="$ctrl.data.service.isProtected" aria-label="Can be deleted?">
+                        {{ $ctrl.data.service.isProtected ? 'Nu poate' : 'Poate'}} fi sters
+                    </md-switch>
+                </div>
+            </form>
+        </div>
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row" layout-align="end center">
+        <md-button ng-click="$ctrl.actions.cancel()">
+            Renunta
+        </md-button>
+        <md-button 
+            class="md-raised md-primary" 
+            ng-click="$ctrl.actions.save($ctrl.data.service)" 
+            ng-disabled="$ctrl.data.serviceForm.$invalid">
+            Salveaza Serviciu
+        </md-button>
+    </md-dialog-actions>
+
+</md-dialog>

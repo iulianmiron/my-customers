@@ -4,10 +4,14 @@
     angular.module('cm.components', [
         'cm.components.common.appHeader',
         'cm.components.common.appSidebar',
+        'cm.components.common.appLoading',
         'cm.components.common.clientSearch',
-
+        
         'cm.components.settings',
         'cm.components.settings.services',
+        'cm.components.settings.services.serviceDialog',
+        'cm.components.settings.services.serviceTypeDialog',
+
         'cm.components.settings.products',
         'cm.components.settings.products.addProductDialog',
         'cm.components.settings.products.editProductDialog',
