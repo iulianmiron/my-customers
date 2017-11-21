@@ -18,6 +18,13 @@
         ctrl.actions = {};
 
         ctrl.$onInit = function() {
+            ctrl.status.showSearch = false;
+            
+            ctrl.actions.hideSearch = hideSearch; 
+        }
+
+        function hideSearch(event) {
+            ctrl.status.showSearch = event.hideSearch;
         }
 
     }
