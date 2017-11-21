@@ -1,9 +1,11 @@
-<form name="$ctrl.searchClientForm" layout="row" layout-align="start center">
-    <md-autocomplete flex
+<form name="$ctrl.searchClientForm" layout="row" layout-align="end center" ng-show="$ctrl.status.show">
+    <md-autocomplete flex ng-blur="$ctrl.actions.hideSearch(false)" 
         placeholder="Cauta client dupa nume, prenume, telefon sau email" 
         md-select-on-focus
+        md-autofocus
         md-no-cache="true" 
         md-delay="500" 
+        md-clear-button="false"
         md-search-text="$ctrl.data.searchText" 
         md-selected-item-change="$ctrl.actions.openClientPage(client._id)" 
         md-items="client in $ctrl.actions.searchClients($ctrl.data.searchText)"

@@ -1,12 +1,12 @@
-<div layout="row" class="md-padding">
-    <div flex="50">
+<div layout="column" layout-gt-xs="row" class="md-padding">
+    <div flex>
         <client-profile 
             new-client="$ctrl.data.newClient" 
             client-data="$ctrl.data.client" 
             on-save-client-profile="$ctrl.actions.saveClientProfile($event)">
         </client-profile>
     </div>
-    <div flex="50">
+    <div flex>
         <client-history 
             new-client="$ctrl.data.newClient"
             history-data="$ctrl.data.history" 
