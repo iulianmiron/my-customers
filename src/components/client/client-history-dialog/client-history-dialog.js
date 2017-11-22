@@ -22,6 +22,7 @@
 
         ctrl.actions.cancel = cancel;
         ctrl.actions.save = save;
+        ctrl.actions.changeSelectedServicesText = changeSelectedServicesText;
 
         $element.find('input').on('keydown', function(ev) { ev.stopPropagation(); });
        
@@ -32,6 +33,10 @@
         function save(historyItem) {
             $mdDialog.hide(historyItem);
         };
+
+        function changeSelectedServicesText(selectedServices) {
+            return selectedServices.length + ' servicii selectate.';
+        }
     }
 
     ClientHistoryDialogController.$inject = ['$element', '$mdDialog', 'dialogData', 'USERS'];
