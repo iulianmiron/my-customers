@@ -75,15 +75,24 @@
     
                 <md-input-container class="md-block">
                     <label>Produse acasa</label>
-                    <textarea md-select-on-focus name="homeProducts" ng-model="$ctrl.data.historyItem.homeProducts">
+                    <textarea name="homeProducts" ng-model="$ctrl.data.historyItem.homeProducts">
                     </textarea>
                 </md-input-container>
     
                 <md-input-container class="md-block">
                     <label>Observatii</label>
-                    <textarea md-select-on-focus name="observations" ng-model="$ctrl.data.historyItem.observations">
+                    <textarea name="observations" ng-model="$ctrl.data.historyItem.observations">
                     </textarea>
                 </md-input-container>
+
+                <md-checkbox
+                    ng-model="$ctrl.data.historyItem.photosTaken">
+                    Poze
+                </md-checkbox>
+                <md-checkbox
+                    ng-model="$ctrl.data.historyItem.videosTaken"> 
+                    Filmare
+                </md-checkbox>
             </form>
 
         </div>

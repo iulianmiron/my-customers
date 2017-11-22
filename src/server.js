@@ -134,6 +134,8 @@ app.put('/history/:id', function(req, res) {
                 interval: req.body.interval,
                 homeProducts: req.body.homeProducts,
                 observations: req.body.observations,
+                photosTaken: req.body.photosTaken,
+                videosTaken: req.body.videosTaken,
                 _clientId: req.body._clientId,
                 updatedOn: updatedOn,
                 createdOn: req.body.createdOn
