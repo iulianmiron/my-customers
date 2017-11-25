@@ -137,3 +137,8 @@ md-list-item p {
 .app-content {
   padding-top: 56px;
 } */
+
+.active-link,
+.active-link md-icon {
+  color: #2196f3;
+}
