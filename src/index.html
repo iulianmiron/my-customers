@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html ng-app="cm" ng-strict-di>
 	<head>
-		<!--<base href="/">-->
+		<base href="/">
 		<title>Estet Studio</title>
 
 		<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,7 +9,7 @@
 		<link rel="icon" href="img/favicon.ico?rev=b83b9da784eb4b107ee22813d1ff7444">
 		<!-- MAIN STYLES -->
 
-		<link rel='stylesheet' href="styles/styles.css?rev=35b1418460401e8264e3db50e7e76a13" />
+		<link rel='stylesheet' href="styles/styles.css?rev=ac81d7ca6f6d1c4a83a8e6f853fd0e8a" />
 
 		<link rel='stylesheet' href="./node_modules/angular-material/angular-material.min.css?rev=ab3c9a89820a9d0f664d6957fdfad5cb" />
 		<link rel='stylesheet' href="node_modules/material-design-icons-iconfont/dist/material-design-icons.css?rev=c25988089f59c8381e2b6c1cc1d627ab" />
@@ -53,17 +53,24 @@
 		<script src="node_modules/angular-spinners/dist/angular-spinners.min.js?rev=2363e32548f9ce1cce73d8d7157b54cd"></script>
 
 		<!-- Main app -->
-		<script src="app.js?rev=dc323c62e7e8574e8695c63e31a792ed"></script>
+		<script src="app.js?rev=682533f5cfb57b7984caf45452b22a55"></script>
+		
+		<!-- DATASERVICES -->
+		<script src="dataservices/dataservices.js?rev=eb930ce288a45e293cbf981380d17a68"></script>
+		<script src="dataservices/products.data-services.js?rev=b9ab5fc7eb00169bc58c556c87b6f59b"></script>
+		<script src="dataservices/services.data-services.js?rev=0f54001c6b9b0f8e15aa94bcec33d682"></script>
+		<script src="dataservices/serviceTypes.data-services.js?rev=9b01a9fb6e4f7d7fb9ebb872d1e1381e"></script>
+		<script src="dataservices/history.data-services.js?rev=9b01a9fb6e4f7d7fb9ebb872d1e1381e"></script>
+		<script src="dataservices/clients.data-services.js?rev=9b01a9fb6e4f7d7fb9ebb872d1e1381e"></script>
+		<script src="dataservices/consumables.data-services.js?rev=9b01a9fb6e4f7d7fb9ebb872d1e1381e"></script>
+
 		<!-- CONSTANTS -->
 		<script src="constants/constants.js?rev=27785d8396b1ce538314efca33f2c4f9"></script>
 		<!-- DIRECTIVES -->
 		<script src="directives/directives.js?rev=5c15040c859659e78350bf1018d54330"></script>
 		<!-- SERVICES -->
-		<script src="services/services.js?rev=593cd75d8b5448063007a83a8b3e0910"></script>
-		<script src="components/client/client.services.js?rev=da7be37c8ec83ac7c042b31733ec94ae"></script>
-		<script src="components/home/search-clients/search-clients.services.js?rev=6a3826138df3942358f24b8239b667e3"></script>
-		<script src="components/settings/services/services.services.js?rev=7519f6bf2fcc24acdbd2e76729c81e9f"></script>
-		<script src="components/settings/products/products.services.js?rev=c39a05f666be86cb4f7fd48e45c6ddee"></script>
+		<script src="services/services.js?rev=d7167843c7b80e0d37c3810e4f5f0135"></script>
+
 
 		<!-- COMPONENTS -->
 		<script src="components/components.js?rev=6f5aec0997c0b33093558ca7952d4f0f"></script>
@@ -81,12 +88,11 @@
 		<script src="components/settings/services/service-dialog/service-dialog.js?rev=f55e09ab1f602e3eae4ac46a257c30e3"></script>
 		<script src="components/settings/services/service-type-dialog/service-type-dialog.js?rev=ab116d9101af488ad3fdfa2c7d22b236"></script>
 
-		<script src="components/settings/products/products.js?rev=4ffb80762800b1c062956a0c652e8ec0"></script>
+		<script src="components/settings/products/products.js?rev=717d8af2cab99db68b36ed005cdceeac"></script>
 		<script src="components/settings/products/add-product/add-product.dialog.js?rev=18bdc7fa65feb377fbcd065f518839d2"></script>
 		<script src="components/settings/products/edit-product/edit-product.dialog.js?rev=6fc6289d83530631e8209649696b7df3"></script>
 
 		<script src="components/settings/consumables/consumables.js?rev=792ce3aaf44302243b11d1dcfc5f9e6d"></script>
-		<script src="components/settings/consumables/consumables.services.js?rev=1b2e228ef1a7d5cd445bdebfc3313463"></script>
 		<script src="components/settings/consumables/consumable-dialog/consumable-dialog.js?rev=a4598175ee1a20bb9379c3737ebb8b44"></script>
 
 		<script src="components/settings/activities/activities.js?rev=c0454480259026339e74eb7c9a4fbbc7"></script>
@@ -97,14 +103,14 @@
 		<script src="components/home/search-clients/search-clients.js?rev=b312d586978fad861ee4bb3af97520fb"></script>
 
 		<!-- CLIENT -->
-		<script src="components/client/client.js?rev=caac814ca07ac4d0f0683caf4e23a363"></script>
-		<script src="components/client/client-profile/client-profile.js?rev=e95a514a72c53e5df46399983b46b0ca"></script>
+		<script src="components/client/client.js?rev=d7937a0b7349fa546123e79f588c0a3e"></script>
+		<script src="components/client/client-profile/client-profile.js?rev=03b61700c816b91583f3ccdee2e0cb08"></script>
 		<script src="components/client/client-history/client-history.js?rev=401b06029bd3922f87148cb04f894784"></script>
-		<script src="components/client/client-history-dialog/client-history-dialog.js?rev=5a0c51bdf46599f263499e2086e9510d"></script>
+		<script src="components/client/client-history-dialog/client-history-dialog.js?rev=75673ea62a877211fca17b97bbbf1265"></script>
 
 
 		<!-- SHOP -->
-		<script src="components/shop/shop.js?rev=a50026205f8a26f11e6dcbf12b06329f"></script>
+		<script src="components/shop/shop.js?rev=e9369d2c3e1569866017dd0d4ccf1420"></script>
 		<script src="components/shop/shop-products/shop-products.js?rev=bc8dc63780d2265452eb18a29b207d51"></script>
 		<script src="components/shop/shop-basket/shop-basket.js?rev=5b0b740ff93095e4f4fc22c84a2d9dbc"></script>
 

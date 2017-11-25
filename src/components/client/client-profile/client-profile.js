@@ -13,7 +13,7 @@
             }
         });
 
-    function ClientProfileController($state, $log, $mdDialog, CLIENT_VIP_LEVELS, CLIENT_VIP_TYPES, SearchClientsServices) {
+    function ClientProfileController($state, $log, $mdDialog, CLIENT_VIP_LEVELS, CLIENT_VIP_TYPES, ClientsDataService) {
         var ctrl = this;
 
         ctrl.data = {};
@@ -24,7 +24,7 @@
             if (changes.clientData && changes.clientData.currentValue) {
                 ctrl.data.client = angular.copy(changes.clientData.currentValue);
                 ctrl.data.clientBackup = angular.copy(changes.clientData.currentValue);
-                calculateClientAge(ctrl.data.client.dateOfBirth);
+                ctrl.data.client.age = ctrl.data.client.dateOfBirth ? calculateClientAge(ctrl.data.client.dateOfBirth): null;
             }
             if (changes.newClient && changes.newClient.currentValue) {
                 ctrl.data.newClient = angular.copy(changes.newClient.currentValue);
@@ -40,15 +40,16 @@
 
             ctrl.status.showMoreProfileDetails = false;
 
+            ctrl.actions.editClient = editClient;
+
             ctrl.actions.setVIPData = setVIPData;
             ctrl.actions.checkIfDuplicate = checkIfDuplicate;
             ctrl.actions.calculateClientAge = calculateClientAge;
             ctrl.actions.saveClientProfile = saveClientProfile;
-            ctrl.actions.resetForm = resetForm;
         }
 
         function calculateClientAge(dateOfBirth) {
-            ctrl.data.clientAge = moment().diff(moment(dateOfBirth), 'years') + ' ani';
+            return moment().diff(moment(dateOfBirth), 'years') + ' ani';
         }
 
         function saveClientProfile(clientData) {
@@ -60,9 +61,13 @@
             ctrl.status.showMoreProfileDetails = false;
         }
 
+        function editClient() {
+            console.log('edit client');
+        }
+
         function checkIfDuplicate(fieldName, fieldValue) {
             if(fieldName && fieldValue && (ctrl.data.newClient || (ctrl.data.clientBackup[fieldName] !== fieldValue))) {
-                SearchClientsServices
+                ClientsDataService
                     .searchClients(fieldValue)
                     .then(handleSuccess)
                     .catch(handleError);
@@ -103,13 +108,7 @@
         function setVIPData(client) {
             client.vip = client.isVip ? client.vip : null;
         }
-
-        function resetForm() {
-            ctrl.status.editClient = false;
-            ctrl.data.client = angular.copy(ctrl.data.clientBackup);
-            calculateClientAge(ctrl.data.client.dateOfBirth);
-        }
     }
 
-    ClientProfileController.$inject = ['$state', '$log', '$mdDialog', 'CLIENT_VIP_LEVELS', 'CLIENT_VIP_TYPES', 'SearchClientsServices'];
+    ClientProfileController.$inject = ['$state', '$log', '$mdDialog', 'CLIENT_VIP_LEVELS', 'CLIENT_VIP_TYPES', 'ClientsDataService'];
 })();

@@ -11,7 +11,7 @@
             }
         });
 
-    function ClientController($q, $state, $log, $mdDialog, $rootElement, ClientDataService, HistoryDataService, ServicesDataService, ServiceTypesDataService, toastr) {
+    function ClientController($mdToast, $q, $state, $log, $mdDialog, $rootElement, ClientsDataService, HistoryDataService, ServicesDataService, ServiceTypesDataService, toastr) {
         var ctrl = this;
 
         ctrl.$onInit = function() {
@@ -28,8 +28,14 @@
             } else if (ctrl.data.clientId === '0') {
                 ctrl.data.newClient = true;
             }
-            getAllServices();
-            getAllServiceTypes();
+
+            $q.all([getAllServices(), getAllServiceTypes()]).then(function() {
+
+            }).finally(function() {
+                // $mdToast.showSimple('Hello');
+                // toastr.success('test');
+            });
+           
 
             ctrl.actions.saveClientProfile = saveClientProfile;
             ctrl.actions.getClientProfile = getClientProfile;
@@ -39,7 +45,7 @@
         }
 
         function getClientProfile(clientId) {
-            ClientDataService.getClient(clientId).then(function(rClientProfile) {
+            ClientsDataService.getClient(clientId).then(function(rClientProfile) {
                 ctrl.data.client = rClientProfile;
                 ctrl.data.clientBackup = rClientProfile;
             });
@@ -62,14 +68,14 @@
         }
 
         function addNewClient(client) {
-            ClientDataService.addClient(client).then(function(rClientAdded) {
+            ClientsDataService.addClient(client).then(function(rClientAdded) {
                 toastr.success("Client adaugat", "Succes");
                 $state.go('client', { id: rClientAdded._id });
             });
         }
 
         function updateClient(client) {
-            ClientDataService.updateClient(client).then(function(rSuccess) {
+            ClientsDataService.updateClient(client).then(function(rSuccess) {
                 toastr.success("Client editat", "Succes");
             });
         }
@@ -137,5 +143,5 @@
         }
     }
 
-    ClientController.$inject = ['$q', '$state', '$log', '$mdDialog', '$rootElement', 'ClientDataService', 'HistoryDataService', 'ServicesDataService', 'ServiceTypesDataService', 'toastr'];
+    ClientController.$inject = ['$mdToast', '$q', '$state', '$log', '$mdDialog', '$rootElement', 'ClientsDataService', 'HistoryDataService', 'ServicesDataService', 'ServiceTypesDataService', 'toastr'];
 })();

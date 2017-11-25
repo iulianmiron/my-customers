@@ -11,8 +11,9 @@
                 onBlur: '&'
             }
         });
-
-    function ClientSearchController($q, $state, $log, SearchClientsServices) {
+        
+    ClientSearchController.$inject = ['$q', '$state', 'ClientsDataService', 'toastr'];
+    function ClientSearchController($q, $state, ClientsDataService, toastr) {
         var ctrl = this;
         ctrl.data = {};
         ctrl.status = {};
@@ -32,7 +33,7 @@
         function searchClients(query) {
             var deferred = $q.defer();
 
-            SearchClientsServices
+            ClientsDataService
                 .searchClients(query)
                 .then(handleSuccess)
                 .catch(handleError);
@@ -42,7 +43,7 @@
             }
 
             function handleError(rErrorMessage) {
-                $log.error('Could not get clients', rErrorMessage);
+                console.error('Could not get clients', rErrorMessage);
                 deferred.reject(rErrorMessage);
             }
             return deferred.promise;
@@ -58,8 +59,5 @@
         function hideSearch(hideSearch) {
             ctrl.onBlur({ $event: {hideSearch: hideSearch} });
         }
-
     }
-
-    ClientSearchController.$inject = ['$q', '$state', '$log', 'SearchClientsServices'];
 })();
