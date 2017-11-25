@@ -1,4 +1,6 @@
 var express = require('express');
+var path = require('path');
+var router = express.Router();
 var app = express();
 var mongojs = require('mongojs');
 var bodyParser = require('body-parser');
@@ -17,6 +19,10 @@ var db_consumables = mongojs(db + 'consumables', ['consumables']);
 
 app.use(express.static(__dirname + '/'));
 app.use(bodyParser.json());
+
+// app.get('*', function(req, res) {
+//     res.sendFile('./index.html')
+// });
 
 ////////////////// CLIENTS Collection /////////////////////////
 //Get all clients in clients collection
@@ -356,6 +362,11 @@ app.put('/api/consumables/:id', function(req, res) {
 //kill server
 app.get('/api/kill', function(req, res) {
 	setTimeout(() => process.exit(), 500);
+});
+
+// necessary to redirect all routes that Node is not using to Angular, always add last
+app.get('*', function(req, res) {
+    res.sendFile(path.resolve('./index.html'));
 });
 
 
