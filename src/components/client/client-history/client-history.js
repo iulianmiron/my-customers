@@ -14,6 +14,7 @@
             }
         });
 
+    ClientHistoryController.$inject = [];
     function ClientHistoryController() {
         var ctrl = this;
         ctrl.data = {};
@@ -34,6 +35,7 @@
         ctrl.$onInit = function() {
             ctrl.actions.addNewHistoryItem = addNewHistoryItem;
             ctrl.actions.editHistoryItem = editHistoryItem;
+
         }
 
         function addNewHistoryItem(event) {
@@ -44,6 +46,4 @@
             ctrl.onEditHistoryItem({ $event: { historyItem: historyItem, event: event } });
         }
     }
-
-    ClientHistoryController.$inject = [];
 })();

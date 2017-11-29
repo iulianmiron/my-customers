@@ -9,7 +9,8 @@
             bindings: {}
         });
 
-    function ShopController(ProductsServices) {
+    ShopController.$inject = ['ProductsDataService'];
+    function ShopController(ProductsDataService) {
         var ctrl = this;
 
         ctrl.data = {};
@@ -26,7 +27,7 @@
         }
 
         function getAllProducts() {
-            ProductsServices.getAllProducts().then(function(rProducts) {
+            ProductsDataService.getAllProducts().then(function(rProducts) {
                 ctrl.data.allProducts = rProducts;
             });
         }
@@ -36,6 +37,4 @@
             ctrl.data.basket = angular.copy(ctrl.data.basket);
         }
     }
-
-    ShopController.$inject = ['ProductsServices'];
 })();

@@ -56,6 +56,7 @@
                             ng-model-options="{trackBy: '$value._id'}" 
                             ng-model="$ctrl.data.historyItem.services"  
                             md-on-close="$ctrl.data.searchServices = '';" 
+                            md-selected-text="$ctrl.actions.changeSelectedServicesText($ctrl.data.historyItem.services)"
                             data-md-container-class="selectdemoSelectHeader">
                             <md-select-header class="demo-select-header">
                                 <input ng-model="$ctrl.data.searchServices" placeholder="Cauta un serviciu" class="demo-header-searchbox md-text">
@@ -72,18 +73,36 @@
                         </div>
                     </md-input-container>
                 </div>
+                <div>
+                    <div>Servicii prestate:</div>
+                    <ul>
+                        <li ng-repeat="service in $ctrl.data.historyItem.services track by service._id">
+                            {{service.name}}
+                            <small>Pret: {{service.price}} RON  Durata: {{service.duration}} min.</small>
+                        </li>
+                    </ul>
+                </div>
     
                 <md-input-container class="md-block">
                     <label>Produse acasa</label>
-                    <textarea md-select-on-focus name="homeProducts" ng-model="$ctrl.data.historyItem.homeProducts">
+                    <textarea name="homeProducts" ng-model="$ctrl.data.historyItem.homeProducts">
                     </textarea>
                 </md-input-container>
     
                 <md-input-container class="md-block">
                     <label>Observatii</label>
-                    <textarea md-select-on-focus name="observations" ng-model="$ctrl.data.historyItem.observations">
+                    <textarea name="observations" ng-model="$ctrl.data.historyItem.observations">
                     </textarea>
                 </md-input-container>
+
+                <md-checkbox
+                    ng-model="$ctrl.data.historyItem.photosTaken">
+                    Poze
+                </md-checkbox>
+                <md-checkbox
+                    ng-model="$ctrl.data.historyItem.videosTaken"> 
+                    Filmare
+                </md-checkbox>
             </form>
 
         </div>
