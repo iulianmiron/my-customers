@@ -1,4 +1,5 @@
 var express = require('express');
+var path = require('path');
 var app = express();
 var mongojs = require('mongojs');
 var bodyParser = require('body-parser');
@@ -18,16 +19,20 @@ var db_consumables = mongojs(db + 'consumables', ['consumables']);
 app.use(express.static(__dirname + '/'));
 app.use(bodyParser.json());
 
+// app.get('*', function(req, res) {
+//     res.sendFile('./index.html')
+// });
+
 ////////////////// CLIENTS Collection /////////////////////////
 //Get all clients in clients collection
-app.get('/clients', function(req, res) {
+app.get('/api/clients', function(req, res) {
     db_clients.clients.find(function(err, docs) {
         res.json(docs);
     });
 });
 
 //Search clients in clients collection
-app.get('/clients/search/:query', function(req, res) {
+app.get('/api/clients/search/:query', function(req, res) {
     console.log("find client with id", req.params.query);
     db_clients.clients.find({ $text: { $search: req.params.query } }, function(err, doc) {
         console.log("find clients response", doc);
@@ -36,7 +41,7 @@ app.get('/clients/search/:query', function(req, res) {
 });
 
 //Add clients in clients collection
-app.post('/clients', function(req, res) {
+app.post('/api/clients', function(req, res) {
     console.log('----------------------------------------');
     console.log('add client with', req.body);
     req.body.createdOn = new Date();
@@ -48,14 +53,14 @@ app.post('/clients', function(req, res) {
 });
 
 //Find client by id
-app.get('/clients/:id', function(req, res) {
+app.get('/api/clients/:id', function(req, res) {
     db_clients.clients.findOne({ _id: mongojs.ObjectId(req.params.id) }, function(err, doc) {
         res.json(doc);
     });
 });
 
 //Update client in db_clients
-app.put('/clients/:id', function(req, res) {
+app.put('/api/clients/:id', function(req, res) {
     console.log("update client with id", req.params.id);
     console.log("update client with data", req.body);
     var updatedOn = new Date();
@@ -87,7 +92,7 @@ app.put('/clients/:id', function(req, res) {
     });
 });
 
-app.delete('/clients/:id', function(req, res) {
+app.delete('/api/clients/:id', function(req, res) {
     db_clients.clients.remove({ _id: mongojs.ObjectId(req.params.id) }, function(err, doc) {
         res.json(doc);
     });
@@ -96,20 +101,20 @@ app.delete('/clients/:id', function(req, res) {
 
 /////////////////// HISTORY collection /////////////////////////////////////
 //Get all history in history collection
-app.get('/history', function(req, res) {
+app.get('/api/history', function(req, res) {
     db_clients.history.find(function(err, docs) {
         res.json(docs);
     });
 });
 
 //Search clients in clients collection
-app.get('/history/client/:id', function(req, res) {
+app.get('/api/history/client/:id', function(req, res) {
     db_clients.history.find({ "_clientId": req.params.id }, function(err, doc) {
         res.json(doc);
     });
 });
 
-app.put('/history', function(req, res) {
+app.put('/api/history', function(req, res) {
     req.body.createdOn = new Date();
     req.body.updatedOn = new Date();
 
@@ -119,7 +124,7 @@ app.put('/history', function(req, res) {
 });
 
 //Update history item in db_clients
-app.put('/history/:id', function(req, res) {
+app.put('/api/history/:id', function(req, res) {
     console.log("update history with id", req.params.id);
     console.log("update history with data", req.body);
     var updatedOn = new Date();
@@ -134,6 +139,8 @@ app.put('/history/:id', function(req, res) {
                 interval: req.body.interval,
                 homeProducts: req.body.homeProducts,
                 observations: req.body.observations,
+                photosTaken: req.body.photosTaken,
+                videosTaken: req.body.videosTaken,
                 _clientId: req.body._clientId,
                 updatedOn: updatedOn,
                 createdOn: req.body.createdOn
@@ -147,7 +154,7 @@ app.put('/history/:id', function(req, res) {
 
 //////////////////// SERVICES collection //////////////////
 //Add services in services collection
-app.post('/services', function(req, res) {
+app.post('/api/services', function(req, res) {
     req.body.createdOn = new Date();
     req.body.updatedOn = new Date();
 
@@ -157,14 +164,14 @@ app.post('/services', function(req, res) {
 });
 
 //Get all services in services collection
-app.get('/services', function(req, res) {
+app.get('/api/services', function(req, res) {
     db_services.services.find(function(err, docs) {
         res.json(docs);
     });
 });
 
 //Update client in db_clients
-app.put('/services/:id', function(req, res) {
+app.put('/api/services/:id', function(req, res) {
     console.log("update services with id", req.params.id);
     console.log("update services with data", req.body);
     var updatedOn = new Date();
@@ -188,7 +195,7 @@ app.put('/services/:id', function(req, res) {
     });
 });
 
-app.delete('/services/:id', function(req, res) {
+app.delete('/api/services/:id', function(req, res) {
     db_services.services.remove({ _id: mongojs.ObjectId(req.params.id) }, function(err, doc) {
         res.json(doc);
     });
@@ -197,7 +204,7 @@ app.delete('/services/:id', function(req, res) {
 
 //////////////////// SERVICE TYPES collection //////////////////
 //Add service type
-app.post('/service-types', function(req, res) {
+app.post('/api/service-types', function(req, res) {
     req.body.createdOn = new Date();
     req.body.updatedOn = new Date();
 
@@ -207,14 +214,14 @@ app.post('/service-types', function(req, res) {
 });
 
 //Get all service type
-app.get('/service-types', function(req, res) {
+app.get('/api/service-types', function(req, res) {
     db_services.types.find(function(err, docs) {
         res.json(docs);
     });
 });
 
 //Update service type
-app.put('/service-types/:id', function(req, res) {
+app.put('/api/service-types/:id', function(req, res) {
     console.log("update service type with id", req.params.id);
     console.log("update service type with data", req.body);
     var updatedOn = new Date();
@@ -236,7 +243,7 @@ app.put('/service-types/:id', function(req, res) {
 });
 
 //delete service type
-app.delete('/service-types/:id', function(req, res) {
+app.delete('/api/service-types/:id', function(req, res) {
     db_services.types.remove({ _id: mongojs.ObjectId(req.params.id) }, function(err, doc) {
         res.json(doc);
     });
@@ -246,7 +253,7 @@ app.delete('/service-types/:id', function(req, res) {
 
 //////////////////// PRODUCTS collection //////////////////
 //Add products in products collection
-app.post('/products', function(req, res) {
+app.post('/api/products', function(req, res) {
     req.body.createdOn = new Date();
     req.body.updatedOn = new Date();
 
@@ -256,21 +263,21 @@ app.post('/products', function(req, res) {
 });
 
 //Get all services in services collection
-app.get('/products', function(req, res) {
+app.get('/api/products', function(req, res) {
     db_products.products.find(function(err, docs) {
         res.json(docs);
     });
 });
 
 //Delete a specific product
-app.delete('/products/:id', function(req, res) {
+app.delete('/api/products/:id', function(req, res) {
     db_products.products.remove({ _id: mongojs.ObjectId(req.params.id) }, function(err, doc) {
         res.json(doc);
     });
 });
 
 //Update product in db_products
-app.put('/products/:id', function(req, res) {
+app.put('/api/products/:id', function(req, res) {
     console.log("update product with id", req.params.id);
     console.log("update product with data", req.body);
     var updatedOn = new Date();
@@ -301,7 +308,7 @@ app.put('/products/:id', function(req, res) {
 
 //////////////////// Consumables collection //////////////////
 //Add consumables in consumables collection
-app.post('/consumables', function(req, res) {
+app.post('/api/consumables', function(req, res) {
     req.body.createdOn = new Date();
     req.body.updatedOn = new Date();
 
@@ -311,21 +318,21 @@ app.post('/consumables', function(req, res) {
 });
 
 //Get all consumables in consumables collection
-app.get('/consumables', function(req, res) {
+app.get('/api/consumables', function(req, res) {
     db_consumables.consumables.find(function(err, docs) {
         res.json(docs);
     });
 });
 
 //Delete a specific consumable
-app.delete('/consumables/:id', function(req, res) {
+app.delete('/api/consumables/:id', function(req, res) {
     db_consumables.consumables.remove({ _id: mongojs.ObjectId(req.params.id) }, function(err, doc) {
         res.json(doc);
     });
 });
 
 //Update consumable in db_consumables
-app.put('/consumables/:id', function(req, res) {
+app.put('/api/consumables/:id', function(req, res) {
     console.log("update consumable with id", req.params.id);
     console.log("update consumable with data", req.body);
     var updatedOn = new Date();
@@ -352,8 +359,13 @@ app.put('/consumables/:id', function(req, res) {
 
 
 //kill server
-app.get('/kill', function(req, res) {
+app.get('/api/kill', function(req, res) {
 	setTimeout(() => process.exit(), 500);
+});
+
+// necessary to redirect all routes that Node is not using to Angular, always add last
+app.get('*', function(req, res) {
+    res.sendFile(path.resolve('./index.html'));
 });
 
 

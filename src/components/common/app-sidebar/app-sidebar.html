@@ -3,7 +3,7 @@
         <h1 class="md-toolbar-tools">Elena Miron</h1>
     </md-toolbar>
     <md-list>
-        <md-list-item class="sidebar-menu-item" ui-sref="{{ menuItem.url }}" 
+        <md-list-item class="sidebar-menu-item" ui-sref="{{ menuItem.url }}" ui-sref-active="active-link"
             ng-click="$ctrl.showSidenav = false" 
             ng-repeat="menuItem in $ctrl.data.sidebarMenuItems">
             <div layout="row" layout-align="start center">

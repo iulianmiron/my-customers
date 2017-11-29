@@ -39,8 +39,12 @@
 
         </md-item-template>
         <md-not-found>
-            <div layout="row" layout-align="start center">
+            <div layout="row" layout-align="space-between center">
                 <span>0 rezultate</span>
+                <md-button ng-click="$ctrl.actions.openClientPage(0)" class="md-primary">
+                    <md-icon>person_add</md-icon>
+                    Adauga client nou
+                </md-button>
             </div>
         </md-not-found>
     </md-autocomplete>

@@ -9,7 +9,7 @@
             bindings: {}
         });
 
-    function ConsumablesController($mdDialog, $rootElement, ConsumablesServices, toastr, NO_PICTURE) {
+    function ConsumablesController($mdDialog, $rootElement, ConsumablesDataService, toastr, NO_PICTURE) {
         var ctrl = this;
         ctrl.data = {};
         ctrl.status = {};
@@ -28,13 +28,13 @@
         }
 
         function getAllConsumables() {
-            ConsumablesServices.getAllConsumables().then(function(rConsumables) {
+            ConsumablesDataService.getAllConsumables().then(function(rConsumables) {
                 ctrl.data.allConsumables = rConsumables;
             });
         }
 
         function saveNewConsumable(newConsumable) {
-            ConsumablesServices.addConsumable(newConsumable).then(function(rSuccess) {
+            ConsumablesDataService.addConsumable(newConsumable).then(function(rSuccess) {
                 toastr.success("Consumabilul adaugat cu succes");
                 return rSuccess.data;
             });
@@ -42,7 +42,7 @@
         }
         
         function saveEditedConsumable(consumable) {
-            ConsumablesServices.updateConsumable(consumable).then(function(rSuccess) {
+            ConsumablesDataService.updateConsumable(consumable).then(function(rSuccess) {
                 toastr.success("Consumabilul editat cu succes");
                 return rSuccess.data;
             });
@@ -50,7 +50,7 @@
         }
 
         function deleteConsumable(consumableId) {
-            ConsumablesServices.deleteConsumable(consumableId).then(function(rSuccess) {
+            ConsumablesDataService.deleteConsumable(consumableId).then(function(rSuccess) {
                 toastr.success("Consumabilul sters cu succes");
                 return rSuccess.data;
             });
@@ -96,5 +96,5 @@
         }
     }
 
-    ConsumablesController.$inject = ['$mdDialog', '$rootElement', 'ConsumablesServices', 'toastr', 'NO_PICTURE'];
+    ConsumablesController.$inject = ['$mdDialog', '$rootElement', 'ConsumablesDataService', 'toastr', 'NO_PICTURE'];
 })();

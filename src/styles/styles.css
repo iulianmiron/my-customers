@@ -123,9 +123,51 @@ md-list-item p {
   width:100%; 
   height:100%; 
   z-index: 99999; 
-  background-color: rgba(0,0,0,0.4); 
+  background-color: rgba(255, 255, 255, 0.8); 
 }
 
 .hide-scroll {
   overflow: hidden;
+}
+
+/* .sticky-toolbar {
+  position: fixed;
+}
+
+.app-content {
+  padding-top: 56px;
+} */
+
+.active-link,
+.active-link md-icon {
+  color: #2196f3;
+}
+
+.fade {
+  transition: 0.1s linear all;
+}
+
+.fade.ng-hide-add { 
+  opacity: 1;
+}
+
+.fade.ng-hide-remove {
+  opacity: 0;
+}
+
+/* fix for md-dialog backdrop when multiple dialogs overlap */
+.md-dialog-backdrop:nth-of-type(even) {
+  z-index: 81;
+}
+
+.md-dialog-backdrop:nth-of-type(odd) {
+  z-index: 79;
+}
+
+.md-dialog-container:nth-of-type(even) {
+  z-index: 80;
+}
+
+.md-dialog-container:nth-of-type(odd) {
+  z-index: 82;
 }

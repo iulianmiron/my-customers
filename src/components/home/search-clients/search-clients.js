@@ -9,7 +9,7 @@
             bindings: {}
         });
 
-    function SearchClientsController($q, $state, $log, SearchClientsServices) {
+    function SearchClientsController($q, $state, $log, ClientsDataService) {
         var ctrl = this;
         ctrl.data = {};
         ctrl.status = {};
@@ -21,7 +21,7 @@
         function searchClients(query) {
             var deferred = $q.defer();
 
-            SearchClientsServices
+            ClientsDataService
                 .searchClients(query)
                 .then(handleSuccess)
                 .catch(handleError);
@@ -43,5 +43,5 @@
     }
 
 
-    SearchClientsController.$inject = ['$q', '$state', '$log', 'SearchClientsServices'];
+    SearchClientsController.$inject = ['$q', '$state', '$log', 'ClientsDataService'];
 })();

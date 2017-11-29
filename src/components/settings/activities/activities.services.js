@@ -3,9 +3,9 @@
 
     angular
         .module('cm.services.settings.consumables', [])
-        .service('ConsumablesServices', ConsumablesServices);
+        .service('ConsumablesDataService', ConsumablesDataService);
 
-    function ConsumablesServices($http, $log) {
+    function ConsumablesDataService($http, $log) {
         var service = this;
 
         service.addConsumable = addConsumable;
@@ -46,5 +46,5 @@
         }
     }
 
-    ConsumablesServices.$inject = ['$http', '$log'];
+    ConsumablesDataService.$inject = ['$http', '$log'];
 })();

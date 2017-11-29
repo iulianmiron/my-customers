@@ -9,7 +9,8 @@
             bindings: {}
         });
 
-    function ProductsController($mdDialog, $rootElement, ProductsServices, toastr, NO_PICTURE) {
+    ProductsController.$inject = ['$mdDialog', '$rootElement', 'ProductsDataService', 'toastr', 'NO_PICTURE'];
+    function ProductsController($mdDialog, $rootElement, ProductsDataService, toastr, NO_PICTURE) {
         var ctrl = this;
         ctrl.data = {};
         ctrl.status = {};
@@ -47,7 +48,7 @@
         }
 
         function saveNewProduct(newProduct) {
-            ProductsServices.addProduct(newProduct).then(function(rSuccess) {
+            ProductsDataService.addProduct(newProduct).then(function(rSuccess) {
                 toastr.success("Produsul adaugat cu succes");
                 return rSuccess.data;
             });
@@ -55,13 +56,13 @@
         }
 
         function getAllProducts() {
-            ProductsServices.getAllProducts().then(function(rProducts) {
+            ProductsDataService.getAllProducts().then(function(rProducts) {
                 ctrl.data.allProducts = rProducts;
             });
         }
 
         function deleteProduct(productId) {
-            ProductsServices.deleteProduct(productId).then(function(rSuccess) {
+            ProductsDataService.deleteProduct(productId).then(function(rSuccess) {
                 toastr.success("Produsul sters cu succes");
                 return rSuccess.data;
             });
@@ -88,13 +89,11 @@
         }
 
         function editProduct(product) {
-            ProductsServices.updateProduct(product).then(function(rSuccess) {
+            ProductsDataService.updateProduct(product).then(function(rSuccess) {
                 toastr.success("Produsul editat cu succes");
                 return rSuccess.data;
             });
             getAllProducts();
         }
     }
-
-    ProductsController.$inject = ['$mdDialog', '$rootElement', 'ProductsServices', 'toastr', 'NO_PICTURE'];
 })();

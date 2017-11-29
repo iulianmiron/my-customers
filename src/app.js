@@ -11,6 +11,8 @@
             'angularSpinners',
             'toastr',
 
+            'cm.dataservices',
+
             'cm.constants',
             'cm.directives',
             'cm.services',
@@ -29,9 +31,6 @@
             return moment(date).format('DD/MM/YYYY');
         };
 
-        // $locationProvider.html5Mode(true);
-        $urlRouterProvider.otherwise('/home');
-
         angular.extend(toastrConfig, {
             closeButton: true,
             closeHtml: '<button>&times;</button>',
@@ -47,6 +46,13 @@
             extendedTimeOut: 5000,
             target: 'body'
         });
+        
+        $locationProvider.html5Mode({
+            enabled: true,
+            requireBase: true
+        });
+        
+        $urlRouterProvider.otherwise('/home');
 
         $stateProvider
             .state('home', {

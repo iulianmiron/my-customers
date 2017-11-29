@@ -5,12 +5,15 @@
         .module('cm.components.clientHistoryDialog', [])
         .controller('ClientHistoryDialogController', ClientHistoryDialogController);
 
-    function ClientHistoryDialogController($element, $mdDialog, dialogData, USERS) {
+        
+    ClientHistoryDialogController.$inject = ['$timeout', '$element', '$mdDialog', 'dialogData', 'USERS'];
+    function ClientHistoryDialogController($timeout, $element, $mdDialog, dialogData, USERS) {
         var ctrl = this;
         ctrl.data = {};
         ctrl.status = {};
         ctrl.actions = {};
 
+        ctrl.data.users = USERS;
         ctrl.data.title = dialogData.title;
         ctrl.data.historyItem = dialogData.historyItem;
         ctrl.data.services = dialogData.services;
@@ -18,10 +21,10 @@
         ctrl.data.historyItem.date = ctrl.data.historyItem.date ? new Date(ctrl.data.historyItem.date) : new Date();
 
         ctrl.data.maxDate = new Date();
-        ctrl.data.users = USERS;
-
+        
         ctrl.actions.cancel = cancel;
         ctrl.actions.save = save;
+        ctrl.actions.changeSelectedServicesText = changeSelectedServicesText;
 
         $element.find('input').on('keydown', function(ev) { ev.stopPropagation(); });
        
@@ -32,7 +35,13 @@
         function save(historyItem) {
             $mdDialog.hide(historyItem);
         };
-    }
 
-    ClientHistoryDialogController.$inject = ['$element', '$mdDialog', 'dialogData', 'USERS'];
+        function changeSelectedServicesText(selectedServices) {
+            return (selectedServices && selectedServices.length) 
+                ? selectedServices.length > 1 
+                    ? selectedServices.length + ' servicii selectate.'
+                    : selectedServices.length + ' serviciu selectat'
+                : 'Nu sunt servicii selectate';            
+        }
+    }
 })();
