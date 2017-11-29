@@ -10,8 +10,17 @@
                 transition: '<$transition$'
             }
         });
-
-    function ClientController($mdToast, $q, $state, $log, $mdDialog, $rootElement, ClientsDataService, HistoryDataService, ServicesDataService, ServiceTypesDataService, toastr) {
+    ClientController.$inject = [
+        '$mdToast', '$q', '$state', '$log', '$mdDialog', '$rootElement', 
+        'ClientsDataService', 'HistoryDataService', 'ServicesDataService', 'ServiceTypesDataService', 
+        'CLIENT_VIP_LEVELS', 'CLIENT_VIP_TYPES',
+        'toastr'
+    ];
+    function ClientController(
+        $mdToast, $q, $state, $log, $mdDialog, $rootElement, 
+        ClientsDataService, HistoryDataService, ServicesDataService, ServiceTypesDataService, CLIENT_VIP_LEVELS, CLIENT_VIP_TYPES, 
+        toastr
+    ) {
         var ctrl = this;
 
         ctrl.$onInit = function() {
@@ -21,50 +30,70 @@
             ctrl.actions = {};
 
             ctrl.data.clientId = ctrl.transition.params("to").id;
-            ctrl.data.newClient = false;
+            ctrl.data.previousPage = ctrl.transition.from().name;
+            ctrl.data.newClient = ctrl.data.clientId === '0' ? true : false;
+
+            ctrl.data.clientVip = {
+                levels: CLIENT_VIP_LEVELS,
+                types: CLIENT_VIP_TYPES
+            };
+            
+            ctrl.actions.getClientProfile   = getClientProfile;
+            ctrl.actions.addClient          = addClient;
+            ctrl.actions.editClient         = editClient;
+
+            ctrl.actions.addHistoryItem     = addHistoryItem;
+            ctrl.actions.editHistoryItem    = editHistoryItem;
+
+            $q.all([
+                getAllServices(), 
+                getAllServiceTypes()
+            ]).then(function(data) {
+                ctrl.data.allServices = data[0];
+                ctrl.data.allServiceTypes = data[1];
+            });
 
             if (ctrl.data.clientId !== '0') {
-                $q.all([getClientProfile(ctrl.data.clientId), getClientHistory(ctrl.data.clientId)]).then(function() {});
-            } else if (ctrl.data.clientId === '0') {
-                ctrl.data.newClient = true;
-            }
+                $q.all([
+                    getClientProfile(ctrl.data.clientId), 
+                    getClientHistory(ctrl.data.clientId)
+                ]).then(function() {});
+            } else {
+                addClient();
+            }     
+        }
+        
+        function getAllServices()       { return ServicesDataService.getAllServices(); }
+        function getAllServiceTypes()   { return ServiceTypesDataService.getAllServiceTypes(); }
 
-            $q.all([getAllServices(), getAllServiceTypes()]).then(function() {
-
-            }).finally(function() {
-                // $mdToast.showSimple('Hello');
-                // toastr.success('test');
-            });
-           
-
-            ctrl.actions.saveClientProfile = saveClientProfile;
-            ctrl.actions.getClientProfile = getClientProfile;
-            ctrl.actions.addHistoryItem = addHistoryItem;
-            ctrl.actions.editHistoryItem = editHistoryItem;
-
+        function getClientProfile(clientId) { 
+            ClientsDataService.getClient(clientId).then(function(rClient) {
+                ctrl.data.client = rClient;
+            }); 
         }
 
-        function getClientProfile(clientId) {
-            ClientsDataService.getClient(clientId).then(function(rClientProfile) {
-                ctrl.data.client = rClientProfile;
-                ctrl.data.clientBackup = rClientProfile;
-            });
+        function getClientHistory(clientId) { 
+            HistoryDataService.getClientHistory(clientId).then(function(rHistory) {
+                ctrl.data.history = rHistory;
+            }); 
         }
 
-        function getAllServices() {
-            ServicesDataService.getAllServices().then(function(rServices) {
-                ctrl.data.allServices = rServices;
-            });
+        function addClient() {
+            var dialogData = {
+                client: null,
+                title: 'Adaugati client',
+                clientVip: ctrl.data.clientVip
+            };
+            showClientProfileDialog(null, dialogData, addNewClient);
         }
 
-        function getAllServiceTypes() {
-            ServiceTypesDataService.getAllServiceTypes().then(function(rServiceTypes) {
-                ctrl.data.allServiceTypes = rServiceTypes;
-            });
-        }
-
-        function saveClientProfile(event) {
-            event.clientData._id ? updateClient(event.clientData) : addNewClient(event.clientData);
+        function editClient(event) {
+            var dialogData = {
+                client: event.client ? angular.copy(event.client) : null,
+                title: 'Editati client',
+                clientVip: ctrl.data.clientVip
+            };
+            showClientProfileDialog(event.event, dialogData, updateClient);
         }
 
         function addNewClient(client) {
@@ -77,14 +106,34 @@
         function updateClient(client) {
             ClientsDataService.updateClient(client).then(function(rSuccess) {
                 toastr.success("Client editat", "Succes");
+                getClientProfile(client._id);
             });
         }
 
-        function getClientHistory(clientId) {
-            HistoryDataService.getClientHistory(clientId).then(function(rClientHistory) {
-                ctrl.data.history = rClientHistory;
+        function showClientProfileDialog(event, dialogData, cb) {
+            $mdDialog.show({
+                controller: 'ClientProfileDialogController',
+                controllerAs: '$ctrl',
+                templateUrl: 'components/client/client-profile-dialog/client-profile-dialog.html',
+                locals: {
+                    dialogData: dialogData
+                },
+                parent: $rootElement,
+                targetEvent: event,
+                clickOutsideToClose: false,
+                fullscreen: true
+            }).then(function(client) {
+                cb(client);
+            }, function(client) {
+                if(!client || !client._id) {
+                    $state.go('home');
+                }
             });
         }
+
+
+//////////////////history/////////////////////////////////
+
 
         function addHistoryItem(event) {
             var dialogData = {
@@ -95,7 +144,7 @@
                 services: ctrl.data.allServices,
                 serviceTypes: ctrl.data.allServiceTypes
             };
-            showDialog(event.event, dialogData, saveNewHistoryItem);
+            showHistoryDialog(event.event, dialogData, saveNewHistoryItem);
         }
 
         function editHistoryItem(event) {
@@ -106,7 +155,7 @@
                 services: ctrl.data.allServices,
                 serviceTypes: ctrl.data.allServiceTypes
             };
-            showDialog(event.event, dialogData, saveEditedHistoryItem);
+            showHistoryDialog(event.event, dialogData, saveEditedHistoryItem);
         }
 
         function saveNewHistoryItem(historyItem) {
@@ -123,7 +172,7 @@
             });
         }
 
-        function showDialog(event, dialogData, cb) {
+        function showHistoryDialog(event, dialogData, cb) {
             $mdDialog.show({
                 controller: 'ClientHistoryDialogController',
                 controllerAs: '$ctrl',
@@ -143,5 +192,4 @@
         }
     }
 
-    ClientController.$inject = ['$mdToast', '$q', '$state', '$log', '$mdDialog', '$rootElement', 'ClientsDataService', 'HistoryDataService', 'ServicesDataService', 'ServiceTypesDataService', 'toastr'];
 })();

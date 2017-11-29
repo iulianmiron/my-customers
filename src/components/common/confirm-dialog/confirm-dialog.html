@@ -1,0 +1,27 @@
+<md-dialog aria-label="{{ $ctrl.data.title }}">
+	<md-toolbar>
+		<div class="md-toolbar-tools">
+			<h2>{{ $ctrl.data.title }}</h2>
+			<span flex></span>
+			<md-button class="md-icon-button" ng-click="$ctrl.actions.cancel()">
+				<md-icon>close</md-icon>
+			</md-button>
+		</div>
+	</md-toolbar>
+
+	<md-dialog-content>
+		<div class="md-dialog-content">
+			{{ $ctrl.data.textContent }}
+		</div>
+	</md-dialog-content>
+
+	<md-dialog-actions layout="row" layout-align="end center" layout-wrap>
+		<md-button ng-click="$ctrl.actions.cancel()">
+			Inapoi
+		</md-button>
+		<md-button class="md-raised md-primary" ng-click="$ctrl.actions.save()">
+			{{ $ctrl.data.okText }}
+		</md-button>
+	</md-dialog-actions>
+
+</md-dialog>

@@ -6,6 +6,7 @@
         'cm.components.common.appSidebar',
         'cm.components.common.appLoading',
         'cm.components.common.clientSearch',
+        'cm.components.common.confirmDialog',
         
         'cm.components.settings',
         'cm.components.settings.services',
@@ -24,6 +25,7 @@
 
         'cm.components.client',
         'cm.components.clientProfile',
+        'cm.components.clientProfileDialog',
         'cm.components.clientHistory',
         'cm.components.clientHistoryDialog',    
 

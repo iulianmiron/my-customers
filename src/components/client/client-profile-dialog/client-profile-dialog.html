@@ -3,7 +3,7 @@
         <div class="md-toolbar-tools">
             <h2>{{ $ctrl.data.title }}</h2>
             <span flex></span>
-            <md-button class="md-icon-button" ng-click="$ctrl.actions.cancel()">
+            <md-button class="md-icon-button" ng-click="$ctrl.actions.cancel($ctrl.data.client)">
                 <md-icon>close</md-icon>
             </md-button>
         </div>
@@ -11,12 +11,12 @@
 
     <md-dialog-content>
         <div class="md-dialog-content">
-            <form name="$ctrl.data.editClientProfileForm" novalidate autocomplete="off">
+            <form name="$ctrl.data.clientProfileForm" novalidate autocomplete="off">
                 <md-input-container class="md-block">
                     <label>Prenume</label>
                     <md-icon>person</md-icon>
                     <input name="clientFirstName" ng-model="$ctrl.data.client.firstName"  minlength="2" md-maxlength="100" required>
-                    <div ng-messages="$ctrl.data.editClientProfileForm.clientFirstName.$error">
+                    <div ng-messages="$ctrl.data.clientProfileForm.clientFirstName.$error">
                         <div ng-message="required">Prenumele este obligatoriu</div>
                         <div ng-message="md-maxlength">Prenumele trebuie sa aiba sub 100 de caractere</div>
                         <div ng-message="minlength">Prenumele trebuie sa aiba mai mult de 1 caracter</div>
@@ -27,7 +27,7 @@
                     <label>Nume</label>
                     <md-icon>person</md-icon>
                     <input name="clientLastName" ng-model="$ctrl.data.client.lastName"  minlength="2" md-maxlength="100" required>
-                    <div ng-messages="$ctrl.data.editClientProfileForm.clientLastName.$error">
+                    <div ng-messages="$ctrl.data.clientProfileForm.clientLastName.$error">
                         <div ng-message="required">Numele este obligatoriu</div>
                         <div ng-message="md-maxlength">Numele trebuie sa aiba sub 100 de caractere</div>
                         <div ng-message="minlength">Numele trebuie sa aiba mai mult de 1 caracter</div>
@@ -37,12 +37,19 @@
                 <md-input-container class="md-block">
                     <label>Telefon</label>
                     <md-icon>phone</md-icon>
-                    <input name="clientPhoneNo" type="text" ng-model="$ctrl.data.client.phoneNumber" ng-model-options="{debounce: 500}" ng-change="$ctrl.actions.checkIfDuplicate('phoneNumber', $ctrl.data.client.phoneNumber)"  minlength="10" md-maxlength="10" required>
-                    <div ng-messages="$ctrl.data.editClientProfileForm.clientPhoneNo.$error">
+                    <input 
+                        name="clientPhoneNo" type="text" minlength="10" md-maxlength="10" required
+                        ng-model="$ctrl.data.client.phoneNumber" ng-model-options="{debounce: 500}" 
+                        ng-change="$ctrl.actions.checkIfDuplicate('phoneNumber', $ctrl.data.client.phoneNumber)"  
+                        >
+                    <div ng-messages="$ctrl.data.clientProfileForm.clientPhoneNo.$error">
                         <div ng-message="required">Numarul de telefon este obligatoriu</div>
                         <div ng-message="minlength, md-maxlength">Numarul de telefon trebuie sa inceapa cu zero si sa fie format din 10 cifre</div>
                     </div>
                 </md-input-container>
+                <div layout="row">
+                    <md-button ng-show="$ctrl.status.showButton">duplicat</md-button>
+                </div>
 
                 <div layout="column" layout-gt-md="row">
                     <md-input-container class="md-block">
@@ -58,7 +65,7 @@
                             ng-blur="$ctrl.actions.calculateClientAge($ctrl.data.client.dateOfBirth)"
                             >
                         </md-datepicker>
-                        <div ng-messages="$ctrl.data.editClientProfileForm.clientDateOfBirth.$error">
+                        <div ng-messages="$ctrl.data.clientProfileForm.clientDateOfBirth.$error">
                             <div ng-message="required">Data nasterii este obligatorie</div>
                         </div>
                     </md-input-container>
@@ -66,7 +73,7 @@
                     <md-input-container flex>
                         <label>Varsta</label>
                         <md-icon>person</md-icon>
-                        <input name="clientAge" type="text" ng-model="$ctrl.data.clientAge" ng-readonly="true">
+                        <input name="clientAge" type="text" ng-model="$ctrl.data.client.age" ng-readonly="true">
                     </md-input-container>
                 </div>
 
@@ -74,17 +81,17 @@
                     <label>Email</label>
                     <md-icon>email</md-icon>
                     <input name="clientEmail" type="email" ng-model="$ctrl.data.client.email" ng-model-options="{debounce: 500}" ng-change="$ctrl.actions.checkIfDuplicate('email', $ctrl.data.client.email)"  ng-pattern="/[\wd\-\_\.]+@[\wd\-\_\.]+\.[\wd\-\_\.]+/">
-                    <div ng-messages="$ctrl.data.editClientProfileForm.clientEmail.$error">
+                    <div ng-messages="$ctrl.data.clientProfileForm.clientEmail.$error">
                         <div ng-message="pattern">Adresa trebuie sa fie in formatul: user.name@email.com</div>
                     </div>
                 </md-input-container>
 
                 <md-button ng-click="$ctrl.status.showMoreProfileDetails = !$ctrl.status.showMoreProfileDetails">
-                    Mai {{$ctrl.status.showMoreProfileDetails ? 'putine' : 'multe'}} detalii
+                    Caracteristici
                     <md-icon>keyboard_arrow_{{$ctrl.status.showMoreProfileDetails ? "up" : 'down'}}</md-icon>
                 </md-button>
 
-                <div ng-show="$ctrl.status.showMoreProfileDetails">
+                <div ng-show="$ctrl.status.showMoreProfileDetails" class="fade">
                     <md-input-container class="md-block">
                         <label>Tip ten</label>
                         <input ng-model="$ctrl.data.client.skinType" >
@@ -135,7 +142,7 @@
                                         {{ clientVipType.label }}
                                     </md-option>
                                 </md-select>
-                                <div ng-messages="$ctrl.data.editClientProfileForm.vipType.$error">
+                                <div ng-messages="$ctrl.data.clientProfileForm.vipType.$error">
                                     <div ng-message="required">Tipul de VIP este necesar.</div>
                                 </div>
                             </md-input-container>
@@ -149,7 +156,7 @@
                                         {{ clientVipLevel.label }}
                                     </md-option>
                                 </md-select>
-                                <div ng-messages="$ctrl.data.editClientProfileForm.vipLevel.$error">
+                                <div ng-messages="$ctrl.data.clientProfileForm.vipLevel.$error">
                                     <div ng-message="required">Nivelul de VIP este necesar.</div>
                                 </div>
                             </md-input-container>
@@ -162,10 +169,10 @@
     </md-dialog-content>
 
     <md-dialog-actions layout="row" layout-align="end center">
-        <md-button ng-click="$ctrl.actions.cancel()">
+        <md-button ng-click="$ctrl.actions.cancel($ctrl.data.client)">
             Renunta
         </md-button>
-        <md-button class="md-raised md-primary" ng-click="$ctrl.actions.save($ctrl.data.client)" ng-disabled="$ctrl.data.editClientProfileForm.$invalid">
+        <md-button class="md-raised md-primary" ng-click="$ctrl.actions.save($ctrl.data.client)" ng-disabled="$ctrl.data.clientProfileForm.$invalid">
             Salveaza Client
         </md-button>
     </md-dialog-actions>

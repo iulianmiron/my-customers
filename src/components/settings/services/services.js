@@ -31,7 +31,10 @@
         }
 
         function updateServicesData() {
-            $q.all([getAllServiceTypes(), getAllServices()]).then(function(data) {
+            $q.all([
+                getAllServiceTypes(), 
+                getAllServices()
+            ]).then(function(data) {
                 ctrl.data.allServiceTypes = data[0];
                 ctrl.data.allServices = data[1];
             }).finally(function() {
