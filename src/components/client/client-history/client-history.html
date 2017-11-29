@@ -1,59 +1,59 @@
-<h2>
-    <md-icon>history</md-icon>
-    Istoric client ({{ $ctrl.data.history.length || '0'}} sedinte)
-</h2>
-<md-fab-speed-dial ng-hide="$ctrl.data.newClient"
-    class="md-fab md-scale md-fab-bottom-right" 
-    md-direction="up" 
-    md-open="$ctrl.status.speedDialOpen" 
-    ng-mouseenter="$ctrl.status.speedDialOpen = true"
-    ng-mouseleave="$ctrl.status.speedDialOpen = false">
-    <md-fab-trigger>
-        <md-button aria-label="menu" class="md-fab md-primary">
-            <md-icon>add</md-icon>
-        </md-button>
-    </md-fab-trigger>
-
-    <md-fab-actions>
-        <md-button class="md-fab md-raised" ng-click="$ctrl.actions.addNewHistoryItem($event)">
-            <md-icon>assignment</md-icon>
-            <md-tooltip md-direction="left" md-visible="$ctrl.status.speedDialOpen">Adauga sedinta noua</md-tooltip>
-        </md-button>
-        <md-button class="md-fab md-raised">
-            <md-icon>schedule</md-icon>
-            <md-tooltip md-direction="left" md-visible="$ctrl.status.speedDialOpen">Adauga programare noua</md-tooltip>
-        </md-button>
-    </md-fab-actions>
-</md-fab-speed-dial>
-
-<md-content style="max-height: 75vh">
-   
-    <div ng-repeat="historyItem in $ctrl.data.history | orderBy: 'date' track by historyItem._id">
-        <md-card ng-click="$ctrl.actions.editHistoryItem($event, historyItem)">
-            <md-card-header>
-                <md-card-header-text>
-                    <span class="md-title">Sedinta {{ $index + 1 }}</span>
-                    <span class="md-subhead">Data: {{ historyItem.date | amDateFormat:'Do MMMM YYYY, h:mm a' }}</span>
-                </md-card-header-text>
-            </md-card-header>
-            <md-card-content>
-                <div>
-                    <div>Servicii prestate:</div>
-                    <ul>
-                        <li ng-repeat="service in historyItem.services track by service._id">
-                            {{service.name}}
-                            <small>Pret: {{service.price}} RON  Durata: {{service.duration}} min.</small>
-                        </li>
-                    </ul>
-                </div>
-                <p>Efectuat de: {{ historyItem.servicesPerformedBy ? historyItem.servicesPerformedBy.first_name + ' ' + historyItem.servicesPerformedBy.last_name : '-' }}</p>
-                <p>Interval: {{ historyItem.interval || '-' }}</p>
-                <p>Produse acasa: {{ historyItem.homeProducts || '-' }}</p>
-                <p>Observatii: {{ historyItem.observations || '-' }}</p>
-                <p>Filmari: {{ historyItem.videosTaken ? 'Da' : '-' }}</p>
-                <p>Poze: {{ historyItem.photosTaken ? 'Da' : '-' }}</p>
-            </md-card-content>
-        </md-card>
-    </div>
-    
-</md-content>
+<md-card>
+    <md-card-header>
+        <md-icon>history</md-icon>
+        <md-card-header-text layout="row" layout-align="space-between center">
+            <span class="md-headline">
+                Istoric client: {{ $ctrl.data.history.length || '0'}} sedinte
+            </span>
+            <md-menu md-position-mode="target-right target">
+                <md-button ng-click="$mdMenu.open($event)" class="md-icon-button">
+                    <md-icon md-menu-origin>add_circle_outline</md-icon>
+                    <md-tooltip md-direction="left">Adauga in istoric</md-tooltip>
+                </md-button>
+                <md-menu-content>
+                    <md-menu-item>
+                        <md-button ng-click="$ctrl.actions.addNewHistoryItem($event)">
+                            <md-icon md-menu-align-target>assignment</md-icon>
+                            Adauga sedinta noua
+                        </md-button>
+                    </md-menu-item>
+                    <md-menu-item ng-hide="true">
+                        <md-button>
+                            <md-icon md-menu-align-target>alarm_add</md-icon>
+                            Adauga programare noua
+                        </md-button>
+                    </md-menu-item>
+                </md-menu-content>
+            </md-menu>
+        </md-card-header-text>
+    </md-card-header>
+    <md-card-content class="overflow">
+        <div ng-repeat="historyItem in $ctrl.data.history | orderBy: 'date' track by historyItem._id">
+            <md-card ng-click="$ctrl.actions.editHistoryItem($event, historyItem)">
+                <md-card-header>
+                    <md-card-header-text>
+                        <span class="md-title">Sedinta {{ $index + 1 }}</span>
+                        <span class="md-subhead">Data: {{ historyItem.date | amDateFormat:'Do MMMM YYYY, h:mm a' }}</span>
+                    </md-card-header-text>
+                </md-card-header>
+                <md-card-content>
+                    <div>
+                        <div>Servicii prestate:</div>
+                        <ul>
+                            <li ng-repeat="service in historyItem.services track by service._id">
+                                {{service.name}}
+                                <small>Pret: {{service.price}} RON  Durata: {{service.duration}} min.</small>
+                            </li>
+                        </ul>
+                    </div>
+                    <p>Efectuat de: {{ historyItem.servicesPerformedBy ? historyItem.servicesPerformedBy.first_name + ' ' + historyItem.servicesPerformedBy.last_name : '-' }}</p>
+                    <p>Interval: {{ historyItem.interval || '-' }}</p>
+                    <p>Produse acasa: {{ historyItem.homeProducts || '-' }}</p>
+                    <p>Observatii: {{ historyItem.observations || '-' }}</p>
+                    <p>Filmari: {{ historyItem.videosTaken ? 'Da' : '-' }}</p>
+                    <p>Poze: {{ historyItem.photosTaken ? 'Da' : '-' }}</p>
+                </md-card-content>
+            </md-card>
+        </div>
+    </md-card-content>
+</md-card>
