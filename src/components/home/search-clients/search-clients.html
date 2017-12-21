@@ -1,11 +1,11 @@
-<md-content class="md-padding">
-    <div layout="column" layout-align="start center">
-        <div flex>
-            <h1>Cauta Clienti</h1>
-        </div>
+<div layout="column" flex flex-gt-sm="50" flex-offset-gt-sm="25">
+
+    <div layout="row" layout-align="space-around center">
+        <h1>Cauta Clienti</h1>
     </div>
-    <div layout="row" layout-align="center start">
-        <form name="$ctrl.searchClientForm" flex flex-gt-sm="50">
+
+    <div layout="row">
+        <form name="$ctrl.searchClientForm" flex>
             <md-autocomplete 
                 placeholder="Introdu nume, prenume, telefon sau email" 
                 md-no-cache="true" 
@@ -22,17 +22,17 @@
                                 VIP: {{client.vip.type.label}}
                             </md-tooltip>
                         </md-icon>
-						<span flex 
-							md-highlight-text="$ctrl.data.searchText" 
+                        <span flex 
+                            md-highlight-text="$ctrl.data.searchText" 
                             md-highlight-flags="i">
-							{{client.firstName}} {{client.lastName}}
-						</span>
+                            {{client.firstName}} {{client.lastName}}
+                        </span>
                         <span flex md-highlight-text="$ctrl.data.searchText" md-highlight-flags="i">
                             {{client.phoneNumber}} 
                         </span>
                         <span flex md-highlight-text="$ctrl.data.searchText" md-highlight-flags="i">
-							{{client.email}} 
-						</span>
+                            {{client.email}} 
+                        </span>
                     </span>
                 </md-item-template>
                 <md-not-found>
@@ -41,20 +41,19 @@
                         <span flex></span>
                         <md-button ng-click="$ctrl.actions.openClientPage(0)" class="md-primary">
                             <md-icon>add</md-icon>
-                            Adauga un client nou
+                            Adauga client nou
                         </md-button>
                     </div>
                 </md-not-found>
             </md-autocomplete>
         </form>
     </div>
-    <div layout="row" layout-align="center start">
-        <div flex flex-gt-sm="50" layout="row">
-            <div flex></div>
-            <md-button ng-click="$ctrl.actions.openClientPage(0)" class="md-primary">
-                <md-icon>add</md-icon>
-                Adauga un client nou
-            </md-button>
-        </div>
+
+    <div layout="row" layout-align="end center">
+        <md-button ng-click="$ctrl.actions.openClientPage(0)" class="md-primary">
+            <md-icon>person_add</md-icon>
+            Adauga client nou
+        </md-button>
     </div>
-</md-content>
+    
+</div>

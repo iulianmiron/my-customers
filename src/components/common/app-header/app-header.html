@@ -8,6 +8,7 @@
         </md-button>
         <h2
             flex="none" hide-xs
+            ng-click="$ctrl.status.showSearch = false" 
             ng-show="$ctrl.status.showSearch">
             Search
         </h2>
@@ -38,6 +39,9 @@
             <md-icon>search</md-icon>
             <md-tooltip>Cauta Clienti</md-tooltip>
         </md-button>
-
+        <md-button ng-click="$ctrl.actions.openClientPage(0)" class="md-default md-icon-button">
+            <md-icon>person_add</md-icon>
+            <md-tooltip>Adauga client nou</md-tooltip>
+        </md-button>
     </div>
 </md-toolbar>

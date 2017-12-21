@@ -7,13 +7,24 @@
 
 	appRouting.$inject = ['$urlRouterProvider','$stateProvider', '$locationProvider'];
 	function appRouting($urlRouterProvider, $stateProvider, $locationProvider) {
+					
+		$locationProvider.html5Mode({
+			enabled: true,
+			requireBase: true
+		});
 
 		$urlRouterProvider.otherwise('/home');
 		
 		$stateProvider
 			.state('test', {
 				url: '/test',
-				component: 'test'
+				component: 'test',
+				onEnter: function() { 
+					console.log('entering test');
+				},
+				onExit: function() { 
+					console.log('exiting test');
+				}
 			})
 			.state('home', {
 				url: '/home',
@@ -57,11 +68,6 @@
 			.state('bankAccount', {
 				url: '/bank-account',
 				component: 'bankAccount'
-			});
-			
-			$locationProvider.html5Mode({
-				enabled: true,
-				requireBase: true
 			});
 	}
 

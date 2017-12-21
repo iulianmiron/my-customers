@@ -22,10 +22,7 @@
         .run(appRun)
         .controller('appController', appCtrl);
 
-    function appConfig($mdThemingProvider, $mdDateLocaleProvider, toastrConfig) {
-        $mdThemingProvider.theme('default')
-            .primaryPalette('blue')
-            .accentPalette('orange');
+    function appConfig($mdDateLocaleProvider, toastrConfig) {
 
         $mdDateLocaleProvider.formatDate = function (date) {
             return moment(date).format('DD/MM/YYYY');
@@ -63,7 +60,7 @@
 
     }
 
-    appConfig.$inject = ['$mdThemingProvider', '$mdDateLocaleProvider', 'toastrConfig'];
+    appConfig.$inject = ['$mdDateLocaleProvider', 'toastrConfig'];
     appRun.$inject = ['amMoment'];
     appCtrl.$inject = ['$http', '$log', 'toastr'];
 })();
