@@ -6,21 +6,21 @@
                 Istoric client: {{ $ctrl.data.history.length || '0'}} sedinte
             </span>
             <md-menu md-position-mode="target-right target">
-                <md-button ng-click="$mdMenu.open($event)" class="md-icon-button">
-                    <md-icon md-menu-origin>add_circle_outline</md-icon>
-                    <md-tooltip md-direction="left">Adauga in istoric</md-tooltip>
+                <md-button md-menu-origin ng-click="$mdMenu.open($event)" class="md-primary">
+                    <md-icon>add_circle</md-icon>
+                    Adauga
                 </md-button>
                 <md-menu-content>
                     <md-menu-item>
                         <md-button ng-click="$ctrl.actions.addNewHistoryItem($event)">
-                            <md-icon md-menu-align-target>assignment</md-icon>
-                            Adauga sedinta noua
+                            <md-icon>assignment</md-icon>
+                            Sedinta noua
                         </md-button>
                     </md-menu-item>
-                    <md-menu-item ng-hide="true">
-                        <md-button>
-                            <md-icon md-menu-align-target>alarm_add</md-icon>
-                            Adauga programare noua
+                    <md-menu-item>
+                        <md-button ng-disabled="true">
+                            <md-icon>alarm_add</md-icon>
+                            Programare noua
                         </md-button>
                     </md-menu-item>
                 </md-menu-content>
