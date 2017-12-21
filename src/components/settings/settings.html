@@ -1,39 +1,28 @@
-<md-tabs md-dynamic-height md-border-bottom md-selected="$ctrl.data.selectedTab">
-
-    <md-tab>
-        <md-tab-label>Gestiune Servicii</md-tab-label>
-        <md-tab-body>
-            <md-content class="md-padding">
-                <services></services>
-            </md-content>
-        </md-tab-body>
-    </md-tab>
-
-    <md-tab>
-        <md-tab-label>Gestiune Consumabile</md-tab-label>
-        <md-tab-body>
-            <md-content class="md-padding">
-                <consumables></consumables>
-            </md-content>
-        </md-tab-body>
-    </md-tab>
-
-    <md-tab>
-        <md-tab-label>Gestiune Produse</md-tab-label>
-        <md-tab-body>
-            <md-content class="md-padding">
-                <products></products>
-            </md-content>
-        </md-tab-body>
-    </md-tab>
-
-    <md-tab>
-        <md-tab-label>Gestiune Activitati</md-tab-label>
-        <md-tab-body>
-            <md-content class="md-padding">
-                <activities></activities>
-            </md-content>
-        </md-tab-body>
-    </md-tab>
-
-</md-tabs>
+<div layout="row">
+    <div flex="none">
+        <md-card>
+            <md-card-header>
+                <md-icon>settings</md-icon>
+                <md-card-header-text>
+                    <div class="md-title">Gestiune</div>
+                </md-card-header-text>
+            </md-card-header>
+            <md-card-content>
+                <md-list>
+                    <md-list-item ui-sref="services" ui-sref-active="active-link">
+                        Servicii
+                    </md-list-item>
+                    <md-list-item ui-sref="consumables" ui-sref-active="active-link">
+                        Consumabile
+                    </md-list-item>
+                    <md-list-item ui-sref="products" ui-sref-active="active-link">
+                        Produse
+                    </md-list-item>
+                </md-list>
+            </md-card-content>
+        </md-card>
+    </div>
+    <div flex>
+        <div ui-view="settingsView"></div>
+    </div>
+</div>

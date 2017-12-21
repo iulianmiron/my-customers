@@ -7,7 +7,7 @@
         .constant('SIDEBAR_MENU_ITEMS', [
             { icon: 'search', label: 'Cauta Clienti', url: 'home'}, 
             { icon: 'store', label: 'Shop', url: 'shop'}, 
-            { icon: 'settings', label: 'Settings', url: 'settings'},
+            { icon: 'settings', label: 'Settings', url: 'services'},
             { icon: 'account_balance', label: 'Plata', url: 'bankAccount'}
         ])
         .constant('CLIENT_VIP_TYPES', [
@@ -29,12 +29,3 @@
             { id: 3, first_name: 'Madalina', last_name: 'Marc' }
         ]);
 })();
-
-
-// "5a13583dd024ec129cbef931", "Stilizare Sprancene"
-
-// "5a135d49d024ec129cbef932", "Tratament Cosmetic"
-
-// "5a135d55d024ec129cbef933", "Extensii Gene"
-
-// "5a135d5cd024ec129cbef934", "Epilat"
