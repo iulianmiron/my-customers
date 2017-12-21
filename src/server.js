@@ -19,9 +19,6 @@ var db_consumables = mongojs(db + 'consumables', ['consumables']);
 app.use(express.static(__dirname + '/'));
 app.use(bodyParser.json());
 
-// app.get('*', function(req, res) {
-//     res.sendFile('./index.html')
-// });
 
 ////////////////// CLIENTS Collection /////////////////////////
 //Get all clients in clients collection
@@ -33,11 +30,16 @@ app.get('/api/clients', function(req, res) {
 
 //Search clients in clients collection
 app.get('/api/clients/search/:query', function(req, res) {
-    console.log("find client with id", req.params.query);
-    db_clients.clients.find({ $text: { $search: req.params.query } }, function(err, doc) {
-        console.log("find clients response", doc);
+    console.log("Searching clients with query: ", req.params.query);
+
+    db_clients.clients.aggregate([
+        { $match: { $text: { $search: req.params.query} } },
+        { $sort: { score: { $meta: "textScore" } } }
+    ], function(err, doc) {
+        console.log("search clients response:\n", doc);
         res.json(doc);
     });
+
 });
 
 //Add clients in clients collection

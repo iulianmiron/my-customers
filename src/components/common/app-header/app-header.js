@@ -11,7 +11,8 @@
             }
         });
 
-    function AppHeaderController() {
+    AppHeaderController.$inject = ['$state'];
+    function AppHeaderController($state) {
         var ctrl = this;
         ctrl.data = {};
         ctrl.status = {};
@@ -21,13 +22,18 @@
             ctrl.status.showSearch = false;
             
             ctrl.actions.hideSearch = hideSearch; 
+            ctrl.actions.openClientPage = openClientPage;
         }
 
         function hideSearch(event) {
             ctrl.status.showSearch = event.hideSearch;
         }
 
+        function openClientPage(clientId) {
+            if(clientId || clientId === 0) {
+                ctrl.status.showSearch = false;
+                $state.go('client', { id: clientId });
+            }
+        }
     }
-
-    AppHeaderController.$inject = [];
 })();

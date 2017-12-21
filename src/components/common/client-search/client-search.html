@@ -2,7 +2,7 @@
     <md-autocomplete flex ng-blur="$ctrl.actions.hideSearch(false)" 
         placeholder="Cauta client dupa nume, prenume, telefon sau email" 
         md-select-on-focus
-        md-autofocus
+        md-autofocus="true"
         md-no-cache="true" 
         md-delay="500" 
         md-clear-button="false"
@@ -48,8 +48,4 @@
             </div>
         </md-not-found>
     </md-autocomplete>
-    <md-button ng-click="$ctrl.actions.openClientPage(0)" class="md-default md-icon-button">
-        <md-icon>person_add</md-icon>
-        <md-tooltip>Adauga client nou</md-tooltip>
-    </md-button>
 </form>
