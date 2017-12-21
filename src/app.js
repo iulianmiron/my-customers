@@ -22,7 +22,7 @@
         .run(appRun)
         .controller('appController', appCtrl);
 
-    function appConfig($stateProvider, $urlRouterProvider, $locationProvider, $mdThemingProvider, $mdDateLocaleProvider, toastrConfig) {
+    function appConfig($mdThemingProvider, $mdDateLocaleProvider, toastrConfig) {
         $mdThemingProvider.theme('default')
             .primaryPalette('blue')
             .accentPalette('orange');
@@ -46,35 +46,6 @@
             extendedTimeOut: 5000,
             target: 'body'
         });
-        
-        $locationProvider.html5Mode({
-            enabled: true,
-            requireBase: true
-        });
-        
-        $urlRouterProvider.otherwise('/home');
-
-        $stateProvider
-            .state('home', {
-                url: '/home',
-                component: 'home'
-            })
-            .state('client', {
-                url: '/client/:id',
-                component: 'client'
-            })
-            .state('settings', {
-                url: '/settings',
-                component: 'settings'
-            })
-            .state('shop', {
-                url: '/shop',
-                component: 'shop'
-            })
-            .state('bankAccount', {
-                url: '/bank-account',
-                component: 'bankAccount'
-            });
     }
 
     function appRun(amMoment) {
@@ -92,7 +63,7 @@
 
     }
 
-    appConfig.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider', '$mdThemingProvider', '$mdDateLocaleProvider', 'toastrConfig'];
+    appConfig.$inject = ['$mdThemingProvider', '$mdDateLocaleProvider', 'toastrConfig'];
     appRun.$inject = ['amMoment'];
     appCtrl.$inject = ['$http', '$log', 'toastr'];
 })();

@@ -8,7 +8,6 @@
 		
 		<link rel="icon" href="img/favicon.ico?rev=b83b9da784eb4b107ee22813d1ff7444">
 		<!-- MAIN STYLES -->
-
 		<link rel='stylesheet' href="styles/styles.css?rev=b15ba64c21544b4200941a82749a69d1" />
 
 		<link rel='stylesheet' href="./node_modules/angular-material/angular-material.min.css?rev=ab3c9a89820a9d0f664d6957fdfad5cb" />
@@ -16,7 +15,7 @@
 		<link rel="stylesheet" href="node_modules/angular-toastr/dist/angular-toastr.min.css?rev=8748148e10fb3ff62ac21e6b3ae720e4" />
 
 	</head>
-	<body ng-controller="appController as $ctrl" ng-class="{ 'hide-scroll' : $ctrl.status.isAppLoading }">
+	<body ng-controller="appController as $ctrl" ng-class="{ 'hide-scroll' : $ctrl.status.isAppLoading }" layout="column" layout-fill>
 		<!--APP HEADER-->
 		<app-header
 			show-sidenav="$ctrl.status.showSidenav">
@@ -34,9 +33,14 @@
 		</spinner>	
 
 		<!--MAIN VIEW -->
-    	<div ui-view class="app-content">
+    	<md-content flex ui-view>
 			Loading App...
-		</div>
+		</md-content>
+
+		<!-- test view -->
+		<!-- <md-content ui-view>
+			Loading App...
+		</md-content> -->
 
 		<!--EXTERNAL LIBS-->
 		<script src="node_modules/angular/angular.min.js?rev=4c619ef91e3fa3f1d4813db2b2eb738d"></script>
@@ -53,7 +57,9 @@
 		<script src="node_modules/angular-spinners/dist/angular-spinners.min.js?rev=2363e32548f9ce1cce73d8d7157b54cd"></script>
 
 		<!-- Main app -->
-		<script src="app.js?rev=28c03aae2d21e8a402811847f9b5c162"></script>
+		<script src="app.js?rev=b1f01555e88e249818040ddb2563422b"></script>
+		<!-- App Routes -->
+		<script src="app.routing.js?rev=b1f01555e88e249818040ddb2563422b"></script>
 		
 		<!-- DATASERVICES -->
 		<script src="dataservices/dataservices.js?rev=d41a3df08e81ea2897384f7f048131c4"></script>
@@ -83,7 +89,7 @@
 		<script src="components/common/confirm-dialog/confirm-dialog.js?rev=3e1f45bceb19b42eeb6c9b601490c11e"></script>
 
 		<!-- SETTINGS -->
-		<script src="components/settings/settings.js?rev=5614658b15ad1a29d44e0abfb25f94d9"></script>
+		<script src="components/settings/settings.js?rev=3541568b8203c8e68df3c02640b29dbf"></script>
 
 		<script src="components/settings/services/services.js?rev=dc50b5b7d1ea1f37976a6c2ab22340d5"></script>
 		<script src="components/settings/services/service-dialog/service-dialog.js?rev=f55e09ab1f602e3eae4ac46a257c30e3"></script>
@@ -118,6 +124,9 @@
 
 		<!-- BANK ACCOUNT -->
 		<script src="components/bank-account/bank-account.js?rev=968dea68867ca9379745a2da25494c6f"></script>
+
+		<!-- TEST page -->
+		<script src="components/test/test.js?rev=e8c52b39d874789825c2719cddc93fc9"></script>
 		
 	</body>
 </html>

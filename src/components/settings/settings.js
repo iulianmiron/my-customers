@@ -9,6 +9,7 @@
             bindings: {}
         });
 
+    SettingsController.$inject = [];
     function SettingsController() {
         var ctrl = this;
         ctrl.data = {};
@@ -16,9 +17,6 @@
         ctrl.actions = {};
 
         ctrl.$onInit = function() {
-            ctrl.data.selectedTab = 0;
         }
     }
-
-    SettingsController.$inject = [];
 })();

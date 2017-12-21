@@ -33,6 +33,8 @@
         'cm.components.shopProducts',
         'cm.components.shopBasket',
 
-        'cm.components.bankAccount'
+        'cm.components.bankAccount',
+
+        'cm.components.test'
     ]);
 })();

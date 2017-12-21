@@ -1,73 +1,69 @@
-<div layout="column">
-    <div flex>
-        <md-card>
-            <md-card-title>
-                <md-card-title-text>
-                    <span class="md-headline">
-                        Lista Servicii ({{$ctrl.data.allServices.length}})
-                    </span>
-                </md-card-title-text>
-            </md-card-title>
-            <md-card-content class="overflow">	
-                <div layout="row" ng-hide="!$ctrl.data.allServices.length">
-                    <md-input-container class="md-block" flex flex-gt-md="50" flex-gt-lg="33">
-                        <md-icon>search</md-icon>
-                        <label>Cauta serviciu</label>
-                        <input ng-model="searchService" ng-model-options="{debounce: 400}">
-                    </md-input-container>
+<md-card>
+    <md-card-title>
+        <md-card-title-text>
+            <span class="md-headline">
+                Lista Servicii ({{$ctrl.data.allServices.length}})
+            </span>
+        </md-card-title-text>
+    </md-card-title>
+    <md-card-content class="overflow">	
+        <div layout="row" ng-hide="!$ctrl.data.allServices.length">
+            <md-input-container class="md-block" flex flex-gt-md="50" flex-gt-lg="33">
+                <md-icon>search</md-icon>
+                <label>Cauta serviciu</label>
+                <input ng-model="searchService" ng-model-options="{debounce: 400}">
+            </md-input-container>
+        </div>
+        <md-list 
+            ng-repeat="serviceType in $ctrl.data.allServiceTypes track by serviceType._id">
+            <md-subheader
+                ng-mouseover="showServiceTypeControls = true" 
+                ng-mouseleave="showServiceTypeControls = false"
+                ng-show="filteredServices.length || !categoryServices.length">
+                <div layout="row" layout-align="space-between center">
+                    <div>{{ serviceType.name }}</div>
+                    <div ng-if="showServiceTypeControls">
+                        <md-button class="md-icon-button" ng-click="$ctrl.actions.editServiceType($event, serviceType)">
+                            <md-icon>edit</md-icon>
+                            <md-tooltip md-direction="top">Editeaza</md-tooltip>
+                        </md-button>
+                        <md-button class="md-icon-button" ng-click="$ctrl.actions.deleteServiceType(serviceType._id)" ng-disabled="serviceType.isProtected" ng-show="!categoryServices.length">
+                            <md-icon>delete</md-icon>
+                            <md-tooltip md-direction="top">Sterge</md-tooltip>
+                        </md-button>
+                    </div>
                 </div>
-                <md-list 
-                    ng-repeat="serviceType in $ctrl.data.allServiceTypes track by serviceType._id">
-                    <md-subheader
-                        ng-mouseover="showServiceTypeControls = true" 
-                        ng-mouseleave="showServiceTypeControls = false"
-                        ng-show="filteredServices.length || !categoryServices.length">
-                        <div layout="row" layout-align="space-between center">
-                            <div>{{ serviceType.name }}</div>
-                            <div ng-if="showServiceTypeControls">
-                                <md-button class="md-icon-button" ng-click="$ctrl.actions.editServiceType($event, serviceType)">
-                                    <md-icon>edit</md-icon>
-                                    <md-tooltip md-direction="top">Editeaza</md-tooltip>
-                                </md-button>
-                                <md-button class="md-icon-button" ng-click="$ctrl.actions.deleteServiceType(serviceType._id)" ng-disabled="serviceType.isProtected" ng-show="!categoryServices.length">
-                                    <md-icon>delete</md-icon>
-                                    <md-tooltip md-direction="top">Sterge</md-tooltip>
-                                </md-button>
-                            </div>
-                        </div>
-                    </md-subheader>
-                    <md-list-item
-                        ng-repeat="service in filteredServices = (categoryServices = ($ctrl.data.allServices | filter: {_serviceTypeId: serviceType._id}) | filter: searchService) track by service._id"
-                        class="md-2-line secondary-button-padding md-long-text" ng-click="$ctrl.actions.editService($event, service)" 
-                        ng-mouseover="showServiceControls = true" 
-                        ng-mouseleave="showServiceControls = false"
-                        >
-                        <md-icon class="md-avatar-icon">work</md-icon>
-                        <div class="md-list-item-text">
-                            <h3>Nume: {{ service.name }}</h3>
-                            <h4>Pret: {{ service.price }} - Durata: {{service.duration}}</h4>
-                            <md-button 
-                                class="md-secondary md-icon-button"
-                                ng-click="$ctrl.actions.editService($event, service)" 
-                                ng-show="showServiceControls">
-                                <md-icon>edit</md-icon>
-                                <md-tooltip md-direction="top">Editeaza</md-tooltip>
-                            </md-button>
-                            <md-button
-                                class="md-secondary md-icon-button"
-                                ng-click="$ctrl.actions.deleteService(service._id)" 
-                                ng-show="showServiceControls"
-                                ng-disabled="service.isProtected">
-                                <md-icon>delete</md-icon>
-                                <md-tooltip md-direction="top">Sterge</md-tooltip>
-                            </md-button>
-                        </div>
-                    </md-list-item>
-                </md-list>
-            </md-card-content>
-        </md-card>
-    </div>
-</div>
+            </md-subheader>
+            <md-list-item
+                ng-repeat="service in filteredServices = (categoryServices = ($ctrl.data.allServices | filter: {_serviceTypeId: serviceType._id}) | filter: searchService) track by service._id"
+                class="md-2-line secondary-button-padding md-long-text" ng-click="$ctrl.actions.editService($event, service)" 
+                ng-mouseover="showServiceControls = true" 
+                ng-mouseleave="showServiceControls = false"
+                >
+                <md-icon class="md-avatar-icon">work</md-icon>
+                <div class="md-list-item-text">
+                    <h3>Nume: {{ service.name }}</h3>
+                    <h4>Pret: {{ service.price }} - Durata: {{service.duration}}</h4>
+                    <md-button 
+                        class="md-secondary md-icon-button"
+                        ng-click="$ctrl.actions.editService($event, service)" 
+                        ng-show="showServiceControls">
+                        <md-icon>edit</md-icon>
+                        <md-tooltip md-direction="top">Editeaza</md-tooltip>
+                    </md-button>
+                    <md-button
+                        class="md-secondary md-icon-button"
+                        ng-click="$ctrl.actions.deleteService(service._id)" 
+                        ng-show="showServiceControls"
+                        ng-disabled="service.isProtected">
+                        <md-icon>delete</md-icon>
+                        <md-tooltip md-direction="top">Sterge</md-tooltip>
+                    </md-button>
+                </div>
+            </md-list-item>
+        </md-list>
+    </md-card-content>
+</md-card>
 
 <md-fab-speed-dial
     class="md-fab md-scale md-fab-top-right" 
