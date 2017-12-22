@@ -15,35 +15,39 @@
         service.getAllHistory = getAllHistory;
 
         function addHistoryItem(historyItem) {
-            return $http.put('/api/history', historyItem).then(function(rSuccess) {
-                return rSuccess.data;
-            }).catch(function(error) {
-                console.error('Could not add historyItem', error);
-            });
+            return $http.put('/api/history', historyItem)
+                .then(_handleSuccess)
+                .catch(function(error) {
+                    console.error('Could not add historyItem', error);
+                });
         }
 
         function getClientHistory(clientId) {
-            return $http.get('/api/history/client/' + clientId).then(function(rClientHistory) {
-                return rClientHistory.data;
-            }).catch(function(error) {
-                $log.error('Could not get historyItem', error);
-            });
+            return $http.get('/api/history/client/' + clientId)
+                .then(_handleSuccess)
+                .catch(function(error) {
+                    console.error('Could not get historyItem', error);
+                });
         }
 
         function editHistoryItem(historyItem) {
-            return $http.put('/api/history/' + historyItem._id, historyItem).then(function(rSuccess) {
-                return rSuccess.data;
-            }).catch(function(error) {
-                $log.error('Could not edit historyItem', error);
-            });;
+            return $http.put('/api/history/' + historyItem._id, historyItem)
+                .then(_handleSuccess)
+                .catch(function(error) {
+                    console.error('Could not edit historyItem', error);
+                });
         }
 
         function getAllHistory() {
-            return $http.get('/api/history').then(function(rHistory) {
-                return rHistory.data;
-            }).catch(function(error) {
-                console.log('Could not get history', error);
-            });
+            return $http.get('/api/history')
+                .then(_handleSuccess)
+                .catch(function(error) {
+                    console.log('Could not get history', error);
+                });
+        }
+
+        function _handleSuccess(response){
+            return response.data;
         }
     }
 

@@ -61,6 +61,13 @@
 					'settingsView@settings': 'consumables'
 				}
 			})
+			.state('staff', {
+				url: '/staff',
+				parent: 'settings',
+				views: {
+					'settingsView@settings': 'staff'
+				}
+			})
 			.state('shop', {
 				url: '/shop',
 				component: 'shop'

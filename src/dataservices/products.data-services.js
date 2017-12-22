@@ -15,35 +15,39 @@
         service.deleteProduct = deleteProduct;
 
         function addProduct(newProduct) {
-            return $http.post('/api/products', newProduct).then(function(rSuccess) {
-                return rSuccess.data;
-            }).catch(function(error) {
-                console.error('Could not add product', error);
-            });
+            return $http.post('/api/products', newProduct)
+                .then(_handleSuccess)
+                .catch(function(error) {
+                    console.error('Could not add product', error);
+                });
         }
 
         function getAllProducts() {
-            return $http.get('/api/products').then(function(rProducts) {
-                return rProducts.data;
-            }).catch(function(error) {
-                console.log('Could not get all products', error);
-            });
+            return $http.get('/api/products')
+                .then(_handleSuccess)
+                .catch(function(error) {
+                    console.log('Could not get all products', error);
+                });
         }
 
         function updateProduct(product) {
-            return $http.put('/api/products/' + product._id, product).then(function(rSuccess) {
-                return rSuccess.data;
-            }).catch(function(error) {
-                console.log('Could not update product', error);
-            });
+            return $http.put('/api/products/' + product._id, product)
+                .then(_handleSuccess)
+                .catch(function(error) {
+                    console.log('Could not update product', error);
+                });
         }
 
         function deleteProduct(productId) {
-            return $http.delete('/api/products/' + productId).then(function(rSuccess) {
-                return rSuccess.data;
-            }).catch(function(error) {
-                console.log('Could not delete product', error);
-            });
+            return $http.delete('/api/products/' + productId)
+                .then(_handleSuccess)
+                .catch(function(error) {
+                    console.log('Could not delete product', error);
+                });
+        }
+
+        function _handleSuccess(response){
+            return response.data;
         }
     }
 })();

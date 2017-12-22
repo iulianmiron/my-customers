@@ -8,6 +8,7 @@
             'cm.dataservices.serviceTypes',
             'cm.dataservices.history',
             'cm.dataservices.clients',
-            'cm.dataservices.consumables'
+            'cm.dataservices.consumables',
+            'cm.dataservices.staff'
         ]);
 })();

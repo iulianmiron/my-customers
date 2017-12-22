@@ -16,47 +16,49 @@
         service.searchClients = searchClients;
 
         function addClient(client) {
-            return $http.post('/api/clients', client).then(function(rSuccess) {
-                return rSuccess.data;
-            }).catch(function(error) {
-                $log.error('Could not add client', error);
-            });
+            return $http.post('/api/clients', client)
+                .then(_handleSuccess)
+                .catch(function(error) {
+                    $log.error('Could not add client', error);
+                });
         }
 
         function getClient(clientId) {
-            return $http.get('/api/clients/' + clientId).then(function(rClient) {
-                return rClient.data;
-            }).catch(function(error) {
-                $log.error('Could not get client', error);
-            });
+            return $http.get('/api/clients/' + clientId)
+                .then(_handleSuccess)
+                .catch(function(error) {
+                    $log.error('Could not get client', error);
+                });
         }
 
         function updateClient(client) {
-            return $http.put('/api/clients/' + client._id, client).then(function(rSuccess) {
-                return rSuccess.data;
-            }).catch(function(error) {
-                console.log('Could not update client', error);
-            });
+            return $http.put('/api/clients/' + client._id, client)
+                .then(_handleSuccess)
+                .catch(function(error) {
+                    console.log('Could not update client', error);
+                });
         }
 
         function deleteClient(clientId) {
-            return $http.delete('/api/clients/' + clientId).then(function(rSuccess) {
-                return rSuccess.data;
-            }).catch(function(error) {
-                console.log('Could not delete client', error);
-            });
+            return $http.delete('/api/clients/' + clientId)
+                .then(_handleSuccess)
+                .catch(function(error) {
+                    console.log('Could not delete client', error);
+                });
         }
         
         function searchClients(query) {
             if (query) {
                 return $http.get('/api/clients/search/' + query)
-                    .then(function(rClients) {
-                        return rClients.data;
-                    })
+                    .then(_handleSuccess)
                     .catch(function(error) {
                         console.error('Could not search clients', error);
                     });
             }
+        }
+
+        function _handleSuccess(response){
+            return response.data;
         }
     }
 })();

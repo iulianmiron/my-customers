@@ -90,6 +90,8 @@ md-list-item p {
   margin: auto;
 }
 
+md-input-container.no-validation .md-errors-spacer:empty { display: none; }
+md-input-container.no-validation { margin: 0; }
 
 .vip-background.low {
   background-color: rgba(255, 0, 0, 0.2);

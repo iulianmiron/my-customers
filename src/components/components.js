@@ -18,6 +18,8 @@
         'cm.components.settings.products.editProductDialog',
         'cm.components.settings.consumables',
         'cm.components.settings.consumables.consumableDialog',
+        'cm.components.settings.staff',
+        'cm.components.settings.staff.staffDialog',
         'cm.components.settings.activities',
 
         'cm.components.home',

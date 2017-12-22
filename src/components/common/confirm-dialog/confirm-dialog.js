@@ -13,7 +13,6 @@
 			ctrl.actions = {};
 	
 			ctrl.data.title = dialogData.title;
-			ctrl.data.clientId = dialogData.clientId;
 			ctrl.data.okText = dialogData.okText;
 			ctrl.data.textContent = dialogData.textContent;
 	
