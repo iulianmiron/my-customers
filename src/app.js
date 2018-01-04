@@ -10,6 +10,7 @@
             'angularMoment',
             'angularSpinners',
             'toastr',
+            'cfp.hotkeys',
 
             'cm.dataservices',
 
@@ -22,6 +23,7 @@
         .run(appRun)
         .controller('appController', appCtrl);
 
+    appConfig.$inject = ['$mdDateLocaleProvider', 'toastrConfig'];
     function appConfig($mdDateLocaleProvider, toastrConfig) {
 
         $mdDateLocaleProvider.formatDate = function (date) {
@@ -45,11 +47,14 @@
         });
     }
 
+    appRun.$inject = ['amMoment'];
     function appRun(amMoment) {
         amMoment.changeLocale('ro');
     }
 
-    function appCtrl($http, $log, toastr) {
+    
+    appCtrl.$inject = ['$state', 'HotkeyService'];
+    function appCtrl($state, HotkeyService) {
         var ctrl = this;
 
         ctrl.data = {};
@@ -58,9 +63,11 @@
 
         ctrl.status.showSidenav = false;
 
-    }
+        HotkeyService.addClient(addNewClient);
 
-    appConfig.$inject = ['$mdDateLocaleProvider', 'toastrConfig'];
-    appRun.$inject = ['amMoment'];
-    appCtrl.$inject = ['$http', '$log', 'toastr'];
+        function addNewClient() {
+            $state.go('client', { id: 0 });
+        }
+
+    }    
 })();
