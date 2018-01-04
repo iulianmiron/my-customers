@@ -8,6 +8,7 @@
     StaffDataService.$inject = ['$http'];
     function StaffDataService($http) {
         var service = this;
+        service.name = 'staff';
 
         service.addStaff = addStaff;
         service.getAllStaff = getAllStaff;
@@ -18,47 +19,43 @@
         function addStaff(newStaff) {
             return $http.post('/api/staff', newStaff)
                 .then(_handleSuccess)
-                .catch(function(error) {
-                    console.error('Could not add Staff', error);
-                });
+                .catch(_handleError);
         }
 
         function getAllStaff() {
             return $http.get('/api/staff')
                 .then(_handleSuccess)
-                .catch(function(error) {
-                    console.log('Could not get all Staff', error);
-                });
+                .catch(_handleError);
         }
 
         function updateStaff(staff) {
             return $http.put('/api/staff/' + staff._id, staff)
                 .then(_handleSuccess)
-                .catch(function(error) {
-                    console.log('Could not update Staff', error);
-                });
+                .catch(_handleError);
         }
 
         function deleteStaff(staffId) {
             return $http.delete('/api/staff/' + staffId)
                 .then(_handleSuccess)
-                .catch(function(error) {
-                    console.log('Could not delete staff', error);
-                });
+                .catch(_handleError);
         }
 
         function searchStaff(query) {
             if (query) {
                 return $http.get('/api/staff/search/' + query)
                     .then(_handleSuccess)
-                    .catch(function(error) {
-                        console.error('Could not search staff', error);
-                    });
+                    .catch(_handleError);
             }
         }
 
         function _handleSuccess(response){
             return response.data;
+        }
+
+        function _handleError(response) {
+            var operation = response.config.method ? response.config.method.toLowerCase() : 'perform operation on';
+            console.error('Could not ' + operation + ' ' + service.name);
+            console.error('Error: ', response);
         }
     }
 })();

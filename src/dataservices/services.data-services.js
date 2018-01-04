@@ -8,6 +8,7 @@
     ServicesDataService.$inject = ['$http'];
     function ServicesDataService($http) {
         var service = this;
+        service.name = 'service';
 
         service.addService      = addService;
         service.getAllServices  = getAllServices;
@@ -17,37 +18,35 @@
         function addService(newService) {
             return $http.post('/api/services', newService)
                 .then(_handleSuccess)
-                .catch(function(error) {
-                    console.error('Could not add service', error);
-                });
+                .catch(_handleError);
         }
 
         function getAllServices() {
             return $http.get('/api/services')
                 .then(_handleSuccess)
-                .catch(function(error) {
-                    console.log('Could not get all services', error);
-                });
+                .catch(_handleError);
         }
 
         function updateService(service) {
             return $http.put('/api/services/' + service._id, service)
                 .then(_handleSuccess)
-                .catch(function(error) {
-                    console.log('Could not update client', error);
-                });
+                .catch(_handleError);
         }
 
         function deleteService(serviceId) {
             return $http.delete('/api/services/' + serviceId)
                 .then(_handleSuccess)
-                .catch(function(error) {
-                    console.log('Could not delete service', error);
-                });
+                .catch(_handleError);
         }
 
         function _handleSuccess(response){
             return response.data;
+        }
+
+        function _handleError(response) {
+            var operation = response.config.method ? response.config.method.toLowerCase() : 'perform operation on';
+            console.error('Could not ' + operation + ' ' + service.name);
+            console.error('Error: ', response);
         }
     }
 })();
