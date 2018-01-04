@@ -13,7 +13,7 @@
 		<link rel='stylesheet' href="./node_modules/angular-material/angular-material.min.css?rev=ab3c9a89820a9d0f664d6957fdfad5cb" />
 		<link rel='stylesheet' href="node_modules/material-design-icons-iconfont/dist/material-design-icons.css?rev=c25988089f59c8381e2b6c1cc1d627ab" />
 		<link rel="stylesheet" href="node_modules/angular-toastr/dist/angular-toastr.min.css?rev=8748148e10fb3ff62ac21e6b3ae720e4" />
-
+		<link rel="stylesheet" href="node_modules/angular-hotkeys/build/hotkeys.min.css?rev=2363e32548f9ce1cce73d8d7157b54cd" />
 	</head>
 	<body ng-controller="appController as $ctrl" ng-class="{ 'hide-scroll' : $ctrl.status.isAppLoading }" layout="column" layout-fill>
 		<!--APP HEADER-->
@@ -55,6 +55,7 @@
 		<script src="node_modules/angular-moment/angular-moment.js?rev=94e8af11203e4a9df27b742000d0f817"></script>
 		<script src="node_modules/angular-toastr/dist/angular-toastr.tpls.min.js?rev=a64241e89e1dbc331198d15defff8ecb"></script>
 		<script src="node_modules/angular-spinners/dist/angular-spinners.min.js?rev=2363e32548f9ce1cce73d8d7157b54cd"></script>
+		<script src="node_modules/angular-hotkeys/build/hotkeys.min.js?rev=2363e32548f9ce1cce73d8d7157b54cd"></script>
 
 		<!-- Main app -->
 		<script src="app.js?rev=b1f01555e88e249818040ddb2563422b"></script>
@@ -79,6 +80,7 @@
 		<script src="directives/directives.js?rev=5c15040c859659e78350bf1018d54330"></script>
 		<!-- SERVICES -->
 		<script src="services/services.js?rev=c54216ea859900c0c9f93ce1bfaaa4ff"></script>
+		<script src="services/hotkey.service.js?rev=c54216ea859900c0c9f93ce1bfaaa4ff"></script>
 
 
 		<!-- COMPONENTS -->
