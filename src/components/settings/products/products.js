@@ -80,7 +80,7 @@
                 parent: $rootElement,
                 targetEvent: event,
                 clickOutsideToClose: false,
-                fullscreen: false
+                fullscreen: true
             }).then(function(product) {
                 editProduct(product);
             }, function() {

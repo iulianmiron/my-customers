@@ -8,6 +8,7 @@
     ServiceTypesDataService.$inject = ['$http',];
     function ServiceTypesDataService($http) {
         var service = this;
+        service.name = 'service type';
 
         service.addServiceType      = addServiceType;
         service.getAllServiceTypes  = getAllServiceTypes;
@@ -15,35 +16,37 @@
         service.deleteServiceType   = deleteServiceType;
 
         function addServiceType(serviceType) {
-            return $http.post('/api/service-types', serviceType).then(function(rSuccess) {
-                return rSuccess.data;
-            }).catch(function(error) {
-                console.error('Could not add service type', error);
-            });
+            return $http.post('/api/service-types', serviceType)
+                .then(_handleSuccess)
+                .catch(_handleError);
         }
 
         function getAllServiceTypes() {
-            return $http.get('/api/service-types').then(function(rServiceTypes) {
-                return rServiceTypes.data;
-            }).catch(function(error) {
-                console.log('Could not get all service types', error);
-            });
+            return $http.get('/api/service-types')
+                .then(_handleSuccess)
+                .catch(_handleError);
         }
 
         function updateServiceType(serviceType) {
-            return $http.put('/api/service-types/' + serviceType._id, serviceType).then(function(rSuccess) {
-                return rSuccess.data;
-            }).catch(function(error) {
-                console.log('Could not update service type', error);
-            });
+            return $http.put('/api/service-types/' + serviceType._id, serviceType)
+                .then(_handleSuccess)
+                .catch(_handleError);
         }
 
         function deleteServiceType(serviceTypeId) {
-            return $http.delete('/api/service-types/' + serviceTypeId).then(function(rSuccess) {
-                return rSuccess.data;
-            }).catch(function(error) {
-                console.log('Could not delete service type', error);
-            });
+            return $http.delete('/api/service-types/' + serviceTypeId)
+                .then(_handleSuccess)
+                .catch(_handleError);
+        }
+
+        function _handleSuccess(response){
+            return response.data;
+        }
+
+        function _handleError(response) {
+            var operation = response.config.method ? response.config.method.toLowerCase() : 'perform operation on';
+            console.error('Could not ' + operation + ' ' + service.name);
+            console.error('Error: ', response);
         }
     }
 

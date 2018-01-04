@@ -87,7 +87,7 @@
                 parent: $rootElement,
                 targetEvent: event,
                 clickOutsideToClose: false,
-                fullscreen: false
+                fullscreen: true
             }).then(function(consumable) {
                 cb(consumable);
             }, function() {

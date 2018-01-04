@@ -8,6 +8,7 @@
     ClientsDataService.$inject = ['$http'];
     function ClientsDataService($http) {
         var service = this;
+        service.name = 'client';
 
         service.addClient = addClient;
         service.getClient = getClient;
@@ -16,47 +17,45 @@
         service.searchClients = searchClients;
 
         function addClient(client) {
-            return $http.post('/api/clients', client).then(function(rSuccess) {
-                return rSuccess.data;
-            }).catch(function(error) {
-                $log.error('Could not add client', error);
-            });
+            return $http.post('/api/clients', client)
+                .then(_handleSuccess)
+                .catch(_handleError);
         }
 
         function getClient(clientId) {
-            return $http.get('/api/clients/' + clientId).then(function(rClient) {
-                return rClient.data;
-            }).catch(function(error) {
-                $log.error('Could not get client', error);
-            });
+            return $http.get('/api/clients/' + clientId)
+                .then(_handleSuccess)
+                .catch(_handleError);
         }
 
         function updateClient(client) {
-            return $http.put('/api/clients/' + client._id, client).then(function(rSuccess) {
-                return rSuccess.data;
-            }).catch(function(error) {
-                console.log('Could not update client', error);
-            });
+            return $http.put('/api/clients/' + client._id, client)
+                .then(_handleSuccess)
+                .catch(_handleError);
         }
 
         function deleteClient(clientId) {
-            return $http.delete('/api/clients/' + clientId).then(function(rSuccess) {
-                return rSuccess.data;
-            }).catch(function(error) {
-                console.log('Could not delete client', error);
-            });
+            return $http.delete('/api/clients/' + clientId)
+                .then(_handleSuccess)
+                .catch(_handleError);
         }
         
         function searchClients(query) {
             if (query) {
                 return $http.get('/api/clients/search/' + query)
-                    .then(function(rClients) {
-                        return rClients.data;
-                    })
-                    .catch(function(error) {
-                        console.error('Could not search clients', error);
-                    });
+                    .then(_handleSuccess)
+                    .catch(_handleError);
             }
+        }
+
+        function _handleSuccess(response){
+            return response.data;
+        }
+
+        function _handleError(response) {
+            var operation = response.config.method ? response.config.method.toLowerCase() : 'perform operation on';
+            console.error('Could not ' + operation + ' ' + service.name);
+            console.error('Error: ', response);
         }
     }
 })();
