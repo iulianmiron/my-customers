@@ -12,8 +12,8 @@
                 onEditClient: '&',
             }
         });
-
-    function ClientProfileController($state, $log, $mdDialog, CLIENT_VIP_LEVELS, CLIENT_VIP_TYPES, ClientsDataService) {
+    ClientProfileController.$inject = ['$state', '$log', '$mdDialog', 'toastr', 'clipboard', 'CLIENT_VIP_LEVELS', 'CLIENT_VIP_TYPES', 'ClientsDataService'];
+    function ClientProfileController($state, $log, $mdDialog, toastr, clipboard, CLIENT_VIP_LEVELS, CLIENT_VIP_TYPES, ClientsDataService) {
         var ctrl = this;
 
         ctrl.data = {};
@@ -38,8 +38,18 @@
 
             ctrl.status.showMoreProfileDetails = false;
 
+            ctrl.actions.copyToClipboard = copyToClipboard;
             ctrl.actions.editClient = editClient;
             ctrl.actions.calculateClientAge = calculateClientAge;
+        }
+
+        function copyToClipboard(copiedItem) {
+            if(copiedItem) {
+                clipboard.copyText(copiedItem);
+                toastr.success(copiedItem + ' copiat in clipboard!');
+            } else {
+                toastr.warning('Nimic de copiat!');
+            }
         }
 
         function editClient(event, client) {
@@ -50,6 +60,4 @@
             return moment().diff(moment(dateOfBirth), 'years') + ' ani';
         }
     }
-
-    ClientProfileController.$inject = ['$state', '$log', '$mdDialog', 'CLIENT_VIP_LEVELS', 'CLIENT_VIP_TYPES', 'ClientsDataService'];
 })();

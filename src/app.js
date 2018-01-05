@@ -11,6 +11,7 @@
             'angularSpinners',
             'toastr',
             'cfp.hotkeys',
+            'angular-clipboard',
 
             'cm.dataservices',
 
