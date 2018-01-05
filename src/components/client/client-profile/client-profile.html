@@ -17,10 +17,16 @@
             <b>{{ $ctrl.data.client.firstName }} {{$ctrl.data.client.lastName}}</b> are varsta de <b>{{ $ctrl.data.client.age || '-trebuie completata data de nastere-'}}</b>.
         </p>
         <p>
-            Telefon: <b>{{ $ctrl.data.client.phoneNumber }}</b>
+            Telefon: 
+            <b ng-click="$ctrl.actions.copyToClipboard($ctrl.data.client.phoneNumber)">
+                {{ $ctrl.data.client.phoneNumber }}
+            </b>
         </p>
         <p>
-            e-mail: <b>{{ $ctrl.data.client.email || '-trebuie completat e-mailul-'}}</b>
+            e-mail: 
+            <b ng-click="$ctrl.actions.copyToClipboard($ctrl.data.client.email)">
+                {{ $ctrl.data.client.email || '-trebuie completat e-mailul-'}}
+            </b>
         </p>
 
         <md-button ng-click="$ctrl.status.showMoreProfileDetails = !$ctrl.status.showMoreProfileDetails">
@@ -31,19 +37,19 @@
         <div ng-show="$ctrl.status.showMoreProfileDetails" class="fade">
             <md-list>
                 <md-list-item>
-                    Tip de piele: <b>{{ $ctrl.data.client.skinType || '-trebuie completat-'}}</b>
+                    Tip de piele: <b>{{ $ctrl.data.client.skinType || ' -trebuie completat-'}}</b>
                 </md-list-item>
                 <md-list-item>
-                    Probleme medicale anterioare: <b>{{ $ctrl.data.client.previousMedicalConditions || '-trebuie completat-'}}</b>
+                    Probleme medicale anterioare: <b>{{ $ctrl.data.client.previousMedicalConditions || ' -trebuie completat-'}}</b>
                 </md-list-item>
                 <md-list-item>
-                    Tratamente anterioare: <b>{{ $ctrl.data.client.previousTreatments || '-trebuie completat-'}}</b>
+                    Tratamente anterioare: <b>{{ $ctrl.data.client.previousTreatments || ' -trebuie completat-'}}</b>
                 </md-list-item>
                 <md-list-item>
-                    Produse de ingrijire folosite: <b>{{ $ctrl.data.client.skinCareProductsUsed || '-trebuie completat-'}}</b>
+                    Produse de ingrijire folosite: <b>{{ $ctrl.data.client.skinCareProductsUsed || ' -trebuie completat-'}}</b>
                 </md-list-item>
                 <md-list-item>
-                    Cum a aflat de salon: <b>{{ $ctrl.data.client.discovery || '-trebuie completat-'}}</b>
+                    Cum a aflat de salon: <b>{{ $ctrl.data.client.discovery || ' -trebuie completat-'}}</b>
                 </md-list-item>
                 <md-list-item ng-if="$ctrl.data.client.isVip">
                     Tip VIP: <b> {{ $ctrl.data.client.vip.type.label }}, {{ $ctrl.data.client.vip.level.label }}</b>
