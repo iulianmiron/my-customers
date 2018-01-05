@@ -18,7 +18,7 @@
                     <span layout="row">
                         <md-icon ng-if="client.isVip" ng-class="['vip-text', client.vip.level.label]">
                             star
-                            <md-tooltip>
+                            <md-tooltip hide show-gt-sm>
                                 VIP: {{client.vip.type.label}}
                             </md-tooltip>
                         </md-icon>

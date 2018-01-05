@@ -17,7 +17,7 @@
         ctrl.actions = {};
 
         ctrl.$onInit = function() {    
-            // spinnerService.show('app-loading');
+            ctrl.status.showSearch = false;
             
             ctrl.actions.addService = addService;
             ctrl.actions.editService = editService;

@@ -18,7 +18,6 @@
         ctrl.data.client.age = ctrl.data.client.dateOfBirth ? calculateClientAge(ctrl.data.client.dateOfBirth): null;
         
         ctrl.data.clientVip = dialogData.clientVip;
-
         ctrl.data.maxDateOfBirth = new Date();
 
         ctrl.actions.setVIPData = setVIPData;
@@ -59,13 +58,11 @@
         }
 
         function showDuplicateAccountDialog(client, fieldName) {
-
             var dialogData = {
                 title: 'Clientul cu: ' + client[fieldName] + ' exista deja.',
                 textContent: 'Detalii client: ' + client.firstName + ' ' + client.lastName,
-                okText: 'Deschide Profil: ' + client.firstName + ' ' + client.lastName,
-                clientId: client._id
-            }
+                okText: 'Deschide Profil: ' + client.firstName + ' ' + client.lastName
+            };
 
             $mdDialog.show({
                 controller: 'ConfirmDialogController',
@@ -79,8 +76,8 @@
                 clickOutsideToClose: false,
                 multiple: true
             }).then(function() {
+                ctrl.actions.cancel(client);
                 $state.go('client', {id: client._id});
-                ctrl.actions.cancel();
             }, function() {
                 ctrl.data.client[fieldName] = null;
             });

@@ -10,10 +10,11 @@ var db_port = process.env.DEV_SERVER_PORT || '27017';
 
 var db = db_base + ':' + db_port.trim() + '/';
 
-var db_clients = mongojs(db + 'clients', ['clients', 'history']);
-var db_services = mongojs(db + 'services', ['services', 'types']);
-var db_products = mongojs(db + 'products', ['products']);
-var db_consumables = mongojs(db + 'consumables', ['consumables']);
+var db_clients      = mongojs(db + 'clients', ['clients', 'history']);
+var db_services     = mongojs(db + 'services', ['services', 'types']);
+var db_products     = mongojs(db + 'products', ['products']);
+var db_consumables  = mongojs(db + 'consumables', ['consumables']);
+var db_staff        = mongojs(db + 'staff', ['staff']);
 
 
 app.use(express.static(__dirname + '/'));
@@ -359,6 +360,71 @@ app.put('/api/consumables/:id', function(req, res) {
     });
 });
 
+
+//////////////////// STAFF collection //////////////////
+//Search staff in staff collection
+app.get('/api/staff/search/:query', function(req, res) {
+    console.log("Searching staff with query: ", req.params.query);
+
+    db_staff.staff.aggregate([
+        { $match: { $text: { $search: req.params.query} } },
+        { $sort: { score: { $meta: "textScore" } } }
+    ], function(err, doc) {
+        console.log("search staff response:\n", doc);
+        res.json(doc);
+    });
+
+});
+
+//Add staff in staff collection
+app.post('/api/staff', function(req, res) {
+    req.body.createdOn = new Date();
+    req.body.updatedOn = new Date();
+
+    db_staff.staff.insert(req.body, function(error, doc) {
+        res.json(doc);
+    });
+});
+
+//Get all staff in staff collection
+app.get('/api/staff', function(req, res) {
+    db_staff.staff.find(function(err, docs) {
+        res.json(docs);
+    });
+});
+
+//Delete a specific staff
+app.delete('/api/staff/:id', function(req, res) {
+    db_staff.staff.remove({ _id: mongojs.ObjectId(req.params.id) }, function(err, doc) {
+        res.json(doc);
+    });
+});
+
+//Update staff in db_staff
+app.put('/api/staff/:id', function(req, res) {
+    console.log("update staff with id", req.params.id);
+    console.log("update staff with data", req.body);
+    var updatedOn = new Date();
+
+    db_staff.staff.findAndModify({
+        query: { _id: mongojs.ObjectId(req.params.id) },
+        update: {
+            $set: {
+                firstName: req.body.firstName,
+                lastName: req.body.lastName,
+                dateOfBirth: req.body.dateOfBirth,
+                phoneNumber: req.body.phoneNumber,
+                description: req.body.description,
+                email: req.body.email,
+                updatedOn: updatedOn,
+                createdOn: req.body.createdOn
+            }
+        },
+        new: true
+    }, function(err, doc) {
+        res.json(doc);
+    });
+});
 
 //kill server
 app.get('/api/kill', function(req, res) {

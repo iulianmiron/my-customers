@@ -1,19 +1,54 @@
 <md-card>
     <md-card-title>
-        <md-card-title-text>
+        <md-card-title-text layout="row" layout-wrap layout-align="space-between center">
             <span class="md-headline">
                 Lista Servicii ({{$ctrl.data.allServices.length}})
             </span>
+            <div>
+                <md-button 
+                    class="md-icon-button md-primary" 
+                    ng-click="$ctrl.status.showSearch = true" 
+                    ng-hide="$ctrl.status.showSearch">
+                    <md-icon>search</md-icon>
+                    <md-tooltip hide show-gt-sm>Cauta serviciu</md-tooltip>
+                </md-button>
+
+                <md-input-container ng-show="$ctrl.data.allServices.length && $ctrl.status.showSearch" flex class="no-validation">
+                    <md-icon>search</md-icon>
+                    <label>Cauta serviciu</label>
+                    <input 
+                        ng-model="searchService" 
+                        ng-model-options="{debounce: 400}" 
+                        ng-blur="$ctrl.status.showSearch = false">
+                </md-input-container>
+            
+                <md-menu md-position-mode="target-right target">
+                    <md-button 
+                        class="md-primary" 
+                        md-menu-origin 
+                        ng-click="$mdMenu.open($event)">
+                        <md-icon>add_circle</md-icon>
+                        adauga
+                    </md-button>
+                    <md-menu-content>
+                        <md-menu-item>
+                            <md-button ng-click="$ctrl.actions.addService($event)">
+                                <md-icon>work</md-icon>
+                                serviciu nou
+                            </md-button>
+                        </md-menu-item>
+                        <md-menu-item>
+                            <md-button ng-click="$ctrl.actions.addServiceType($event)">
+                                <md-icon>style</md-icon>
+                                tip de serviciu nou
+                            </md-button>
+                        </md-menu-item>
+                    </md-menu-content>
+                </md-menu>
+            </div>
         </md-card-title-text>
     </md-card-title>
-    <md-card-content class="overflow">	
-        <div layout="row" ng-hide="!$ctrl.data.allServices.length">
-            <md-input-container class="md-block" flex flex-gt-md="50" flex-gt-lg="33">
-                <md-icon>search</md-icon>
-                <label>Cauta serviciu</label>
-                <input ng-model="searchService" ng-model-options="{debounce: 400}">
-            </md-input-container>
-        </div>
+    <md-card-content class="overflow">
         <md-list 
             ng-repeat="serviceType in $ctrl.data.allServiceTypes track by serviceType._id">
             <md-subheader
@@ -25,18 +60,23 @@
                     <div ng-if="showServiceTypeControls">
                         <md-button class="md-icon-button" ng-click="$ctrl.actions.editServiceType($event, serviceType)">
                             <md-icon>edit</md-icon>
-                            <md-tooltip md-direction="top">Editeaza</md-tooltip>
+                            <md-tooltip hide show-gt-sm md-direction="top">Editeaza</md-tooltip>
                         </md-button>
-                        <md-button class="md-icon-button" ng-click="$ctrl.actions.deleteServiceType(serviceType._id)" ng-disabled="serviceType.isProtected" ng-show="!categoryServices.length">
+                        <md-button 
+                            class="md-icon-button" 
+                            ng-click="$ctrl.actions.deleteServiceType(serviceType._id)" 
+                            ng-disabled="serviceType.isProtected" 
+                            ng-show="!categoryServices.length">
                             <md-icon>delete</md-icon>
-                            <md-tooltip md-direction="top">Sterge</md-tooltip>
+                            <md-tooltip hide show-gt-sm md-direction="top">Sterge</md-tooltip>
                         </md-button>
                     </div>
                 </div>
             </md-subheader>
             <md-list-item
                 ng-repeat="service in filteredServices = (categoryServices = ($ctrl.data.allServices | filter: {_serviceTypeId: serviceType._id}) | filter: searchService) track by service._id"
-                class="md-2-line secondary-button-padding md-long-text" ng-click="$ctrl.actions.editService($event, service)" 
+                class="md-2-line secondary-button-padding md-long-text" 
+                ng-click="$ctrl.actions.editService($event, service)" 
                 ng-mouseover="showServiceControls = true" 
                 ng-mouseleave="showServiceControls = false"
                 >
@@ -49,7 +89,7 @@
                         ng-click="$ctrl.actions.editService($event, service)" 
                         ng-show="showServiceControls">
                         <md-icon>edit</md-icon>
-                        <md-tooltip md-direction="top">Editeaza</md-tooltip>
+                        <md-tooltip hide show-gt-sm md-direction="top">Editeaza</md-tooltip>
                     </md-button>
                     <md-button
                         class="md-secondary md-icon-button"
@@ -57,34 +97,10 @@
                         ng-show="showServiceControls"
                         ng-disabled="service.isProtected">
                         <md-icon>delete</md-icon>
-                        <md-tooltip md-direction="top">Sterge</md-tooltip>
+                        <md-tooltip hide show-gt-sm md-direction="top">Sterge</md-tooltip>
                     </md-button>
                 </div>
             </md-list-item>
         </md-list>
     </md-card-content>
 </md-card>
-
-<md-fab-speed-dial
-    class="md-fab md-scale md-fab-top-right" 
-    md-direction="down" 
-    md-open="$ctrl.status.speedDialOpen" 
-    ng-mouseenter="$ctrl.status.speedDialOpen = true"
-    ng-mouseleave="$ctrl.status.speedDialOpen = false">
-    <md-fab-trigger>
-        <md-button aria-label="menu" class="md-fab md-primary">
-            <md-icon>add</md-icon>
-        </md-button>
-    </md-fab-trigger>
-
-    <md-fab-actions>
-        <md-button class="md-fab md-raised" ng-click="$ctrl.actions.addService($event)">
-            <md-icon>work</md-icon>
-            <md-tooltip md-direction="left" md-visible="$ctrl.status.speedDialOpen">Adauga serviciu nou</md-tooltip>
-        </md-button>
-        <md-button class="md-fab md-raised" ng-click="$ctrl.actions.addServiceType($event)">
-            <md-icon>style</md-icon>
-            <md-tooltip md-direction="left" md-visible="$ctrl.status.speedDialOpen">Adauga tip de serviciu nou</md-tooltip>
-        </md-button>
-    </md-fab-actions>
-</md-fab-speed-dial>

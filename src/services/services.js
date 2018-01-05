@@ -2,6 +2,7 @@
 	'use strict';
 
 	angular
-		.module('cm.services', [		
+		.module('cm.services', [
+			'cm.services.hotkeyService'		
 			]);
 })();

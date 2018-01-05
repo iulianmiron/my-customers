@@ -11,8 +11,8 @@
             }
         });
 
-    AppHeaderController.$inject = ['$state'];
-    function AppHeaderController($state) {
+    AppHeaderController.$inject = ['$state', 'HotkeyService'];
+    function AppHeaderController($state, HotkeyService) {
         var ctrl = this;
         ctrl.data = {};
         ctrl.status = {};
@@ -23,6 +23,12 @@
             
             ctrl.actions.hideSearch = hideSearch; 
             ctrl.actions.openClientPage = openClientPage;
+
+            HotkeyService.searchClient(displaySearch);
+        }
+
+        function displaySearch(event, hotkey) {
+            ctrl.status.showSearch = !ctrl.status.showSearch;
         }
 
         function hideSearch(event) {

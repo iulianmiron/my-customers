@@ -8,6 +8,7 @@
         ProductsDataService.$inject = ['$http'];
     function ProductsDataService($http) {
         var service = this;
+        service.name = 'product';
 
         service.addProduct = addProduct;
         service.getAllProducts = getAllProducts;
@@ -15,35 +16,37 @@
         service.deleteProduct = deleteProduct;
 
         function addProduct(newProduct) {
-            return $http.post('/api/products', newProduct).then(function(rSuccess) {
-                return rSuccess.data;
-            }).catch(function(error) {
-                console.error('Could not add product', error);
-            });
+            return $http.post('/api/products', newProduct)
+                .then(_handleSuccess)
+                .catch(_handleError);
         }
 
         function getAllProducts() {
-            return $http.get('/api/products').then(function(rProducts) {
-                return rProducts.data;
-            }).catch(function(error) {
-                console.log('Could not get all products', error);
-            });
+            return $http.get('/api/products')
+                .then(_handleSuccess)
+                .catch(_handleError);
         }
 
         function updateProduct(product) {
-            return $http.put('/api/products/' + product._id, product).then(function(rSuccess) {
-                return rSuccess.data;
-            }).catch(function(error) {
-                console.log('Could not update product', error);
-            });
+            return $http.put('/api/products/' + product._id, product)
+                .then(_handleSuccess)
+                .catch(_handleError);
         }
 
         function deleteProduct(productId) {
-            return $http.delete('/api/products/' + productId).then(function(rSuccess) {
-                return rSuccess.data;
-            }).catch(function(error) {
-                console.log('Could not delete product', error);
-            });
+            return $http.delete('/api/products/' + productId)
+                .then(_handleSuccess)
+                .catch(_handleError);
+        }
+
+        function _handleSuccess(response){
+            return response.data;
+        }
+
+        function _handleError(response) {
+            var operation = response.config.method ? response.config.method.toLowerCase() : 'perform operation on';
+            console.error('Could not ' + operation + ' ' + service.name);
+            console.error('Error: ', response);
         }
     }
 })();
