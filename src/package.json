@@ -54,9 +54,14 @@
   },
   "devDependencies": {
     "browser-sync": "^2.18.13",
+    "del": "^3.0.0",
     "gulp": "^3.9.1",
+    "gulp-ignore": "^2.0.2",
+    "gulp-inject": "^4.3.0",
     "gulp-rev": "^8.0.0",
     "gulp-rev-append": "^0.1.8",
+    "gulp-webserver": "^0.9.1",
+    "nodemon": "^1.14.10",
     "openurl": "^1.1.1",
     "webpack": "^3.6.0",
     "webpack-dev-server": "^2.8.2"
