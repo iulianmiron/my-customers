@@ -3,8 +3,12 @@ var db = require('../config').db;
 
 var db_consumables = mongojs(db + 'consumables', ['consumables']);
 
-//Add consumables in consumables collection
-exports.add = function(req, res) {
+exports.getAll = getAll;
+exports.add = add;
+exports.update = update;
+exports.delete = deleteOne;
+
+function add(req, res) {
     req.body.createdOn = new Date();
     req.body.updatedOn = new Date();
 
@@ -14,24 +18,21 @@ exports.add = function(req, res) {
     });
 };
 
-//Get all consumables in consumables collection
-exports.getAll = function(req, res) {
+function getAll(req, res) {
     db_consumables.consumables.find(function(err, doc) {
         if (err) { console.log('Error: ', err); };
         res.json(doc);
     });
 };
 
-//Delete a specific consumable
-exports.delete = function(req, res) {
+function deleteOne(req, res) {
     db_consumables.consumables.remove({ _id: mongojs.ObjectId(req.params.id) }, function(err, doc) {
         if (err) { console.log('Error: ', err); };
         res.json(doc);
     });
 };
 
-//Update consumable in db_consumables
-exports.update = function(req, res) {
+function update(req, res) {
     var updatedOn = new Date();
 
     db_consumables.consumables.findAndModify({

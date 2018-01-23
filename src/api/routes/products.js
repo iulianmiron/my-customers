@@ -3,16 +3,19 @@ var db = require('../config').db;
 
 var db_products = mongojs(db + 'products', ['products']);
 
-//Get all services in services collection
-exports.getAll = function(req, res) {
+exports.getAll = getAll;
+exports.add = add;
+exports.update = update;
+exports.delete = deleteOne;
+
+function getAll(req, res) {
     db_products.products.find(function(err, doc) {
         if (err) { console.log('Error: ', err); };
         res.json(doc);
     });
 };
 
-//Add products in products collection
-exports.add = function(req, res) {
+function add(req, res) {
     req.body.createdOn = new Date();
     req.body.updatedOn = new Date();
 
@@ -22,16 +25,14 @@ exports.add = function(req, res) {
     });
 };
 
-//Delete a specific product
-exports.delete = function(req, res) {
+function deleteOne(req, res) {
     db_products.products.remove({ _id: mongojs.ObjectId(req.params.id) }, function(err, doc) {
         if (err) { console.log('Error: ', err); };
         res.json(doc);
     });
 };
 
-//Update product in db_products
-exports.update = function(req, res) {
+function update(req, res) {
     var updatedOn = new Date();
 
     db_products.products.findAndModify({

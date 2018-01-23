@@ -3,16 +3,21 @@ var db = require('../config').db;
 
 var db_clients = mongojs(db + 'clients', ['clients']);
 
-//Get all clients in clients collection
-exports.getAll = function (req, res) {
+exports.getAll = getAll;
+exports.search = search;
+exports.add = add;
+exports.getOne = getOne;
+exports.update = update;
+exports.delete = deleteOne;
+
+function getAll(req, res) {
     db_clients.clients.find(function(err, doc) {
         if (err) { console.log('Error: ', err); };
         res.json(doc);
     });
 };
 
-//Search clients in clients collection
-exports.search = function (req, res) {
+function search(req, res) {
     db_clients.clients.aggregate([
         { $match: { $text: { $search: req.params.query} } },
         { $sort: { score: { $meta: "textScore" } } }
@@ -23,8 +28,7 @@ exports.search = function (req, res) {
 
 };
 
-//Add clients in clients collection
-exports.add = function (req, res) {
+function add(req, res) {
     req.body.createdOn = new Date();
     req.body.updatedOn = new Date();
 
@@ -34,16 +38,14 @@ exports.add = function (req, res) {
     });
 };
 
-//Find client by id
-exports.getOne = function (req, res) {
+function getOne(req, res) {
     db_clients.clients.findOne({ _id: mongojs.ObjectId(req.params.id) }, function(err, doc) {
         if (err) { console.log('Error: ', err); };
         res.json(doc);
     });
 };
 
-//Update client in db_clients
-exports.update = function (req, res) {
+function update(req, res) {
     var updatedOn = new Date();
 
     db_clients.clients.findAndModify({
@@ -74,7 +76,7 @@ exports.update = function (req, res) {
     });
 };
 
-exports.delete = function (req, res) {
+function deleteOne(req, res) {
     db_clients.clients.remove({ _id: mongojs.ObjectId(req.params.id) }, function(err, doc) {
         if (err) { console.log('Error: ', err); };
         res.json(doc);

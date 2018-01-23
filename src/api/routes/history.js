@@ -3,23 +3,27 @@ var db = require('../config').db;
 
 var db_clients = mongojs(db + 'clients', ['history']);
 
-//Get all history in history collection
-exports.getAll = function (req, res) {
+exports.getAll = getAll;
+exports.getClientHistory = getClientHistory;
+exports.add = add;
+exports.update = update;
+exports.delete = deleteOne;
+
+function getAll(req, res) {
     db_clients.history.find(function(err, doc) {
         if (err) { console.log('Error: ', err); };
         res.json(doc);
     });
 };
 
-//Search history for one client in history collection
-exports.getClientHistory = function(req, res) {
+function getClientHistory(req, res) {
     db_clients.history.find({ "_clientId": req.params.id }, function(err, doc) {
         if (err) { console.log('Error: ', err); };
         res.json(doc);
     });
 };
 
-exports.add = function(req, res) {
+function add(req, res) {
     req.body.createdOn = new Date();
     req.body.updatedOn = new Date();
 
@@ -29,8 +33,7 @@ exports.add = function(req, res) {
     });
 };
 
-//Update history item in db_clients
-exports.update = function(req, res) {
+function update(req, res) {
     var updatedOn = new Date();
 
     db_clients.history.findAndModify({
@@ -57,7 +60,7 @@ exports.update = function(req, res) {
     });
 };
 
-exports.delete = function (req, res) {
+function deleteOne(req, res) {
     db_clients.history.remove({ _id: mongojs.ObjectId(req.params.id) }, function(err, doc) {
         if (err) { console.log('Error: ', err); };
         res.json(doc);

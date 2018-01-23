@@ -3,8 +3,13 @@ var db = require('../config').db;
 
 var db_staff = mongojs(db + 'staff', ['staff']);
 
-//Search staff in staff collection
-exports.search = function(req, res) {
+exports.search = search;
+exports.getAll = getAll;
+exports.add = add;
+exports.update = update;
+exports.delete = deleteOne;
+
+function search(req, res) {
     db_staff.staff.aggregate([
         { $match: { $text: { $search: req.params.query} } },
         { $sort: { score: { $meta: "textScore" } } }
@@ -14,8 +19,7 @@ exports.search = function(req, res) {
     });
 };
 
-//Add staff in staff collection
-exports.add = function(req, res) {
+function add(req, res) {
     req.body.createdOn = new Date();
     req.body.updatedOn = new Date();
 
@@ -25,24 +29,21 @@ exports.add = function(req, res) {
     });
 };
 
-//Get all staff in staff collection
-exports.getAll = function(req, res) {
+function getAll(req, res) {
     db_staff.staff.find(function(err, doc) {
         if (err) { console.log('Error: ', err); };
         res.json(doc);
     });
 };
 
-//Delete a specific staff
-exports.delete = function(req, res) {
+function deleteOne(req, res) {
     db_staff.staff.remove({ _id: mongojs.ObjectId(req.params.id) }, function(err, doc) {
         if (err) { console.log('Error: ', err); };
         res.json(doc);
     });
 };
 
-//Update staff in db_staff
-exports.update = function(req, res) {
+function update(req, res) {
     var updatedOn = new Date();
 
     db_staff.staff.findAndModify({

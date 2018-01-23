@@ -3,16 +3,19 @@ var db = require('../config').db;
 
 var db_services = mongojs(db + 'services', ['services']);
 
-//Get all services in services collection
-exports.getAll = function(req, res) {
+exports.getAll = getAll;
+exports.add = add;
+exports.update = update;
+exports.delete = deleteOne;
+
+function getAll(req, res) {
     db_services.services.find(function(err, doc) {
         if (err) { console.log('Error: ', err); };
         res.json(doc);
     });
 };
 
-//Add services in services collection
-exports.add = function(req, res) {
+function add(req, res) {
     req.body.createdOn = new Date();
     req.body.updatedOn = new Date();
 
@@ -22,8 +25,7 @@ exports.add = function(req, res) {
     });
 };
 
-//Update client in db_clients
-exports.update = function(req, res) {
+function update(req, res) {
     var updatedOn = new Date();
 
     db_services.services.findAndModify({
@@ -46,7 +48,7 @@ exports.update = function(req, res) {
     });
 };
 
-exports.delete = function(req, res) {
+function deleteOne(req, res) {
     db_services.services.remove({ _id: mongojs.ObjectId(req.params.id) }, function(err, doc) {
         if (err) { console.log('Error: ', err); };
         res.json(doc);
