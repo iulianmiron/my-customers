@@ -3,12 +3,14 @@ var db = require('../config').db;
 
 var db_clients = mongojs(db + 'clients', ['clients']);
 
-exports.getAll = getAll;
-exports.search = search;
-exports.add = add;
-exports.getOne = getOne;
-exports.update = update;
-exports.delete = deleteOne;
+module.exports = {
+    getAll: getAll,
+    search: search,
+    add: add,
+    getOne: getOne,
+    update: update,
+    delete: deleteOne
+};
 
 function getAll(req, res) {
     db_clients.clients.find(function(err, doc) {

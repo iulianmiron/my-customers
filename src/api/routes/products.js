@@ -3,10 +3,12 @@ var db = require('../config').db;
 
 var db_products = mongojs(db + 'products', ['products']);
 
-exports.getAll = getAll;
-exports.add = add;
-exports.update = update;
-exports.delete = deleteOne;
+module.exports = {
+    getAll: getAll,
+    add: add,
+    update: update,
+    delete: deleteOne
+};
 
 function getAll(req, res) {
     db_products.products.find(function(err, doc) {

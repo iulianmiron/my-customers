@@ -3,10 +3,12 @@ var db = require('../config').db;
 
 var db_services = mongojs(db + 'services', ['types']);
 
-exports.getAll = getAll;
-exports.add = add;
-exports.update = update;
-exports.delete = deleteOne;
+module.exports = {
+    getAll: getAll,
+    add: add,
+    update: update,
+    delete: deleteOne
+};
 
 function getAll(req, res) {
     db_services.types.find(function(err, doc) {

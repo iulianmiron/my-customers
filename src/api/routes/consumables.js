@@ -3,10 +3,12 @@ var db = require('../config').db;
 
 var db_consumables = mongojs(db + 'consumables', ['consumables']);
 
-exports.getAll = getAll;
-exports.add = add;
-exports.update = update;
-exports.delete = deleteOne;
+module.exports = {
+    getAll: getAll,
+    add: add,
+    update: update,
+    delete: deleteOne
+};
 
 function add(req, res) {
     req.body.createdOn = new Date();

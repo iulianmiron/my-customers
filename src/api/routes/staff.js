@@ -3,11 +3,13 @@ var db = require('../config').db;
 
 var db_staff = mongojs(db + 'staff', ['staff']);
 
-exports.search = search;
-exports.getAll = getAll;
-exports.add = add;
-exports.update = update;
-exports.delete = deleteOne;
+module.exports = {
+    getAll: getAll,
+    search: search,
+    add: add,
+    update: update,
+    delete: deleteOne
+};
 
 function search(req, res) {
     db_staff.staff.aggregate([
