@@ -1,12 +1,7 @@
 var mongojs = require('mongojs');
+var db = require('../config').db;
 
-var db_base = '127.0.0.1';
-var PORT = (process.env.PORT && process.env.PORT.trim()) || '3500';
-var db_port = process.env.DEV_SERVER_PORT || '27017';
-
-var db = db_base + ':' + db_port.trim() + '/';
-
-var db_clients      = mongojs(db + 'clients', ['history']);
+var db_clients = mongojs(db + 'clients', ['history']);
 
 //Get all history in history collection
 exports.getAll = function (req, res) {

@@ -1,12 +1,7 @@
 var mongojs = require('mongojs');
+var db = require('../config').db;
 
-var db_base = '127.0.0.1';
-var PORT = (process.env.PORT && process.env.PORT.trim()) || '3500';
-var db_port = process.env.DEV_SERVER_PORT || '27017';
-
-var db = db_base + ':' + db_port.trim() + '/';
-
-var db_clients      = mongojs(db + 'clients', ['clients']);
+var db_clients = mongojs(db + 'clients', ['clients']);
 
 //Get all clients in clients collection
 exports.getAll = function (req, res) {
