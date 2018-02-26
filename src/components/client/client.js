@@ -30,14 +30,17 @@
             ctrl.actions = {};
 
             ctrl.data.clientId = ctrl.transition.params("to").id;
-            ctrl.data.previousPage = ctrl.transition.from().name;
             ctrl.data.newClient = ctrl.data.clientId === '0' ? true : false;
-
             ctrl.data.clientVip = {
                 levels: CLIENT_VIP_LEVELS,
                 types: CLIENT_VIP_TYPES
             };
-            
+
+            ctrl.data.previousPage =  {
+                name: ctrl.transition.from().name || 'home',
+                paramName: Object.keys(ctrl.transition.params('from'))[1] || null,
+                paramValue: ctrl.transition.params('from')[Object.keys(ctrl.transition.params('from'))[1]] || null
+            };
             ctrl.actions.getClientProfile   = getClientProfile;
             ctrl.actions.addClient          = addClient;
             ctrl.actions.editClient         = editClient;
@@ -126,7 +129,7 @@
                 cb(client);
             }, function(client) {
                 if(!client || !client._id) {
-                    $state.go('home');
+                    $state.go(ctrl.data.previousPage.name, {[ctrl.data.previousPage.paramName]: ctrl.data.previousPage.paramValue});
                 }
             });
         }

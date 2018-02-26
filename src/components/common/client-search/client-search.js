@@ -8,7 +8,8 @@
             controller: ClientSearchController,
             bindings: {
                 show: '<',
-                onBlur: '&'
+                onBlur: '&',
+                clientFn: '&'
             }
         });
         
@@ -26,7 +27,7 @@
         }
         ctrl.$onInit = function() {
             ctrl.actions.searchClients = searchClients;
-            ctrl.actions.openClientPage = openClientPage;
+            ctrl.actions.clientFn = clientFn;
             ctrl.actions.hideSearch = hideSearch;
         }
 
@@ -49,11 +50,8 @@
             return deferred.promise;
         }
 
-        function openClientPage(clientId) {
-            if(clientId || clientId === 0) {
-                hideSearch(false);
-                $state.go('client', { id: clientId });
-            }
+        function clientFn(client) {
+            ctrl.clientFn({$event: {client: client}});
         }
 
         function hideSearch(hideSearch) {

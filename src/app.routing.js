@@ -75,6 +75,10 @@
 			.state('bankAccount', {
 				url: '/bank-account',
 				component: 'bankAccount'
+			})
+			.state('calendar', {
+				url: '/calendar',
+				component: 'calendar'
 			});
 	}
 

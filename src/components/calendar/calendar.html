@@ -1,0 +1,32 @@
+<div flex>
+    <md-card>
+        <md-card-header>
+            <md-icon>today</md-icon>
+            <md-card-header-text layout="row" layout-align="space-between center">
+                <span class="md-headline">
+                Programari
+                </span>
+                <md-menu md-position-mode="target-right target">
+                    <md-button md-menu-origin ng-click="$mdMenu.open($event)" class="md-primary">
+                        <md-icon>add_circle</md-icon>
+                        Adauga
+                    </md-button>
+                    <md-menu-content>
+                        <md-menu-item>
+                            <md-button>
+                                <md-icon>alarm_add</md-icon>
+                                Programare noua
+                            </md-button>
+                        </md-menu-item>
+                    </md-menu-content>
+                </md-menu>
+            </md-card-header-text>
+        </md-card-header>
+        <md-card-content>
+            <client-search flex="50" 
+                show="true"               
+                client-fn="$ctrl.actions.addClient($event)">
+            </client-search>
+        </md-card-content>
+    </md-card>
+</div>

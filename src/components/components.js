@@ -7,6 +7,8 @@
         'cm.components.common.appLoading',
         'cm.components.common.clientSearch',
         'cm.components.common.confirmDialog',
+
+        'cm.components.calendar',
         
         'cm.components.settings',
         'cm.components.settings.services',
