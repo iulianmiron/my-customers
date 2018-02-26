@@ -10,13 +10,13 @@ var db_port = process.env.DEV_SERVER_PORT || '27017';
 
 var db = db_base + ':' + db_port.trim() + '/';
 
-var clients         = require('./apis/clients');
-var history         = require('./apis/history');
-var services        = require('./apis/services');
-var service_types   = require('./apis/service-types');
-var products        = require('./apis/products');
-var consumables     = require('./apis/consumables');
-var staff           = require('./apis/staff');
+var clients         = require('./apis/routes/clients');
+var history         = require('./apis/routes/history');
+var services        = require('./apis/routes/services');
+var service_types   = require('./apis/routes/service-types');
+var products        = require('./apis/routes/products');
+var consumables     = require('./apis/routes/consumables');
+var staff           = require('./apis/routes/staff');
 
 app.use(express.static(__dirname + '/'));
 app.use(bodyParser.json());
