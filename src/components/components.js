@@ -9,6 +9,7 @@
         'cm.components.common.confirmDialog',
 
         'cm.components.calendar',
+        'cm.components.calendar.addAppointmentDialog',
         
         'cm.components.settings',
         'cm.components.settings.services',
