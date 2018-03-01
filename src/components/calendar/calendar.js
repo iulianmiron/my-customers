@@ -9,16 +9,15 @@
             bindings: {}
         });
 
-    CalendarController.$inject = ['StaffDataService', 'ServicesDataService'];
-    function CalendarController(StaffDataService, ServicesDataService) {
+    CalendarController.$inject = ['$rootElement', 'StaffDataService', 'ServicesDataService'];
+    function CalendarController($rootElement, StaffDataService, ServicesDataService) {
         var ctrl = this;
         ctrl.data = {};
         ctrl.status = {};
         ctrl.actions = {};
 
         ctrl.$onInit = function() {
-
-            ctrl.actions.addClient = addClient;
+            ctrl.actions.addNewAppointment = addNewAppointment;
             ctrl.actions.loadUsers = loadUsers;
             ctrl.actions.loadServices = loadServices;
         };
@@ -43,6 +42,18 @@
             });
         }
 
+        function addNewAppointment(event) {
+            var dialogData = {
+                historyItem: {
+                    _clientId: ctrl.data.clientId
+                },
+                title: 'Adaugati Programare',
+                services: ctrl.data.allServices,
+                serviceTypes: ctrl.data.allServiceTypes
+            };
+            showAddAppointmentDialog(event, dialogData, saveNewAppointment);
+        }
+
         function showAddAppointmentDialog(event, dialogData, cb) {
             $mdDialog.show({
                 controller: 'AddAppointmentDialogController',
@@ -55,11 +66,19 @@
                 targetEvent: event,
                 clickOutsideToClose: false,
                 fullscreen: true
-            }).then(function(client) {
-                cb(client);
+            }).then(function(appointment) {
+                cb(appointment);
             }, function() {
 
             });
+        }
+
+        //TODO
+        function saveNewAppointment(appointment) {
+            // HistoryDataService.addHistoryItem(historyItem).then(function(rSuccess) {
+            //     toastr.success("Sedinta adaugata", "Succes");
+            //     getClientHistory(historyItem._clientId);
+            // });
         }
 
     }
