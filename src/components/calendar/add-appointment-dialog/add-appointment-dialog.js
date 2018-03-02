@@ -13,25 +13,34 @@
         ctrl.actions = {};
 
         ctrl.data.title = dialogData.title;
-        ctrl.data.historyItem = dialogData.historyItem;
+        ctrl.data.appointment = dialogData.appointment;
         ctrl.data.services = dialogData.services;
         ctrl.data.serviceTypes = dialogData.serviceTypes;
-        ctrl.data.historyItem.date = ctrl.data.historyItem.date ? new Date(ctrl.data.historyItem.date) : new Date();
+        ctrl.data.appointment.date = ctrl.data.appointment.date ? new Date(ctrl.data.appointment.date) : new Date();
 
         ctrl.data.maxDate = new Date();
         
+        ctrl.actions.loadStaff = loadStaff;
         ctrl.actions.cancel = cancel;
         ctrl.actions.save = save;
         ctrl.actions.changeSelectedServicesText = changeSelectedServicesText;
 
         $element.find('input').on('keydown', function(ev) { ev.stopPropagation(); });
+
+        function loadStaff() {
+            return StaffDataService.getAllStaff().then(function(rSuccess) {
+                ctrl.data.staff = rSuccess;
+            }).catch(function(rError) {
+                console.error(rError);
+            });
+        }
        
         function cancel() {
             $mdDialog.cancel();
         };
 
-        function save(historyItem) {
-            $mdDialog.hide(historyItem);
+        function save(appointment) {
+            $mdDialog.hide(appointment);
         };
 
         function changeSelectedServicesText(selectedServices) {

@@ -11,15 +11,15 @@
 
     <md-dialog-content>
         <div class="md-dialog-content">
-            <form name="$ctrl.data.editHistoryItemForm">
+            <form name="$ctrl.data.addNewAppointmentForm">
                 <div layout="row" layout-align="start center">
                     <md-input-container>
                         <label>Data sedintei</label>
                         <md-datepicker name="date" required 
-                            ng-model="$ctrl.data.historyItem.date" 
+                            ng-model="$ctrl.data.appointment.date" 
                             md-max-date="$ctrl.data.maxDate">
                         </md-datepicker>
-                        <div ng-messages="$ctrl.data.editHistoryItemForm.date.$error">
+                        <div ng-messages="$ctrl.data.addNewAppointmentForm.date.$error">
                             <div ng-message="valid">Valoarea introdusa nu este o data valida</div>
                             <div ng-message="required">Data este necesara</div>
                             <div ng-message="maxdate">Data nu poate fi mai mare decat data curenta</div>
@@ -28,7 +28,7 @@
                     <md-input-container>
                         <label>Interval in saptamani</label>
                         <md-icon>timelapse</md-icon>
-                        <input name="interval" ng-model="$ctrl.data.historyItem.interval" type="number" step="1">
+                        <input name="interval" ng-model="$ctrl.data.appointment.interval" type="number" step="1">
                     </md-input-container>
                 </div>
     
@@ -37,12 +37,12 @@
                         <label>Sedinta efectuata de:</label>
                         <md-select name="servicesPerformedBy" required
                             ng-model-options="{trackBy: '$value.id'}" 
-                            ng-model="$ctrl.data.historyItem.servicesPerformedBy">
+                            ng-model="$ctrl.data.appointment.servicesPerformedBy">
                             <md-option ng-value="user" ng-repeat="user in $ctrl.data.users track by user.id">
                                 <md-icon>face</md-icon> {{ user.first_name }} {{ user.last_name }}
                             </md-option>
                         </md-select>
-                        <div ng-messages="$ctrl.data.editHistoryItemForm.servicesPerformedBy.$error">
+                        <div ng-messages="$ctrl.data.addNewAppointmentForm.servicesPerformedBy.$error">
                             <div ng-message="required">O persoana trebuie selectata.</div>
                         </div>
                     </md-input-container>
@@ -54,9 +54,9 @@
                         <md-select 
                             name="services" multiple required
                             ng-model-options="{trackBy: '$value._id'}" 
-                            ng-model="$ctrl.data.historyItem.services"  
+                            ng-model="$ctrl.data.appointment.services"  
                             md-on-close="$ctrl.data.searchServices = '';" 
-                            md-selected-text="$ctrl.actions.changeSelectedServicesText($ctrl.data.historyItem.services)"
+                            md-selected-text="$ctrl.actions.changeSelectedServicesText($ctrl.data.appointment.services)"
                             data-md-container-class="selectdemoSelectHeader">
                             <md-select-header class="demo-select-header">
                                 <input ng-model="$ctrl.data.searchServices" placeholder="Cauta un serviciu" class="demo-header-searchbox md-text">
@@ -68,7 +68,7 @@
                                 </md-option>
                             </md-optgroup>
                         </md-select>
-                        <div ng-messages="$ctrl.data.editHistoryItemForm.services.$error">
+                        <div ng-messages="$ctrl.data.addNewAppointmentForm.services.$error">
                             <div ng-message="required">Minim un serviciu trebuie introdus</div>
                         </div>
                     </md-input-container>
@@ -76,7 +76,7 @@
                 <div>
                     <div>Servicii prestate:</div>
                     <ul>
-                        <li ng-repeat="service in $ctrl.data.historyItem.services track by service._id">
+                        <li ng-repeat="service in $ctrl.data.appointment.services track by service._id">
                             {{service.name}}
                             <small>Pret: {{service.price}} RON  Durata: {{service.duration}} min.</small>
                         </li>
@@ -84,23 +84,17 @@
                 </div>
     
                 <md-input-container class="md-block">
-                    <label>Produse acasa</label>
-                    <textarea name="homeProducts" ng-model="$ctrl.data.historyItem.homeProducts">
-                    </textarea>
-                </md-input-container>
-    
-                <md-input-container class="md-block">
                     <label>Observatii</label>
-                    <textarea name="observations" ng-model="$ctrl.data.historyItem.observations">
+                    <textarea name="observations" ng-model="$ctrl.data.appointment.observations">
                     </textarea>
                 </md-input-container>
 
                 <md-checkbox
-                    ng-model="$ctrl.data.historyItem.photosTaken">
+                    ng-model="$ctrl.data.appointment.photosTaken">
                     Poze
                 </md-checkbox>
                 <md-checkbox
-                    ng-model="$ctrl.data.historyItem.videosTaken"> 
+                    ng-model="$ctrl.data.appointment.videosTaken"> 
                     Filmare
                 </md-checkbox>
             </form>
@@ -112,8 +106,8 @@
         <md-button ng-click="$ctrl.actions.cancel()">
             Renunta
         </md-button>
-        <md-button class="md-raised md-primary" ng-click="$ctrl.actions.save($ctrl.data.historyItem)" ng-disabled="$ctrl.data.editHistoryItemForm.$invalid">
-            Salveaza Sedinta
+        <md-button class="md-raised md-primary" ng-click="$ctrl.actions.save($ctrl.data.appointment)" ng-disabled="$ctrl.data.addNewAppointmentForm.$invalid">
+            Salveaza Programarea
         </md-button>
     </md-dialog-actions>
 
