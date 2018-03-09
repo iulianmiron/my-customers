@@ -23,25 +23,7 @@
             </md-card-header-text>
         </md-card-header>
         <md-card-content>
-            <client-search flex="50" 
-                show="true"               
-                client-fn="$ctrl.actions.addClient($event)">
-            </client-search>
-            <md-select placeholder="Assign to staff member" ng-model="$ctrl.data.selectedStaff" md-on-open="$ctrl.actions.loadUsers()">
-                <md-option ng-value="staff._id" ng-repeat="staff in $ctrl.data.staff">
-                    {{staff.firstName}} {{staff.lastName}}
-                </md-option>
-            </md-select>
-            {{$ctrl.data.selectedStaff}}
-
-            <md-select placeholder="Select service" 
-                ng-model="$ctrl.data.selectedService" 
-                md-on-open="$ctrl.actions.loadServices()"
-                multiple>
-                <md-option ng-value="service._id" ng-repeat="service in $ctrl.data.services">
-                    {{service.name}}
-                </md-option>
-            </md-select>
+            
         </md-card-content>
     </md-card>
 </div>

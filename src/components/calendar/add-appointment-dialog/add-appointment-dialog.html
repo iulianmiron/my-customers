@@ -13,96 +13,102 @@
         <div class="md-dialog-content">
             <form name="$ctrl.data.addNewAppointmentForm">
                 <div layout="row" layout-align="start center">
+                    <span>Client:</span>
+                    <client-search flex flex-offset="5"
+                        client-fn="$ctrl.actions.selectClient($event)">
+                    </client-search>
+                </div>
+
+                <div layout="row" layout-align="start start">
+                    <!-- DATE -->
                     <md-input-container>
-                        <label>Data sedintei</label>
+                        <label>Data programarii</label>
                         <md-datepicker name="date" required 
-                            ng-model="$ctrl.data.appointment.date" 
-                            md-max-date="$ctrl.data.maxDate">
+                            ng-model="$ctrl.data.appointment.date">
                         </md-datepicker>
                         <div ng-messages="$ctrl.data.addNewAppointmentForm.date.$error">
                             <div ng-message="valid">Valoarea introdusa nu este o data valida</div>
                             <div ng-message="required">Data este necesara</div>
-                            <div ng-message="maxdate">Data nu poate fi mai mare decat data curenta</div>
                         </div>
                     </md-input-container>
-                    <md-input-container>
-                        <label>Interval in saptamani</label>
-                        <md-icon>timelapse</md-icon>
-                        <input name="interval" ng-model="$ctrl.data.appointment.interval" type="number" step="1">
-                    </md-input-container>
+
+                    <!-- TIME -->
+                    <md-time-picker
+                        ng-model="$ctrl.data.appointment.date" 
+                        message="$ctrl.data.timePickerMessages" 
+                        read-only="false" 
+                        mandatory="true" 
+                        no-meridiem>
+                    </md-time-picker>
                 </div>
-    
-                <div layout="row" layout-align="start center">
-                    <md-input-container flex>
-                        <label>Sedinta efectuata de:</label>
-                        <md-select name="servicesPerformedBy" required
-                            ng-model-options="{trackBy: '$value.id'}" 
-                            ng-model="$ctrl.data.appointment.servicesPerformedBy">
-                            <md-option ng-value="user" ng-repeat="user in $ctrl.data.users track by user.id">
-                                <md-icon>face</md-icon> {{ user.first_name }} {{ user.last_name }}
+                
+                <div layout="row" layout-align="start center" 
+                    ng-repeat="service in $ctrl.data.appointment.services track by $index">
+
+                     <!-- SERVICE TYPE -->
+                     <md-input-container flex>
+                        <md-icon>work</md-icon>
+                        <label>Alege serviciul:</label>
+                        <md-select 
+                            name="selectedService_{{$index}}"
+                            ng-model="service.type"
+                            md-on-open="$ctrl.actions.loadServices()"
+                            required>
+                            <md-option 
+                                ng-value="selectedService._id" 
+                                ng-repeat="selectedService in $ctrl.data.services track by selectedService._id">
+                                {{ selectedService.name }}
                             </md-option>
                         </md-select>
-                        <div ng-messages="$ctrl.data.addNewAppointmentForm.servicesPerformedBy.$error">
+                        <div ng-messages="$ctrl.data.addNewAppointmentForm['selectedService_' + $index].$error">
+                            <div ng-message="required">Un serviciu trebuie selectat.</div>
+                        </div>
+                    </md-input-container>
+
+                    <!-- PERFORMED BY -->
+                    <md-input-container flex>
+                        <label>Efectuat de:</label>
+                        <md-select 
+                            name="selectedStaff_{{$index}}"
+                            ng-model="service.staff"
+                            md-on-open="$ctrl.actions.loadStaff()"
+                            required>
+                            <md-option 
+                                ng-value="selectedStaff._id" 
+                                ng-repeat="selectedStaff in $ctrl.data.staff track by selectedStaff._id">
+                                {{ selectedStaff.firstName }} {{ selectedStaff.lastName }}
+                            </md-option>
+                        </md-select>
+                        <div ng-messages="$ctrl.data.addNewAppointmentForm['selectedStaff_' + $index].$error">
                             <div ng-message="required">O persoana trebuie selectata.</div>
                         </div>
                     </md-input-container>
+
+                    <md-button class="md-icon-button" ng-click="$ctrl.actions.removeService(service)">
+                        <md-icon>delete</md-icon>
+                        <!-- TODO -->
+                        <md-tooltip></md-tooltip>
+                    </md-button>
                 </div>
-    
-                <div layout="row" layout-align="start center">
-                    <md-input-container flex>
-                        <label>Alege Servicii</label>
-                        <md-select 
-                            name="services" multiple required
-                            ng-model-options="{trackBy: '$value._id'}" 
-                            ng-model="$ctrl.data.appointment.services"  
-                            md-on-close="$ctrl.data.searchServices = '';" 
-                            md-selected-text="$ctrl.actions.changeSelectedServicesText($ctrl.data.appointment.services)"
-                            data-md-container-class="selectdemoSelectHeader">
-                            <md-select-header class="demo-select-header">
-                                <input ng-model="$ctrl.data.searchServices" placeholder="Cauta un serviciu" class="demo-header-searchbox md-text">
-                            </md-select-header>
-                            <md-optgroup label="{{serviceType.name}}" ng-repeat="serviceType in $ctrl.data.serviceTypes track by serviceType._id">
-                                <md-option ng-value="service" ng-repeat="service in filteredServices = ($ctrl.data.services | filter: {_serviceTypeId: serviceType._id, name: $ctrl.data.searchServices })  track by service._id">
-                                    {{service.name}}
-                                    <small>Pret: {{service.price}} RON  Durata: {{service.duration}} min.</small>
-                                </md-option>
-                            </md-optgroup>
-                        </md-select>
-                        <div ng-messages="$ctrl.data.addNewAppointmentForm.services.$error">
-                            <div ng-message="required">Minim un serviciu trebuie introdus</div>
-                        </div>
-                    </md-input-container>
-                </div>
-                <div>
-                    <div>Servicii prestate:</div>
-                    <ul>
-                        <li ng-repeat="service in $ctrl.data.appointment.services track by service._id">
-                            {{service.name}}
-                            <small>Pret: {{service.price}} RON  Durata: {{service.duration}} min.</small>
-                        </li>
-                    </ul>
-                </div>
-    
+                <md-button ng-click="$ctrl.actions.addService()" class="md-raised">
+                    Adauga serviciu
+                </md-button>
+
+                <!-- OBSERVATIONS -->
                 <md-input-container class="md-block">
                     <label>Observatii</label>
                     <textarea name="observations" ng-model="$ctrl.data.appointment.observations">
                     </textarea>
                 </md-input-container>
-
-                <md-checkbox
-                    ng-model="$ctrl.data.appointment.photosTaken">
-                    Poze
-                </md-checkbox>
-                <md-checkbox
-                    ng-model="$ctrl.data.appointment.videosTaken"> 
-                    Filmare
-                </md-checkbox>
             </form>
 
         </div>
     </md-dialog-content>
 
     <md-dialog-actions layout="row" layout-align="end center">
+        <md-button ng-click="$ctrl.actions.showData()">
+            Data
+        </md-button>
         <md-button ng-click="$ctrl.actions.cancel()">
             Renunta
         </md-button>

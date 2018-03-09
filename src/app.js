@@ -12,6 +12,7 @@
             'toastr',
             'cfp.hotkeys',
             'angular-clipboard',
+            'md.time.picker',
 
             'cm.dataservices',
 

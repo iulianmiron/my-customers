@@ -9,8 +9,8 @@
             bindings: {}
         });
 
-    CalendarController.$inject = ['$rootElement', '$mdDialog', 'ServicesDataService'];
-    function CalendarController($rootElement, $mdDialog, ServicesDataService) {
+    CalendarController.$inject = ['$rootElement', '$mdDialog'];
+    function CalendarController($rootElement, $mdDialog) {
         var ctrl = this;
         ctrl.data = {};
         ctrl.status = {};
@@ -18,28 +18,14 @@
 
         ctrl.$onInit = function() {
             ctrl.actions.addNewAppointment = addNewAppointment;
-            ctrl.actions.loadUsers = loadUsers;
-            ctrl.actions.loadServices = loadServices;
         };
-
-        function addClient(event) {
-            console.log(event.client);
-        }
-
-        function loadServices() {
-            return ServicesDataService.getAllServices().then(function(rSuccess) {
-                ctrl.data.services = rSuccess;
-            }).catch(function(rError) {
-                console.error(rError);
-            });
-        }
 
         function addNewAppointment(event) {
             var dialogData = {
                 appointment: {
                     _clientId: ctrl.data.clientId
                 },
-                title: 'Adaugati Programare',
+                title: 'Adauga Programare',
                 services: ctrl.data.allServices,
                 serviceTypes: ctrl.data.allServiceTypes
             };
