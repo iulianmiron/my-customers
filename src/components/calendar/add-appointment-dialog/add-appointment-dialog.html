@@ -12,14 +12,18 @@
     <md-dialog-content>
         <div class="md-dialog-content">
             <form name="$ctrl.data.addNewAppointmentForm">
+                <!-- CLIENT -->
                 <div layout="row" layout-align="start center">
-                    <span>Client:</span>
-                    <client-search flex flex-offset="5"
+                    <client-search flex
                         client-fn="$ctrl.actions.selectClient($event)">
                     </client-search>
+                    <md-button ui-sref="client({id: 0})" class="md-icon-button">
+                        <md-icon>person_add</md-icon>
+                        <md-tooltip hide show-gt-sm>Adauga client nou</md-tooltip>
+                    </md-button>
                 </div>
 
-                <div layout="row" layout-align="start start">
+                <div layout="row">
                     <!-- DATE -->
                     <md-input-container>
                         <label>Data programarii</label>
@@ -31,10 +35,20 @@
                             <div ng-message="required">Data este necesara</div>
                         </div>
                     </md-input-container>
-
-                    <!-- TIME -->
+                </div>
+                <div layout="row" layout-align="start center">
+                    <!-- START TIME -->
                     <md-time-picker
-                        ng-model="$ctrl.data.appointment.date" 
+                        ng-model="$ctrl.data.appointment.startTime" 
+                        message="$ctrl.data.timePickerMessages" 
+                        read-only="false" 
+                        mandatory="true" 
+                        no-meridiem>
+                    </md-time-picker>
+                    <span flex-offset="5">la</span>
+                    <!-- END TIME -->
+                    <md-time-picker
+                        ng-model="$ctrl.data.appointment.endTime" 
                         message="$ctrl.data.timePickerMessages" 
                         read-only="false" 
                         mandatory="true" 
@@ -86,19 +100,18 @@
 
                     <md-button class="md-icon-button" ng-click="$ctrl.actions.removeService(service)">
                         <md-icon>delete</md-icon>
-                        <!-- TODO -->
-                        <md-tooltip></md-tooltip>
+                        <md-tooltip hide show-gt-sm>Sterge serviciu</md-tooltip>
                     </md-button>
                 </div>
-                <md-button ng-click="$ctrl.actions.addService()" class="md-raised">
+                <md-button ng-click="$ctrl.actions.addService()">
+                    <md-icon>add</md-icon>
                     Adauga serviciu
                 </md-button>
 
                 <!-- OBSERVATIONS -->
                 <md-input-container class="md-block">
                     <label>Observatii</label>
-                    <textarea name="observations" ng-model="$ctrl.data.appointment.observations">
-                    </textarea>
+                    <textarea name="observations" ng-model="$ctrl.data.appointment.observations"></textarea>
                 </md-input-container>
             </form>
 
@@ -112,7 +125,9 @@
         <md-button ng-click="$ctrl.actions.cancel()">
             Renunta
         </md-button>
-        <md-button class="md-raised md-primary" ng-click="$ctrl.actions.save($ctrl.data.appointment)" ng-disabled="$ctrl.data.addNewAppointmentForm.$invalid">
+        <md-button class="md-raised md-primary" 
+            ng-click="$ctrl.actions.save($ctrl.data.appointment)" 
+            ng-disabled="$ctrl.data.addNewAppointmentForm.$invalid || !$ctrl.data.appointment.services || !$ctrl.data.appointment.services.length || !$ctrl.data.appointment._clientId">
             Salveaza Programarea
         </md-button>
     </md-dialog-actions>

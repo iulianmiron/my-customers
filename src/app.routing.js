@@ -76,9 +76,34 @@
 				url: '/bank-account',
 				component: 'bankAccount'
 			})
+			// .state('calendar', {
+			// 	url: '/calendar/:day/:month/:year',
+			// 	component: 'calendar',
+			// 	params : {
+			// 		day: {
+			// 			value: null,
+			// 			squash: true,
+			// 		},
+			// 		month: {
+			// 			value: null,
+			// 			squash: true,
+			// 		},
+			// 		year: {
+			// 			value: null,
+			// 			squash: true,
+			// 		}
+			// 	}
+			// })
+			
 			.state('calendar', {
-				url: '/calendar',
-				component: 'calendar'
+				url: '/calendar/:date',
+				component: 'calendar',
+				params : {
+					date: {
+						value: null,
+						squash: true,
+					}
+				}
 			});
 	}
 

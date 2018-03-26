@@ -1,11 +1,43 @@
 <div flex>
     <md-card>
         <md-card-header>
-            <md-icon>today</md-icon>
+            <!-- <md-icon>today</md-icon> -->
             <md-card-header-text layout="row" layout-align="space-between center">
-                <span class="md-headline">
-                Programari
-                </span>
+                <div layout="row" layout-align="start center">
+                    <span class="md-headline" class="md-accent">
+                        Programari
+                    </span>
+
+                    <md-button hide show-gt-sm ng-click="$ctrl.actions.selectDate($ctrl.data.today, 0)">
+                        Azi
+                        <md-tooltip hide show-gt-sm>
+                            {{ $ctrl.data.today | amDateFormat: 'dddd, Do MMMM YYYY' }}
+                        </md-tooltip>
+                    </md-button>
+
+                    <md-button hide show-gt-sm ng-click="$ctrl.actions.selectDate($ctrl.data.selectedDate, -1)" class="md-icon-button">
+                        <md-icon>chevron_left</md-icon>
+                        <md-tooltip>Ziua precedenta</md-tooltip>
+                    </md-button>
+
+                    <md-button hide show-gt-sm ng-click="$ctrl.actions.selectDate($ctrl.data.selectedDate, 1)" class="md-icon-button">
+                        <md-icon>chevron_right</md-icon>
+                        <md-tooltip>Ziua urmatoare</md-tooltip>
+                    </md-button>
+
+                    <md-datepicker
+                        ng-model="$ctrl.data.selectedDate" 
+                        md-placeholder="Alege o data" 
+                        md-open-on-focus
+                        ng-change="$ctrl.actions.selectDate($ctrl.data.selectedDate)"
+                        class="hide-input-container">
+                    </md-datepicker>
+
+                    <span hide show-gt-sm>{{$ctrl.data.selectedDate | amDateFormat:'dddd, Do MMMM YYYY'}}</span>
+                    <span hide-gt-sm>{{$ctrl.data.selectedDate | amDateFormat:'D-M-Y'}}</span>
+
+                </div>
+                
                 <md-menu md-position-mode="target-right target">
                     <md-button md-menu-origin ng-click="$mdMenu.open($event)" class="md-primary">
                         <md-icon>add_circle</md-icon>
@@ -23,7 +55,6 @@
             </md-card-header-text>
         </md-card-header>
         <md-card-content>
-            
         </md-card-content>
     </md-card>
 </div>

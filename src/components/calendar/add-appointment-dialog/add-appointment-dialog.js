@@ -5,8 +5,8 @@
         .module('cm.components.calendar.addAppointmentDialog', [])
         .controller('AddAppointmentDialogController', AddAppointmentDialogController);
         
-    AddAppointmentDialogController.$inject = ['$timeout', '$mdDialog', 'dialogData', 'StaffDataService', 'ServiceTypesDataService'];
-    function AddAppointmentDialogController($timeout, $mdDialog, dialogData, StaffDataService, ServiceTypesDataService) {
+    AddAppointmentDialogController.$inject = ['$timeout', '$mdDialog', '$state', 'dialogData', 'StaffDataService', 'ServiceTypesDataService'];
+    function AddAppointmentDialogController($timeout, $mdDialog, $state, dialogData, StaffDataService, ServiceTypesDataService) {
         var ctrl = this;
         ctrl.data = {};
         ctrl.status = {};
@@ -17,6 +17,8 @@
         ctrl.data.services = dialogData.services;
         ctrl.data.serviceTypes = dialogData.serviceTypes;
         ctrl.data.appointment.date = ctrl.data.appointment.date ? new Date(ctrl.data.appointment.date) : new Date();
+        ctrl.data.appointment.startTime = new Date();
+        ctrl.data.appointment.endTime = new Date();
 
         ctrl.data.timePickerMessages = {
             hour: 'Hour is required',
@@ -60,11 +62,9 @@
                 type: null
             };
 
-            if(!ctrl.data.appointment.services) {
-                ctrl.data.appointment.services = [];
-            }
-
-            ctrl.data.appointment.services.push(service);
+            ctrl.data.appointment.services 
+            ? ctrl.data.appointment.services.push(service)
+            : ctrl.data.appointment.services = [];
         }
 
         function removeService(value) {
@@ -76,11 +76,15 @@
         }
 
         function selectClient(event) {
-            if(event.client && event.client._id === 0) {
-                alert('ai ales client nou');
-            }
-            if(event.client && event.client._id) {
-                ctrl.data.appointment._clientId = event.client._id;
+            if(event.client === undefined) { 
+                ctrl.data.appointment._clientId = null; 
+            } 
+            else if (event.client) {
+
+                event.client._id === 0 
+                ? $state.go('client', {id: 0})
+                : ctrl.data.appointment._clientId = event.client._id;
+
             }
         }
        
