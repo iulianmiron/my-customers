@@ -46,8 +46,10 @@
                         var client = rClients.filter(function(iClient) {
                             return iClient[fieldName] === fieldValue;
                         })[0];
-                        
-                        showDuplicateAccountDialog(client, fieldName);
+
+                        if(client && client._id !== ctrl.data.client._id) {
+                            showDuplicateAccountDialog(client, fieldName);
+                        }
                     }
                 }
 

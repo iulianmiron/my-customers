@@ -25,16 +25,9 @@
 
                 <div layout="row">
                     <!-- DATE -->
-                    <md-input-container>
-                        <label>Data programarii</label>
-                        <md-datepicker name="date" required 
-                            ng-model="$ctrl.data.appointment.date">
-                        </md-datepicker>
-                        <div ng-messages="$ctrl.data.addNewAppointmentForm.date.$error">
-                            <div ng-message="valid">Valoarea introdusa nu este o data valida</div>
-                            <div ng-message="required">Data este necesara</div>
-                        </div>
-                    </md-input-container>
+                    <md-datepicker name="date" required 
+                        ng-model="$ctrl.data.appointment.date">
+                    </md-datepicker>
                 </div>
                 <div layout="row" layout-align="start center">
                     <!-- START TIME -->

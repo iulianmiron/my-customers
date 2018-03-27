@@ -68,6 +68,13 @@
 					'settingsView@settings': 'staff'
 				}
 			})
+			.state('roles', {
+				url: '/roles',
+				parent: 'settings',
+				views: {
+					'settingsView@settings': 'roles'
+				}
+			})
 			.state('shop', {
 				url: '/shop',
 				component: 'shop'
@@ -75,26 +82,7 @@
 			.state('bankAccount', {
 				url: '/bank-account',
 				component: 'bankAccount'
-			})
-			// .state('calendar', {
-			// 	url: '/calendar/:day/:month/:year',
-			// 	component: 'calendar',
-			// 	params : {
-			// 		day: {
-			// 			value: null,
-			// 			squash: true,
-			// 		},
-			// 		month: {
-			// 			value: null,
-			// 			squash: true,
-			// 		},
-			// 		year: {
-			// 			value: null,
-			// 			squash: true,
-			// 		}
-			// 	}
-			// })
-			
+			})			
 			.state('calendar', {
 				url: '/calendar/:date',
 				component: 'calendar',

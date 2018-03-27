@@ -9,6 +9,7 @@
             'cm.dataservices.history',
             'cm.dataservices.clients',
             'cm.dataservices.consumables',
-            'cm.dataservices.staff'
+            'cm.dataservices.staff',
+            'cm.dataservices.roles'
         ]);
 })();

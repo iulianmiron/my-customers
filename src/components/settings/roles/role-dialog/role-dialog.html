@@ -1,0 +1,59 @@
+<md-dialog aria-label="{{ $ctrl.data.title }}">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>{{ $ctrl.data.title }}</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="$ctrl.actions.cancel()">
+                <md-icon>close</md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+
+    <md-dialog-content>
+        <div class="md-dialog-content">
+            <form name="$ctrl.data.roleForm">
+                <div layout="column">
+                
+                    <md-input-container class="md-block">
+                        <label>Denumire</label>
+                        <md-icon>assignment</md-icon>
+                        <input name="roleName" ng-model="$ctrl.data.role.name"  minlength="2" md-maxlength="100" required>
+                        <div ng-messages="$ctrl.data.roleForm.roleName.$error">
+                            <div ng-message="required">Denumirea este obligatorie</div>
+                            <div ng-message="md-maxlength">Denumirea trebuie sa aiba sub 100 de caractere</div>
+                            <div ng-message="minlength">Denumirea trebuie sa aiba mai mult de 1 caracter</div>
+                        </div>
+                    </md-input-container>
+
+                    <md-input-container class="md-block">
+                        <label>Descriere</label>
+                        <md-icon>description</md-icon>
+                        <textarea ng-model="$ctrl.data.role.description">
+						</textarea>
+                    </md-input-container>
+
+                    <div layout="row">
+                        <md-switch ng-model="$ctrl.data.role.isProtected" aria-label="Can be deleted?">
+                            {{ $ctrl.data.role.isProtected ? 'Nu poate' : 'Poate'}} fi sters
+                        </md-switch>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row" layout-align="end center">
+        <md-button ng-click="$ctrl.actions.cancel()">
+            Renunta
+        </md-button>
+        <md-button 
+            class="md-raised md-primary" 
+            ng-click="$ctrl.actions.save($ctrl.data.role)" 
+            ng-disabled="$ctrl.data.roleForm.$invalid">
+            Salveaza Rol
+        </md-button>
+    </md-dialog-actions>
+
+</md-dialog>
+
+

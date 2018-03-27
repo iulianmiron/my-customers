@@ -19,10 +19,16 @@
         'cm.components.settings.products',
         'cm.components.settings.products.addProductDialog',
         'cm.components.settings.products.editProductDialog',
+
         'cm.components.settings.consumables',
         'cm.components.settings.consumables.consumableDialog',
+
         'cm.components.settings.staff',
         'cm.components.settings.staff.staffDialog',
+
+        'cm.components.settings.roles',
+        'cm.components.settings.roles.roleDialog',
+
         'cm.components.settings.activities',
 
         'cm.components.home',

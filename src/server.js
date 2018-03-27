@@ -14,6 +14,7 @@ var service_types   = require('./api/routes/service-types');
 var products        = require('./api/routes/products');
 var consumables     = require('./api/routes/consumables');
 var staff           = require('./api/routes/staff');
+var roles           = require('./api/routes/roles');
 
 app.use(express.static(__dirname + '/'));
 app.use(bodyParser.json());
@@ -63,6 +64,13 @@ app.get('/api/staff', staff.getAll);
 app.post('/api/staff', staff.add);
 app.put('/api/staff/:id', staff.update);
 app.delete('/api/staff/:id', staff.delete);
+
+// ROLES collection
+app.get('/api/roles/search/:query', roles.search);
+app.get('/api/roles', roles.getAll);
+app.post('/api/roles', roles.add);
+app.put('/api/roles/:id', roles.update);
+app.delete('/api/roles/:id', roles.delete);
 
 // kill server
 app.get('/api/kill', function(req, res) {
