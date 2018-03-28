@@ -9,8 +9,8 @@
             bindings: {}
         });
 
-    StaffController.$inject = ['$mdDialog', '$rootElement', 'StaffDataService', 'toastr', 'NO_PICTURE'];
-    function StaffController($mdDialog, $rootElement, StaffDataService, toastr, NO_PICTURE) {
+    StaffController.$inject = ['$q', '$mdDialog', '$rootElement', 'StaffDataService', 'RolesDataService', 'toastr', 'NO_PICTURE'];
+    function StaffController($q, $mdDialog, $rootElement, StaffDataService, RolesDataService, toastr, NO_PICTURE) {
         var ctrl = this;
         ctrl.data = {};
         ctrl.status = {};
@@ -24,13 +24,21 @@
             ctrl.actions.editStaff = editStaff;
             ctrl.actions.deleteStaff = deleteStaff;
             ctrl.actions.saveEditedStaff = saveEditedStaff;
-           
-            getAllStaff();
+
+            $q.all([getAllStaff(), getAllRoles()]).then(function(data) {
+                //data received
+            });
         }
 
         function getAllStaff() {
             StaffDataService.getAllStaff().then(function(rStaff) {
                 ctrl.data.allStaff = rStaff;
+            });
+        }
+
+        function getAllRoles() {
+            RolesDataService.getAllRoles().then(function(rRoles) {
+                ctrl.data.allRoles = rRoles;
             });
         }
 
@@ -62,6 +70,7 @@
             var staff = staff;
             var dialogData = {
                 staff: staff ? angular.copy(staff) : null,
+                roles: ctrl.data.allRoles,
                 title: 'Editati angajat'
             };
 
@@ -72,6 +81,7 @@
             var staff = staff;
             var dialogData = {
                 staff: staff ? angular.copy(staff) : null,
+                roles: ctrl.data.allRoles,
                 title: 'Adaugati angajat nou'
             };
             showDialog(event, dialogData, saveNewStaff);

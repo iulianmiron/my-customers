@@ -11,30 +11,33 @@
 
     <md-dialog-content>
         <div class="md-dialog-content">
-            <form name="$ctrl.data.staffForm">
+            <form name="$ctrl.data.staffForm" autocomplete="off" novalidate>
                 <div layout="column">
-                    <md-input-container class="md-block">
-                        <label>Prenume</label>
-                        <md-icon>person</md-icon>
-                        <input name="staffFirstName" ng-model="$ctrl.data.staff.firstName" minlength="2" md-maxlength="100" required>
-                        <div ng-messages="$ctrl.data.staffForm.staffFirstName.$error">
-                            <div ng-message="required">Prenumele este obligatoriu</div>
-                            <div ng-message="md-maxlength">Prenumele trebuie sa aiba sub 100 de caractere</div>
-                            <div ng-message="minlength">Prenumele trebuie sa aiba mai mult de 1 caracter</div>
-                        </div>
-                    </md-input-container>
-                
-                    <md-input-container class="md-block">
-                        <label>Nume</label>
-                        <md-icon>person</md-icon>
-                        <input name="staffLastName" ng-model="$ctrl.data.staff.lastName"  minlength="2" md-maxlength="100" required>
-                        <div ng-messages="$ctrl.data.staffForm.staffLastName.$error">
-                            <div ng-message="required">Numele este obligatoriu</div>
-                            <div ng-message="md-maxlength">Numele trebuie sa aiba sub 100 de caractere</div>
-                            <div ng-message="minlength">Numele trebuie sa aiba mai mult de 1 caracter</div>
-                        </div>
-                    </md-input-container>
-                
+                    <div layout="column" layout-gt-sm="row">
+                        <md-input-container class="md-block">
+                            <label>Prenume</label>
+                            <md-icon>person</md-icon>
+                            <input name="staffFirstName" ng-model="$ctrl.data.staff.firstName" minlength="2" md-maxlength="100" required>
+                            <div ng-messages="$ctrl.data.staffForm.staffFirstName.$error">
+                                <div ng-message="required">Prenumele este obligatoriu</div>
+                                <div ng-message="md-maxlength">Prenumele trebuie sa aiba sub 100 de caractere</div>
+                                <div ng-message="minlength">Prenumele trebuie sa aiba mai mult de 1 caracter</div>
+                            </div>
+                        </md-input-container>
+                    
+                        <md-input-container class="md-block">
+                            <label>Nume</label>
+                            <md-icon>person</md-icon>
+                            <input name="staffLastName" ng-model="$ctrl.data.staff.lastName"  minlength="2" md-maxlength="100" required>
+                            <div ng-messages="$ctrl.data.staffForm.staffLastName.$error">
+                                <div ng-message="required">Numele este obligatoriu</div>
+                                <div ng-message="md-maxlength">Numele trebuie sa aiba sub 100 de caractere</div>
+                                <div ng-message="minlength">Numele trebuie sa aiba mai mult de 1 caracter</div>
+                            </div>
+                        </md-input-container>
+                    </div>
+                    
+                    
                     <md-input-container class="md-block">
                         <label>Telefon</label>
                         <md-icon>phone</md-icon>
@@ -51,8 +54,8 @@
                     <div layout="row">
                         <md-button ng-show="$ctrl.status.showButton">duplicat</md-button>
                     </div>
-                
-                    <div layout="column" layout-gt-md="row">
+
+                    <div layout="column" layout-gt-sm="row">
                         <md-input-container class="md-block">
                             <label>Data nasterii</label>
                             <md-datepicker flex
@@ -75,6 +78,25 @@
                             <label>Varsta</label>
                             <md-icon>person</md-icon>
                             <input name="staffAge" type="text" ng-model="$ctrl.data.staff.age" ng-readonly="true">
+                        </md-input-container>
+                    </div>
+
+
+                    <div layout="row" layout-align="start center">
+                        <md-input-container flex>
+                            <label>Alege Roluri</label>
+                            <md-select 
+                                name="roles" multiple required
+                                ng-model="$ctrl.data.staff.roles">
+                                <md-option 
+                                    ng-value="role._id" 
+                                    ng-repeat="role in $ctrl.data.roles track by role._id">
+                                    {{ role.name }}
+                                </md-option>
+                            </md-select>
+                            <div ng-messages="$ctrl.data.staffForm.roles.$error">
+                                <div ng-message="required">Minim un rol trebuie ales.</div>
+                            </div>
                         </md-input-container>
                     </div>
                 

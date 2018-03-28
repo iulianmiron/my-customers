@@ -58,6 +58,7 @@ function update(req, res) {
                 phoneNumber: req.body.phoneNumber,
                 description: req.body.description,
                 email: req.body.email,
+                roles: req.body.roles,
                 updatedOn: updatedOn,
                 createdOn: req.body.createdOn
             }

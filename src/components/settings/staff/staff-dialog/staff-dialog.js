@@ -5,8 +5,8 @@
         .module('cm.components.settings.staff.staffDialog', [])
         .controller('StaffDialogController', StaffDialogController);
     
-    StaffDialogController.$inject = ['$rootElement', '$mdDialog', 'NO_PICTURE', 'dialogData', 'StaffDataService'];
-    function StaffDialogController($rootElement, $mdDialog, NO_PICTURE, dialogData, StaffDataService) {
+    StaffDialogController.$inject = ['$rootElement', '$mdDialog', 'NO_PICTURE', 'dialogData', 'StaffDataService', 'UtilsService'];
+    function StaffDialogController($rootElement, $mdDialog, NO_PICTURE, dialogData, StaffDataService, UtilsService) {
         var ctrl = this;
         ctrl.data = {};
         ctrl.status = {};
@@ -16,11 +16,14 @@
         ctrl.data.staff = dialogData.staff || {};
         ctrl.data.staff.age = ctrl.data.staff.dateOfBirth ? calculateStaffAge(ctrl.data.staff.dateOfBirth): null;
         ctrl.data.title = dialogData.title;
-
+        ctrl.data.roles = dialogData.roles;
+        ctrl.data.selectedRoles = UtilsService.getSelectedItems(ctrl.data.roles, ctrl.data.staff.roles);
         ctrl.data.maxDateOfBirth = new Date();
 
         ctrl.actions.calculateStaffAge = calculateStaffAge;
         ctrl.actions.checkIfDuplicate = checkIfDuplicate;
+        ctrl.actions.getSelectedItems = UtilsService.getSelectedItems;
+
         ctrl.actions.cancel = cancel;
         ctrl.actions.save = save;
 
@@ -67,9 +70,9 @@
                 clickOutsideToClose: false,
                 multiple: true
             }).then(function() {
-                alert('yes')
+                ctrl.data.staff[fieldName] = null;
             }, function() {
-                alert('no')
+                ctrl.data.staff[fieldName] = null;
             });
 
         };
