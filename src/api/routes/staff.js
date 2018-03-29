@@ -46,22 +46,13 @@ function deleteOne(req, res) {
 };
 
 function update(req, res) {
-    var updatedOn = new Date();
+    delete req.body._id;
+	req.body.updatedOn = new Date();
 
     db_staff.staff.findAndModify({
         query: { _id: mongojs.ObjectId(req.params.id) },
         update: {
-            $set: {
-                firstName: req.body.firstName,
-                lastName: req.body.lastName,
-                dateOfBirth: req.body.dateOfBirth,
-                phoneNumber: req.body.phoneNumber,
-                description: req.body.description,
-                email: req.body.email,
-                roles: req.body.roles,
-                updatedOn: updatedOn,
-                createdOn: req.body.createdOn
-            }
+            $set: req.body
         },
         new: true
     }, function(err, doc) {

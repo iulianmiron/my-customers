@@ -35,21 +35,13 @@ function deleteOne(req, res) {
 };
 
 function update(req, res) {
-    var updatedOn = new Date();
+    delete req.body._id;
+	req.body.updatedOn = new Date();
 
     db_consumables.consumables.findAndModify({
         query: { _id: mongojs.ObjectId(req.params.id) },
         update: {
-            $set: {
-                manufacturer: req.body.manufacturer,
-                name: req.body.name,
-                range: req.body.range,
-                description: req.body.description,
-                volume: req.body.volume,
-                price: req.body.price,
-                updatedOn: updatedOn,
-                createdOn: req.body.createdOn
-            }
+            $set: req.body
         },
         new: true
     }, function(err, doc) {

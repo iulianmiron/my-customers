@@ -36,24 +36,13 @@ function add(req, res) {
 };
 
 function update(req, res) {
-    var updatedOn = new Date();
+    delete req.body._id;
+	req.body.updatedOn = new Date();
 
     db_clients.history.findAndModify({
         query: { _id: mongojs.ObjectId(req.params.id) },
         update: {
-            $set: {
-                date: req.body.date,
-                servicesPerformedBy: req.body.servicesPerformedBy,
-                services: req.body.services,
-                interval: req.body.interval,
-                homeProducts: req.body.homeProducts,
-                observations: req.body.observations,
-                photosTaken: req.body.photosTaken,
-                videosTaken: req.body.videosTaken,
-                _clientId: req.body._clientId,
-                updatedOn: updatedOn,
-                createdOn: req.body.createdOn
-            }
+            $set: req.body
         },
         new: true
     }, function(err, doc) {
