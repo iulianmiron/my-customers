@@ -70,7 +70,7 @@
         function getAllServiceTypes()   { return ServiceTypesDataService.getAllServiceTypes(); }
 
         function getClientProfile(clientId) { 
-            ClientsDataService.getClient(clientId).then(function(rClient) {
+            ClientsDataService.getOne(clientId).then(function(rClient) {
                 ctrl.data.client = rClient;
             }); 
         }
@@ -100,14 +100,14 @@
         }
 
         function addNewClient(client) {
-            ClientsDataService.addClient(client).then(function(rClientAdded) {
+            ClientsDataService.addNew(client).then(function(rClientAdded) {
                 toastr.success("Client adaugat", "Succes");
                 $state.go('client', { id: rClientAdded._id });
             });
         }
 
         function updateClient(client) {
-            ClientsDataService.updateClient(client).then(function(rSuccess) {
+            ClientsDataService.updateOne(client).then(function(rSuccess) {
                 toastr.success("Client editat", "Succes");
                 getClientProfile(client._id);
             });

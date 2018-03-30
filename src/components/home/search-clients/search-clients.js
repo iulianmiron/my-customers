@@ -22,7 +22,7 @@
             var deferred = $q.defer();
 
             ClientsDataService
-                .searchClients(query)
+                .searchAll(query)
                 .then(handleSuccess)
                 .catch(handleError);
 

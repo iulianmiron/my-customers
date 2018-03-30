@@ -74,9 +74,9 @@ app.delete('/api/roles/:id', roles.delete);
 
 // kill server
 app.get('/api/kill', function(req, res) {
-    console.info("\n┌──────────────────────────┐");
-    console.info(  "│ ESTET STUDIO APP CLOSED  │");
-    console.info(  "└──────────────────────────┘\n");
+    console.info("\n┌─────────────────────────────┐");
+    console.info(  "│ ESTET STUDIO APP -> STOPPED │");
+    console.info(  "└─────────────────────────────┘\n");
 
 	setTimeout(() => process.exit(), 500);
 });
@@ -87,9 +87,9 @@ app.get('*', function(req, res) {
 });
 
 app.listen(PORT, function() {
-    console.info("\n┌──────────────────────────┐");
-    console.info(  "│ ESTET STUDIO APP STARTED │");
-    console.info(  "└──────────────────────────┘\n");
+    console.info("\n┌─────────────────────────────┐");
+    console.info(  "│ ESTET STUDIO APP -> STARTED │");
+    console.info(  "└─────────────────────────────┘\n");
     console.info("DO NOT CLOSE THIS WINDOW!");
     console.info("SERVER address: ", db);
     console.info("APP port: ", PORT);

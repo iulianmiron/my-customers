@@ -10,37 +10,44 @@
         var service = this;
         service.name = 'client';
 
-        service.addClient = addClient;
-        service.getClient = getClient;
-        service.updateClient = updateClient;
-        service.deleteClient = deleteClient;
-        service.searchClients = searchClients;
+        service.getAll = getAll;
+        service.addNew = addNew;
+        service.getOne = getOne;
+        service.updateOne = updateOne;
+        service.deleteOne = deleteOne;
+        service.searchAll = searchAll;
 
-        function addClient(client) {
+        function getAll() {
+            return $http.get('/api/clients')
+                .then(_handleSuccess)
+                .catch(_handleError);
+        }
+
+        function addNew(client) {
             return $http.post('/api/clients', client)
                 .then(_handleSuccess)
                 .catch(_handleError);
         }
 
-        function getClient(clientId) {
+        function getOne(clientId) {
             return $http.get('/api/clients/' + clientId)
                 .then(_handleSuccess)
                 .catch(_handleError);
         }
 
-        function updateClient(client) {
+        function updateOne(client) {
             return $http.put('/api/clients/' + client._id, client)
                 .then(_handleSuccess)
                 .catch(_handleError);
         }
 
-        function deleteClient(clientId) {
+        function deleteOne(clientId) {
             return $http.delete('/api/clients/' + clientId)
                 .then(_handleSuccess)
                 .catch(_handleError);
         }
         
-        function searchClients(query) {
+        function searchAll(query) {
             if (query) {
                 return $http.get('/api/clients/search/' + query)
                     .then(_handleSuccess)
