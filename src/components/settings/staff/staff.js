@@ -31,19 +31,19 @@
         }
 
         function getAllStaff() {
-            StaffDataService.getAllStaff().then(function(rStaff) {
+            StaffDataService.getAll().then(function(rStaff) {
                 ctrl.data.allStaff = rStaff;
             });
         }
 
         function getAllRoles() {
-            RolesDataService.getAllRoles().then(function(rRoles) {
+            RolesDataService.getAll().then(function(rRoles) {
                 ctrl.data.allRoles = rRoles;
             });
         }
 
         function saveNewStaff(newStaff) {
-            StaffDataService.addStaff(newStaff).then(function(rSuccess) {
+            StaffDataService.addNew(newStaff).then(function(rSuccess) {
                 toastr.success("Angajat adaugat cu succes");
                 return rSuccess.data;
             });
@@ -51,7 +51,7 @@
         }
         
         function saveEditedStaff(staff) {
-            StaffDataService.updateStaff(staff).then(function(rSuccess) {
+            StaffDataService.updateOne(staff).then(function(rSuccess) {
                 toastr.success("Angajat editat cu succes");
                 return rSuccess.data;
             });
@@ -59,7 +59,7 @@
         }
 
         function deleteStaff(staffId) {
-            StaffDataService.deleteStaff(staffId).then(function(rSuccess) {
+            StaffDataService.deleteOne(staffId).then(function(rSuccess) {
                 toastr.success("Angajat sters cu succes");
                 return rSuccess.data;
             });

@@ -37,7 +37,7 @@
         function checkIfDuplicate(fieldName, fieldValue) {
             if(fieldName && fieldValue && (ctrl.data.client || (ctrl.data.client[fieldName] !== fieldValue))) {
                 ClientsDataService
-                    .searchClients(fieldValue)
+                    .searchAll(fieldValue)
                     .then(handleSuccess)
                     .catch(handleError);
 

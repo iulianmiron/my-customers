@@ -21,13 +21,12 @@ function getAll(req, res) {
 
 function search(req, res) {
     db_clients.clients.aggregate([
-        { $match: { $text: { $search: req.params.query} } },
+        { $match: { $text: { $search: req.params.query } } },
         { $sort: { score: { $meta: "textScore" } } }
     ], function(err, doc) {
         if (err) { console.log('Error: ', err); };
         res.json(doc);
     });
-
 };
 
 function add(req, res) {

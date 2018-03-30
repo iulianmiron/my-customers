@@ -66,8 +66,8 @@
             }     
         }
         
-        function getAllServices()       { return ServicesDataService.getAllServices(); }
-        function getAllServiceTypes()   { return ServiceTypesDataService.getAllServiceTypes(); }
+        function getAllServices()       { return ServicesDataService.getAll(); }
+        function getAllServiceTypes()   { return ServiceTypesDataService.getAll(); }
 
         function getClientProfile(clientId) { 
             ClientsDataService.getOne(clientId).then(function(rClient) {
@@ -76,7 +76,7 @@
         }
 
         function getClientHistory(clientId) { 
-            HistoryDataService.getClientHistory(clientId).then(function(rHistory) {
+            HistoryDataService.getAllById(clientId).then(function(rHistory) {
                 ctrl.data.history = rHistory;
             }); 
         }
@@ -162,14 +162,14 @@
         }
 
         function saveNewHistoryItem(historyItem) {
-            HistoryDataService.addHistoryItem(historyItem).then(function(rSuccess) {
+            HistoryDataService.addNew(historyItem).then(function(rSuccess) {
                 toastr.success("Sedinta adaugata", "Succes");
                 getClientHistory(historyItem._clientId);
             });
         }
 
         function saveEditedHistoryItem(historyItem) {
-            HistoryDataService.editHistoryItem(historyItem).then(function(rSuccess) {
+            HistoryDataService.updateOne(historyItem).then(function(rSuccess) {
                 toastr.success("Sedinta editata", "Succes");
                 getClientHistory(historyItem._clientId);
             });

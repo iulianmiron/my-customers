@@ -76,7 +76,7 @@
         //TODO
         function saveNewAppointment(appointment) {
             console.log(appointment);
-            // HistoryDataService.addHistoryItem(historyItem).then(function(rSuccess) {
+            // HistoryDataService.addOne(historyItem).then(function(rSuccess) {
             //     toastr.success("Sedinta adaugata", "Succes");
             //     getClientHistory(historyItem._clientId);
             // });

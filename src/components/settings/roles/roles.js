@@ -29,13 +29,13 @@
         }
 
         function getAllRoles() {
-            RolesDataService.getAllRoles().then(function(rRoles) {
+            RolesDataService.getAll().then(function(rRoles) {
                 ctrl.data.allRoles = rRoles;
             });
         }
 
         function saveNewRole(newRole) {
-            RolesDataService.addRole(newRole).then(function(rSuccess) {
+            RolesDataService.addNew(newRole).then(function(rSuccess) {
                 toastr.success("Rol adaugat cu succes");
                 return rSuccess.data;
             });
@@ -43,7 +43,7 @@
         }
         
         function saveEditedRole(role) {
-            RolesDataService.updateRole(role).then(function(rSuccess) {
+            RolesDataService.updateOne(role).then(function(rSuccess) {
                 toastr.success("Rol editat cu succes");
                 return rSuccess.data;
             });
@@ -51,7 +51,7 @@
         }
 
         function deleteRole(roleId) {
-            RolesDataService.deleteRole(roleId).then(function(rSuccess) {
+            RolesDataService.deleteOne(roleId).then(function(rSuccess) {
                 toastr.success("Rol sters cu succes");
                 return rSuccess.data;
             });

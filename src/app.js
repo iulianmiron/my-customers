@@ -14,7 +14,7 @@
             'angular-clipboard',
             'md.time.picker',
 
-            'cm.dataservices',
+            'cm.dataservice',
 
             'cm.constants',
             'cm.directives',

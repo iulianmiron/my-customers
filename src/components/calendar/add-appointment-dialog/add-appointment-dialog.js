@@ -41,7 +41,7 @@
         };
 
         function loadStaff() {
-            return StaffDataService.getAllStaff().then(function(rSuccess) {
+            return StaffDataService.getAll().then(function(rSuccess) {
                 ctrl.data.staff = rSuccess;
             }).catch(function(rError) {
                 console.error(rError);
@@ -49,7 +49,7 @@
         }
 
         function loadServices() {
-            return ServiceTypesDataService.getAllServiceTypes().then(function(rSuccess) {
+            return ServiceTypesDataService.getAll().then(function(rSuccess) {
                 ctrl.data.services = rSuccess;
             }).catch(function(rError) {
                 console.error(rError);

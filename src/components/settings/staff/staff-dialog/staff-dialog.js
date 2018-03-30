@@ -30,7 +30,7 @@
         function checkIfDuplicate(fieldName, fieldValue) {
             if(fieldName && fieldValue && (ctrl.data.staff || (ctrl.data.staff[fieldName] !== fieldValue))) {
                 StaffDataService
-                    .searchStaff(fieldValue)
+                    .searchAll(fieldValue)
                     .then(handleSuccess)
                     .catch(handleError);
 
