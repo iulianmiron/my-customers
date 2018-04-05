@@ -15,11 +15,12 @@
 
         ctrl.data.title = dialogData.title;
         ctrl.data.client = dialogData.client || {};
+        ctrl.data.staff = dialogData.staff;
         ctrl.data.client.age = ctrl.data.client.dateOfBirth ? calculateClientAge(ctrl.data.client.dateOfBirth): null;
-        
+        debugger;
         ctrl.data.clientVip = dialogData.clientVip;
         ctrl.data.maxDateOfBirth = new Date();
-
+        
         ctrl.actions.setVIPData = setVIPData;
         ctrl.actions.calculateClientAge = calculateClientAge;
         ctrl.actions.checkIfDuplicate = checkIfDuplicate;

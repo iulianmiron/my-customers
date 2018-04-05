@@ -45,6 +45,24 @@
         <div ng-show="$ctrl.status.showMoreProfileDetails" class="fade">
 
             <div layout="column">
+                <div layout="row" ng-if="$ctrl.data.client.preferredStaff">
+                    <div flex>
+                        <md-icon>favorite</md-icon>
+                        <span>Personal preferat: </span>
+                    </div>
+                    <div flex>
+                        <b>{{$ctrl.data.client.preferredStaff.firstName}} {{$ctrl.data.client.preferredStaff.lastName}}</b>
+                    </div>
+                </div>
+                <md-divider></md-divider>
+                <div layout="row" ng-if="$ctrl.data.client.isVip">
+                    <div flex>
+                        <span>Tip VIP:</span>
+                    </div>
+                    <div flex>
+                        <b>{{ $ctrl.data.client.vip.type.label }}, {{ $ctrl.data.client.vip.level.label }}</b>
+                    </div>
+                </div>
                 <div layout="row">
                     <div flex>
                         <span>Tip de piele:</span>
@@ -83,14 +101,6 @@
                     </div>
                     <div flex>
                         <b>{{ $ctrl.data.client.discovery || ' -trebuie completat-'}}</b>
-                    </div>
-                </div>
-                <div layout="row" ng-if="$ctrl.data.client.isVip">
-                    <div flex>
-                        <span>Tip VIP:</span>
-                    </div>
-                    <div flex>
-                        <b>{{ $ctrl.data.client.vip.type.label }}, {{ $ctrl.data.client.vip.level.label }}</b>
                     </div>
                 </div>
             </div>         

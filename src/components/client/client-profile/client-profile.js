@@ -12,8 +12,8 @@
                 onEditClient: '&',
             }
         });
-    ClientProfileController.$inject = ['$state', '$log', '$mdDialog', 'toastr', 'clipboard', 'CLIENT_VIP_LEVELS', 'CLIENT_VIP_TYPES', 'ClientsDataService'];
-    function ClientProfileController($state, $log, $mdDialog, toastr, clipboard, CLIENT_VIP_LEVELS, CLIENT_VIP_TYPES, ClientsDataService) {
+    ClientProfileController.$inject = ['toastr', 'clipboard', 'CLIENT_VIP_LEVELS', 'CLIENT_VIP_TYPES'];
+    function ClientProfileController(toastr, clipboard, CLIENT_VIP_LEVELS, CLIENT_VIP_TYPES) {
         var ctrl = this;
 
         ctrl.data = {};

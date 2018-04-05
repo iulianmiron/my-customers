@@ -12,13 +12,14 @@
         });
     ClientController.$inject = [
         '$mdToast', '$q', '$state', '$log', '$mdDialog', '$rootElement', 
-        'ClientsDataService', 'HistoryDataService', 'ServicesDataService', 'ServiceTypesDataService', 
-        'CLIENT_VIP_LEVELS', 'CLIENT_VIP_TYPES',
+        'ClientsDataService', 'HistoryDataService', 'ServicesDataService', 'ServiceTypesDataService', 'StaffDataService',
+        'CLIENT_VIP_LEVELS', 'CLIENT_VIP_TYPES', 'UtilsService',
         'toastr'
     ];
     function ClientController(
         $mdToast, $q, $state, $log, $mdDialog, $rootElement, 
-        ClientsDataService, HistoryDataService, ServicesDataService, ServiceTypesDataService, CLIENT_VIP_LEVELS, CLIENT_VIP_TYPES, 
+        ClientsDataService, HistoryDataService, ServicesDataService, ServiceTypesDataService, StaffDataService,
+        CLIENT_VIP_LEVELS, CLIENT_VIP_TYPES, UtilsService,
         toastr
     ) {
         var ctrl = this;
@@ -50,10 +51,12 @@
 
             $q.all([
                 getAllServices(), 
-                getAllServiceTypes()
+                getAllServiceTypes(),
+                getAllStaff()
             ]).then(function(data) {
                 ctrl.data.allServices = data[0];
                 ctrl.data.allServiceTypes = data[1];
+                ctrl.data.allStaff = data[2];
             });
 
             if (ctrl.data.clientId !== '0') {
@@ -68,10 +71,12 @@
         
         function getAllServices()       { return ServicesDataService.getAll(); }
         function getAllServiceTypes()   { return ServiceTypesDataService.getAll(); }
+        function getAllStaff()          { return StaffDataService.getAll(); }
 
         function getClientProfile(clientId) { 
             ClientsDataService.getOne(clientId).then(function(rClient) {
                 ctrl.data.client = rClient;
+                ctrl.data.client.preferredStaff = UtilsService.getSelectedItems(ctrl.data.allStaff, ctrl.data.client.preferredStaff);
             }); 
         }
 
@@ -85,7 +90,8 @@
             var dialogData = {
                 client: null,
                 title: 'Adaugati client',
-                clientVip: ctrl.data.clientVip
+                clientVip: ctrl.data.clientVip,
+                staff: ctrl.data.allStaff
             };
             showClientProfileDialog(null, dialogData, addNewClient);
         }
@@ -94,7 +100,8 @@
             var dialogData = {
                 client: event.client ? angular.copy(event.client) : null,
                 title: 'Editati client',
-                clientVip: ctrl.data.clientVip
+                clientVip: ctrl.data.clientVip,
+                staff: ctrl.data.allStaff
             };
             showClientProfileDialog(event.event, dialogData, updateClient);
         }
