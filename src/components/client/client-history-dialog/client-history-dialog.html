@@ -68,7 +68,7 @@
                             md-selected-text="$ctrl.actions.changeSelectedServicesText($ctrl.data.historyItem.services)"
                             data-md-container-class="selectdemoSelectHeader">
                             <md-select-header class="demo-select-header">
-                                <input ng-model="$ctrl.data.searchServices" placeholder="Cauta un serviciu" class="demo-header-searchbox md-text">
+                                <input ng-model="$ctrl.data.searchServices" placeholder="Cauta un serviciu" class="select-header-searchbox md-text">
                             </md-select-header>
                             <md-optgroup label="{{serviceType.name}}" ng-repeat="serviceType in $ctrl.data.serviceTypes track by serviceType._id">
                                 <md-option ng-value="service" ng-repeat="service in filteredServices = ($ctrl.data.services | filter: {_serviceTypeId: serviceType._id, name: $ctrl.data.searchServices })  track by service._id">
