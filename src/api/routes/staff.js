@@ -5,6 +5,7 @@ var db_staff = mongojs(db + 'staff', ['staff']);
 
 module.exports = {
     getAll: getAll,
+    getOne: getOne,
     search: search,
     add: add,
     update: update,
@@ -33,6 +34,13 @@ function add(req, res) {
 
 function getAll(req, res) {
     db_staff.staff.find(function(err, doc) {
+        if (err) { console.log('Error: ', err); };
+        res.json(doc);
+    });
+};
+
+function getOne(req, res) {
+    db_staff.staff.findOne({ _id: mongojs.ObjectId(req.params.id) }, function(err, doc) {
         if (err) { console.log('Error: ', err); };
         res.json(doc);
     });

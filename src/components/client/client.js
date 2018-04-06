@@ -75,9 +75,17 @@
 
         function getClientProfile(clientId) { 
             ClientsDataService.getOne(clientId).then(function(rClient) {
-                ctrl.data.client = rClient;
-                ctrl.data.client.preferredStaff = UtilsService.getSelectedItems(ctrl.data.allStaff, ctrl.data.client.preferredStaff);
+                ctrl.data.client = rClient;   
+                getSelectedStaff(ctrl.data.client.preferredStaff);             
+                // ctrl.data.preferredStaff = UtilsService.getSelectedItems(ctrl.data.allStaff, ctrl.data.client.preferredStaff);
             }); 
+        }
+
+        function getSelectedStaff(selectedStaffId) {
+            StaffDataService.getOne(selectedStaffId).then(function(rPreferredStaff) {
+                ctrl.data.preferredStaff = rPreferredStaff;
+                console.log(ctrl.data.preferredStaff);
+            });
         }
 
         function getClientHistory(clientId) { 

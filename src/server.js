@@ -61,6 +61,7 @@ app.delete('/api/consumables/:id', consumables.delete);
 // STAFF collection
 app.get('/api/staff/search/:query', staff.search);
 app.get('/api/staff', staff.getAll);
+app.get('/api/staff/:id', staff.getOne);
 app.post('/api/staff', staff.add);
 app.put('/api/staff/:id', staff.update);
 app.delete('/api/staff/:id', staff.delete);
