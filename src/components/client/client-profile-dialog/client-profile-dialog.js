@@ -17,7 +17,6 @@
         ctrl.data.staff = dialogData.staff;
         ctrl.data.client = dialogData.client || {};
         ctrl.data.client.age = ctrl.data.client.dateOfBirth ? calculateClientAge(ctrl.data.client.dateOfBirth): null;
-     
         ctrl.data.clientVip = dialogData.clientVip;
         ctrl.data.maxDateOfBirth = new Date();
         
