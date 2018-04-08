@@ -2,7 +2,7 @@
     <md-card-title>
         <md-card-title-text layout="row" layout-wrap layout-align="space-between center">
             <span class="md-headline">
-                Lista Personal ({{ $ctrl.data.allStaff.length }})
+                Lista Roluri ({{ $ctrl.data.allRoles.length }})
             </span>
             <div>
                 <md-button 
@@ -10,14 +10,14 @@
                     ng-click="$ctrl.status.showSearch = true" 
                     ng-hide="$ctrl.status.showSearch">
                     <md-icon>search</md-icon>
-                    <md-tooltip hide show-gt-sm>Cauta angajat</md-tooltip>
+                    <md-tooltip hide show-gt-sm>Cauta rol</md-tooltip>
                 </md-button>
 
-                <md-input-container ng-show="$ctrl.data.allStaff.length && $ctrl.status.showSearch" flex class="no-validation">
+                <md-input-container ng-show="$ctrl.data.allRoles.length && $ctrl.status.showSearch" flex class="no-validation">
                     <md-icon>search</md-icon>
-                    <label>Cauta angajat</label>
+                    <label>Cauta rol</label>
                     <input 
-                        ng-model="searchStaff" 
+                        ng-model="searchRoles" 
                         ng-model-options="{debounce: 400}" 
                         ng-blur="$ctrl.status.showSearch = false">
                 </md-input-container>
@@ -32,9 +32,9 @@
                     </md-button>
                     <md-menu-content>
                         <md-menu-item>
-                            <md-button ng-click="$ctrl.actions.addStaff($event)">
-                                <md-icon>person</md-icon>
-                                Angajat nou
+                            <md-button ng-click="$ctrl.actions.addRole($event)">
+                                <md-icon>assignment</md-icon>
+                                Rol nou
                             </md-button>
                         </md-menu-item>
                     </md-menu-content>
@@ -43,22 +43,28 @@
         </md-card-title-text>
     </md-card-title>
     <md-card-content class="overflow">
-        <md-list ng-show="$ctrl.data.allStaff.length">
-            <md-list-item class="md-3-line"
-                ng-repeat="staff in $ctrl.data.allStaff | filter:searchStaff track by staff._id"
-                ng-click="$ctrl.actions.editStaff($event, staff)" 
+        <md-list ng-show="$ctrl.data.allRoles.length">
+            <md-list-item class="md-2-line"
+                ng-repeat="role in $ctrl.data.allRoles | filter:searchRoles | orderBy: 'name' track by role._id"
+                ng-click="$ctrl.actions.editRole($event, role)" 
                 ng-mouseover="showControl = true" 
                 ng-mouseleave="showControl = false">
-                <img ng-src="{{ $ctrl.data.noPicture }}" class="md-avatar" alt="poza angajat" />
+                <img ng-src="{{ $ctrl.data.noPicture }}" class="md-avatar" alt="poza rol" />
                 <div class="md-list-item-text" layout="column">
-                    <h3>Nume: {{ staff.firstName }} {{ staff.lastName }}</h3>
-                    <h4>email: {{ staff.email }}</h4>
-                    <p>Telefon: {{ staff.phoneNumber }}, data nasterii: {{ staff.dateOfBirth | amDateFormat:'DD MMMM YYYY' }}</p>
-                    <md-button ng-click="$ctrl.actions.editStaff($event, staff)" ng-show="showControl" class="md-secondary md-icon-button">
+                    <h3>Denumire: <b>{{ role.name }}</b></h3>
+                    <p ng-show="role.description">Descriere: {{ role.description }}</p>
+                    <md-button 
+                        ng-click="$ctrl.actions.editRole($event, role)" 
+                        ng-show="showControl" 
+                        class="md-secondary md-icon-button">
                         <md-icon>edit</md-icon>
                         <md-tooltip hide show-gt-sm md-direction="top">Editeaza</md-tooltip>
                     </md-button>
-                    <md-button ng-click="$ctrl.actions.deleteStaff(staff._id)" ng-show="showControl" class="md-secondary md-icon-button">
+                    <md-button 
+                        ng-click="$ctrl.actions.deleteRole(role._id)" 
+                        ng-show="showControl" 
+                        ng-disabled="role.isProtected"
+                        class="md-secondary md-icon-button">
                         <md-icon>delete</md-icon>
                         <md-tooltip hide show-gt-sm md-direction="top">Sterge</md-tooltip>
                     </md-button>
@@ -66,7 +72,7 @@
             </md-list-item>
         </md-list>
     </md-card-content>
-    <md-card-footer ng-show="!$ctrl.data.allStaff.length" layout="row" layout-align="center center">
-        <h2>Adauga un angajat apasand butonul din dreapta sus</h2>
+    <md-card-footer ng-show="!$ctrl.data.allRoles.length" layout="row" layout-align="center center">
+        <h2>Adauga un rol apasand butonul din dreapta sus</h2>
     </md-card-footer>
 </md-card>

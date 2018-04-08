@@ -48,7 +48,7 @@
         }
 
         function saveNewProduct(newProduct) {
-            ProductsDataService.addProduct(newProduct).then(function(rSuccess) {
+            ProductsDataService.addNew(newProduct).then(function(rSuccess) {
                 toastr.success("Produsul adaugat cu succes");
                 return rSuccess.data;
             });
@@ -56,13 +56,13 @@
         }
 
         function getAllProducts() {
-            ProductsDataService.getAllProducts().then(function(rProducts) {
+            ProductsDataService.getAll().then(function(rProducts) {
                 ctrl.data.allProducts = rProducts;
             });
         }
 
         function deleteProduct(productId) {
-            ProductsDataService.deleteProduct(productId).then(function(rSuccess) {
+            ProductsDataService.deleteOne(productId).then(function(rSuccess) {
                 toastr.success("Produsul sters cu succes");
                 return rSuccess.data;
             });
@@ -89,7 +89,7 @@
         }
 
         function editProduct(product) {
-            ProductsDataService.updateProduct(product).then(function(rSuccess) {
+            ProductsDataService.updateOne(product).then(function(rSuccess) {
                 toastr.success("Produsul editat cu succes");
                 return rSuccess.data;
             });

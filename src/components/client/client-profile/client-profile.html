@@ -14,18 +14,26 @@
     </md-card-header>
     <md-card-content>
         <p>
-            <b>{{ $ctrl.data.client.firstName }} {{$ctrl.data.client.lastName}}</b> are varsta de <b>{{ $ctrl.data.client.age || '-trebuie completata data de nastere-'}}</b>.
+            <b>{{ $ctrl.data.client.firstName }} {{ $ctrl.data.client.lastName }}</b> 
+            are varsta de 
+            <b>{{ $ctrl.data.client.age || '- trebuie completata data de nastere -'}}.
+                <md-tooltip ng-if="$ctrl.data.client.age">
+                    Data Nasterii: {{ $ctrl.data.client.dateOfBirth | amDateFormat:'Do/MM/YYYY' }}
+                </md-tooltip>
+            </b>
         </p>
         <p>
             Telefon: 
             <b ng-click="$ctrl.actions.copyToClipboard($ctrl.data.client.phoneNumber)">
                 {{ $ctrl.data.client.phoneNumber }}
+                <md-tooltip hide show-gt-sm md-direction="right">Copiaza</md-tooltip>
             </b>
         </p>
         <p>
             e-mail: 
             <b ng-click="$ctrl.actions.copyToClipboard($ctrl.data.client.email)">
-                {{ $ctrl.data.client.email || '-trebuie completat e-mailul-'}}
+                {{ $ctrl.data.client.email || '- trebuie completat e-mailul -'}}
+                <md-tooltip hide show-gt-sm md-direction="right">Copiaza</md-tooltip>
             </b>
         </p>
 
@@ -35,26 +43,67 @@
         </md-button>
 
         <div ng-show="$ctrl.status.showMoreProfileDetails" class="fade">
-            <md-list>
-                <md-list-item>
-                    Tip de piele: <b>{{ $ctrl.data.client.skinType || ' -trebuie completat-'}}</b>
-                </md-list-item>
-                <md-list-item>
-                    Probleme medicale anterioare: <b>{{ $ctrl.data.client.previousMedicalConditions || ' -trebuie completat-'}}</b>
-                </md-list-item>
-                <md-list-item>
-                    Tratamente anterioare: <b>{{ $ctrl.data.client.previousTreatments || ' -trebuie completat-'}}</b>
-                </md-list-item>
-                <md-list-item>
-                    Produse de ingrijire folosite: <b>{{ $ctrl.data.client.skinCareProductsUsed || ' -trebuie completat-'}}</b>
-                </md-list-item>
-                <md-list-item>
-                    Cum a aflat de salon: <b>{{ $ctrl.data.client.discovery || ' -trebuie completat-'}}</b>
-                </md-list-item>
-                <md-list-item ng-if="$ctrl.data.client.isVip">
-                    Tip VIP: <b> {{ $ctrl.data.client.vip.type.label }}, {{ $ctrl.data.client.vip.level.label }}</b>
-                </md-list-item>
-            </md-list>
+
+            <div layout="column">
+                <div layout="row" ng-if="$ctrl.data.preferredStaff">
+                    <div flex>
+                        <md-icon>favorite</md-icon>
+                        <span>Personal preferat: </span>
+                    </div>
+                    <div flex>
+                        <b>{{$ctrl.data.preferredStaff.firstName}} {{$ctrl.data.preferredStaff.lastName}}</b>
+                    </div>
+                </div>
+                <div layout="row" ng-if="$ctrl.data.client.isVip">
+                    <div flex>
+                        <span>Tip VIP:</span>
+                    </div>
+                    <div flex>
+                        <b>{{ $ctrl.data.client.vip.type.label }}, {{ $ctrl.data.client.vip.level.label }}</b>
+                    </div>
+                </div>
+                <div layout="row">
+                    <div flex>
+                        <span>Tip de piele:</span>
+                    </div>
+                    <div flex>
+                        <b>{{ $ctrl.data.client.skinType || ' -trebuie completat-'}}</b>
+                    </div>
+                </div>
+                <div layout="row">
+                    <div flex>
+                        <span>Probleme medicale anterioare:</span>
+                    </div>
+                    <div flex>
+                        <b>{{ $ctrl.data.client.previousMedicalConditions || ' -trebuie completat-'}}</b>
+                    </div>
+                </div>
+                <div layout="row">
+                    <div flex>
+                        <span>Tratamente anterioare:</span>
+                    </div>
+                    <div flex>
+                        <b>{{ $ctrl.data.client.previousTreatments || ' -trebuie completat-'}}</b>
+                    </div>
+                </div>
+                <div layout="row">
+                    <div flex>
+                        <span>Produse de ingrijire folosite:</span>
+                    </div>
+                    <div flex>
+                        <b>{{ $ctrl.data.client.skinCareProductsUsed || ' -trebuie completat-'}}</b>
+                    </div>
+                </div>
+                <div layout="row">
+                    <div flex>
+                        <span>Cum a aflat de salon:</span>
+                    </div>
+                    <div flex>
+                        <b>{{ $ctrl.data.client.discovery || ' -trebuie completat-'}}</b>
+                    </div>
+                </div>
+            </div>         
+
         </div>
     </md-card-content>
     <md-card-actions>

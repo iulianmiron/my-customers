@@ -14,18 +14,18 @@
         ctrl.actions = {};
 
         ctrl.data.title = dialogData.title;
+        ctrl.data.staff = dialogData.staff;
         ctrl.data.client = dialogData.client || {};
         ctrl.data.client.age = ctrl.data.client.dateOfBirth ? calculateClientAge(ctrl.data.client.dateOfBirth): null;
-        
         ctrl.data.clientVip = dialogData.clientVip;
         ctrl.data.maxDateOfBirth = new Date();
-
+        
         ctrl.actions.setVIPData = setVIPData;
         ctrl.actions.calculateClientAge = calculateClientAge;
         ctrl.actions.checkIfDuplicate = checkIfDuplicate;
         ctrl.actions.cancel = cancel;
-        ctrl.actions.save = save;
-       
+        ctrl.actions.save = save;      
+
         function calculateClientAge(dateOfBirth) {
             return ctrl.data.client.age = moment().diff(moment(dateOfBirth), 'years') + ' ani';
         }
@@ -37,7 +37,7 @@
         function checkIfDuplicate(fieldName, fieldValue) {
             if(fieldName && fieldValue && (ctrl.data.client || (ctrl.data.client[fieldName] !== fieldValue))) {
                 ClientsDataService
-                    .searchClients(fieldValue)
+                    .searchAll(fieldValue)
                     .then(handleSuccess)
                     .catch(handleError);
 
@@ -46,8 +46,10 @@
                         var client = rClients.filter(function(iClient) {
                             return iClient[fieldName] === fieldValue;
                         })[0];
-                        
-                        showDuplicateAccountDialog(client, fieldName);
+
+                        if(client && client._id !== ctrl.data.client._id) {
+                            showDuplicateAccountDialog(client, fieldName);
+                        }
                     }
                 }
 

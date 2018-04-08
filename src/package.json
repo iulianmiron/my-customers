@@ -39,6 +39,7 @@
     "angular-clipboard": "^1.6.2",
     "angular-hotkeys": "^1.7.0",
     "angular-material": "^1.1.5",
+    "angular-material-time-picker": "^1.0.7",
     "angular-messages": "^1.6.6",
     "angular-moment": "^1.0.1",
     "angular-sanitize": "^1.6.6",

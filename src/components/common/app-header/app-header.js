@@ -35,10 +35,10 @@
             ctrl.status.showSearch = event.hideSearch;
         }
 
-        function openClientPage(clientId) {
-            if(clientId || clientId === 0) {
+        function openClientPage(event) {
+            if(event.client._id || event.client._id === 0) {
                 ctrl.status.showSearch = false;
-                $state.go('client', { id: clientId });
+                $state.go('client', { id: event.client._id });
             }
         }
     }

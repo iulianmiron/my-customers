@@ -14,6 +14,7 @@ var service_types   = require('./api/routes/service-types');
 var products        = require('./api/routes/products');
 var consumables     = require('./api/routes/consumables');
 var staff           = require('./api/routes/staff');
+var roles           = require('./api/routes/roles');
 
 app.use(express.static(__dirname + '/'));
 app.use(bodyParser.json());
@@ -60,12 +61,24 @@ app.delete('/api/consumables/:id', consumables.delete);
 // STAFF collection
 app.get('/api/staff/search/:query', staff.search);
 app.get('/api/staff', staff.getAll);
+app.get('/api/staff/:id', staff.getOne);
 app.post('/api/staff', staff.add);
 app.put('/api/staff/:id', staff.update);
 app.delete('/api/staff/:id', staff.delete);
 
+// ROLES collection
+app.get('/api/roles/search/:query', roles.search);
+app.get('/api/roles', roles.getAll);
+app.post('/api/roles', roles.add);
+app.put('/api/roles/:id', roles.update);
+app.delete('/api/roles/:id', roles.delete);
+
 // kill server
 app.get('/api/kill', function(req, res) {
+    console.info("\n┌─────────────────────────────┐");
+    console.info(  "│ ESTET STUDIO APP -> STOPPED │");
+    console.info(  "└─────────────────────────────┘\n");
+
 	setTimeout(() => process.exit(), 500);
 });
 
@@ -75,7 +88,10 @@ app.get('*', function(req, res) {
 });
 
 app.listen(PORT, function() {
-    console.log("DO NOT CLOSE THIS WINDOW!");
-    console.log("server running on address: ", db);
-    console.log("app running on port: ", PORT);
+    console.info("\n┌─────────────────────────────┐");
+    console.info(  "│ ESTET STUDIO APP -> STARTED │");
+    console.info(  "└─────────────────────────────┘\n");
+    console.info("DO NOT CLOSE THIS WINDOW!");
+    console.info("SERVER address: ", db);
+    console.info("APP port: ", PORT);
 });

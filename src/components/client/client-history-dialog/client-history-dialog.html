@@ -12,7 +12,7 @@
     <md-dialog-content>
         <div class="md-dialog-content">
             <form name="$ctrl.data.editHistoryItemForm">
-                <div layout="row" layout-align="start center">
+                <div layout="row" layout-align="start start" layout-wrap>
                     <md-input-container>
                         <label>Data sedintei</label>
                         <md-datepicker name="date" required 
@@ -25,8 +25,17 @@
                             <div ng-message="maxdate">Data nu poate fi mai mare decat data curenta</div>
                         </div>
                     </md-input-container>
-                    <md-input-container>
-                        <label>Interval in saptamani</label>
+
+                    <md-time-picker
+                        ng-model="$ctrl.data.historyItem.date" 
+                        message="$ctrl.data.timePickerMessages" 
+                        read-only="false" 
+                        mandatory="true" 
+                        no-meridiem>
+                    </md-time-picker>
+                   
+                    <md-input-container flex="33">
+                        <label>Interval (sapt.)</label>
                         <md-icon>timelapse</md-icon>
                         <input name="interval" ng-model="$ctrl.data.historyItem.interval" type="number" step="1">
                     </md-input-container>

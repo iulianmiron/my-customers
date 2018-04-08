@@ -7,7 +7,7 @@
         md-delay="500" 
         md-clear-button="false"
         md-search-text="$ctrl.data.searchText" 
-        md-selected-item-change="$ctrl.actions.openClientPage(client._id)" 
+        md-selected-item-change="$ctrl.actions.clientFn(client)" 
         md-items="client in $ctrl.actions.searchClients($ctrl.data.searchText)"
         md-item-text="client.firstName + ' ' + client.lastName">
         <md-item-template>
@@ -41,7 +41,7 @@
         <md-not-found>
             <div layout="row" layout-align="space-between center">
                 <span>0 rezultate</span>
-                <md-button ng-click="$ctrl.actions.openClientPage(0)" class="md-primary">
+                <md-button ng-click="$ctrl.actions.clientFn({_id: 0})" class="md-primary">
                     <md-icon>person_add</md-icon>
                     Adauga client nou
                 </md-button>

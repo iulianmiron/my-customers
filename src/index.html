@@ -8,12 +8,13 @@
 		
 		<link rel="icon" href="img/favicon.ico?rev=b83b9da784eb4b107ee22813d1ff7444">
 		<!-- MAIN STYLES -->
-		<link rel='stylesheet' href="styles/styles.css?rev=2fe8481641ec2825bd0dad7a1ae97585" />
+		<link rel='stylesheet' href="styles/styles.css?rev=721693aab6fe5d4f4849496c2952eb81" />
 
 		<link rel='stylesheet' href="./node_modules/angular-material/angular-material.min.css?rev=ab3c9a89820a9d0f664d6957fdfad5cb" />
 		<link rel='stylesheet' href="node_modules/material-design-icons-iconfont/dist/material-design-icons.css?rev=c25988089f59c8381e2b6c1cc1d627ab" />
 		<link rel="stylesheet" href="node_modules/angular-toastr/dist/angular-toastr.min.css?rev=8748148e10fb3ff62ac21e6b3ae720e4" />
 		<link rel="stylesheet" href="node_modules/angular-hotkeys/build/hotkeys.min.css?rev=88fa719c85dc86ad6c60d15e57ff4993" />
+		<link rel="stylesheet" href="node_modules/angular-material-time-picker/dist/md-time-picker.css?rev=dfee32c92fd47c42c8db87454a659536" />
 	</head>
 	<body ng-controller="appController as $ctrl" ng-class="{ 'hide-scroll' : $ctrl.status.isAppLoading }" layout="column" layout-fill>
 		<!--APP HEADER-->
@@ -56,83 +57,84 @@
 		<script src="node_modules/angular-toastr/dist/angular-toastr.tpls.min.js?rev=a64241e89e1dbc331198d15defff8ecb"></script>
 		<script src="node_modules/angular-spinners/dist/angular-spinners.min.js?rev=2363e32548f9ce1cce73d8d7157b54cd"></script>
 		<script src="node_modules/angular-hotkeys/build/hotkeys.min.js?rev=240f18a19501924691f17f6c3156d833"></script>
-		<script src="node_modules/angular-clipboard/angular-clipboard.js?rev=240f18a19501924691f17f6c3156d833"></script>
+		<script src="node_modules/angular-clipboard/angular-clipboard.js?rev=cdc29a4208a58a62d6ad2b062fd6cfd3"></script>
+		<script src="node_modules/angular-material-time-picker/dist/md-time-picker.js?rev=6d7df93347523439030c51b4af582d74"></script>
 
 		<!-- Main app -->
-		<script src="app.js?rev=ca09b8516f55755c7eed3d8868281007"></script>
+		<script src="app.js?rev=bae45987047d26eb376698609ea37ddd"></script>
 		<!-- App Routes -->
-		<script src="app.routing.js?rev=8103a45e976bc0110ebdc59e5eae43c8"></script>
+		<script src="app.routing.js?rev=719d209fd1974f18b7404c51007e57f9"></script>
 		<!-- App Theme -->
 		<script src="app.theming.js?rev=6b9e4d5150dd9f04259037ade2986526"></script>
 		
 		<!-- DATASERVICES -->
-		<script src="dataservices/dataservices.js?rev=622835e9527388ed959d3dc252325960"></script>
-		<script src="dataservices/products.data-services.js?rev=cd73d1139b7ee9ea163a11532b2fb280"></script>
-		<script src="dataservices/services.data-services.js?rev=d6461fadbf784478a14ef0729bf4766a"></script>
-		<script src="dataservices/serviceTypes.data-services.js?rev=767f6a9a471a53d77b53936f22a4d3f2"></script>
-		<script src="dataservices/history.data-services.js?rev=29f054f11a09a57c3fdf0afc0ed60182"></script>
-		<script src="dataservices/clients.data-services.js?rev=54fd8ae1ef592f7c87b9ced6dea8868a"></script>
-		<script src="dataservices/consumables.data-services.js?rev=57321b88e3d7a59cba5a616d7a0387f5"></script>
-		<script src="dataservices/staff.data-services.js?rev=06657181aa947cae90080f3971fdbd11"></script>
+		<script src="dataservices/dataservice.js?rev=5623f4e1e667788f7067d4fa31545964"></script>
+		<script src="dataservices/dataservices.js?rev=4c45992f02e7268caed446a8d37e510c"></script>
 
 		<!-- CONSTANTS -->
-		<script src="constants/constants.js?rev=075a24ddb8c04c81276837eced3d0442"></script>
+		<script src="constants/constants.js?rev=b4eae3a6e378b34abfccdf15a5e30db8"></script>
 		<!-- DIRECTIVES -->
 		<script src="directives/directives.js?rev=5c15040c859659e78350bf1018d54330"></script>
 		<!-- SERVICES -->
-		<script src="services/services.js?rev=02c30446141b0f8ebfee83d67a39bb3b"></script>
+		<script src="services/services.js?rev=948607cca6e28268291ba56b779309a6"></script>
 		<script src="services/hotkey.service.js?rev=398c940d304ef1f282f607017877a957"></script>
+		<script src="services/utils.service.js?rev=38e93f2adefc6b1d2ef401eb99521dfe"></script>
 
 
 		<!-- COMPONENTS -->
-		<script src="components/components.js?rev=6d259208230c0fc095fb7c06c4c70997"></script>
+		<script src="components/components.js?rev=2ec395001dab7b3888907a990f567b3d"></script>
 
 		<!-- COMMON -->
-		<script src="components/common/app-header/app-header.js?rev=0bab6e5277520d7581c75aebbb0037b7"></script>
+		<script src="components/common/app-header/app-header.js?rev=b30e93f53f00677a5999202cc5063cbd"></script>
 		<script src="components/common/app-sidebar/app-sidebar.js?rev=d77df53fa4fc76c86654712647b65f43"></script>
-		<script src="components/common/client-search/client-search.js?rev=16324989d77af47670beb79b9b28a795"></script>
+		<script src="components/common/client-search/client-search.js?rev=53d76da758dee7c2698471b1c2fdd032"></script>
 		<script src="components/common/app-loading/app-loading.js?rev=5f30da210665a2a2b916977eeecfeee9"></script>
 		<script src="components/common/confirm-dialog/confirm-dialog.js?rev=a5c2f344d9c975eaa2c19c14f1d5e169"></script>
 
 		<!-- SETTINGS -->
 		<script src="components/settings/settings.js?rev=3ed1e7db8c9ca762c43c6bffc4a21e57"></script>
 
-		<script src="components/settings/services/services.js?rev=fe7ab35ac13976a0eae36a9d64c12e74"></script>
+		<script src="components/settings/services/services.js?rev=89c8d5a3233406d6f9dfc26c1f8b5d7b"></script>
 		<script src="components/settings/services/service-dialog/service-dialog.js?rev=f55e09ab1f602e3eae4ac46a257c30e3"></script>
 		<script src="components/settings/services/service-type-dialog/service-type-dialog.js?rev=ab116d9101af488ad3fdfa2c7d22b236"></script>
 
-		<script src="components/settings/products/products.js?rev=3bac367a60a5aa717d761c0e3bdddb0a"></script>
+		<script src="components/settings/products/products.js?rev=57de4729c0450e6f3bf2331d2c46891c"></script>
 		<script src="components/settings/products/add-product/add-product.dialog.js?rev=18bdc7fa65feb377fbcd065f518839d2"></script>
 		<script src="components/settings/products/edit-product/edit-product.dialog.js?rev=6fc6289d83530631e8209649696b7df3"></script>
 
-		<script src="components/settings/consumables/consumables.js?rev=be345c2db667edc26e385ae6d49a610e"></script>
+		<script src="components/settings/consumables/consumables.js?rev=6eb8386db5ebb0e9d3bfdfa0047e387c"></script>
 		<script src="components/settings/consumables/consumable-dialog/consumable-dialog.js?rev=a4598175ee1a20bb9379c3737ebb8b44"></script>
 
-		<script src="components/settings/activities/activities.js?rev=468cadb2e1070ed085febc7843a520ea"></script>
-		<script src="components/settings/activities/activities.services.js?rev=e9abfab484dc94f815a50dcc53ea3d58"></script>
+		<script src="components/settings/activities/activities.js?rev=8d9d23897634f8191d8044bc1ad1bf7e"></script>
 
-		<script src="components/settings/staff/staff.js?rev=4de9ca79782e0c513da2ff848425ffed"></script>
-		<script src="components/settings/staff/staff-dialog/staff-dialog.js?rev=434ba122ef44dd54d20a9eccd2cf9403"></script>
+		<script src="components/settings/staff/staff.js?rev=3d52cca7b67f443846209c1e107ca95b"></script>
+		<script src="components/settings/staff/staff-dialog/staff-dialog.js?rev=e2a9f9536c8e66d87a2cfdf580e36bdc"></script>
+
+		<script src="components/settings/roles/roles.js?rev=09d83858f32e3cbe9eed2a30b7946917"></script>
+		<script src="components/settings/roles/role-dialog/role-dialog.js?rev=284dfeb6bf06749a21c1f2027e09e61d"></script>
 
 		<!-- HOME -->
 		<script src="components/home/home.js?rev=a7ffd555845df698a6f27686fb3e65b5"></script>
-		<script src="components/home/search-clients/search-clients.js?rev=27189991032b3dd7304aee97b4e49635"></script>
+		<script src="components/home/search-clients/search-clients.js?rev=83275c55e20b6cb48e63bdc844b035cb"></script>
 
 		<!-- CLIENT -->
-		<script src="components/client/client.js?rev=c31fed8f38a3b5e1bc1356456f5c7fdd"></script>
-		<script src="components/client/client-profile/client-profile.js?rev=99facaa5b8eb4e7a98dfbda8d5d36920"></script>
-		<script src="components/client/client-profile-dialog/client-profile-dialog.js?rev=f45c7e6351b7d45fbac37dddd80e585f"></script>
+		<script src="components/client/client.js?rev=e4527ca0816f2953478e1b0b5ebdedfd"></script>
+		<script src="components/client/client-profile/client-profile.js?rev=f7322075e3737ff6c7ba27bd7dacd6b5"></script>
+		<script src="components/client/client-profile-dialog/client-profile-dialog.js?rev=c271e6386738c771a0d2a961dd267be1"></script>
 		<script src="components/client/client-history/client-history.js?rev=83f1c6b3e52d180a2f79701b5295a786"></script>
-		<script src="components/client/client-history-dialog/client-history-dialog.js?rev=258275777731f29139fd7ac5b3d9f70d"></script>
-
+		<script src="components/client/client-history-dialog/client-history-dialog.js?rev=2f8b0d5f472b4e2178d8c98cea857560"></script>
 
 		<!-- SHOP -->
-		<script src="components/shop/shop.js?rev=e9369d2c3e1569866017dd0d4ccf1420"></script>
+		<script src="components/shop/shop.js?rev=1975195e25c3eeaaf99c31f0dd33d40c"></script>
 		<script src="components/shop/shop-products/shop-products.js?rev=bc8dc63780d2265452eb18a29b207d51"></script>
 		<script src="components/shop/shop-basket/shop-basket.js?rev=5b0b740ff93095e4f4fc22c84a2d9dbc"></script>
 
 		<!-- BANK ACCOUNT -->
 		<script src="components/bank-account/bank-account.js?rev=968dea68867ca9379745a2da25494c6f"></script>
+
+		<!-- CALENDAR -->
+		<script src="components/calendar/calendar.js?rev=faf7e0373c6c368052c1962f03842c04"></script>
+		<script src="components/calendar/add-appointment-dialog/add-appointment-dialog.js?rev=527aaf4a74c98f290d4918a8c27da7db"></script>
 
 		<!-- TEST page -->
 		<script src="components/test/test.js?rev=e55b05c016e18710528d3e4eb9e1193e"></script>

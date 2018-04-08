@@ -68,6 +68,13 @@
 					'settingsView@settings': 'staff'
 				}
 			})
+			.state('roles', {
+				url: '/roles',
+				parent: 'settings',
+				views: {
+					'settingsView@settings': 'roles'
+				}
+			})
 			.state('shop', {
 				url: '/shop',
 				component: 'shop'
@@ -75,6 +82,16 @@
 			.state('bankAccount', {
 				url: '/bank-account',
 				component: 'bankAccount'
+			})			
+			.state('calendar', {
+				url: '/calendar/:date',
+				component: 'calendar',
+				params : {
+					date: {
+						value: null,
+						squash: true,
+					}
+				}
 			});
 	}
 

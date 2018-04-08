@@ -28,20 +28,13 @@ function add(req, res) {
 };
 
 function update(req, res) {
-    var updatedOn = new Date();
+    delete req.body._id;
+	req.body.updatedOn = new Date();
 
     db_services.services.findAndModify({
         query: { _id: mongojs.ObjectId(req.params.id) },
         update: {
-            $set: {
-                name: req.body.name,
-                price: req.body.price,
-                duration: req.body.duration,
-                _serviceTypeId: req.body._serviceTypeId,
-                isProtected: req.body.isProtected,
-                updatedOn: updatedOn,
-                createdOn: req.body.createdOn
-            }
+            $set: req.body
         },
         new: true
     }, function(err, doc) {
