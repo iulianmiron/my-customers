@@ -9,6 +9,7 @@
             bindings: {
                 newClient: '<',
                 clientData: '<',
+                preferredStaff: '<',
                 onEditClient: '&',
             }
         });
@@ -28,6 +29,9 @@
             }
             if (changes.newClient && changes.newClient.currentValue) {
                 ctrl.data.newClient = angular.copy(changes.newClient.currentValue);
+            }
+            if (changes.preferredStaff && changes.preferredStaff.currentValue) {
+                ctrl.data.preferredStaff = angular.copy(changes.preferredStaff.currentValue);
             }
         }
         ctrl.$onInit = function() {

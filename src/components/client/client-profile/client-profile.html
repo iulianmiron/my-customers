@@ -45,13 +45,13 @@
         <div ng-show="$ctrl.status.showMoreProfileDetails" class="fade">
 
             <div layout="column">
-                <div layout="row" ng-if="$ctrl.data.client.preferredStaff">
+                <div layout="row" ng-if="$ctrl.data.preferredStaff">
                     <div flex>
                         <md-icon>favorite</md-icon>
                         <span>Personal preferat: </span>
                     </div>
                     <div flex>
-                        <b>{{$ctrl.data.client.preferredStaff.firstName}} {{$ctrl.data.client.preferredStaff.lastName}}</b>
+                        <b>{{$ctrl.data.preferredStaff.firstName}} {{$ctrl.data.preferredStaff.lastName}}</b>
                     </div>
                 </div>
                 <div layout="row" ng-if="$ctrl.data.client.isVip">

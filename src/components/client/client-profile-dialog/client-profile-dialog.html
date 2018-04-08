@@ -101,8 +101,7 @@
                         <md-icon>favorite</md-icon>
                         <label>Prefera pe:</label>
                         <md-select name="preferredStaff" 
-                            ng-model="$ctrl.data.client.preferredStaff"
-                            ng-model-options="{trackBy: '$value._id'}">
+                            ng-model="$ctrl.data.client._preferredStaffId">
                             <md-option ng-value="null">Fara</md-option>
                             <md-option 
                                 ng-value="staff._id" 

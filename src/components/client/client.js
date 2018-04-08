@@ -63,7 +63,7 @@
                 $q.all([
                     getClientProfile(ctrl.data.clientId), 
                     getClientHistory(ctrl.data.clientId)
-                ]).then(function() {});
+                ]).then(function(data) {});
             } else {
                 addClient();
             }     
@@ -75,23 +75,23 @@
 
         function getClientProfile(clientId) { 
             ClientsDataService.getOne(clientId).then(function(rClient) {
-                ctrl.data.client = rClient;   
-                getSelectedStaff(ctrl.data.client.preferredStaff);             
-                // ctrl.data.preferredStaff = UtilsService.getSelectedItems(ctrl.data.allStaff, ctrl.data.client.preferredStaff);
+                ctrl.data.client = rClient;  
+                if(ctrl.data.client._preferredStaffId) {
+                    getSelectedStaff(ctrl.data.client._preferredStaffId);
+                } 
             }); 
-        }
-
-        function getSelectedStaff(selectedStaffId) {
-            StaffDataService.getOne(selectedStaffId).then(function(rPreferredStaff) {
-                ctrl.data.preferredStaff = rPreferredStaff;
-                console.log(ctrl.data.preferredStaff);
-            });
         }
 
         function getClientHistory(clientId) { 
             HistoryDataService.getAllById(clientId).then(function(rHistory) {
                 ctrl.data.history = rHistory;
             }); 
+        }
+
+        function getSelectedStaff(selectedStaffId) {
+            StaffDataService.getOne(selectedStaffId).then(function(rPreferredStaff) {
+                ctrl.data.preferredStaff = rPreferredStaff;
+            });
         }
 
         function addClient() {
