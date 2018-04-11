@@ -5,6 +5,7 @@ var db_services = mongojs(db + 'services', ['types']);
 
 module.exports = {
     getAll: getAll,
+    getOne: getOne,
     add: add,
     update: update,
     delete: deleteOne
@@ -12,6 +13,13 @@ module.exports = {
 
 function getAll(req, res) {
     db_services.types.find(function(err, doc) {
+        if (err) { console.log('Error: ', err); };
+        res.json(doc);
+    });
+};
+
+function getOne(req, res) {
+    db_services.types.findOne({ _id: mongojs.ObjectId(req.params.id) }, function(err, doc) {
         if (err) { console.log('Error: ', err); };
         res.json(doc);
     });

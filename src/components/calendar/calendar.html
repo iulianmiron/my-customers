@@ -29,7 +29,7 @@
                         ng-model="$ctrl.data.selectedDate" 
                         md-placeholder="Alege o data" 
                         md-open-on-focus
-                        ng-change="$ctrl.actions.selectDate($ctrl.data.selectedDate)"
+                        ng-change="$ctrl.actions.selectDate($ctrl.data.selectedDate, 0)"
                         class="hide-input-container">
                     </md-datepicker>
 
@@ -55,6 +55,28 @@
             </md-card-header-text>
         </md-card-header>
         <md-card-content>
+            <div layout="column" layout-gt-sm="row">
+
+                <div>
+                    <md-list flex>
+                        <md-subheader class="md-no-sticky">Programati</md-subheader>
+                        <md-list-item class="md-3-line" ng-repeat="appointment in $ctrl.data.appointments | orderBy: 'startTime'" ng-click="null">
+                            <div class="md-list-item-text" layout="column">
+                                <h3>{{ appointment.client.firstName }} {{ appointment.client.lastName }} ({{ appointment.client.phoneNumber }})</h3>
+                                <h4>Servicii: 
+                                    <span ng-repeat="service in appointment.services track by $index">
+                                        {{ service.type.name }} 
+                                        <span ng-if="service.staff.firstName">({{ service.staff.firstName }})</span>
+                                    </span>
+                                </h4>
+                                <p>{{ appointment.startTime | amDateFormat:'HH:mma'}} – {{ appointment.endTime | amDateFormat:'HH:mma'}}</p>
+                            </div>
+                        </md-list-item>
+                    </md-list>
+                    
+                </div>
+
+            </div>
         </md-card-content>
     </md-card>
 </div>

@@ -1,4 +1,4 @@
-<md-dialog aria-label="{{ $ctrl.data.title }}">
+<md-dialog aria-label="{{ $ctrl.data.title }}" flex="66">
     <md-toolbar>
         <div class="md-toolbar-tools">
             <h2>{{ $ctrl.data.title }}</h2>
@@ -13,8 +13,9 @@
         <div class="md-dialog-content">
             <form name="$ctrl.data.addNewAppointmentForm">
                 <!-- CLIENT -->
-                <div layout="row" layout-align="start center">
-                    <client-search flex
+                <div layout="row" layout-align="start center" ng-hide="$ctrl.data.appointment._clientId">
+                    <span>Client:</span>
+                    <client-search flex flex-offset="5"
                         client-fn="$ctrl.actions.selectClient($event)">
                     </client-search>
                     <md-button ui-sref="client({id: 0})" class="md-icon-button">
@@ -22,14 +23,34 @@
                         <md-tooltip hide show-gt-sm>Adauga client nou</md-tooltip>
                     </md-button>
                 </div>
+                <div layout="row" layout-align="start center" ng-show="$ctrl.data.appointment._clientId">
+                    <span>
+                        Client: 
+                    
+                    <md-button ng-click="$ctrl.actions.removeSelectedClient()">
+                        {{ $ctrl.data.selectedClient.firstName }} {{ $ctrl.data.selectedClient.lastName }} 
+                        <md-icon>clear</md-icon>
+                    </md-button>
+                    <md-icon ng-if="$ctrl.data.selectedClient._preferredStaffId">
+                        favorite
+                        <md-tooltip>
+                            Prefera pe: {{ $ctrl.data.preferredStaff.firstName }} {{ $ctrl.data.preferredStaff.lastName }}
+                        </md-tooltip>
+                    </md-icon>
+                </span>
+                    
 
-                <div layout="row">
+                </div>
+
+                <div layout="row" layout-align="start center">
+                    <span>Data:</span>
                     <!-- DATE -->
                     <md-datepicker name="date" required 
                         ng-model="$ctrl.data.appointment.date">
                     </md-datepicker>
                 </div>
-                <div layout="row" layout-align="start center">
+                <div layout="row" layout-align="start center" layout-wrap>
+                    <span>Ora: </span>
                     <!-- START TIME -->
                     <md-time-picker
                         ng-model="$ctrl.data.appointment.startTime" 
@@ -38,7 +59,7 @@
                         mandatory="true" 
                         no-meridiem>
                     </md-time-picker>
-                    <span flex-offset="5">la</span>
+                    <span>–</span>
                     <!-- END TIME -->
                     <md-time-picker
                         ng-model="$ctrl.data.appointment.endTime" 
@@ -55,19 +76,18 @@
                      <!-- SERVICE TYPE -->
                      <md-input-container flex>
                         <md-icon>work</md-icon>
-                        <label>Alege serviciul:</label>
+                        <label>Serviciul dorit:</label>
                         <md-select 
-                            name="selectedService_{{$index}}"
+                            name="selectedServiceType_{{$index}}"
                             ng-model="service.type"
-                            md-on-open="$ctrl.actions.loadServices()"
                             required>
                             <md-option 
-                                ng-value="selectedService._id" 
-                                ng-repeat="selectedService in $ctrl.data.services track by selectedService._id">
-                                {{ selectedService.name }}
+                                ng-value="selectedServiceType._id" 
+                                ng-repeat="selectedServiceType in $ctrl.data.allServiceTypes track by selectedServiceType._id">
+                                {{ selectedServiceType.name }}
                             </md-option>
                         </md-select>
-                        <div ng-messages="$ctrl.data.addNewAppointmentForm['selectedService_' + $index].$error">
+                        <div ng-messages="$ctrl.data.addNewAppointmentForm['selectedServiceType_' + $index].$error">
                             <div ng-message="required">Un serviciu trebuie selectat.</div>
                         </div>
                     </md-input-container>
@@ -78,17 +98,14 @@
                         <md-select 
                             name="selectedStaff_{{$index}}"
                             ng-model="service.staff"
-                            md-on-open="$ctrl.actions.loadStaff()"
-                            required>
+                            >
+                            <md-option ng-value="null">–</md-option>
                             <md-option 
                                 ng-value="selectedStaff._id" 
-                                ng-repeat="selectedStaff in $ctrl.data.staff track by selectedStaff._id">
+                                ng-repeat="selectedStaff in $ctrl.data.allStaff track by selectedStaff._id">
                                 {{ selectedStaff.firstName }} {{ selectedStaff.lastName }}
                             </md-option>
                         </md-select>
-                        <div ng-messages="$ctrl.data.addNewAppointmentForm['selectedStaff_' + $index].$error">
-                            <div ng-message="required">O persoana trebuie selectata.</div>
-                        </div>
                     </md-input-container>
 
                     <md-button class="md-icon-button" ng-click="$ctrl.actions.removeService(service)">
@@ -112,9 +129,6 @@
     </md-dialog-content>
 
     <md-dialog-actions layout="row" layout-align="end center">
-        <md-button ng-click="$ctrl.actions.showData()">
-            Data
-        </md-button>
         <md-button ng-click="$ctrl.actions.cancel()">
             Renunta
         </md-button>

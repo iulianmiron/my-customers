@@ -17,6 +17,8 @@
                 return _matchSelection(allItems, selectedItems);
             } else if(allItems && selectedItems && angular.isString(selectedItems)) {
 				return _matchSelection(allItems, selectedItems)[0];
+			} else {
+				return null;
 			}
 		}
 		
