@@ -38,13 +38,13 @@
                     <label>Telefon</label>
                     <md-icon>phone</md-icon>
                     <input 
-                        name="clientPhoneNo" type="text" minlength="10" md-maxlength="10" required
+                        name="clientPhoneNo" type="text" minlength="10" md-maxlength="15" required
                         ng-model="$ctrl.data.client.phoneNumber" ng-model-options="{debounce: 500}" 
                         ng-change="$ctrl.actions.checkIfDuplicate('phoneNumber', $ctrl.data.client.phoneNumber)"  
                         >
                     <div ng-messages="$ctrl.data.clientProfileForm.clientPhoneNo.$error">
                         <div ng-message="required">Numarul de telefon este obligatoriu</div>
-                        <div ng-message="minlength, md-maxlength">Numarul de telefon trebuie sa inceapa cu zero si sa fie format din 10 cifre</div>
+                        <div ng-message="minlength, md-maxlength">Numarul de telefon trebuie sa inceapa cu zero si sa fie format din 10-15 cifre</div>
                     </div>
                 </md-input-container>
                 <div layout="row">
