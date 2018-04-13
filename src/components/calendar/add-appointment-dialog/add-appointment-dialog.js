@@ -25,7 +25,7 @@
             minute: 'Minute is required',
             meridiem: 'Meridiem is required'
         };
-        
+
         ctrl.actions.addService = addService;
         ctrl.actions.removeService = removeService;
         ctrl.actions.selectClient = selectClient;
@@ -70,7 +70,7 @@
                 ctrl.data.preferredStaff = UtilsService.getSelectedItems(ctrl.data.allStaff, ctrl.data.selectedClient._preferredStaffId);
             }
         }
-       
+
         function cancel() {
             $mdDialog.cancel();
         };

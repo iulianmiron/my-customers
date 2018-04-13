@@ -1,7 +1,8 @@
-var mongojs = require('mongojs');
-var db = require('../config').db;
+var mongojs     = require('mongojs');
+var db          = require('../config').db;
+var responseFn  = require('../utils/utils').handleResponse;
 
-var db_staff = mongojs(db + 'staff', ['roles']);
+var db_staff    = mongojs(db + 'staff', ['roles']);
 
 module.exports = {
     getAll: getAll,
@@ -11,38 +12,21 @@ module.exports = {
     delete: deleteOne
 };
 
+function getAll(req, res) { db_staff.roles.find(responseFn(res)); };
+function deleteOne(req, res) { db_staff.roles.remove({ _id: mongojs.ObjectId(req.params.id) }, responseFn(res)); };
+
 function search(req, res) {
     db_staff.roles.aggregate([
         { $match: { $text: { $search: req.params.query} } },
         { $sort: { score: { $meta: "textScore" } } }
-    ], function(err, doc) {
-        if (err) { console.log('Error: ', err); };
-        res.json(doc);
-    });
+    ], responseFn(res));
 };
 
 function add(req, res) {
     req.body.createdOn = new Date();
     req.body.updatedOn = new Date();
 
-    db_staff.roles.insert(req.body, function(err, doc) {
-        if (err) { console.log('Error: ', err); };
-        res.json(doc);
-    });
-};
-
-function getAll(req, res) {
-    db_staff.roles.find(function(err, doc) {
-        if (err) { console.log('Error: ', err); };
-        res.json(doc);
-    });
-};
-
-function deleteOne(req, res) {
-    db_staff.roles.remove({ _id: mongojs.ObjectId(req.params.id) }, function(err, doc) {
-        if (err) { console.log('Error: ', err); };
-        res.json(doc);
-    });
+    db_staff.roles.insert(req.body, responseFn(res));
 };
 
 function update(req, res) {
@@ -55,8 +39,5 @@ function update(req, res) {
             $set: req.body
         },
         new: true
-    }, function(err, doc) {
-        if (err) { console.log('Error: ', err); };
-        res.json(doc);
-    });
+    }, responseFn(res));
 };

@@ -85,7 +85,7 @@ app.put('/api/roles/:id', roles.update);
 app.delete('/api/roles/:id', roles.delete);
 
 // kill server
-app.get('/api/kill', function(req, res) {
+app.get('/api/stop', function(req, res) {
     console.info("\n┌─────────────────────────────┐");
     console.info(  "│ ESTET STUDIO APP -> STOPPED │");
     console.info(  "└─────────────────────────────┘\n");

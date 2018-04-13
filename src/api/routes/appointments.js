@@ -1,7 +1,8 @@
-var mongojs = require('mongojs');
-var db = require('../config').db;
+var mongojs     = require('mongojs');
+var db          = require('../config').db;
+var responseFn  = require('../utils/utils').handleResponse;
 
-var db_clients = mongojs(db + 'clients', ['appointments']);
+var db_clients  = mongojs(db + 'clients', ['appointments']);
 
 module.exports = {
     getAll: getAll,
@@ -14,21 +15,16 @@ module.exports = {
     delete: deleteOne
 };
 
+function getAll(req, res)                   { db_clients.appointments.find(responseFn(res)); };
+function getOne(req, res)                   { db_clients.appointments.findOne({ _id: mongojs.ObjectId(req.params.id) }, responseFn(res)); };
+function deleteOne(req, res)                { db_clients.appointments.remove({ _id: mongojs.ObjectId(req.params.id) }, responseFn(res)); };
+function getClientAppointments(req, res)    { db_clients.appointments.find({ "_clientId": req.params.id }, responseFn(res)); };
+
 function search(req, res) {
     db_clients.appointments.aggregate([
         { $match: { $text: { $search: req.params.query} } },
         { $sort: { score: { $meta: "textScore" } } }
-    ], function(err, doc) {
-        if (err) { console.log('Error: ', err); };
-        res.json(doc);
-    });
-};
-
-function getClientAppointments(req, res) {
-    db_clients.appointments.find({ "_clientId": req.params.id }, function(err, doc) {
-        if (err) { console.log('Error: ', err); };
-        res.json(doc);
-    });
+    ], responseFn(res));
 };
 
 function getAllByDate(req, res) {
@@ -38,10 +34,7 @@ function getAllByDate(req, res) {
     var dateMidnight = new Date(startDate);
     dateMidnight.setHours(23, 59, 59);
 
-    db_clients.appointments.find({date: {"$gte": startDate, "$lt": dateMidnight} }, function(err, doc) {
-        if (err) { console.log('Error: ', err); };
-        res.json(doc);
-    });
+    db_clients.appointments.find({date: {"$gte": startDate, "$lt": dateMidnight} }, responseFn(res));
 }
 
 function add(req, res) {
@@ -49,31 +42,7 @@ function add(req, res) {
     req.body.updatedOn = new Date();
     req.body.date = new Date(req.body.date);
 
-    db_clients.appointments.insert(req.body, function(err, doc) {
-        if (err) { console.log('Error: ', err); };
-        res.json(doc);
-    });
-};
-
-function getAll(req, res) {
-    db_clients.appointments.find(function(err, doc) {
-        if (err) { console.log('Error: ', err); };
-        res.json(doc);
-    });
-};
-
-function getOne(req, res) {
-    db_clients.appointments.findOne({ _id: mongojs.ObjectId(req.params.id) }, function(err, doc) {
-        if (err) { console.log('Error: ', err); };
-        res.json(doc);
-    });
-};
-
-function deleteOne(req, res) {
-    db_clients.appointments.remove({ _id: mongojs.ObjectId(req.params.id) }, function(err, doc) {
-        if (err) { console.log('Error: ', err); };
-        res.json(doc);
-    });
+    db_clients.appointments.insert(req.body, responseFn(res));
 };
 
 function update(req, res) {
@@ -86,8 +55,5 @@ function update(req, res) {
             $set: req.body
         },
         new: true
-    }, function(err, doc) {
-        if (err) { console.log('Error: ', err); };
-        res.json(doc);
-    });
+    }, responseFn(res));
 };

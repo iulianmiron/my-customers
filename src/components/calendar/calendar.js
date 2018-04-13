@@ -27,7 +27,7 @@
         ctrl.actions = {};
 
         ctrl.$onInit = function() {
-             
+
             ctrl.data.today = new Date();
             ctrl.data.selectedDate = setRouteDate(ctrl.transition.params('to'));
 
@@ -53,8 +53,12 @@
 
         function selectDate(date, modifier) {
             date = new Date(date);
-            date.setDate(date.getDate() + modifier);
-            $state.go('calendar', { date: moment(date).format('D-M-Y') });
+            if(moment().diff(date, 'days') === 0) {
+                $state.reload();
+            } else {
+                date.setDate(date.getDate() + modifier);
+                $state.go('calendar', { date: moment(date).format('D-M-Y') });
+            }
         }
 
         function getAppointmentData(appointments) {
@@ -115,6 +119,5 @@
                 toastr.success("Programare adaugata", "Succes");
             });
         }
-
     }
 })();
