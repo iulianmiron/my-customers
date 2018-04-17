@@ -27,9 +27,9 @@
             </md-menu>
         </md-card-header-text>
     </md-card-header>
-    <md-card-content class="overflow">
+    <md-card-content class="overflow" scroll-glue>
         <div ng-repeat="historyItem in $ctrl.data.history | orderBy: 'date' track by historyItem._id">
-            <md-card>
+            <md-card current-session="historyItem.date" session-color>
                 <md-card-header>
                     <md-card-header-text ng-click="showDetails = !showDetails">
                         <span class="md-title">Sedinta {{ $index + 1 }}</span>

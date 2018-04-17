@@ -3,6 +3,7 @@ var path = require('path');
 var app = express();
 var mongojs = require('mongojs');
 var bodyParser = require('body-parser');
+var logger = require('./api/utils/logging').logger;
 
 var PORT = require('./api/config').FE_PORT;
 var db = require('./api/config').db;
@@ -19,6 +20,7 @@ var roles           = require('./api/routes/roles');
 
 app.use(express.static(__dirname + '/'));
 app.use(bodyParser.json());
+app.use(logger);
 
 // CLIENTS collection
 app.get('/api/clients', clients.getAll);
