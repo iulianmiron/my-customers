@@ -11,6 +11,8 @@
 		var service = this;
 
 		service.getSelectedItems = getSelectedItems;
+		service.isToday = isToday;
+		service.isRouteDateToday = isRouteDateToday;
 
 		function getSelectedItems(allItems, selectedItems) {
             if(allItems && selectedItems && angular.isArray(selectedItems)) {
@@ -27,6 +29,14 @@
 				return selectedItems.indexOf(item._id) !== -1;
 			});
 		}
+
+		function isToday(date) {
+			return moment().isSame(date, 'day');
+		}  
+		
+        function isRouteDateToday(routeDate) {
+			return routeDate === moment().format('DD-MM-Y');
+        }
 	}
 
 })();

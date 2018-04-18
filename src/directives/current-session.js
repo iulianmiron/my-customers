@@ -11,7 +11,6 @@
             scope: { currentSession: '<' },
             link: function($scope, element, attributes) {
                 if($scope.currentSession && isToday($scope.currentSession)) {
-
                     var color = attributes.sessionColor || '#9c27b0';
                     element.css('border', color + ' 2px solid');
                 }

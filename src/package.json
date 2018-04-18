@@ -57,12 +57,9 @@
     "rotating-file-stream": "^1.3.6"
   },
   "devDependencies": {
-    "browser-sync": "^2.23.6",
     "gulp": "^3.9.1",
     "gulp-rev": "^8.1.1",
     "gulp-rev-append": "^0.1.8",
-    "openurl": "^1.1.1",
-    "webpack": "^3.11.0",
-    "webpack-dev-server": "^2.11.2"
+    "openurl": "^1.1.1"
   }
 }

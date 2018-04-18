@@ -8,19 +8,19 @@
                         Programari
                     </span>
 
-                    <md-button hide show-gt-sm ng-click="$ctrl.actions.selectDate($ctrl.data.today, 0)">
+                    <md-button hide show-gt-sm ng-click="$ctrl.actions.goToDate($ctrl.data.today, 0)">
                         Azi
                         <md-tooltip hide show-gt-sm>
                             {{ $ctrl.data.today | amDateFormat: 'dddd, Do MMMM YYYY' }}
                         </md-tooltip>
                     </md-button>
 
-                    <md-button hide show-gt-sm ng-click="$ctrl.actions.selectDate($ctrl.data.selectedDate, -1)" class="md-icon-button">
+                    <md-button hide show-gt-sm ng-click="$ctrl.actions.goToDate($ctrl.data.selectedDate, -1)" class="md-icon-button">
                         <md-icon>chevron_left</md-icon>
                         <md-tooltip>Ziua precedenta</md-tooltip>
                     </md-button>
 
-                    <md-button hide show-gt-sm ng-click="$ctrl.actions.selectDate($ctrl.data.selectedDate, 1)" class="md-icon-button">
+                    <md-button hide show-gt-sm ng-click="$ctrl.actions.goToDate($ctrl.data.selectedDate, 1)" class="md-icon-button">
                         <md-icon>chevron_right</md-icon>
                         <md-tooltip>Ziua urmatoare</md-tooltip>
                     </md-button>
@@ -29,7 +29,7 @@
                         ng-model="$ctrl.data.selectedDate" 
                         md-placeholder="Alege o data" 
                         md-open-on-focus
-                        ng-change="$ctrl.actions.selectDate($ctrl.data.selectedDate, 0)"
+                        ng-change="$ctrl.actions.goToDate($ctrl.data.selectedDate, 0)"
                         class="hide-input-container">
                     </md-datepicker>
 

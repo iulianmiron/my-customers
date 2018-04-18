@@ -14,7 +14,7 @@ fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory);
 var currentDay = moment().format('DD-MM-YYYY');
 
 // create a rotating write stream
-var accessLogStream = rfs('access-' + currentDay + '.log', 
+var accessLogStream = rfs('server-' + currentDay + '.log', 
     {
         interval: '1d', // rotate daily
         path: logDirectory

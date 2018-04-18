@@ -14,12 +14,12 @@
     CalendarController.$inject = [
         '$q', '$rootElement', '$mdDialog', '$state', 
         'StaffDataService', 'ServiceTypesDataService', 'AppointmentsDataService', 'ClientsDataService',
-        'toastr'
+        'toastr', 'UtilsService'
     ];
     function CalendarController(
         $q, $rootElement, $mdDialog, $state, 
         StaffDataService, ServiceTypesDataService, AppointmentsDataService, ClientsDataService,
-        toastr
+        toastr, UtilsService
     ) {
         var ctrl = this;
         ctrl.data = {};
@@ -32,7 +32,7 @@
             ctrl.data.selectedDate = setRouteDate(ctrl.transition.params('to'));
 
             ctrl.actions.addNewAppointment = addNewAppointment;
-            ctrl.actions.selectDate = selectDate;
+            ctrl.actions.goToDate = goToDate;
 
             $q.all([getAllStaff(), getAllServiceTypes(), getAppointmentsForDate(ctrl.data.selectedDate)]).then(function(data) {
                 ctrl.data.allStaff = data[0];
@@ -47,17 +47,18 @@
 
         function setRouteDate(dateParams) {
             return dateParams.date
-                ? new Date(moment(dateParams.date, "D-M-Y"))
+                ? new Date(moment(dateParams.date, "DD-MM-Y"))
                 : new Date();
         }
 
-        function selectDate(date, modifier) {
-            date = new Date(date);
-            if(moment().diff(date, 'days') === 0) {
+        function goToDate(selectedDate, modifier) {
+            selectedDate = new Date(selectedDate);
+            selectedDate.setDate(selectedDate.getDate() + modifier);
+
+            if(UtilsService.isToday(selectedDate) && UtilsService.isRouteDateToday(ctrl.transition.params('to').date)) {
                 $state.reload();
             } else {
-                date.setDate(date.getDate() + modifier);
-                $state.go('calendar', { date: moment(date).format('D-M-Y') });
+                $state.go('calendar', { date: moment(selectedDate).format('DD-MM-Y') });
             }
         }
 
