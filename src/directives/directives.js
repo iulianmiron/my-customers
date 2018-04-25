@@ -5,6 +5,7 @@
         .module('cm.directives', [
             'cm.directives.vipColor',
             'cm.directives.activateSpinner',
-            'cm.directives.currentSession'
+            'cm.directives.currentSession',
+            'cm.directives.buttonShrink'
         ]);
 })();
