@@ -10,7 +10,6 @@
         return {
             restrict: 'A',
             link: function (scope, element, attrs) {
-                debugger;
                 if(attrs.buttonShrink) {
                     var btnText = element.contents()[2].textContent;
                     var tooltip = angular.element('<md-tooltip hide-' + attrs.buttonShrink + '>'+ btnText +'</md-tooltip>');

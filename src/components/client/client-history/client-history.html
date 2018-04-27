@@ -4,6 +4,12 @@
         <md-card-header-text layout="row" layout-align="space-between center">
             <span class="md-headline">
                 Istoric client: {{ $ctrl.data.history.length || '0'}} sedinte
+                <md-button class="md-icon-button" 
+                    ng-click="$ctrl.actions.refreshHistory($event)"
+                    ng-if="$ctrl.data.clientId">
+                    <md-icon>refresh</md-icon>
+                    <md-tooltip>Refresh istoric</md-tooltip>
+                </md-button>
             </span>
             <md-menu md-position-mode="target-right target">
                 <md-button md-menu-origin ng-click="$mdMenu.open($event)" class="md-primary">

@@ -10,7 +10,8 @@
                 newClient: '<',
                 historyData: '<',
                 onAddHistoryItem: '&',
-                onEditHistoryItem: '&'
+                onEditHistoryItem: '&',
+                onRefreshHistory: '&'
             }
         });
 
@@ -25,16 +26,18 @@
             if(changes.newClient && changes.newClient.currentValue) {
                 ctrl.data.newClient = angular.copy(changes.newClient.currentValue);
             }
-            if (changes.historyData && changes.historyData.currentValue) {
+            if (changes.historyData && changes.historyData.currentValue) {                
                 ctrl.data.history = angular.copy(changes.historyData.currentValue);
                 angular.forEach(ctrl.data.history, function(iHistory) {
                     iHistory.date = new Date(iHistory.date);
                 });
+                ctrl.data.clientId = ctrl.data.history.length && ctrl.data.history[0]._clientId;
             }
         }
         ctrl.$onInit = function() {
             ctrl.actions.addNewHistoryItem = addNewHistoryItem;
             ctrl.actions.editHistoryItem = editHistoryItem;
+            ctrl.actions.refreshHistory = refreshHistory;
 
         }
 
@@ -44,6 +47,10 @@
 
         function editHistoryItem(event, historyItem) {
             ctrl.onEditHistoryItem({ $event: { historyItem: historyItem, event: event } });
+        }
+
+        function refreshHistory(event) {
+            ctrl.onRefreshHistory({ $event: { clientId: ctrl.data.clientId } });
         }
     }
 })();
