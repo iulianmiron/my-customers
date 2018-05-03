@@ -34,6 +34,26 @@
         ctrl.actions.cancel = cancel;
         ctrl.actions.save = save;
 
+        ctrl.actions.updateStartTime = updateStartTime;
+        ctrl.actions.updateEndTime = updateEndTime;
+
+        function updateStartTime(event) {
+            if(event.time) {
+                ctrl.data.appointment.startTime = event.time;
+                ctrl.data.appointment.endTime = new Date(moment(event.time).add(1, 'h'));
+            }
+        }
+
+        function updateEndTime(event) {
+            if(event.time) {
+                ctrl.data.appointment.endTime = event.time;
+            }
+        }
+
+        ctrl.actions.showData = function() {
+            console.log(ctrl.data.appointment);
+        }
+
         function removeSelectedClient() {
             ctrl.data.appointment._clientId = null;
         }

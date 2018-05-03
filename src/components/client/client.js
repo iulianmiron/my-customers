@@ -97,6 +97,7 @@
 
         function refreshHistory(event) {
             getClientHistory(event.clientId);
+            toastr.success('Refresh istoric client', 'Succes');
         }
 
         function addClient() {

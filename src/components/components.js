@@ -6,6 +6,7 @@
         'cm.components.common.appSidebar',
         'cm.components.common.appLoading',
         'cm.components.common.clientSearch',
+        'cm.components.common.timePicker',
         'cm.components.common.confirmDialog',
 
         'cm.components.calendar',

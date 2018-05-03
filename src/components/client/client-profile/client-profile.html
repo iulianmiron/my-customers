@@ -29,6 +29,14 @@
                 <md-tooltip hide show-gt-sm md-direction="right">Copiaza</md-tooltip>
             </b>
         </p>
+        <p ng-if="$ctrl.data.client.altPhoneNumber">
+            Telefon alternativ: 
+            <b ng-click="$ctrl.actions.copyToClipboard($ctrl.data.client.altPhoneNumber)">
+                {{ $ctrl.data.client.altPhoneNumber }}
+                <md-tooltip hide show-gt-sm md-direction="right">Copiaza</md-tooltip>
+            </b>
+            ({{ $ctrl.data.client.altPhoneNumberRelation }})
+        </p>
         <p>
             e-mail: 
             <b ng-click="$ctrl.actions.copyToClipboard($ctrl.data.client.email)">

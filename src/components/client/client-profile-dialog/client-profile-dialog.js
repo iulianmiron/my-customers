@@ -22,6 +22,7 @@
         
         ctrl.actions.setVIPData = setVIPData;
         ctrl.actions.calculateClientAge = calculateClientAge;
+        ctrl.actions.updateClientRelation = updateClientRelation;
         ctrl.actions.checkIfDuplicate = checkIfDuplicate;
         ctrl.actions.cancel = cancel;
         ctrl.actions.save = save;      
@@ -32,6 +33,10 @@
 
         function setVIPData(client) {
             client.vip = client.isVip ? client.vip : null;
+        }
+
+        function updateClientRelation(altPhoneNumber) {
+            ctrl.data.client.altPhoneNumberRelation = altPhoneNumber ? ctrl.data.client.altPhoneNumberRelation : null;
         }
 
         function checkIfDuplicate(fieldName, fieldValue) {

@@ -26,21 +26,39 @@
                 <div layout="row" layout-align="start center" ng-show="$ctrl.data.appointment._clientId">
                     <span>
                         Client: 
-                    
-                    <md-button ng-click="$ctrl.actions.removeSelectedClient()">
-                        {{ $ctrl.data.selectedClient.firstName }} {{ $ctrl.data.selectedClient.lastName }} 
-                        <md-icon>clear</md-icon>
-                    </md-button>
-                    <md-icon ng-if="$ctrl.data.selectedClient._preferredStaffId">
-                        favorite
-                        <md-tooltip>
-                            Prefera pe: {{ $ctrl.data.preferredStaff.firstName }} {{ $ctrl.data.preferredStaff.lastName }}
-                        </md-tooltip>
-                    </md-icon>
-                </span>
-                    
+                        <md-button ng-click="$ctrl.actions.removeSelectedClient()">
+                            {{ $ctrl.data.selectedClient.firstName }} {{ $ctrl.data.selectedClient.lastName }} 
+                            <md-icon>clear</md-icon>
+                        </md-button>
+                        <md-icon ng-if="$ctrl.data.selectedClient._preferredStaffId">
+                            favorite
+                            <md-tooltip>
+                                Prefera pe: {{ $ctrl.data.preferredStaff.firstName }} {{ $ctrl.data.preferredStaff.lastName }}
+                            </md-tooltip>
+                        </md-icon>
+                    </span>
+                </div>
+
+                <div layout="row" layout-align="start center">
+
+                    <time-picker
+                        placeholder="Start time"
+                        selected-time="$ctrl.data.appointment.startTime"
+                        on-update="$ctrl.actions.updateStartTime($event)">
+                    </time-picker>
+
+                    <span flex-offset="5">la</span>
+
+                    <time-picker flex-offset="5"
+                        placeholder="End time"
+                        selected-time="$ctrl.data.appointment.endTime"
+                        on-update="$ctrl.actions.updateEndTime($event)">
+                    </time-picker>
 
                 </div>
+                <md-button ng-click="$ctrl.actions.showData()">click</md-button>
+
+
 
                 <div layout="row" layout-align="start center">
                     <span>Data:</span>
@@ -54,12 +72,12 @@
                     <!-- START TIME -->
                     <md-time-picker
                         ng-model="$ctrl.data.appointment.startTime" 
-                        message="$ctrl.data.timePickerMessages" 
+                        message="$ctrl.data.timePickerMessages"
                         read-only="false" 
                         mandatory="true" 
                         no-meridiem>
                     </md-time-picker>
-                    <span>–</span>
+                    <span>&nbsp;–</span>
                     <!-- END TIME -->
                     <md-time-picker
                         ng-model="$ctrl.data.appointment.endTime" 
