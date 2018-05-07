@@ -1,70 +1,45 @@
-var mongojs = require('mongojs');
-var db = require('../config').db;
+var mongojs     = require('mongojs');
+var db          = require('../config').db;
+var responseFn  = require('../utils/utils').handleResponse;
 
-var db_staff = mongojs(db + 'staff', ['staff']);
+var db_staff    = mongojs(db + 'staff', ['staff']);
 
 module.exports = {
     getAll: getAll,
+    getOne: getOne,
     search: search,
     add: add,
     update: update,
     delete: deleteOne
 };
 
+function getAll(req, res)       { db_staff.staff.find(responseFn(res)); };
+function getOne(req, res)       { db_staff.staff.findOne({ _id: mongojs.ObjectId(req.params.id) }, responseFn(res)); };
+function deleteOne(req, res)    { db_staff.staff.remove({ _id: mongojs.ObjectId(req.params.id) }, responseFn(res)); };
+
 function search(req, res) {
     db_staff.staff.aggregate([
         { $match: { $text: { $search: req.params.query} } },
         { $sort: { score: { $meta: "textScore" } } }
-    ], function(err, doc) {
-        if (err) { console.log('Error: ', err); };
-        res.json(doc);
-    });
+    ], responseFn(res));
 };
 
 function add(req, res) {
     req.body.createdOn = new Date();
     req.body.updatedOn = new Date();
 
-    db_staff.staff.insert(req.body, function(err, doc) {
-        if (err) { console.log('Error: ', err); };
-        res.json(doc);
-    });
-};
-
-function getAll(req, res) {
-    db_staff.staff.find(function(err, doc) {
-        if (err) { console.log('Error: ', err); };
-        res.json(doc);
-    });
-};
-
-function deleteOne(req, res) {
-    db_staff.staff.remove({ _id: mongojs.ObjectId(req.params.id) }, function(err, doc) {
-        if (err) { console.log('Error: ', err); };
-        res.json(doc);
-    });
+    db_staff.staff.insert(req.body, responseFn(res));
 };
 
 function update(req, res) {
-    var updatedOn = new Date();
+    delete req.body._id;
+	req.body.updatedOn = new Date();
 
     db_staff.staff.findAndModify({
         query: { _id: mongojs.ObjectId(req.params.id) },
         update: {
-            $set: {
-                firstName: req.body.firstName,
-                lastName: req.body.lastName,
-                dateOfBirth: req.body.dateOfBirth,
-                phoneNumber: req.body.phoneNumber,
-                description: req.body.description,
-                email: req.body.email,
-                updatedOn: updatedOn,
-                createdOn: req.body.createdOn
-            }
+            $set: req.body
         },
         new: true
-    }, function(err, doc) {
-        if (err) { console.log('Error: ', err); };
-        res.json(doc);
-    });
+    }, responseFn(res));
 };

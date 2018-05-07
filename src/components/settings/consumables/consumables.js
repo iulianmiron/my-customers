@@ -28,13 +28,13 @@
         }
 
         function getAllConsumables() {
-            ConsumablesDataService.getAllConsumables().then(function(rConsumables) {
+            ConsumablesDataService.getAll().then(function(rConsumables) {
                 ctrl.data.allConsumables = rConsumables;
             });
         }
 
         function saveNewConsumable(newConsumable) {
-            ConsumablesDataService.addConsumable(newConsumable).then(function(rSuccess) {
+            ConsumablesDataService.addNew(newConsumable).then(function(rSuccess) {
                 toastr.success("Consumabilul adaugat cu succes");
                 return rSuccess.data;
             });
@@ -42,7 +42,7 @@
         }
         
         function saveEditedConsumable(consumable) {
-            ConsumablesDataService.updateConsumable(consumable).then(function(rSuccess) {
+            ConsumablesDataService.updateOne(consumable).then(function(rSuccess) {
                 toastr.success("Consumabilul editat cu succes");
                 return rSuccess.data;
             });
@@ -50,7 +50,7 @@
         }
 
         function deleteConsumable(consumableId) {
-            ConsumablesDataService.deleteConsumable(consumableId).then(function(rSuccess) {
+            ConsumablesDataService.deleteOne(consumableId).then(function(rSuccess) {
                 toastr.success("Consumabilul sters cu succes");
                 return rSuccess.data;
             });

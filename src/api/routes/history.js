@@ -1,7 +1,8 @@
-var mongojs = require('mongojs');
-var db = require('../config').db;
+var mongojs     = require('mongojs');
+var db          = require('../config').db;
+var responseFn  = require('../utils/utils').handleResponse;
 
-var db_clients = mongojs(db + 'clients', ['history']);
+var db_clients  = mongojs(db + 'clients', ['history']);
 
 module.exports = {
     getAll: getAll,
@@ -11,60 +12,27 @@ module.exports = {
     delete: deleteOne
 };
 
-function getAll(req, res) {
-    db_clients.history.find(function(err, doc) {
-        if (err) { console.log('Error: ', err); };
-        res.json(doc);
-    });
-};
-
-function getClientHistory(req, res) {
-    db_clients.history.find({ "_clientId": req.params.id }, function(err, doc) {
-        if (err) { console.log('Error: ', err); };
-        res.json(doc);
-    });
-};
+function getAll(req, res)           { db_clients.history.find(responseFn(res)); };
+function getClientHistory(req, res) { db_clients.history.find({ "_clientId": req.params.id }, responseFn(res)); };
+function deleteOne(req, res)        { db_clients.history.remove({ _id: mongojs.ObjectId(req.params.id) }, responseFn(res)); };
 
 function add(req, res) {
     req.body.createdOn = new Date();
     req.body.updatedOn = new Date();
 
-    db_clients.history.insert(req.body, function(err, doc) {
-        if (err) { console.log('Error: ', err); };
-        res.json(doc);
-    });
+    db_clients.history.insert(req.body, responseFn(res));
 };
 
 function update(req, res) {
-    var updatedOn = new Date();
+    delete req.body._id;
+	req.body.updatedOn = new Date();
 
     db_clients.history.findAndModify({
         query: { _id: mongojs.ObjectId(req.params.id) },
         update: {
-            $set: {
-                date: req.body.date,
-                servicesPerformedBy: req.body.servicesPerformedBy,
-                services: req.body.services,
-                interval: req.body.interval,
-                homeProducts: req.body.homeProducts,
-                observations: req.body.observations,
-                photosTaken: req.body.photosTaken,
-                videosTaken: req.body.videosTaken,
-                _clientId: req.body._clientId,
-                updatedOn: updatedOn,
-                createdOn: req.body.createdOn
-            }
+            $set: req.body
         },
         new: true
-    }, function(err, doc) {
-        if (err) { console.log('Error: ', err); };
-        res.json(doc);
-    });
+    }, responseFn(res));
 };
 
-function deleteOne(req, res) {
-    db_clients.history.remove({ _id: mongojs.ObjectId(req.params.id) }, function(err, doc) {
-        if (err) { console.log('Error: ', err); };
-        res.json(doc);
-    });
-};

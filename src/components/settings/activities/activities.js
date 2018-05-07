@@ -28,7 +28,7 @@
 		}
 
 		function getAllConsumables() {
-            ConsumablesDataService.getAllConsumables().then(function(rConsumables) {
+            ConsumablesDataService.getAll().then(function(rConsumables) {
                 ctrl.data.allConsumables = rConsumables;
             });
         }

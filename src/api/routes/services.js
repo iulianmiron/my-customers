@@ -1,5 +1,6 @@
-var mongojs = require('mongojs');
-var db = require('../config').db;
+var mongojs     = require('mongojs');
+var db          = require('../config').db;
+var responseFn  = require('../utils/utils').handleResponse;
 
 var db_services = mongojs(db + 'services', ['services']);
 
@@ -10,49 +11,25 @@ module.exports = {
     delete: deleteOne
 };
 
-function getAll(req, res) {
-    db_services.services.find(function(err, doc) {
-        if (err) { console.log('Error: ', err); };
-        res.json(doc);
-    });
-};
+function getAll(req, res)       { db_services.services.find(responseFn(res)); };
+function deleteOne(req, res)    { db_services.services.remove({ _id: mongojs.ObjectId(req.params.id) }, responseFn(res)); };
 
 function add(req, res) {
     req.body.createdOn = new Date();
     req.body.updatedOn = new Date();
 
-    db_services.services.insert(req.body, function(err, doc) {
-        if (err) { console.log('Error: ', err); };
-        res.json(doc);
-    });
+    db_services.services.insert(req.body, responseFn(res));
 };
 
 function update(req, res) {
-    var updatedOn = new Date();
+    delete req.body._id;
+	req.body.updatedOn = new Date();
 
     db_services.services.findAndModify({
         query: { _id: mongojs.ObjectId(req.params.id) },
         update: {
-            $set: {
-                name: req.body.name,
-                price: req.body.price,
-                duration: req.body.duration,
-                _serviceTypeId: req.body._serviceTypeId,
-                isProtected: req.body.isProtected,
-                updatedOn: updatedOn,
-                createdOn: req.body.createdOn
-            }
+            $set: req.body
         },
         new: true
-    }, function(err, doc) {
-        if (err) { console.log('Error: ', err); };
-        res.json(doc);
-    });
-};
-
-function deleteOne(req, res) {
-    db_services.services.remove({ _id: mongojs.ObjectId(req.params.id) }, function(err, doc) {
-        if (err) { console.log('Error: ', err); };
-        res.json(doc);
-    });
+    }, responseFn(res));
 };

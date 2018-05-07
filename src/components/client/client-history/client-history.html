@@ -4,9 +4,15 @@
         <md-card-header-text layout="row" layout-align="space-between center">
             <span class="md-headline">
                 Istoric client: {{ $ctrl.data.history.length || '0'}} sedinte
+                <md-button class="md-icon-button" 
+                    ng-click="$ctrl.actions.refreshHistory($event)"
+                    ng-if="$ctrl.data.clientId">
+                    <md-icon>refresh</md-icon>
+                    <md-tooltip hide show-gt-sm>Refresh istoric</md-tooltip>
+                </md-button>
             </span>
             <md-menu md-position-mode="target-right target">
-                <md-button md-menu-origin ng-click="$mdMenu.open($event)" class="md-primary">
+                <md-button md-menu-origin ng-click="$mdMenu.open($event)" class="md-primary" button-shrink="gt-sm">
                     <md-icon>add_circle</md-icon>
                     Adauga
                 </md-button>
@@ -27,16 +33,21 @@
             </md-menu>
         </md-card-header-text>
     </md-card-header>
-    <md-card-content class="overflow">
+    <md-card-content class="overflow" scroll-glue>
         <div ng-repeat="historyItem in $ctrl.data.history | orderBy: 'date' track by historyItem._id">
-            <md-card ng-click="$ctrl.actions.editHistoryItem($event, historyItem)">
+            <md-card current-session="historyItem.date" session-color>
                 <md-card-header>
-                    <md-card-header-text>
+                    <md-card-header-text ng-click="showDetails = !showDetails">
                         <span class="md-title">Sedinta {{ $index + 1 }}</span>
-                        <span class="md-subhead">Data: {{ historyItem.date | amDateFormat:'Do MMMM YYYY, h:mm a' }}</span>
+                        <span class="md-subhead">Data: {{ historyItem.date | amDateFormat:'Do/MM/YYYY, h:mm a' }}</span>
                     </md-card-header-text>
+                    <md-button ng-click="$ctrl.actions.editHistoryItem($event, historyItem)" button-shrink="gt-sm">
+                        <md-icon>edit</md-icon>
+                        Editeaza
+                    </md-button>
                 </md-card-header>
-                <md-card-content>
+                <md-divider></md-divider>
+                <md-card-content ng-show="showDetails || $last" class="fade">
                     <div>
                         <div>Servicii prestate:</div>
                         <ul>

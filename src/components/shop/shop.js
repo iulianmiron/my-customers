@@ -27,7 +27,7 @@
         }
 
         function getAllProducts() {
-            ProductsDataService.getAllProducts().then(function(rProducts) {
+            ProductsDataService.getAll().then(function(rProducts) {
                 ctrl.data.allProducts = rProducts;
             });
         }

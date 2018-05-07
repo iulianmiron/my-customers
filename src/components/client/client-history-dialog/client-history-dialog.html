@@ -12,7 +12,7 @@
     <md-dialog-content>
         <div class="md-dialog-content">
             <form name="$ctrl.data.editHistoryItemForm">
-                <div layout="row" layout-align="start center">
+                <div layout="row" layout-align="start start" layout-wrap>
                     <md-input-container>
                         <label>Data sedintei</label>
                         <md-datepicker name="date" required 
@@ -25,8 +25,17 @@
                             <div ng-message="maxdate">Data nu poate fi mai mare decat data curenta</div>
                         </div>
                     </md-input-container>
-                    <md-input-container>
-                        <label>Interval in saptamani</label>
+
+                    <md-time-picker
+                        ng-model="$ctrl.data.historyItem.date" 
+                        message="$ctrl.data.timePickerMessages" 
+                        read-only="false" 
+                        mandatory="true" 
+                        no-meridiem>
+                    </md-time-picker>
+
+                    <md-input-container flex="50">
+                        <label>Interval (sapt.)</label>
                         <md-icon>timelapse</md-icon>
                         <input name="interval" ng-model="$ctrl.data.historyItem.interval" type="number" step="1">
                     </md-input-container>
@@ -47,7 +56,7 @@
                         </div>
                     </md-input-container>
                 </div>
-    
+
                 <div layout="row" layout-align="start center">
                     <md-input-container flex>
                         <label>Alege Servicii</label>
@@ -82,13 +91,13 @@
                         </li>
                     </ul>
                 </div>
-    
+
                 <md-input-container class="md-block">
                     <label>Produse acasa</label>
                     <textarea name="homeProducts" ng-model="$ctrl.data.historyItem.homeProducts">
                     </textarea>
                 </md-input-container>
-    
+
                 <md-input-container class="md-block">
                     <label>Observatii</label>
                     <textarea name="observations" ng-model="$ctrl.data.historyItem.observations">

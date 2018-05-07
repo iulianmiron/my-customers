@@ -1,5 +1,6 @@
-var mongojs = require('mongojs');
-var db = require('../config').db;
+var mongojs     = require('mongojs');
+var db          = require('../config').db;
+var responseFn  = require('../utils/utils').handleResponse;
 
 var db_products = mongojs(db + 'products', ['products']);
 
@@ -10,54 +11,25 @@ module.exports = {
     delete: deleteOne
 };
 
-function getAll(req, res) {
-    db_products.products.find(function(err, doc) {
-        if (err) { console.log('Error: ', err); };
-        res.json(doc);
-    });
-};
+function getAll(req, res)       { db_products.products.find(responseFn(res)); };
+function deleteOne(req, res)    { db_products.products.remove({ _id: mongojs.ObjectId(req.params.id) }, responseFn(res)); };
 
 function add(req, res) {
     req.body.createdOn = new Date();
     req.body.updatedOn = new Date();
 
-    db_products.products.insert(req.body, function(err, doc) {
-        if (err) { console.log('Error: ', err); };
-        res.json(doc);
-    });
-};
-
-function deleteOne(req, res) {
-    db_products.products.remove({ _id: mongojs.ObjectId(req.params.id) }, function(err, doc) {
-        if (err) { console.log('Error: ', err); };
-        res.json(doc);
-    });
+    db_products.products.insert(req.body, responseFn(res));
 };
 
 function update(req, res) {
-    var updatedOn = new Date();
+    delete req.body._id;
+	req.body.updatedOn = new Date();
 
     db_products.products.findAndModify({
         query: { _id: mongojs.ObjectId(req.params.id) },
         update: {
-            $set: {
-                codeCashRegister: req.body.codeCashRegister,
-                code: req.body.code,
-                manufacturer: req.body.manufacturer,
-                name: req.body.name,
-                range: req.body.range,
-                description: req.body.description,
-                volume: req.body.volume,
-                stock: req.body.stock,
-                priceInitial: req.body.priceInitial,
-                priceToSell: req.body.priceToSell,
-                updatedOn: updatedOn,
-                createdOn: req.body.createdOn
-            }
+            $set: req.body
         },
         new: true
-    }, function(err, doc) {
-        if (err) { console.log('Error: ', err); };
-        res.json(doc);
-    });
+    }, responseFn(res));
 };

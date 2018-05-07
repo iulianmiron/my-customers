@@ -12,8 +12,10 @@
             'toastr',
             'cfp.hotkeys',
             'angular-clipboard',
+            'md.time.picker',
+            'ngScrollGlue',
 
-            'cm.dataservices',
+            'cm.dataservice',
 
             'cm.constants',
             'cm.directives',

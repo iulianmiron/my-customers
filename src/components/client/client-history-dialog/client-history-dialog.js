@@ -26,8 +26,14 @@
         ctrl.actions.save = save;
         ctrl.actions.changeSelectedServicesText = changeSelectedServicesText;
 
+        ctrl.data.timePickerMessages = {
+            hour: 'Hour is required',
+            minute: 'Minute is required',
+            meridiem: 'Meridiem is required'
+        };
+
         $element.find('input').on('keydown', function(ev) { ev.stopPropagation(); });
-       
+
         function cancel() {
             $mdDialog.cancel();
         };

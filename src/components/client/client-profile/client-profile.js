@@ -9,11 +9,12 @@
             bindings: {
                 newClient: '<',
                 clientData: '<',
+                preferredStaff: '<',
                 onEditClient: '&',
             }
         });
-    ClientProfileController.$inject = ['$state', '$log', '$mdDialog', 'toastr', 'clipboard', 'CLIENT_VIP_LEVELS', 'CLIENT_VIP_TYPES', 'ClientsDataService'];
-    function ClientProfileController($state, $log, $mdDialog, toastr, clipboard, CLIENT_VIP_LEVELS, CLIENT_VIP_TYPES, ClientsDataService) {
+    ClientProfileController.$inject = ['toastr', 'clipboard', 'CLIENT_VIP_LEVELS', 'CLIENT_VIP_TYPES'];
+    function ClientProfileController(toastr, clipboard, CLIENT_VIP_LEVELS, CLIENT_VIP_TYPES) {
         var ctrl = this;
 
         ctrl.data = {};
@@ -28,6 +29,9 @@
             }
             if (changes.newClient && changes.newClient.currentValue) {
                 ctrl.data.newClient = angular.copy(changes.newClient.currentValue);
+            }
+            if (changes.preferredStaff && changes.preferredStaff.currentValue) {
+                ctrl.data.preferredStaff = angular.copy(changes.preferredStaff.currentValue);
             }
         }
         ctrl.$onInit = function() {

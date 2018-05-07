@@ -6,6 +6,7 @@
         .constant('NO_PICTURE', 'img/no-picture.png')
         .constant('SIDEBAR_MENU_ITEMS', [
             { icon: 'search', label: 'Cauta Clienti', url: 'home'}, 
+            // { icon: 'today', label: 'Programari', url: 'calendar'}, 
             { icon: 'store', label: 'Shop', url: 'shop'}, 
             { icon: 'settings', label: 'Settings', url: 'services'},
             { icon: 'account_balance', label: 'Plata', url: 'bankAccount'}

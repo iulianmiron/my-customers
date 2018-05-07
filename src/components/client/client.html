@@ -1,8 +1,9 @@
-<div layout="column" layout-gt-sm="row" layout-align-gt-xs="start stretch" class="md-padding" ng-hide="$ctrl.data.newClient">
+<div layout="column" layout-gt-sm="row" layout-align-gt-xs="start stretch" ng-hide="$ctrl.data.newClient">
     <div flex>
         <client-profile 
             new-client="$ctrl.data.newClient" 
             client-data="$ctrl.data.client" 
+            preferred-staff="$ctrl.data.preferredStaff"
             on-edit-client="$ctrl.actions.editClient($event)">
         </client-profile>
     </div>
@@ -11,7 +12,8 @@
             new-client="$ctrl.data.newClient"
             history-data="$ctrl.data.history" 
             on-add-history-item="$ctrl.actions.addHistoryItem($event)" 
-            on-edit-history-item="$ctrl.actions.editHistoryItem($event)">
+            on-edit-history-item="$ctrl.actions.editHistoryItem($event)"
+            on-refresh-history="$ctrl.actions.refreshHistory($event)">
         </client-history>
     </div>
 </div>

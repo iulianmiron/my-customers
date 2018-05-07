@@ -12,13 +12,14 @@
         });
     ClientController.$inject = [
         '$mdToast', '$q', '$state', '$log', '$mdDialog', '$rootElement', 
-        'ClientsDataService', 'HistoryDataService', 'ServicesDataService', 'ServiceTypesDataService', 
-        'CLIENT_VIP_LEVELS', 'CLIENT_VIP_TYPES',
+        'ClientsDataService', 'HistoryDataService', 'ServicesDataService', 'ServiceTypesDataService', 'StaffDataService',
+        'CLIENT_VIP_LEVELS', 'CLIENT_VIP_TYPES', 'UtilsService',
         'toastr'
     ];
     function ClientController(
         $mdToast, $q, $state, $log, $mdDialog, $rootElement, 
-        ClientsDataService, HistoryDataService, ServicesDataService, ServiceTypesDataService, CLIENT_VIP_LEVELS, CLIENT_VIP_TYPES, 
+        ClientsDataService, HistoryDataService, ServicesDataService, ServiceTypesDataService, StaffDataService,
+        CLIENT_VIP_LEVELS, CLIENT_VIP_TYPES, UtilsService,
         toastr
     ) {
         var ctrl = this;
@@ -30,15 +31,19 @@
             ctrl.actions = {};
 
             ctrl.data.clientId = ctrl.transition.params("to").id;
-            ctrl.data.previousPage = ctrl.transition.from().name;
             ctrl.data.newClient = ctrl.data.clientId === '0' ? true : false;
-
             ctrl.data.clientVip = {
                 levels: CLIENT_VIP_LEVELS,
                 types: CLIENT_VIP_TYPES
             };
-            
+
+            ctrl.data.previousPage =  {
+                name: ctrl.transition.from().name || 'home',
+                paramName: Object.keys(ctrl.transition.params('from'))[1] || null,
+                paramValue: ctrl.transition.params('from')[Object.keys(ctrl.transition.params('from'))[1]] || null
+            };
             ctrl.actions.getClientProfile   = getClientProfile;
+            ctrl.actions.refreshHistory     = refreshHistory;
             ctrl.actions.addClient          = addClient;
             ctrl.actions.editClient         = editClient;
 
@@ -47,42 +52,60 @@
 
             $q.all([
                 getAllServices(), 
-                getAllServiceTypes()
+                getAllServiceTypes(),
+                getAllStaff()
             ]).then(function(data) {
                 ctrl.data.allServices = data[0];
                 ctrl.data.allServiceTypes = data[1];
+                ctrl.data.allStaff = data[2];
             });
 
             if (ctrl.data.clientId !== '0') {
                 $q.all([
                     getClientProfile(ctrl.data.clientId), 
                     getClientHistory(ctrl.data.clientId)
-                ]).then(function() {});
+                ]).then(function(data) {});
             } else {
                 addClient();
             }     
         }
         
-        function getAllServices()       { return ServicesDataService.getAllServices(); }
-        function getAllServiceTypes()   { return ServiceTypesDataService.getAllServiceTypes(); }
+        function getAllServices()       { return ServicesDataService.getAll(); }
+        function getAllServiceTypes()   { return ServiceTypesDataService.getAll(); }
+        function getAllStaff()          { return StaffDataService.getAll(); }
 
         function getClientProfile(clientId) { 
-            ClientsDataService.getClient(clientId).then(function(rClient) {
-                ctrl.data.client = rClient;
+            ClientsDataService.getOne(clientId).then(function(rClient) {
+                ctrl.data.client = rClient;  
+                if(ctrl.data.client._preferredStaffId) {
+                    getSelectedStaff(ctrl.data.client._preferredStaffId);
+                } 
             }); 
         }
 
         function getClientHistory(clientId) { 
-            HistoryDataService.getClientHistory(clientId).then(function(rHistory) {
+            HistoryDataService.getAllById(clientId).then(function(rHistory) {
                 ctrl.data.history = rHistory;
             }); 
+        }
+
+        function getSelectedStaff(selectedStaffId) {
+            StaffDataService.getOne(selectedStaffId).then(function(rPreferredStaff) {
+                ctrl.data.preferredStaff = rPreferredStaff;
+            });
+        }
+
+        function refreshHistory(event) {
+            getClientHistory(event.clientId);
+            toastr.success('Sedinte gasite: ' + ctrl.data.history.length, 'Succes');
         }
 
         function addClient() {
             var dialogData = {
                 client: null,
                 title: 'Adaugati client',
-                clientVip: ctrl.data.clientVip
+                clientVip: ctrl.data.clientVip,
+                staff: ctrl.data.allStaff
             };
             showClientProfileDialog(null, dialogData, addNewClient);
         }
@@ -91,20 +114,21 @@
             var dialogData = {
                 client: event.client ? angular.copy(event.client) : null,
                 title: 'Editati client',
-                clientVip: ctrl.data.clientVip
+                clientVip: ctrl.data.clientVip,
+                staff: ctrl.data.allStaff
             };
             showClientProfileDialog(event.event, dialogData, updateClient);
         }
 
         function addNewClient(client) {
-            ClientsDataService.addClient(client).then(function(rClientAdded) {
+            ClientsDataService.addNew(client).then(function(rClientAdded) {
                 toastr.success("Client adaugat", "Succes");
                 $state.go('client', { id: rClientAdded._id });
             });
         }
 
         function updateClient(client) {
-            ClientsDataService.updateClient(client).then(function(rSuccess) {
+            ClientsDataService.updateOne(client).then(function(rSuccess) {
                 toastr.success("Client editat", "Succes");
                 getClientProfile(client._id);
             });
@@ -126,7 +150,7 @@
                 cb(client);
             }, function(client) {
                 if(!client || !client._id) {
-                    $state.go('home');
+                    $state.go(ctrl.data.previousPage.name, {[ctrl.data.previousPage.paramName]: ctrl.data.previousPage.paramValue});
                 }
             });
         }
@@ -159,14 +183,14 @@
         }
 
         function saveNewHistoryItem(historyItem) {
-            HistoryDataService.addHistoryItem(historyItem).then(function(rSuccess) {
+            HistoryDataService.addNew(historyItem).then(function(rSuccess) {
                 toastr.success("Sedinta adaugata", "Succes");
                 getClientHistory(historyItem._clientId);
             });
         }
 
         function saveEditedHistoryItem(historyItem) {
-            HistoryDataService.editHistoryItem(historyItem).then(function(rSuccess) {
+            HistoryDataService.updateOne(historyItem).then(function(rSuccess) {
                 toastr.success("Sedinta editata", "Succes");
                 getClientHistory(historyItem._clientId);
             });

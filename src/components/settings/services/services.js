@@ -43,11 +43,11 @@
         }
 
         function getAllServices() {
-            return ServicesDataService.getAllServices();
+            return ServicesDataService.getAll();
         }
 
         function addNewService(newService) {
-            ServicesDataService.addService(newService).then(function(rSuccess) {
+            ServicesDataService.addNew(newService).then(function(rSuccess) {
                 toastr.success("Serviciul adaugat cu succes");
                 return rSuccess.data;
             });
@@ -55,7 +55,7 @@
         }
 
         function saveEditedService(service) {
-            ServicesDataService.updateService(service).then(function(rSuccess) {
+            ServicesDataService.updateOne(service).then(function(rSuccess) {
                 toastr.success("Serviciul editat cu succes");
                 return rSuccess.data;
             });
@@ -63,7 +63,7 @@
         }
 
         function deleteService(serviceId) {
-            ServicesDataService.deleteService(serviceId).then(function(rSuccess) {
+            ServicesDataService.deleteOne(serviceId).then(function(rSuccess) {
                 toastr.success("Serviciul sters cu succes");
                 return rSuccess.data;
             });
@@ -112,11 +112,11 @@
 
 /////////////////// service types ///////////////////
         function getAllServiceTypes() {
-            return ServiceTypesDataService.getAllServiceTypes();
+            return ServiceTypesDataService.getAll();
         }
 
         function addNewServiceType(serviceType) {
-            ServiceTypesDataService.addServiceType(serviceType).then(function(rSuccess) {
+            ServiceTypesDataService.addNew(serviceType).then(function(rSuccess) {
                 toastr.success("Tip de serviciu nou adaugat cu succes");
                 return rSuccess.data;
             });
@@ -124,7 +124,7 @@
         }
 
         function saveEditedServiceType(serviceType) {
-            ServiceTypesDataService.updateServiceType(serviceType).then(function(rSuccess) {
+            ServiceTypesDataService.updateOne(serviceType).then(function(rSuccess) {
                 toastr.success("Tipul de serviciu editat cu succes");
                 return rSuccess.data;
             });
@@ -132,7 +132,7 @@
         }
 
         function deleteServiceType(serviceTypeId) {
-            ServiceTypesDataService.deleteServiceType(serviceTypeId).then(function(rSuccess) {
+            ServiceTypesDataService.deleteOne(serviceTypeId).then(function(rSuccess) {
                 toastr.success("Tipul de serviciu a fost sters cu succes");
                 return rSuccess.data;
             });
