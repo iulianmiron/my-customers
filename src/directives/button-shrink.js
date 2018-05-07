@@ -12,7 +12,7 @@
             link: function (scope, element, attrs) {
                 if(attrs.buttonShrink) {
                     var btnText = element.contents()[2].textContent;
-                    var tooltip = angular.element('<md-tooltip hide-' + attrs.buttonShrink + '>'+ btnText +'</md-tooltip>');
+                    var tooltip = angular.element('<md-tooltip hide show-gt-sm>'+ btnText +'</md-tooltip>');
                     element.append(tooltip);
                     $compile(tooltip)(scope);
 

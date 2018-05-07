@@ -47,8 +47,17 @@
                         <div ng-message="minlength, md-maxlength">Numarul de telefon trebuie sa inceapa cu zero si sa fie format din 5-20 cifre</div>
                     </div>
                 </md-input-container>
-                <div layout="row">
-                    <md-input-container>
+                <!--Alternate phone-->
+                <md-button ng-click="$ctrl.status.showAltPhone = !$ctrl.status.showAltPhone" ng-hide="$ctrl.data.client.altPhoneNumber || $ctrl.status.showAltPhone">
+                    <md-icon>add</md-icon>
+                    telefon alternativ
+                </md-button>
+                <div ng-if="$ctrl.data.client.altPhoneNumber || $ctrl.status.showAltPhone" layout="row" layout-align="start center">
+                    <md-button class="md-icon-button" ng-click="$ctrl.actions.removeAltPhone()">
+                        <md-icon>delete</md-icon>
+                        <md-tooltip hide show-gt-sm>Sterge numar de telefon alternativ</md-tooltip>
+                    </md-button>
+                    <md-input-container flex>
                         <label>Telefon alternativ</label>
                         <md-icon>phone</md-icon>
                         <input 
@@ -61,7 +70,7 @@
                             <div ng-message="minlength, md-maxlength">Numarul de telefon trebuie sa inceapa cu zero si sa fie format din 5-20 cifre</div>
                         </div>
                     </md-input-container>
-                    <md-input-container>
+                    <md-input-container flex="40">
                         <label>Relatie</label>
                         <md-icon>person</md-icon>
                         <input 

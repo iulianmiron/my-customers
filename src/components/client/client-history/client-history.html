@@ -8,7 +8,7 @@
                     ng-click="$ctrl.actions.refreshHistory($event)"
                     ng-if="$ctrl.data.clientId">
                     <md-icon>refresh</md-icon>
-                    <md-tooltip>Refresh istoric</md-tooltip>
+                    <md-tooltip hide show-gt-sm>Refresh istoric</md-tooltip>
                 </md-button>
             </span>
             <md-menu md-position-mode="target-right target">
@@ -41,7 +41,7 @@
                         <span class="md-title">Sedinta {{ $index + 1 }}</span>
                         <span class="md-subhead">Data: {{ historyItem.date | amDateFormat:'Do/MM/YYYY, h:mm a' }}</span>
                     </md-card-header-text>
-                    <md-button ng-click="$ctrl.actions.editHistoryItem($event, historyItem)">
+                    <md-button ng-click="$ctrl.actions.editHistoryItem($event, historyItem)" button-shrink="gt-sm">
                         <md-icon>edit</md-icon>
                         Editeaza
                     </md-button>

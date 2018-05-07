@@ -19,10 +19,11 @@
         ctrl.data.client.age = ctrl.data.client.dateOfBirth ? calculateClientAge(ctrl.data.client.dateOfBirth): null;
         ctrl.data.clientVip = dialogData.clientVip;
         ctrl.data.maxDateOfBirth = new Date();
-        
+                
         ctrl.actions.setVIPData = setVIPData;
         ctrl.actions.calculateClientAge = calculateClientAge;
         ctrl.actions.updateClientRelation = updateClientRelation;
+        ctrl.actions.removeAltPhone = removeAltPhone;
         ctrl.actions.checkIfDuplicate = checkIfDuplicate;
         ctrl.actions.cancel = cancel;
         ctrl.actions.save = save;      
@@ -33,6 +34,12 @@
 
         function setVIPData(client) {
             client.vip = client.isVip ? client.vip : null;
+        }
+
+        function removeAltPhone() {
+            ctrl.data.client.altPhoneNumber = null;
+            ctrl.status.showAltPhone = false;
+            updateClientRelation();
         }
 
         function updateClientRelation(altPhoneNumber) {
