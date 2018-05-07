@@ -13,6 +13,7 @@
             'cfp.hotkeys',
             'angular-clipboard',
             'md.time.picker',
+            'ngScrollGlue',
 
             'cm.dataservice',
 

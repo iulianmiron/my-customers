@@ -33,7 +33,7 @@
         };
 
         $element.find('input').on('keydown', function(ev) { ev.stopPropagation(); });
-       
+
         function cancel() {
             $mdDialog.cancel();
         };

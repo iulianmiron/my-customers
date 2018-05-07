@@ -5,8 +5,8 @@
         .module('cm.components.calendar.addAppointmentDialog', [])
         .controller('AddAppointmentDialogController', AddAppointmentDialogController);
         
-    AddAppointmentDialogController.$inject = ['$timeout', '$mdDialog', '$state', 'dialogData', 'StaffDataService', 'ServiceTypesDataService'];
-    function AddAppointmentDialogController($timeout, $mdDialog, $state, dialogData, StaffDataService, ServiceTypesDataService) {
+    AddAppointmentDialogController.$inject = ['$timeout', '$mdDialog', '$state', 'dialogData', 'UtilsService'];
+    function AddAppointmentDialogController($timeout, $mdDialog, $state, dialogData, UtilsService) {
         var ctrl = this;
         ctrl.data = {};
         ctrl.status = {};
@@ -14,46 +14,48 @@
 
         ctrl.data.title = dialogData.title;
         ctrl.data.appointment = dialogData.appointment;
-        ctrl.data.services = dialogData.services;
-        ctrl.data.serviceTypes = dialogData.serviceTypes;
+        ctrl.data.allStaff = dialogData.staff;
+        ctrl.data.allServiceTypes = dialogData.serviceTypes;
         ctrl.data.appointment.date = ctrl.data.appointment.date ? new Date(ctrl.data.appointment.date) : new Date();
-        ctrl.data.appointment.startTime = new Date();
-        ctrl.data.appointment.endTime = new Date();
+        ctrl.data.appointment.startTime = ctrl.data.appointment.startTime ? new Date(ctrl.data.appointment.startTime) : new Date();
+        ctrl.data.appointment.endTime = ctrl.data.appointment.endTime ? new Date(ctrl.data.appointment.endTime) : new Date();
 
         ctrl.data.timePickerMessages = {
             hour: 'Hour is required',
             minute: 'Minute is required',
             meridiem: 'Meridiem is required'
         };
-        
-        ctrl.actions.loadStaff = loadStaff;
-        ctrl.actions.loadServices = loadServices;
 
         ctrl.actions.addService = addService;
         ctrl.actions.removeService = removeService;
         ctrl.actions.selectClient = selectClient;
+        ctrl.actions.removeSelectedClient = removeSelectedClient;
 
         ctrl.actions.cancel = cancel;
         ctrl.actions.save = save;
 
-        ctrl.actions.showData = function() {
-            console.log('appointment', ctrl.data.appointment);
-        };
+        ctrl.actions.updateStartTime = updateStartTime;
+        ctrl.actions.updateEndTime = updateEndTime;
 
-        function loadStaff() {
-            return StaffDataService.getAll().then(function(rSuccess) {
-                ctrl.data.staff = rSuccess;
-            }).catch(function(rError) {
-                console.error(rError);
-            });
+        function updateStartTime(event) {
+            if(event.time) {
+                ctrl.data.appointment.startTime = event.time;
+                ctrl.data.appointment.endTime = new Date(moment(event.time).add(1, 'h'));
+            }
         }
 
-        function loadServices() {
-            return ServiceTypesDataService.getAll().then(function(rSuccess) {
-                ctrl.data.services = rSuccess;
-            }).catch(function(rError) {
-                console.error(rError);
-            });
+        function updateEndTime(event) {
+            if(event.time) {
+                ctrl.data.appointment.endTime = event.time;
+            }
+        }
+
+        ctrl.actions.showData = function() {
+            console.log(ctrl.data.appointment);
+        }
+
+        function removeSelectedClient() {
+            ctrl.data.appointment._clientId = null;
         }
 
         function addService() {
@@ -64,7 +66,7 @@
 
             ctrl.data.appointment.services 
             ? ctrl.data.appointment.services.push(service)
-            : ctrl.data.appointment.services = [];
+            : ctrl.data.appointment.services = [service];
         }
 
         function removeService(value) {
@@ -78,16 +80,17 @@
         function selectClient(event) {
             if(event.client === undefined) { 
                 ctrl.data.appointment._clientId = null; 
-            } 
-            else if (event.client) {
+            } else if (event.client) {
 
                 event.client._id === 0 
                 ? $state.go('client', {id: 0})
                 : ctrl.data.appointment._clientId = event.client._id;
 
+                ctrl.data.selectedClient = event.client;
+                ctrl.data.preferredStaff = UtilsService.getSelectedItems(ctrl.data.allStaff, ctrl.data.selectedClient._preferredStaffId);
             }
         }
-       
+
         function cancel() {
             $mdDialog.cancel();
         };

@@ -4,7 +4,7 @@
         <md-card-header-text layout="row" layout-align="space-between center">
             <span class="md-headline">Profil client</span>
             <div> 
-                <md-button class="md-primary"
+                <md-button class="md-primary" button-shrink="gt-sm"
                     ng-click="$ctrl.actions.editClient($event, $ctrl.data.client)">
                     <md-icon>edit</md-icon>
                     Editeaza
@@ -28,6 +28,14 @@
                 {{ $ctrl.data.client.phoneNumber }}
                 <md-tooltip hide show-gt-sm md-direction="right">Copiaza</md-tooltip>
             </b>
+        </p>
+        <p ng-if="$ctrl.data.client.altPhoneNumber">
+            Telefon alternativ: 
+            <b ng-click="$ctrl.actions.copyToClipboard($ctrl.data.client.altPhoneNumber)">
+                {{ $ctrl.data.client.altPhoneNumber }}
+                <md-tooltip hide show-gt-sm md-direction="right">Copiaza</md-tooltip>
+            </b>
+            ({{ $ctrl.data.client.altPhoneNumberRelation }})
         </p>
         <p>
             e-mail: 

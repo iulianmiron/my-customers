@@ -43,6 +43,7 @@
                 paramValue: ctrl.transition.params('from')[Object.keys(ctrl.transition.params('from'))[1]] || null
             };
             ctrl.actions.getClientProfile   = getClientProfile;
+            ctrl.actions.refreshHistory     = refreshHistory;
             ctrl.actions.addClient          = addClient;
             ctrl.actions.editClient         = editClient;
 
@@ -92,6 +93,11 @@
             StaffDataService.getOne(selectedStaffId).then(function(rPreferredStaff) {
                 ctrl.data.preferredStaff = rPreferredStaff;
             });
+        }
+
+        function refreshHistory(event) {
+            getClientHistory(event.clientId);
+            toastr.success('Sedinte gasite: ' + ctrl.data.history.length, 'Succes');
         }
 
         function addClient() {

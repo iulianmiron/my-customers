@@ -38,17 +38,52 @@
                     <label>Telefon</label>
                     <md-icon>phone</md-icon>
                     <input 
-                        name="clientPhoneNo" type="text" minlength="10" md-maxlength="10" required
+                        name="clientPhoneNo" type="text" minlength="5" md-maxlength="20" required
                         ng-model="$ctrl.data.client.phoneNumber" ng-model-options="{debounce: 500}" 
                         ng-change="$ctrl.actions.checkIfDuplicate('phoneNumber', $ctrl.data.client.phoneNumber)"  
                         >
                     <div ng-messages="$ctrl.data.clientProfileForm.clientPhoneNo.$error">
                         <div ng-message="required">Numarul de telefon este obligatoriu</div>
-                        <div ng-message="minlength, md-maxlength">Numarul de telefon trebuie sa inceapa cu zero si sa fie format din 10 cifre</div>
+                        <div ng-message="minlength, md-maxlength">Numarul de telefon trebuie sa inceapa cu zero si sa fie format din 5-20 cifre</div>
                     </div>
                 </md-input-container>
-                <div layout="row">
-                    <md-button ng-show="$ctrl.status.showButton">duplicat</md-button>
+                <!--Alternate phone-->
+                <md-button ng-click="$ctrl.status.showAltPhone = !$ctrl.status.showAltPhone" ng-hide="$ctrl.data.client.altPhoneNumber || $ctrl.status.showAltPhone">
+                    <md-icon>add</md-icon>
+                    telefon alternativ
+                </md-button>
+                <div ng-if="$ctrl.data.client.altPhoneNumber || $ctrl.status.showAltPhone" layout="row" layout-align="start center">
+                    <md-button class="md-icon-button" ng-click="$ctrl.actions.removeAltPhone()">
+                        <md-icon>delete</md-icon>
+                        <md-tooltip hide show-gt-sm>Sterge numar de telefon alternativ</md-tooltip>
+                    </md-button>
+                    <md-input-container flex>
+                        <label>Telefon alternativ</label>
+                        <md-icon>phone</md-icon>
+                        <input 
+                            name="altPhoneNumber" type="text" minlength="5" md-maxlength="20"
+                            ng-model="$ctrl.data.client.altPhoneNumber" 
+                            ng-mode-options="{debounce: 500}" 
+                            ng-change="$ctrl.actions.updateClientRelation($ctrl.data.client.altPhoneNumber)"
+                            >
+                        <div ng-messages="$ctrl.data.clientProfileForm.altPhoneNumber.$error">
+                            <div ng-message="minlength, md-maxlength">Numarul de telefon trebuie sa inceapa cu zero si sa fie format din 5-20 cifre</div>
+                        </div>
+                    </md-input-container>
+                    <md-input-container flex="40">
+                        <label>Relatie</label>
+                        <md-icon>person</md-icon>
+                        <input 
+                            name="altPhoneNumberRelation" type="text" minlength="2" md-maxlength="100"
+                            ng-model="$ctrl.data.client.altPhoneNumberRelation" 
+                            ng-required="$ctrl.data.client.altPhoneNumber" 
+                            >
+                        <div ng-messages="$ctrl.data.clientProfileForm.altPhoneNumberRelation.$error">
+                            <div ng-message="required">Relatia este obligatorie</div>
+                            <div ng-message="md-maxlength">Relatia trebuie sa aiba sub 100 de caractere</div>
+                            <div ng-message="minlength">Relatia trebuie sa aiba mai mult de 1 caracter</div>
+                        </div>
+                    </md-input-container>
                 </div>
 
                 <div layout="column" layout-gt-md="row">
