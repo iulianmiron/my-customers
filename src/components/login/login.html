@@ -1,0 +1,51 @@
+<div layout="row" layout-align="center start">
+    <div flex="75" flex-gt-sm="45" flex-gt-md="35">
+        <md-card>
+                <md-toolbar>
+                    <div layout="row">
+                        <md-toolbar-filler layout="row" layout-align="center center">
+                            <md-icon>input</md-icon>
+                        </md-toolbar-filler>
+                        <h2 class="md-toolbar-tools">
+                            <span class="md-headline">Login</span>
+                        </h2>
+                    </div>
+                </md-toolbar>
+            <md-card-content>
+                <form name="$ctrl.data.loginForm" novalidate>
+                    <md-input-container class="md-block">
+                        <label>Nume de utilizator</label>
+                        <md-icon>person</md-icon>
+                        <input name="username" type="text" autocomplete="username email"
+                            ng-model="$ctrl.data.user.username" 
+                            minlength="2" md-maxlength="100" required>
+                        <div ng-messages="$ctrl.data.loginForm.username.$error">
+                            <div ng-message="required">Prenumele este obligatoriu</div>
+                            <div ng-message="md-maxlength">Prenumele trebuie sa aiba sub 100 de caractere</div>
+                            <div ng-message="minlength">Prenumele trebuie sa aiba mai mult de 1 caracter</div>
+                        </div>
+                    </md-input-container>
+                    <md-input-container class="md-block">
+                        <label>Parola</label>
+                        <md-icon>lock</md-icon>
+                        <input name="password" type="password" autocomplete="current-password"
+                            ng-model="$ctrl.data.user.password" 
+                            minlength="2" md-maxlength="100" required>
+                        <div ng-messages="$ctrl.data.loginForm.password.$error">
+                            <div ng-message="required">Parola este obligatorie</div>
+                            <div ng-message="md-maxlength">Parola trebuie sa aiba sub 100 de caractere</div>
+                            <div ng-message="minlength">Parola trebuie sa aiba mai mult de 1 caracter</div>
+                        </div>
+                    </md-input-container>
+                </form>
+            </md-card-content>
+            <md-card-footer layout="row" layout-align="end center">
+                <md-button class="md-raised md-primary" 
+                    ng-click="$ctrl.actions.login($ctrl.data.user)" 
+                    ng-disabled="$ctrl.data.loginForm.$invalid">
+                    Login
+                </md-button>
+            </md-card-footer>
+        </md-card->
+    </div>
+</div>

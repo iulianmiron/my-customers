@@ -9,6 +9,8 @@
         'cm.components.common.timePicker',
         'cm.components.common.confirmDialog',
 
+        'cm.components.login',
+
         'cm.components.calendar',
         'cm.components.calendar.addAppointmentDialog',
         

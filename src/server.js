@@ -5,6 +5,7 @@ var mongojs = require('mongojs');
 var bodyParser = require('body-parser');
 var logger = require('./api/utils/logging').logger;
 
+var secret = require('./api/config').secret;
 var PORT = require('./api/config').FE_PORT;
 var db = require('./api/config').db;
 
@@ -17,10 +18,12 @@ var products        = require('./api/routes/products');
 var consumables     = require('./api/routes/consumables');
 var staff           = require('./api/routes/staff');
 var roles           = require('./api/routes/roles');
+var users           = require('./api/routes/users');
 
 app.use(express.static(__dirname + '/'));
 app.use(bodyParser.json());
 app.use(logger);
+app.set('superSecret', secret);
 
 // CLIENTS collection
 app.get('/api/clients', clients.getAll);
@@ -85,6 +88,16 @@ app.get('/api/roles', roles.getAll);
 app.post('/api/roles', roles.add);
 app.put('/api/roles/:id', roles.update);
 app.delete('/api/roles/:id', roles.delete);
+
+// USERS collection
+app.post('/api/users/login', users.login);
+app.post('/api/users/logout', users.logout);
+app.get('/api/users', users.getAll);
+app.get('/api/users/:id', users.getOne);
+app.get('/api/users/search/:query', users.search);
+app.post('/api/users', users.add);
+app.put('/api/users/:id', users.update);
+app.delete('/api/users/:id', users.delete);
 
 // kill server
 app.get('/api/stop', function(req, res) {

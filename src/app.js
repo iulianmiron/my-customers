@@ -14,6 +14,8 @@
             'angular-clipboard',
             'md.time.picker',
             'ngScrollGlue',
+            'willcrisis.angularjs-auth',
+            'angular-storage',
 
             'cm.dataservice',
 

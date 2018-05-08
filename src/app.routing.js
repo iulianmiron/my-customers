@@ -16,6 +16,10 @@
 		$urlRouterProvider.otherwise('/home');
 		
 		$stateProvider
+			.state('login', {
+				url: '/login',
+				component: 'login'
+			})
 			.state('test', {
 				url: '/test',
 				component: 'test',
