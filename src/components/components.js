@@ -8,8 +8,10 @@
         'cm.components.common.clientSearch',
         'cm.components.common.timePicker',
         'cm.components.common.confirmDialog',
+        'cm.components.common.starRating',
 
         'cm.components.login',
+        'cm.components.register',
 
         'cm.components.calendar',
         'cm.components.calendar.addAppointmentDialog',

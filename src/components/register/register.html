@@ -1,0 +1,82 @@
+<div layout="row" layout-align="center start">
+    <div flex="75" flex-gt-sm="45" flex-gt-md="35">
+        <md-card>
+                <md-toolbar>
+                    <div layout="row">
+                        <md-toolbar-filler layout="row" layout-align="center center">
+                            <md-icon>person_add</md-icon>
+                        </md-toolbar-filler>
+                        <h2 class="md-toolbar-tools">
+                            <span class="md-headline">Register</span>
+                        </h2>
+                    </div>
+                </md-toolbar>
+            <md-card-content>
+                <form name="$ctrl.data.registerForm" novalidate>
+                    <!-- Email -->
+                    <md-input-container class="md-block">
+                        <label>E-mail</label>
+                        <md-icon>person</md-icon>
+                        <input name="userEmail" type="email" autocomplete="username email"
+                            ng-model="$ctrl.data.user.email" 
+                            minlength="2" md-maxlength="100" required>
+                        <div ng-messages="$ctrl.data.registerForm.userEmail.$error">
+                            <div ng-message="required">E-mail-ul este obligatoriu</div>
+                            <div ng-message="md-maxlength">E-mail-ul trebuie sa aiba sub 100 de caractere</div>
+                            <div ng-message="minlength">E-mail-ul trebuie sa aiba mai mult de 1 caracter</div>
+                        </div>
+                    </md-input-container>
+
+                    <!-- First & Last Name -->
+                    <md-input-container class="md-block">
+                        <label>Prenume si Nume</label>
+                        <md-icon>person</md-icon>
+                        <input name="userFirstAndLastNames" type="text"
+                            minlength="4" md-maxlength="100" required
+                            ng-model="$ctrl.data.user.firstAndLastNames">
+                        <div ng-messages="$ctrl.data.registerForm.userFirstAndLastNames.$error">
+                            <div ng-message="required">Prenumele si numele sunt obligatorii</div>
+                            <div ng-message="md-maxlength">Prenumele si numele trebuie sa aiba sub 100 de caractere</div>
+                            <div ng-message="minlength">Prenumele si numele trebuie sa aiba mai mult de 3 caractere</div>
+                        </div>
+                    </md-input-container>
+
+                    <!-- Email -->
+                    <md-input-container class="md-block">
+                        <label>Telefon</label>
+                        <md-icon>phone</md-icon>
+                        <input name="userPhoneNo" type="text" 
+                            minlength="5" md-maxlength="20" required
+                            ng-model="$ctrl.data.user.phoneNumber">
+                        <div ng-messages="$ctrl.data.registerForm.userPhoneNo.$error">
+                            <div ng-message="required">Numarul de telefon este obligatoriu</div>
+                            <div ng-message="minlength, md-maxlength">Numarul de telefon trebuie sa inceapa cu zero si sa fie format din 5-20 cifre</div>
+                        </div>
+                    </md-input-container>
+
+                    <!-- Parola -->
+                    <md-input-container class="md-block">
+                        <label>Parola</label>
+                        <md-icon>lock</md-icon>
+                        <input name="userPassword" type="password" autocomplete="current-password"
+                            ng-model="$ctrl.data.user.password" 
+                            minlength="2" md-maxlength="100" required>
+                        <div ng-messages="$ctrl.data.registerForm.userPassword.$error">
+                            <div ng-message="required">Parola este obligatorie</div>
+                            <div ng-message="md-maxlength">Parola trebuie sa aiba sub 100 de caractere</div>
+                            <div ng-message="minlength">Parola trebuie sa aiba mai mult de 1 caracter</div>
+                        </div>
+                    </md-input-container>
+
+                </form>
+            </md-card-content>
+            <md-card-footer layout="row" layout-align="end center">
+                <md-button class="md-raised md-primary" 
+                    ng-click="$ctrl.actions.register($ctrl.data.user)" 
+                    ng-disabled="$ctrl.data.registerForm.$invalid">
+                    Login
+                </md-button>
+            </md-card-footer>
+        </md-card->
+    </div>
+</div>

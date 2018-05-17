@@ -20,14 +20,16 @@
 				url: '/login',
 				component: 'login'
 			})
+			.state('register', {
+				url: '/register',
+				component: 'register'
+			})
 			.state('test', {
 				url: '/test',
 				component: 'test',
 				onEnter: function() { 
-					console.log('entering test');
 				},
 				onExit: function() { 
-					console.log('exiting test');
 				}
 			})
 			.state('home', {

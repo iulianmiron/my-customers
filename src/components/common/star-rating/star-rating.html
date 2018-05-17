@@ -1,0 +1,9 @@
+<md-icon 
+    ng-repeat="star in $ctrl.data.stars track by star.id"
+    ng-click="$ctrl.actions.selectRating(star.id)"
+    ng-mousemove="$ctrl.actions.hoverIcon($event, star.id)"
+    ng-mouseleave="$ctrl.actions.resetIcons()">
+    {{ star.icon }}
+</md-icon>
+
+<div>selected Rating: {{ $ctrl.data.selectedStarId }}</div>

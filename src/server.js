@@ -1,13 +1,13 @@
-var express = require('express');
-var path = require('path');
-var app = express();
-var mongojs = require('mongojs');
-var bodyParser = require('body-parser');
-var logger = require('./api/utils/logging').logger;
+var express     = require('express');
+var app         = express();
+var path        = require('path');
+var mongojs     = require('mongojs');
+var bodyParser  = require('body-parser');
+var logger      = require('./api/utils/logging').logger;
 
-var secret = require('./api/config').secret;
-var PORT = require('./api/config').FE_PORT;
-var db = require('./api/config').db;
+var secret  = require('./api/config').secret;
+var PORT    = require('./api/config').FE_PORT;
+var db      = require('./api/config').db;
 
 var clients         = require('./api/routes/clients');
 var history         = require('./api/routes/history');
@@ -90,6 +90,7 @@ app.put('/api/roles/:id', roles.update);
 app.delete('/api/roles/:id', roles.delete);
 
 // USERS collection
+app.post('/api/users/register', users.register);
 app.post('/api/users/login', users.login);
 app.post('/api/users/logout', users.logout);
 app.get('/api/users', users.getAll);

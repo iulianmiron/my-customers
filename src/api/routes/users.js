@@ -5,6 +5,7 @@ var responseFn  = require('../utils/utils').handleResponse;
 var db_users    = mongojs(db + 'users', ['users']);
 
 module.exports = {
+    register: register,
     login: login,
     logout: logout,
     getAll: getAll,
@@ -14,6 +15,10 @@ module.exports = {
     update: update,
     delete: deleteOne
 };
+
+function register(req, res) {
+
+}
 
 function login(req, res) {
     

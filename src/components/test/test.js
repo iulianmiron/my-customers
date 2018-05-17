@@ -11,6 +11,15 @@
 
 		testController.$inject = [];
 		function testController() {
+			var ctrl = this;
+			ctrl.data = {};
+			ctrl.status = {};
+			ctrl.actions = {};
 
+			ctrl.actions.updateRating = updateRating;
+		}
+
+		function updateRating(event) {
+			console.log('update rating event: ', event.selectedRating);
 		}
 })();
