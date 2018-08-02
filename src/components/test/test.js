@@ -16,6 +16,8 @@
 			ctrl.status = {};
 			ctrl.actions = {};
 
+			ctrl.data.rating = 3.51;
+
 			ctrl.actions.updateRating = updateRating;
 		}
 

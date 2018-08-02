@@ -1,9 +1,17 @@
-<md-icon 
-    ng-repeat="star in $ctrl.data.stars track by star.id"
-    ng-click="$ctrl.actions.selectRating(star.id)"
-    ng-mousemove="$ctrl.actions.hoverIcon($event, star.id)"
-    ng-mouseleave="$ctrl.actions.resetIcons()">
-    {{ star.icon }}
-</md-icon>
+<div layout="row" layout-align="start center"> 
+    <md-button ng-show="$ctrl.data.clearButton"
+        class="md-icon-button" 
+        ng-click="$ctrl.actions.clearRating()">
+        <md-icon>clear</md-icon>
+    </md-button>
 
-<div>selected Rating: {{ $ctrl.data.selectedStarId }}</div>
+    <div>
+        <md-icon class="md-primary"
+            ng-repeat="star in $ctrl.data.stars track by star.id"
+            ng-click="$ctrl.actions.selectRating($event, star.id)"
+            ng-mousemove="$ctrl.actions.getMouseHoverPos($event, star.id)"
+            ng-mouseleave="$ctrl.actions.resetIcons()">
+            {{ star.icon }}
+        </md-icon>
+    </div>
+</div>

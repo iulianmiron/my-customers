@@ -7,8 +7,10 @@
             templateUrl: '/components/common/star-rating/star-rating.html',
             controller: StarRatingController,
             bindings: {
-                stars: '@',
-                halfStars: '<',
+                rating: '<',
+                halfIncrement: '<',
+                clearButton: '<',
+                maxRating: '@',
                 onChange: '&'
             }
         });
@@ -21,24 +23,33 @@
         ctrl.actions = {};
 
         ctrl.$onChanges = function(changes) {
-            if(changes.stars && changes.stars.currentValue) {
-                ctrl.data.starsCount = angular.copy(changes.stars.currentValue);
+            if(changes.rating && changes.rating.currentValue) {
+                ctrl.data.initialRating = angular.copy(changes.rating.currentValue);
             }
-            if(changes.halfStars && changes.halfStars.currentValue) {
-                ctrl.data.halfStars = angular.copy(changes.halfStars.currentValue);
+            if(changes.maxRating && changes.maxRating.currentValue) {
+                ctrl.data.starsCount = angular.copy(changes.maxRating.currentValue);
+            }
+            if(changes.halfIncrement && changes.halfIncrement.currentValue) {
+                ctrl.data.halfStars = angular.copy(changes.halfIncrement.currentValue);
+            }
+            if(changes.clearButton && changes.clearButton.currentValue) {
+                ctrl.data.clearButton = angular.copy(changes.clearButton.currentValue);
             }
         };
 
         ctrl.$onInit = function () {
-            
             var stars = parseInt(ctrl.data.starsCount) || 5;
             ctrl.data.stars = generateStars(stars);
-            ctrl.data.selectedStarId = 0;
+            ctrl.data.stars = updateIcons(ctrl.data.initialRating, ctrl.data.stars);
+            ctrl.data.selectedRating = ctrl.data.initialRating || 0;
+            ctrl.data.halfStars = !!ctrl.data.halfStars;
+            ctrl.data.clearButton = typeof ctrl.data.clearButton;
 
             ctrl.actions.selectRating = selectRating;
-            ctrl.actions.hoverIcon = hoverIcon;
+            ctrl.actions.getMouseHoverPos = getMouseHoverPos;
             ctrl.actions.resetIcons = resetIcons;
-            ctrl.data.isMousePosOverHalf = isMousePosOverHalf;
+            ctrl.actions.isMousePosOverHalf = isMousePosOverHalf;
+            ctrl.actions.clearRating = clearRating;
         }
 
         function generateStars(value) {
@@ -55,42 +66,49 @@
             return ratingsArray;
         }
 
-        function selectRating(id) {
-            ctrl.data.selectedStarId = id;
-            ctrl.data.stars = updateIcons(id, ctrl.data.stars);
+        function updateIcons(rating, stars) {
+            return stars.map(function(star) {
+                if(star.id <= rating) { star.icon = 'star'; }
+                if(star.id > rating) { star.icon = 'star_border'; }
+                if(rating >= star.id - 0.5 && rating < star.id) { star.icon = 'star_half'; }
 
-            ctrl.onChange({$event: {selectedRating: id}});
+                return star;
+            });
         }
 
-        function updateIcons(id, stars) {
-            for(var i = 0; i < stars.length; i++) {
-                var star = stars[i];
-                if(star.id <= id) {
-                    star.icon = 'star'
-                }
-                if(star.id > id) {
-                    star.icon = 'star_border';
-                }
-                if(id === star.id - 0.5) {
-                    star.icon = 'star_half';
-                }
-            }
+        function selectRating(event, id) {
+            ctrl.data.selectedRating = getRatingValue(event, id);
+            ctrl.data.stars = updateIcons(ctrl.data.selectedRating, ctrl.data.stars);
 
-            return stars;
+            ctrl.onChange({$event: {selectedRating: ctrl.data.selectedRating}});
         }
 
-        function hoverIcon(event, id) {
-            var lessThanHalf = isMousePosOverHalf(event);
-            ctrl.data.hoverValue = id - (lessThanHalf ? 0.5 : 0);
-            ctrl.data.stars = updateIcons(ctrl.data.hoverValue, ctrl.data.stars);
+        function getMouseHoverPos(event, id) {
+            ctrl.data.hoveredRating = getRatingValue(event, id);
+            ctrl.data.stars = updateIcons(ctrl.data.hoveredRating, ctrl.data.stars);
         }
 
         function resetIcons() {
-            ctrl.data.stars = updateIcons(ctrl.data.hoverValue, ctrl.data.stars);
+            ctrl.data.stars = updateIcons(ctrl.data.selectedRating, ctrl.data.stars);
+        }
+
+        function getRatingValue(event, id) {
+            var ratingValue;
+            if(event) {
+                var overHalf = !ctrl.data.halfStars || isMousePosOverHalf(event);
+                ratingValue = id - (overHalf ? 0 : 0.5);
+            }
+            return ratingValue || id;
         }
 
         function isMousePosOverHalf(event) {
-            return ctrl.data.halfStars ? event.offsetX < (event.target.clientWidth / 2) : false;
+            return event.offsetX >= (event.target.clientWidth / 2);
+        }
+
+        function clearRating() {
+            ctrl.data.selectedRating = null;
+            ctrl.data.stars = updateIcons(ctrl.data.selectedRating, ctrl.data.stars);
+            ctrl.onChange({$event: {selectedRating: ctrl.data.selectedRating}});
         }
     }
 
