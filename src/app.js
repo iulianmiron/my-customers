@@ -9,6 +9,7 @@
             'ui.router',
             'angularMoment',
             'angularSpinners',
+            'LocalStorageModule',
             'toastr',
             'cfp.hotkeys',
             'angular-clipboard',
@@ -56,13 +57,15 @@
     }
 
     
-    appCtrl.$inject = ['$state', 'HotkeyService'];
-    function appCtrl($state, HotkeyService) {
+    appCtrl.$inject = ['$state', 'HotkeyService', 'localStorageService'];
+    function appCtrl($state, HotkeyService, localStorageService) {
         var ctrl = this;
 
         ctrl.data = {};
         ctrl.status = {};
         ctrl.actions = {};
+
+        localStorageService.set('show-admin-controls', true);
 
         ctrl.status.showSidenav = false;
 

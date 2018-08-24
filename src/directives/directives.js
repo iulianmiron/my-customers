@@ -6,6 +6,7 @@
             'cm.directives.vipColor',
             'cm.directives.activateSpinner',
             'cm.directives.currentSession',
-            'cm.directives.buttonShrink'
+            'cm.directives.buttonShrink',
+            'cm.directives.adminOnly',
         ]);
 })();

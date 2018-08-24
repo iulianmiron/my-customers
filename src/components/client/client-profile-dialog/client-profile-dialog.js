@@ -25,6 +25,7 @@
         ctrl.actions.updateClientRelation = updateClientRelation;
         ctrl.actions.removeAltPhone = removeAltPhone;
         ctrl.actions.checkIfDuplicate = checkIfDuplicate;
+        ctrl.actions.deleteClient = deleteClient;
         ctrl.actions.cancel = cancel;
         ctrl.actions.save = save;      
 
@@ -98,8 +99,12 @@
 
         };
 
+        function deleteClient(client) {
+            $mdDialog.cancel({item: client, command: 'delete'});
+        }
+
         function cancel(client) {
-            $mdDialog.cancel(client);
+            $mdDialog.cancel({item: client, command: 'cancel'});
         };
 
         function save(client) {

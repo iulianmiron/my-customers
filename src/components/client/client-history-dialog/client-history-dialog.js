@@ -22,6 +22,7 @@
 
         ctrl.data.maxDate = new Date();
         
+        ctrl.actions.deleteSession = deleteSession;
         ctrl.actions.cancel = cancel;
         ctrl.actions.save = save;
         ctrl.actions.changeSelectedServicesText = changeSelectedServicesText;
@@ -33,6 +34,10 @@
         };
 
         $element.find('input').on('keydown', function(ev) { ev.stopPropagation(); });
+
+        function deleteSession(historyItem) {
+            $mdDialog.cancel({item: historyItem, command: 'delete'});
+        }
 
         function cancel() {
             $mdDialog.cancel();
@@ -48,6 +53,6 @@
                     ? selectedServices.length + ' servicii selectate.'
                     : selectedServices.length + ' serviciu selectat'
                 : 'Nu sunt servicii selectate';            
-        }
+        };
     }
 })();

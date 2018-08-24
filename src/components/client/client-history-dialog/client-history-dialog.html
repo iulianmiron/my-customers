@@ -82,7 +82,7 @@
                         </div>
                     </md-input-container>
                 </div>
-                <div>
+                <div ng-show="$ctrl.data.historyItem.services">
                     <div>Servicii prestate:</div>
                     <ul>
                         <li ng-repeat="service in $ctrl.data.historyItem.services track by service._id">
@@ -91,6 +91,8 @@
                         </li>
                     </ul>
                 </div>
+
+
 
                 <md-input-container class="md-block">
                     <label>Produse acasa</label>
@@ -118,10 +120,18 @@
     </md-dialog-content>
 
     <md-dialog-actions layout="row" layout-align="end center">
-        <md-button ng-click="$ctrl.actions.cancel()">
+        <md-button class="md-warn" admin-only ng-if="$ctrl.data.historyItem._id"
+            ng-click="$ctrl.actions.deleteSession($ctrl.data.historyItem)">
+            Sterge Sedinta
+        </md-button>
+        <div flex></div>
+        <md-button 
+            ng-click="$ctrl.actions.cancel()">
             Renunta
         </md-button>
-        <md-button class="md-raised md-primary" ng-click="$ctrl.actions.save($ctrl.data.historyItem)" ng-disabled="$ctrl.data.editHistoryItemForm.$invalid">
+        <md-button class="md-raised md-primary" 
+            ng-click="$ctrl.actions.save($ctrl.data.historyItem)" 
+            ng-disabled="$ctrl.data.editHistoryItemForm.$invalid">
             Salveaza Sedinta
         </md-button>
     </md-dialog-actions>

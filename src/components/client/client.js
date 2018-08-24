@@ -11,13 +11,13 @@
             }
         });
     ClientController.$inject = [
-        '$mdToast', '$q', '$state', '$log', '$mdDialog', '$rootElement', 
+        '$mdToast', '$q', '$state', '$log', '$mdDialog', '$rootElement',
         'ClientsDataService', 'HistoryDataService', 'ServicesDataService', 'ServiceTypesDataService', 'StaffDataService',
         'CLIENT_VIP_LEVELS', 'CLIENT_VIP_TYPES', 'UtilsService',
         'toastr'
     ];
     function ClientController(
-        $mdToast, $q, $state, $log, $mdDialog, $rootElement, 
+        $mdToast, $q, $state, $log, $mdDialog, $rootElement,
         ClientsDataService, HistoryDataService, ServicesDataService, ServiceTypesDataService, StaffDataService,
         CLIENT_VIP_LEVELS, CLIENT_VIP_TYPES, UtilsService,
         toastr
@@ -37,13 +37,13 @@
                 types: CLIENT_VIP_TYPES
             };
 
-            ctrl.data.previousPage =  {
-                name: ctrl.transition.from().name || 'home',
-                paramName: Object.keys(ctrl.transition.params('from'))[1] || null,
-                paramValue: ctrl.transition.params('from')[Object.keys(ctrl.transition.params('from'))[1]] || null
-            };
+            ctrl.data.previousState = setPreviousState(ctrl.transition);
+
+            ctrl.data.goToPreviousState     = goToPreviousState;
+
             ctrl.actions.getClientProfile   = getClientProfile;
             ctrl.actions.refreshHistory     = refreshHistory;
+
             ctrl.actions.addClient          = addClient;
             ctrl.actions.editClient         = editClient;
 
@@ -77,7 +77,10 @@
         function getClientProfile(clientId) { 
             ClientsDataService.getOne(clientId).then(function(rClient) {
                 ctrl.data.client = rClient;  
-                if(ctrl.data.client._preferredStaffId) {
+                if(!ctrl.data.client) {
+                    goToPreviousState();
+                    toastr.info('Clientul a fost sters', 'Client negasit');
+                } else if(ctrl.data.client._preferredStaffId) {
                     getSelectedStaff(ctrl.data.client._preferredStaffId);
                 } 
             }); 
@@ -93,6 +96,17 @@
             StaffDataService.getOne(selectedStaffId).then(function(rPreferredStaff) {
                 ctrl.data.preferredStaff = rPreferredStaff;
             });
+        }
+        function setPreviousState(transition) {
+            return {
+                name: transition.from().name || 'home',
+                paramName: Object.keys(transition.params('from'))[1] || null,
+                paramValue: transition.params('from')[Object.keys(transition.params('from'))[1]] || null
+            };
+        }
+
+        function goToPreviousState() {
+            $state.go(ctrl.data.previousState.name, {[ctrl.data.previousState.paramName]: ctrl.data.previousState.paramValue});
         }
 
         function refreshHistory(event) {
@@ -117,7 +131,7 @@
                 clientVip: ctrl.data.clientVip,
                 staff: ctrl.data.allStaff
             };
-            showClientProfileDialog(event.event, dialogData, updateClient);
+            showClientProfileDialog(event.event, dialogData, updateClient, deleteClient);
         }
 
         function addNewClient(client) {
@@ -134,7 +148,13 @@
             });
         }
 
-        function showClientProfileDialog(event, dialogData, cb) {
+        function deleteClient(client) {
+            ClientsDataService.deleteOne(client._id).then(function(rSuccess) {
+                toastr.success("Client sters", "Succes");
+            });
+        }
+
+        function showClientProfileDialog(event, dialogData, saveCb, deleteCb) {
             $mdDialog.show({
                 controller: 'ClientProfileDialogController',
                 controllerAs: '$ctrl',
@@ -147,10 +167,14 @@
                 clickOutsideToClose: false,
                 fullscreen: true
             }).then(function(client) {
-                cb(client);
-            }, function(client) {
-                if(!client || !client._id) {
-                    $state.go(ctrl.data.previousPage.name, {[ctrl.data.previousPage.paramName]: ctrl.data.previousPage.paramValue});
+                saveCb(client);
+            }, function(data) {
+                if(!data.item || !data.item._id) {
+                    goToPreviousState();
+                }
+                if(data && data.command === 'delete' && data.item._id) {
+                    deleteCb(data.item);
+                    $state.go('home');
                 }
             });
         }
@@ -179,7 +203,7 @@
                 services: ctrl.data.allServices,
                 serviceTypes: ctrl.data.allServiceTypes
             };
-            showHistoryDialog(event.event, dialogData, saveEditedHistoryItem);
+            showHistoryDialog(event.event, dialogData, saveEditedHistoryItem, deleteHistoryItem);
         }
 
         function saveNewHistoryItem(historyItem) {
@@ -196,7 +220,14 @@
             });
         }
 
-        function showHistoryDialog(event, dialogData, cb) {
+        function deleteHistoryItem(historyItem) {
+            HistoryDataService.deleteOne(historyItem._id).then(function(rSuccess) {
+                toastr.success("Sedinta stearsa", "Succes");
+                getClientHistory(historyItem._clientId);
+            });
+        }
+
+        function showHistoryDialog(event, dialogData, saveCb, deleteCb) {
             $mdDialog.show({
                 controller: 'ClientHistoryDialogController',
                 controllerAs: '$ctrl',
@@ -209,9 +240,11 @@
                 clickOutsideToClose: false,
                 fullscreen: true
             }).then(function(historyItem) {
-                cb(historyItem);
-            }, function() {
-                //historyItem action cancelled
+                saveCb(historyItem);
+            }, function(data) {
+                if(data && data.command === 'delete' && data.item._id) {
+                    deleteCb(data.item);
+                }
             });
         }
     }
