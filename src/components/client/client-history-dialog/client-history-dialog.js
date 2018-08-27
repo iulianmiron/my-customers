@@ -6,8 +6,8 @@
         .controller('ClientHistoryDialogController', ClientHistoryDialogController);
 
         
-    ClientHistoryDialogController.$inject = ['$timeout', '$element', '$mdDialog', 'dialogData', 'USERS'];
-    function ClientHistoryDialogController($timeout, $element, $mdDialog, dialogData, USERS) {
+    ClientHistoryDialogController.$inject = ['$element', '$mdDialog', 'dialogData', 'USERS'];
+    function ClientHistoryDialogController($element, $mdDialog, dialogData, USERS) {
         var ctrl = this;
         ctrl.data = {};
         ctrl.status = {};
@@ -19,7 +19,7 @@
         ctrl.data.services = dialogData.services;
         ctrl.data.serviceTypes = dialogData.serviceTypes;
         ctrl.data.historyItem.date = ctrl.data.historyItem.date ? new Date(ctrl.data.historyItem.date) : new Date();
-
+        debugger;
         ctrl.data.maxDate = new Date();
         
         ctrl.actions.deleteSession = deleteSession;
@@ -44,6 +44,7 @@
         };
 
         function save(historyItem) {
+            console.log("save historyitem", historyItem);
             $mdDialog.hide(historyItem);
         };
 

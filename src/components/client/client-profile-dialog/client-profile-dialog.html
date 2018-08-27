@@ -223,7 +223,7 @@
     </md-dialog-content>
 
     <md-dialog-actions layout="row" layout-align="end center">
-        <md-button class="md-warn" admin-only
+        <md-button class="md-warn" admin-only ng-if="$ctrl.data.client._id"
             ng-click="$ctrl.actions.deleteClient($ctrl.data.client)">
             Sterge Client
         </md-button>
