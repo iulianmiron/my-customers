@@ -12,25 +12,117 @@
     <md-dialog-content>
         <div class="md-dialog-content">
 
-            <md-card class="new-services" ng-repeat="performedService in $ctrl.data.historyItem.performedServices">
+
+
+
+
+            <md-card class="new-services">
 
                 <md-card-content>
-                    <md-input-container flex>
-                        <label>Sedinta efectuata de:</label>
-                        <md-select name="servicesPerformedBy" required
-                            ng-model-options="{trackBy: '$value.id'}" 
-                            ng-model="$ctrl.data.historyItem.servicesPerformedBy">
-                            <md-option ng-value="user" ng-repeat="user in $ctrl.data.users track by user.id">
-                                <md-icon>face</md-icon> {{ user.first_name }} {{ user.last_name }}
-                            </md-option>
-                        </md-select>
-                        <div ng-messages="$ctrl.data.editHistoryItemForm.servicesPerformedBy.$error">
-                            <div ng-message="required">O persoana trebuie selectata.</div>
-                        </div>
-                    </md-input-container>
+                    <div layout="column" layout-gt-sm="row">
+                        <md-input-container flex>
+                            <label>Servicii efectuate de:</label>
+                            <md-select name="servicesPerformedBy" required
+                                ng-model-options="{trackBy: '$value.id'}" 
+                                ng-model="$ctrl.data.newPerformedService.staff">
+                                <md-option ng-value="user" ng-repeat="user in $ctrl.data.users track by user.id">
+                                    <md-icon>face</md-icon> {{ user.first_name }} {{ user.last_name }}
+                                </md-option>
+                            </md-select>
+                            <div ng-messages="$ctrl.data.editHistoryItemForm.servicesPerformedBy.$error">
+                                <div ng-message="required">O persoana trebuie selectata.</div>
+                            </div>
+                        </md-input-container>
+
+                        <md-input-container flex>
+                            <label>Alege Servicii</label>
+                            <md-select 
+                                name="services" multiple required
+                                ng-model-options="{trackBy: '$value._id'}" 
+                                ng-model="$ctrl.data.newPerformedService.services"  
+                                md-on-close="$ctrl.data.searchServices = ''; $ctrl.actions.getTotalCost($ctrl.data.newPerformedService.services)" 
+                                md-selected-text="$ctrl.actions.changeSelectedServicesText($ctrl.data.newPerformedService.services)"
+                                data-md-container-class="container-select-header">
+                                <md-select-header class="select-header">
+                                    <input ng-model="$ctrl.data.searchServices" placeholder="Cauta un serviciu" class="select-header-searchbox md-text">
+                                </md-select-header>
+                                <md-optgroup label="{{serviceType.name}}" ng-repeat="serviceType in $ctrl.data.serviceTypes track by serviceType._id">
+                                    <md-option ng-value="service" ng-repeat="service in filteredServices = ($ctrl.data.services | filter: {_serviceTypeId: serviceType._id, name: $ctrl.data.searchServices })  track by service._id">
+                                        {{service.name}}
+                                        <small>{{service.price}} RON ({{service.duration}} min.)</small>
+                                    </md-option>
+                                </md-optgroup>
+                            </md-select>
+                            <div ng-messages="$ctrl.data.editHistoryItemForm.services.$error">
+                                <div ng-message="required">Minim un serviciu trebuie introdus</div>
+                            </div>
+                        </md-input-container>
+
+                    </div>
+
+                    <div layout="row">
+                        <md-input-container flex>
+                            <label>Pret grup servicii</label>
+                            <md-icon>attach_money</md-icon>
+                            <input name="cost" type="number" step="1"
+                                ng-model="$ctrl.data.newPerformedService.cost"
+                                ng-change="$ctrl.actions.getTotalCostWithDiscount($ctrl.data.newPerformedService.cost, $ctrl.data.newPerformedService.discount)"
+                            >
+                        </md-input-container>
+
+                        <md-input-container flex>
+                            <label>Discount</label>
+                            <md-icon>attach_money</md-icon>
+                            <input name="discount" type="number" step="1"
+                                ng-model="$ctrl.data.newPerformedService.discount" 
+                                ng-change="$ctrl.actions.getTotalCostWithDiscount($ctrl.data.newPerformedService.cost, $ctrl.data.newPerformedService.discount)"
+                            >
+                        </md-input-container>
+
+                        <md-input-container flex>
+                            <label>Total</label>
+                            <md-icon>attach_money</md-icon>
+                            <input name="discount" type="number" step="1" ng-readonly="true"
+                                ng-model="$ctrl.data.newPerformedService.total" 
+                            >
+                        </md-input-container>
+                    </div>
                 </md-card-content>
 
+                <md-card-footer layout="row" layout-align="end center">
+                    <md-button class="md-default"
+                        ng-click="$ctrl.actions.resetAddServiceForm()">
+                        reset
+                    </md-button>
+                    <md-button class="md-primary"
+                        ng-click="$ctrl.actions.addService($ctrl.data.newPerformedService)">
+                        Adauga
+                    </md-button>
+                </md-card-footer>
+
             </md-card>
+
+            <md-card ng-if="$ctrl.data.historyItem.performedServices.length">
+                <md-card-content>
+
+                    <div ng-repeat="performedService in $ctrl.data.historyItem.performedServices">
+                        <div>Servicii prestate de: {{performedService.staff.first_name}}</div>
+                        <ul>
+                            <li ng-repeat="service in performedService.services track by service._id">
+                                {{service.name}}
+                                <small>{{service.price}} RON, ({{service.duration}} min.)</small>
+                            </li>
+                        </ul>
+                    </div>
+
+                </md-card-content>
+            </md-card>
+
+
+
+
+
+
 
             <form name="$ctrl.data.editHistoryItemForm" ng-hide="true">
                 <div layout="row" layout-align="start center" layout-wrap>
@@ -82,9 +174,9 @@
                                     ng-model="$ctrl.data.historyItem.services"  
                                     md-on-close="$ctrl.data.searchServices = '';" 
                                     md-selected-text="$ctrl.actions.changeSelectedServicesText($ctrl.data.historyItem.services)"
-                                    data-md-container-class="selectdemoSelectHeader">
+                                    data-md-container-class="select-header">
                                     <md-select-header class="demo-select-header">
-                                        <input ng-model="$ctrl.data.searchServices" placeholder="Cauta un serviciu" class="demo-header-searchbox md-text">
+                                        <input ng-model="$ctrl.data.searchServices" placeholder="Cauta un serviciu" class="select-header-searchbox md-text">
                                     </md-select-header>
                                     <md-optgroup label="{{serviceType.name}}" ng-repeat="serviceType in $ctrl.data.serviceTypes track by serviceType._id">
                                         <md-option ng-value="service" ng-repeat="service in filteredServices = ($ctrl.data.services | filter: {_serviceTypeId: serviceType._id, name: $ctrl.data.searchServices })  track by service._id">

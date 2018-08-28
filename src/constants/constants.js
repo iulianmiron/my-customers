@@ -26,7 +26,6 @@
         ])
         .constant('USERS', [
             { id: 1, first_name: 'Elena', last_name: 'Miron' },
-            { id: 2, first_name: 'Carmen', last_name: 'Bondric' },
-            { id: 3, first_name: 'Madalina', last_name: 'Marc' }
+            { id: 2, first_name: 'Madalina', last_name: 'Mocanu' }
         ]);
 })();
