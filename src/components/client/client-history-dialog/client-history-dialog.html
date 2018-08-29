@@ -11,6 +11,7 @@
 
     <md-dialog-content>
         <div class="md-dialog-content">
+            
             <!--ADD SERVICES BY STAFF FORM-->
             <form name="$ctrl.data.addServicesByStaffForm">
                 <div ng-repeat="servicesByStaff in $ctrl.data.historyItem.performedServices">
@@ -37,6 +38,7 @@
                         <md-card-content ng-show="$ctrl.data.showCardContent[$index]">
                             <div>
                                 <div layout="row" layout-gt-sm="row">
+
                                     <!--STAFF-->
                                     <md-input-container flex>
                                         <label>Servicii efectuate de:</label>
@@ -51,6 +53,7 @@
                                             <div ng-message="required">O persoana trebuie selectata.</div>
                                         </div>
                                     </md-input-container>
+
                                     <!--SERVICES-->
                                     <md-input-container flex>
                                         <label>Alege Servicii</label>
@@ -87,6 +90,7 @@
                             </div>
 
                             <div layout="row" layout-gt-sm="row" ng-show="servicesByStaff.services.length">
+
                                 <!--PRET-->
                                 <md-input-container flex>
                                     <label>Pret grup servicii</label>
@@ -100,6 +104,7 @@
                                         <div ng-message="min">Pretul nu poate fi negativ</div>
                                     </div>
                                 </md-input-container>
+
                                 <!--DISCOUNT-->
                                 <md-input-container flex>
                                     <label>Discount</label>
@@ -113,6 +118,7 @@
                                         <div ng-message="min">Discount-ul nu poate fi negativ</div>
                                     </div>
                                 </md-input-container>
+
                                 <!--TOTAL-->
                                 <md-input-container flex>
                                     <label>Total (RON)</label>
@@ -127,6 +133,7 @@
                     </md-card>
                     
                 </div>
+
                 <!--BUTOANE ADAUGARE-->
                 <div layout="row" layout-align="start center">
                     <md-button 
@@ -136,6 +143,7 @@
                         Adauga servicii
                     </md-button>
                 </div>
+
                 <!--MOD PLATA-->
                 <md-card ng-show="$ctrl.data.historyItem.performedServices.length">
                     <md-card-header>
