@@ -20,9 +20,8 @@
         ctrl.data.services = dialogData.services;
         ctrl.data.serviceTypes = dialogData.serviceTypes;
         ctrl.data.historyItem = dialogData.historyItem;
-        ctrl.data.historyItem.date = ctrl.data.historyItem.date ? new Date(ctrl.data.historyItem.date) : new Date();
         ctrl.data.historyItem.performedServices = ctrl.data.historyItem.performedServices || addServicesByStaff(ctrl.data.historyItem);
-        ctrl.data.historyItem.payment = {};
+        ctrl.data.historyItem.payment = ctrl.data.historyItem.payment || {};
         
         
         ctrl.actions.changeSelectedServicesText = changeSelectedServicesText;
@@ -104,6 +103,7 @@
             historyItem.performedServices.push({
                 services: null,
                 staff: null,
+                date: new Date()
             });
             historyItem.performedServices.map(function(item, index) {
                 var boolean = !!(index === historyItem.performedServices.length - 1);

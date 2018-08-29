@@ -37,6 +37,24 @@
                         </md-card-header>
                         <md-card-content ng-show="$ctrl.data.showCardContent[$index]">
                             <div>
+                                <div layout="row" layout-align="start center" layout-wrap>
+                                    <md-input-container class="no-validation">
+                                        <label>Data sedintei</label>
+                                        <md-datepicker name="date" required 
+                                            ng-model="servicesByStaff.date" 
+                                            md-max-date="$ctrl.data.maxDate">
+                                        </md-datepicker>
+                                    </md-input-container>
+                
+                                    <md-time-picker
+                                        ng-model="servicesByStaff.date" 
+                                        message="$ctrl.data.timePickerMessages" 
+                                        read-only="false" 
+                                        mandatory="true" 
+                                        no-meridiem>
+                                    </md-time-picker>
+                                </div>
+
                                 <div layout="row" layout-gt-sm="row">
 
                                     <!--STAFF-->
@@ -129,6 +147,40 @@
                                     >
                                 </md-input-container>
                             </div>
+
+                            <md-button ng-click="showExtraDetails = !showExtraDetails">
+                                {{ showExtraDetails ? 'ascunde' : 'arata' }} detalii
+                            </md-button>
+
+                            <div ng-show="showExtraDetails">
+                                <div>
+                                    <md-input-container class="md-block">
+                                        <label>Interval (sapt.)</label>
+                                        <input name="interval" ng-model="servicesByStaff.interval" type="number" step="1">
+                                    </md-input-container>
+
+                                    <md-input-container class="md-block">
+                                        <label>Produse vandute</label>
+                                        <textarea name="soldProducts" ng-model="servicesByStaff.soldProducts">
+                                        </textarea>
+                                    </md-input-container>
+                
+                                    <md-input-container class="md-block">
+                                        <label>Observatii</label>
+                                        <textarea name="observations" ng-model="servicesByStaff.observations">
+                                        </textarea>
+                                    </md-input-container>
+                
+                                    <md-checkbox
+                                        ng-model="servicesByStaff.photosTaken">
+                                        Poze
+                                    </md-checkbox>
+                                    <md-checkbox
+                                        ng-model="servicesByStaff.videosTaken"> 
+                                        Filmare
+                                    </md-checkbox>
+                                </div>
+                            </div>
                         </md-card-content>
                     </md-card>
                     
@@ -152,7 +204,7 @@
                         </md-card-header-text>
                     </md-card-header>
                     <md-card-content layout="row" layout-align="start center">
-                        <div layout="row" layout-align="start center">
+                        <div layout="row" layout-align="start center" flex>
                             <md-input-container flex>
                                 <label>Mod Plata:</label>
                                 <md-select name="paymentType"
@@ -168,9 +220,11 @@
                                     ng-model="$ctrl.data.historyItem.payment.paidAmount">
                             </md-input-container>
                         </div>
-                        <div layout="column" layout-align="start end" layout-padding>
+                        <div layout="column" layout-align="start end" layout-padding flex>
                             <span>Discount Total: {{ $ctrl.data.historyItem.payment.discount }} RON</span>
                             <span>Cost Total: {{ $ctrl.data.historyItem.payment.total }} RON</span>
+                            <span>Platit: {{ $ctrl.data.historyItem.payment.paidAmount || 0 }} RON</span>
+                            <span>Rest de Plata: {{ $ctrl.data.historyItem.payment.total - $ctrl.data.historyItem.payment.paidAmount }} RON</span>
                         </div>
                     </md-card-content>
                 </md-card>
