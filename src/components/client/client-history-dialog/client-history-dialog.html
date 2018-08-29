@@ -76,37 +76,6 @@
                                         </div>
                                     </md-input-container>
                                 </div>
-                                <div layout="row" layout-gt-sm="row">
-                                    <!--PRET-->
-                                    <md-input-container flex>
-                                        <label>Pret grup servicii</label>
-                                        <md-icon>attach_money</md-icon>
-                                        <input name="cost_{{$index}}" 
-                                            type="number" step="1" min="0"
-                                            ng-model="servicesByStaff.cost"
-                                            ng-change="$ctrl.actions.setTotalCostWithDiscount(servicesByStaff)"
-                                        >
-                                    </md-input-container>
-                                    <!--DISCOUNT-->
-                                    <md-input-container flex>
-                                        <label>Discount</label>
-                                        <md-icon>attach_money</md-icon>
-                                        <input name="discount_{{$index}}" 
-                                            type="number" step="1" min="0"
-                                            ng-model="servicesByStaff.discount" 
-                                            ng-change="$ctrl.actions.setTotalCostWithDiscount(servicesByStaff)"
-                                        >
-                                    </md-input-container>
-                                    <!--TOTAL-->
-                                    <md-input-container flex>
-                                        <label>Total</label>
-                                        <md-icon>attach_money</md-icon>
-                                        <input name="total_{{$index}}" 
-                                            type="number" step="1" min="0" ng-readonly="true"
-                                            ng-model="servicesByStaff.total" 
-                                        >
-                                    </md-input-container>
-                                </div>
                             </div>
                             <div ng-show="servicesByStaff.services.length" ng-hide="true">
                                 <ul>
@@ -116,16 +85,88 @@
                                     </li>
                                 </ul>
                             </div>
+
+                            <div layout="row" layout-gt-sm="row" ng-show="servicesByStaff.services.length">
+                                <!--PRET-->
+                                <md-input-container flex>
+                                    <label>Pret grup servicii</label>
+                                    <md-icon>attach_money</md-icon>
+                                    <input name="cost_{{$index}}" 
+                                        type="number" step="1" min="0"
+                                        ng-model="servicesByStaff.cost"
+                                        ng-change="$ctrl.actions.setTotalCostWithDiscount(servicesByStaff)"
+                                    >
+                                    <div ng-messages="$ctrl.data.addServicesByStaffForm['cost_' + $index].$error">
+                                        <div ng-message="min">Pretul nu poate fi negativ</div>
+                                    </div>
+                                </md-input-container>
+                                <!--DISCOUNT-->
+                                <md-input-container flex>
+                                    <label>Discount</label>
+                                    <md-icon>money_off</md-icon>
+                                    <input name="discount_{{$index}}" 
+                                        type="number" step="1" min="0"
+                                        ng-model="servicesByStaff.discount" 
+                                        ng-change="$ctrl.actions.setTotalCostWithDiscount(servicesByStaff)"
+                                    >
+                                    <div ng-messages="$ctrl.data.addServicesByStaffForm['discount_' + $index].$error">
+                                        <div ng-message="min">Discount-ul nu poate fi negativ</div>
+                                    </div>
+                                </md-input-container>
+                                <!--TOTAL-->
+                                <md-input-container flex>
+                                    <label>Total (RON)</label>
+                                    <md-icon>attach_money</md-icon>
+                                    <input name="total_{{$index}}" 
+                                        type="number" step="1" min="0" ng-readonly="true"
+                                        ng-model="servicesByStaff.total" 
+                                    >
+                                </md-input-container>
+                            </div>
                         </md-card-content>
                     </md-card>
                     
                 </div>
-                <md-button 
-                    ng-disabled="$ctrl.data.addServicesByStaffForm.$invalid"
-                    ng-click="$ctrl.actions.addServicesByStaff($ctrl.data.historyItem)">
-                    <md-icon>add</md-icon>
-                    Adauga servicii
-                </md-button>
+                <!--BUTOANE ADAUGARE-->
+                <div layout="row" layout-align="start center">
+                    <md-button 
+                        ng-disabled="$ctrl.data.addServicesByStaffForm.$invalid"
+                        ng-click="$ctrl.actions.addServicesByStaff($ctrl.data.historyItem)">
+                        <md-icon>add</md-icon>
+                        Adauga servicii
+                    </md-button>
+                </div>
+                <!--MOD PLATA-->
+                <md-card ng-show="$ctrl.data.historyItem.performedServices.length">
+                    <md-card-header>
+                        <md-card-header-text>
+                            <span class="md-title">Mod Plata</span>
+                        </md-card-header-text>
+                    </md-card-header>
+                    <md-card-content layout="row" layout-align="start center">
+                        <div layout="row" layout-align="start center">
+                            <md-input-container flex>
+                                <label>Mod Plata:</label>
+                                <md-select name="paymentType"
+                                    ng-model="$ctrl.data.historyItem.payment.type">
+                                    <md-option ng-value="type" ng-repeat="type in ['CASH', 'CARD']">
+                                        <md-icon>credit_card</md-icon> {{ type }}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                            <md-input-container flex class="no-validation">
+                                <label>Platit:</label>
+                                <input name="paymentType"
+                                    ng-model="$ctrl.data.historyItem.payment.paidAmount">
+                            </md-input-container>
+                        </div>
+                        <div layout="column" layout-align="start end" layout-padding>
+                            <span>Discount Total: {{ $ctrl.data.historyItem.payment.discount }} RON</span>
+                            <span>Cost Total: {{ $ctrl.data.historyItem.payment.total }} RON</span>
+                        </div>
+                    </md-card-content>
+                </md-card>
+
             </form>
 
 

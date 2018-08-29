@@ -13,15 +13,17 @@
         ctrl.status = {};
         ctrl.actions = {};
 
+        ctrl.data.showCardContent = [];
+        ctrl.data.maxDate = new Date();
         ctrl.data.users = USERS;
         ctrl.data.title = dialogData.title;
-        ctrl.data.historyItem = dialogData.historyItem;
         ctrl.data.services = dialogData.services;
         ctrl.data.serviceTypes = dialogData.serviceTypes;
+        ctrl.data.historyItem = dialogData.historyItem;
         ctrl.data.historyItem.date = ctrl.data.historyItem.date ? new Date(ctrl.data.historyItem.date) : new Date();
         ctrl.data.historyItem.performedServices = ctrl.data.historyItem.performedServices || addServicesByStaff(ctrl.data.historyItem);
-        ctrl.data.maxDate = new Date();
-        ctrl.data.showCardContent = [];
+        ctrl.data.historyItem.payment = {};
+        
         
         ctrl.actions.changeSelectedServicesText = changeSelectedServicesText;
         ctrl.actions.setTotalCost = setTotalCost;
@@ -62,9 +64,13 @@
         };
 
         function setTotalCost(servicesByStaff) {
-            servicesByStaff.cost = servicesByStaff.services.reduce(function(acc, curr) {
-                return acc + curr.price;
-            }, 0);
+            if(servicesByStaff.services) {
+                servicesByStaff.cost = servicesByStaff.services.reduce(function(acc, curr) {
+                    return acc + curr.price;
+                }, 0);
+            } else {
+                servicesByStaff.cost = 0;
+            }
 
             setTotalCostWithDiscount(servicesByStaff);
         }
@@ -74,20 +80,46 @@
             var discount = servicesByStaff.discount || 0;
             
             discount = discount > cost ? cost : discount;
+            servicesByStaff.discount = discount;
             servicesByStaff.total = cost - discount;
+
+            setTotalDiscountPerSession();
+            setTotalCostPerSession();
+        }
+
+        function setTotalDiscountPerSession() {
+            ctrl.data.historyItem.payment.discount = ctrl.data.historyItem.performedServices.reduce(function(acc, curr) {
+                return acc + curr.discount;
+            }, 0);
+        }
+
+        function setTotalCostPerSession() {
+            ctrl.data.historyItem.payment.total = ctrl.data.historyItem.performedServices.reduce(function(acc, curr) {
+                return acc + curr.total;
+            }, 0);
         }
 
         function addServicesByStaff(historyItem) {
             historyItem.performedServices = angular.isArray(historyItem.performedServices) ? historyItem.performedServices : [];
-            return historyItem.performedServices.push({});
+            historyItem.performedServices.push({
+                services: null,
+                staff: null,
+            });
+            historyItem.performedServices.map(function(item, index) {
+                var boolean = !!(index === historyItem.performedServices.length - 1);
+                showCardContent(index, boolean);
+            });
+            
         }
 
-        function showCardContent(cardIndex) {
-            ctrl.data.showCardContent[cardIndex] = !ctrl.data.showCardContent[cardIndex];
+        function showCardContent(cardIndex, boolean) {
+            ctrl.data.showCardContent[cardIndex] = typeof(boolean) === 'boolean' ? boolean : !ctrl.data.showCardContent[cardIndex];
         }
 
         function deleteServicesByStaff(performedServices, index) {
             performedServices.splice(index, 1);
+            setTotalDiscountPerSession();
+            setTotalCostPerSession();
         }
     }
 })();

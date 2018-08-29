@@ -89,7 +89,7 @@ app.delete('/api/roles/:id', roles.delete);
 // kill server
 app.get('/api/stop', function(req, res) {
     console.info("\n┌─────────────────────────────┐");
-    console.info(  "│ ELENA MIRON APP -> STOPPED │");
+    console.info(  "│ ELENA MIRON APP -> STOPPED  │");
     console.info(  "└─────────────────────────────┘\n");
 
 	setTimeout(() => process.exit(), 500);
@@ -102,7 +102,7 @@ app.get('*', function(req, res) {
 
 app.listen(PORT, function() {
     console.info("\n┌─────────────────────────────┐");
-    console.info(  "│ ELENA MIRON APP -> STARTED │");
+    console.info(  "│ ELENA MIRON APP -> STARTED  │");
     console.info(  "└─────────────────────────────┘\n");
     console.info("DO NOT CLOSE THIS WINDOW!");
     console.info("SERVER address: ", db);
