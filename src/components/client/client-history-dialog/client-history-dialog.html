@@ -85,8 +85,8 @@
                                             <md-select-header class="select-header">
                                                 <input ng-model="$ctrl.data.searchServices" placeholder="Cauta un serviciu" class="select-header-searchbox">
                                             </md-select-header>
-                                            <md-optgroup label="{{serviceType.name}}" ng-repeat="serviceType in $ctrl.data.serviceTypes track by serviceType._id">
-                                                <md-option ng-value="service" ng-repeat="service in filteredServices = ($ctrl.data.services | filter: {_serviceTypeId: serviceType._id, name: $ctrl.data.searchServices })  track by service._id">
+                                            <md-optgroup label="{{serviceType.name}}" ng-repeat="serviceType in $ctrl.data.serviceTypes | orderBy:'-name' track by serviceType._id">
+                                                <md-option ng-value="service" ng-repeat="service in filteredServices = ($ctrl.data.services | filter: {_serviceTypeId: serviceType._id, name: $ctrl.data.searchServices }) track by service._id">
                                                     {{service.name}}
                                                     <small>{{service.price}} RON ({{service.duration}} min.)</small>
                                                 </md-option>
@@ -196,35 +196,43 @@
                     </md-button>
                 </div>
 
-                <!--MOD PLATA-->
+                <!--PLATA-->
                 <md-card ng-show="$ctrl.data.historyItem.performedServices.length">
-                    <md-card-header>
-                        <md-card-header-text>
-                            <span class="md-title">Mod Plata</span>
+                    <md-card-header ng-click="showPaymentCard = !showPaymentCard">
+                        <md-card-header-text layout="row" layout-align="start center">
+                            <span class="md-title">Plata</span>
+                            <span>
+                                <md-button class="md-icon-button">
+                                    <md-icon>keyboard_arrow_{{showPaymentCard ? 'up' : 'down'}}</md-icon>
+                                </md-button>
+                            </span>
                         </md-card-header-text>
                     </md-card-header>
-                    <md-card-content layout="row" layout-align="start center">
-                        <div layout="row" layout-align="start center" flex>
-                            <md-input-container flex>
-                                <label>Mod Plata:</label>
-                                <md-select name="paymentType"
-                                    ng-model="$ctrl.data.historyItem.payment.type">
-                                    <md-option ng-value="type" ng-repeat="type in ['CASH', 'CARD']">
-                                        <md-icon>credit_card</md-icon> {{ type }}
-                                    </md-option>
-                                </md-select>
-                            </md-input-container>
-                            <md-input-container flex class="no-validation">
-                                <label>Platit:</label>
-                                <input name="paymentType"
-                                    ng-model="$ctrl.data.historyItem.payment.paidAmount">
-                            </md-input-container>
-                        </div>
-                        <div layout="column" layout-align="start end" layout-padding flex>
-                            <span>Discount Total: {{ $ctrl.data.historyItem.payment.discount }} RON</span>
-                            <span>Cost Total: {{ $ctrl.data.historyItem.payment.total }} RON</span>
-                            <span>Platit: {{ $ctrl.data.historyItem.payment.paidAmount || 0 }} RON</span>
-                            <span>Rest de Plata: {{ $ctrl.data.historyItem.payment.total - $ctrl.data.historyItem.payment.paidAmount }} RON</span>
+                    <md-card-content ng-show="showPaymentCard">
+                        <div layout="row" layout-align="start center">
+                            <div layout="row" layout-align="start center" flex>
+                                <md-input-container flex>
+                                    <label>Mod Plata:</label>
+                                    <md-select name="paymentType"
+                                        ng-model="$ctrl.data.historyItem.payment.type">
+                                        <md-option ng-value="type" ng-repeat="type in ['CASH', 'CARD']">
+                                            <md-icon>credit_card</md-icon> {{ type }}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                                <md-input-container flex class="no-validation">
+                                    <label>Platit:</label>
+                                    <input name="paymentType" 
+                                        type="number" min="0" step="1"
+                                        ng-model="$ctrl.data.historyItem.payment.paidAmount">
+                                </md-input-container>
+                            </div>
+                            <div layout="column" layout-align="start end" layout-padding flex>
+                                <span>Discount Total: {{ $ctrl.data.historyItem.payment.discount }} RON</span>
+                                <span>Cost Total: {{ $ctrl.data.historyItem.payment.total }} RON</span>
+                                <span>Platit: {{ $ctrl.data.historyItem.payment.paidAmount || 0 }} RON</span>
+                                <span>Rest de Plata: {{ $ctrl.data.historyItem.payment.total - $ctrl.data.historyItem.payment.paidAmount }} RON</span>
+                            </div>
                         </div>
                     </md-card-content>
                 </md-card>
