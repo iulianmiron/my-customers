@@ -15,6 +15,7 @@
             'angular-clipboard',
             'md.time.picker',
             'ngScrollGlue',
+            'ngCsv',
 
             'cm.dataservice',
 
