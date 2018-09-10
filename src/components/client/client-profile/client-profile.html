@@ -18,7 +18,7 @@
             are varsta de 
             <b>{{ $ctrl.data.client.age || '- trebuie completata data de nastere -'}}.
                 <md-tooltip ng-if="$ctrl.data.client.age">
-                    Data Nasterii: {{ $ctrl.data.client.dateOfBirth | amDateFormat:'Do/MM/YYYY' }}
+                    Data Nasterii: {{ $ctrl.data.client.dateOfBirth | amDateFormat:'DD/MM/YYYY' }}
                 </md-tooltip>
             </b>
         </p>

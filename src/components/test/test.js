@@ -24,11 +24,11 @@
 
 			function getAllClients() {
 				ClientsDataService.getAll().then(function(rClients) {
-					ctrl.data.allClients = cleanUpClients(rClients);
+					ctrl.data.allClients = formatToGoogleContactsCSV(rClients);
 				});
 			}
 
-			function cleanUpClients(clients) {
+			function formatToGoogleContactsCSV(clients) {
 				return clients.map(function(client) {
 					return {
 						'Name': client.firstName.charAt(0).toUpperCase() + client.firstName.slice(1) + ' ' + client.lastName.charAt(0).toUpperCase() + client.lastName.slice(1),
