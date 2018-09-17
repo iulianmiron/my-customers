@@ -16,6 +16,7 @@
             'md.time.picker',
             'ngScrollGlue',
             'ngCsv',
+            'btford.socket-io',
 
             'cm.dataservice',
 
@@ -26,7 +27,13 @@
         ])
         .config(appConfig)
         .run(appRun)
-        .controller('appController', appCtrl);
+        .controller('appController', appCtrl)
+        .factory('socketService', socketService);
+
+        socketService.$inject = ['socketFactory'];
+        function socketService(socketFactory) {
+            return socketFactory();
+        }
 
     appConfig.$inject = ['$mdDateLocaleProvider', 'toastrConfig'];
     function appConfig($mdDateLocaleProvider, toastrConfig) {
@@ -56,7 +63,6 @@
     function appRun(amMoment) {
         amMoment.changeLocale('ro');
     }
-
     
     appCtrl.$inject = ['$state', 'HotkeyService', 'localStorageService'];
     function appCtrl($state, HotkeyService, localStorageService) {
@@ -75,6 +81,6 @@
         function addNewClient() {
             $state.go('client', { id: 0 });
         }
-
     }    
 })();
+

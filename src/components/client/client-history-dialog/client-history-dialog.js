@@ -51,7 +51,8 @@
         };
 
         function save(historyItem) {
-            $mdDialog.hide(historyItem);
+            console.log(historyItem);
+            // $mdDialog.hide(historyItem);
         };
 
         function changeSelectedServicesText(selectedServices) {

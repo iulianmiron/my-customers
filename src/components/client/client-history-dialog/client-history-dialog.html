@@ -55,7 +55,7 @@
                                     </md-time-picker>
                                 </div>
 
-                                <div layout="row" layout-gt-sm="row">
+                                <div layout="column" layout-gt-sm="row">
 
                                     <!--STAFF-->
                                     <md-input-container flex>
@@ -365,7 +365,7 @@
         </md-button>
         <md-button class="md-raised md-primary" 
             ng-click="$ctrl.actions.save($ctrl.data.historyItem)" 
-            ng-disabled="$ctrl.data.editHistoryItemForm.$invalid">
+            ng-disabled="!$ctrl.data.historyItem.performedServices.length || $ctrl.data.addServicesByStaffForm.$invalid">
             Salveaza Sedinta
         </md-button>
     </md-dialog-actions>
