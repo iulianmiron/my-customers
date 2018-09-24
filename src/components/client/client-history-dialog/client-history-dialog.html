@@ -219,6 +219,7 @@
                             <md-input-container flex>
                                 <label>Mod Plata:</label>
                                 <md-select name="paymentType_{{$index}}" required
+                                    ng-model-options="{trackBy: '$value.id'}"
                                     ng-model="paidAmount.type">
                                     <md-option ng-value="paymentMethod" ng-repeat="paymentMethod in $ctrl.data.paymentMethods track by paymentMethod.id">
                                         <md-icon>{{ paymentMethod.icon }}</md-icon> {{ paymentMethod.name }}

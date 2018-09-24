@@ -72,7 +72,7 @@
         ctrl.status = {};
         ctrl.actions = {};
 
-        localStorageService.set('show-admin-controls', true);
+        localStorageService.set('show-admin-controls', false);
 
         ctrl.status.showSidenav = false;
 
