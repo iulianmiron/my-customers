@@ -97,7 +97,6 @@
                     selectedTime = processTime(selectedTime);
                 }
                 if(selectedTime) {
-                    debugger;
                     var hour = selectedTime.split(':')[0];
                     var minute = selectedTime.split(':')[1];
     

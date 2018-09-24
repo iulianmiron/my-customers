@@ -48,17 +48,17 @@ md-list-item p {
   padding: 15px;
 }
 
-/* .selectdemoSelectHeader {
-  Please note: All these selectors are only applied to children of elements with the 'selectdemoSelectHeader' class
+/* .container-select-header {
+  Please note: All these selectors are only applied to children of elements with the 'container-select-header' class
 } */
-.selectdemoSelectHeader .demo-header-searchbox {
+.container-select-header .select-header-searchbox {
   border: none;
   outline: none;
   height: 100%;
   width: 100%;
   padding: 0; 
 }
-.selectdemoSelectHeader .demo-select-header {
+.container-select-header .select-header {
   box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.1), 0 0 0 0 rgba(0, 0, 0, 0.14), 0 0 0 0 rgba(0, 0, 0, 0.12);
   padding-left: 10.667px;
   height: 48px;
@@ -68,10 +68,9 @@ md-list-item p {
   align-items: center;
   width: auto; 
 }
-.selectdemoSelectHeader md-content._md {
+.container-select-header md-content._md {
   max-height: 240px; 
 }
-
 
 .overflow {
   max-height: 60vh;
@@ -91,7 +90,7 @@ md-list-item p {
 }
 
 md-input-container.no-validation .md-errors-spacer:empty { display: none; }
-md-input-container.no-validation { margin: 0; }
+md-input-container.no-validation { margin-bottom: 0; margin-top: 0 }
 
 md-datepicker.hide-input-container .md-datepicker-input-container {
   opacity: 0;
@@ -181,4 +180,8 @@ md-datepicker.hide-input-container .md-icon-button+.md-datepicker-input-containe
 
 .md-dialog-container:nth-of-type(odd) {
   z-index: 82;
+}
+
+.margin-left {
+  margin-left: 12px;
 }

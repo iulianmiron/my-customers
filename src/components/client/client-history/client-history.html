@@ -8,7 +8,7 @@
                     ng-click="$ctrl.actions.refreshHistory($event)"
                     ng-if="$ctrl.data.clientId">
                     <md-icon>refresh</md-icon>
-                    <md-tooltip hide show-gt-sm>Refresh istoric</md-tooltip>
+                    <md-tooltip>Refresh istoric</md-tooltip>
                 </md-button>
             </span>
             <md-menu md-position-mode="target-right target">
@@ -47,22 +47,23 @@
                     </md-button>
                 </md-card-header>
                 <md-divider></md-divider>
-                <md-card-content ng-show="showDetails || $last" class="fade">
-                    <div>
-                        <div>Servicii prestate:</div>
-                        <ul>
-                            <li ng-repeat="service in historyItem.services track by service._id">
+                <md-card-content ng-show="showDetails || $last">
+                    <div ng-repeat="servicesByStaff in historyItem.performedServices track by $index">
+                        <div>
+                            <b>{{ servicesByStaff.staff.first_name + ' ' + servicesByStaff.staff.last_name }}</b>{{ servicesByStaff.interval ? ', interval ' +  servicesByStaff.interval + ' sapt.': ''}}:
+                        </div>
+                        <ol>
+                            <li ng-repeat="service in servicesByStaff.services track by service._id">
                                 {{service.name}}
-                                <small>Pret: {{service.price}} RON  Durata: {{service.duration}} min.</small>
+                                <small ng-hide="!service.price && !service.duration">{{service.price}} RON / {{service.duration}} min.</small>
                             </li>
-                        </ul>
+                        </ol>
+
+                        <p ng-show="servicesByStaff.soldProducts">Produse acasa: {{ servicesByStaff.soldProducts }}</p>
+                        <p ng-show="servicesByStaff.observations">Observatii: {{ servicesByStaff.observations }}</p>
+                        <p ng-show="servicesByStaff.videosTaken">Filmari: {{ servicesByStaff.videosTaken ? 'Da' : 'Nu' }}</p>
+                        <p ng-show="servicesByStaff.photosTaken">Poze: {{ servicesByStaff.photosTaken ? 'Da' : 'Nu' }}</p>
                     </div>
-                    <p>Efectuat de: {{ historyItem.servicesPerformedBy ? historyItem.servicesPerformedBy.first_name + ' ' + historyItem.servicesPerformedBy.last_name : '-' }}</p>
-                    <p>Interval: {{ historyItem.interval || '-' }}</p>
-                    <p>Produse acasa: {{ historyItem.homeProducts || '-' }}</p>
-                    <p>Observatii: {{ historyItem.observations || '-' }}</p>
-                    <p>Filmari: {{ historyItem.videosTaken ? 'Da' : '-' }}</p>
-                    <p>Poze: {{ historyItem.photosTaken ? 'Da' : '-' }}</p>
                 </md-card-content>
             </md-card>
         </div>

@@ -130,7 +130,7 @@
                     <md-icon>keyboard_arrow_{{$ctrl.status.showMoreProfileDetails ? "up" : 'down'}}</md-icon>
                 </md-button>
 
-                <div ng-show="$ctrl.status.showMoreProfileDetails" class="fade">
+                <div ng-show="$ctrl.status.showMoreProfileDetails">
 
                     <md-input-container>
                         <md-icon>favorite</md-icon>
@@ -223,10 +223,18 @@
     </md-dialog-content>
 
     <md-dialog-actions layout="row" layout-align="end center">
-        <md-button ng-click="$ctrl.actions.cancel($ctrl.data.client)">
+        <md-button class="md-warn" admin-only ng-if="$ctrl.data.client._id"
+            ng-click="$ctrl.actions.deleteClient($ctrl.data.client)">
+            Sterge Client
+        </md-button>
+        <div flex></div>
+        <md-button 
+            ng-click="$ctrl.actions.cancel($ctrl.data.client)">
             Renunta
         </md-button>
-        <md-button class="md-raised md-primary" ng-click="$ctrl.actions.save($ctrl.data.client)" ng-disabled="$ctrl.data.clientProfileForm.$invalid">
+        <md-button class="md-raised md-primary" 
+            ng-click="$ctrl.actions.save($ctrl.data.client)" 
+            ng-disabled="$ctrl.data.clientProfileForm.$invalid">
             Salveaza Client
         </md-button>
     </md-dialog-actions>
