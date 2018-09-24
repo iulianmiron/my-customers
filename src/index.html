@@ -2,21 +2,22 @@
 <html ng-app="cm" ng-strict-di>
 	<head>
 		<base href="/">
-		<title>Estet Studio</title>
+		<title>Salon Elena Miron</title>
 
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		
-		<link rel="icon" href="img/favicon.ico?rev=b83b9da784eb4b107ee22813d1ff7444">
+		<link rel="icon" href="img/favicon.ico?rev=74b80f3f3513325a58333df8716ce36d">
 		<!-- MAIN STYLES -->
-		<link rel='stylesheet' href="styles/styles.css?rev=721693aab6fe5d4f4849496c2952eb81" />
+		<link rel='stylesheet' href="styles/styles.css?rev=3a0a06c08d3ba2fcfb99289e420e9953" />
 
-		<link rel='stylesheet' href="./node_modules/angular-material/angular-material.min.css?rev=ab3c9a89820a9d0f664d6957fdfad5cb" />
+		<link rel='stylesheet' href="./node_modules/angular-material/angular-material.min.css?rev=6dfe5f7b7a472e57f4103adba18f0515" />
 		<link rel='stylesheet' href="node_modules/material-design-icons-iconfont/dist/material-design-icons.css?rev=c25988089f59c8381e2b6c1cc1d627ab" />
 		<link rel="stylesheet" href="node_modules/angular-toastr/dist/angular-toastr.min.css?rev=8748148e10fb3ff62ac21e6b3ae720e4" />
 		<link rel="stylesheet" href="node_modules/angular-hotkeys/build/hotkeys.min.css?rev=88fa719c85dc86ad6c60d15e57ff4993" />
-		<link rel="stylesheet" href="node_modules/angular-material-time-picker/dist/md-time-picker.css?rev=dfee32c92fd47c42c8db87454a659536" />
+		<link rel="stylesheet" href="node_modules/angular-material-time-picker/dist/md-time-picker.css?rev=5de98edd3c541017dea3bf9ba6f15ea3" />
 	</head>
 	<body ng-controller="appController as $ctrl" ng-class="{ 'hide-scroll' : $ctrl.status.isAppLoading }" layout="column" layout-fill>
+
 		<!--APP HEADER-->
 		<app-header
 			show-sidenav="$ctrl.status.showSidenav">
@@ -44,25 +45,29 @@
 		</md-content> -->
 
 		<!--EXTERNAL LIBS-->
-		<script src="node_modules/angular/angular.min.js?rev=4c619ef91e3fa3f1d4813db2b2eb738d"></script>
-		<script src="node_modules/angular-animate/angular-animate.min.js?rev=0ca043310774b1827f4200ca79c4f8ee"></script>
-		<script src="node_modules/angular-aria/angular-aria.min.js?rev=dd99025f836bda0a54da4660dea66cfa"></script>
-		<script src="node_modules/angular-material/angular-material.min.js?rev=f304374e645b5212b801568586589167"></script>
-		<script src="node_modules/angular-messages/angular-messages.min.js?rev=a3a2568e873caa60a8ff05d5e3488bbe"></script>
-		<script src="node_modules/angular-sanitize/angular-sanitize.min.js?rev=a2b8f13581f94af095aeb8fc6e4d0c71"></script>
-		<script src="node_modules/@uirouter/angularjs/release/angular-ui-router.min.js?rev=8e1e61433ddeffef6c7f8037222defd0"></script>
-		<script src="node_modules/moment/min/moment.min.js?rev=8793f63b81247c95dceb2edd699efbdc"></script>
-		<script src="node_modules/moment/locale/ro.js?rev=d5f894647d7d1f2926435af819243b44"></script>
-		<script src="node_modules/angular-moment/angular-moment.js?rev=94e8af11203e4a9df27b742000d0f817"></script>
+		<script src="node_modules/angular/angular.min.js?rev=ca6464a8e26218520f4b0c3bf2137013"></script>
+		<script src="node_modules/angular-animate/angular-animate.min.js?rev=87b4f8591c4a916da916d748e30e0a27"></script>
+		<script src="node_modules/angular-aria/angular-aria.min.js?rev=9ef918682a1d3785b378e15c18d9e66a"></script>
+		<script src="node_modules/angular-material/angular-material.min.js?rev=556ff06eb29690866322e3d8a3ffa66f"></script>
+		<script src="node_modules/angular-messages/angular-messages.min.js?rev=7a916854b1e803e20fa0868a9796064c"></script>
+		<script src="node_modules/angular-sanitize/angular-sanitize.min.js?rev=cfca0c834e8a4a014374922dbd5f5652"></script>
+		<script src="node_modules/@uirouter/angularjs/release/angular-ui-router.min.js?rev=6ba4d2da5200dcd5475e111ac82a922c"></script>
+		<script src="node_modules/moment/min/moment.min.js?rev=fb1d9a5b3984866233be3647c8a56d7b"></script>
+		<script src="node_modules/moment/locale/ro.js?rev=16866d6254dd5a304b9c50b5800e8a2d"></script>
+		<script src="node_modules/angular-moment/angular-moment.js?rev=d7649fb0a9d9a4a601c0d757bd16dc56"></script>
 		<script src="node_modules/angular-toastr/dist/angular-toastr.tpls.min.js?rev=a64241e89e1dbc331198d15defff8ecb"></script>
 		<script src="node_modules/angular-spinners/dist/angular-spinners.min.js?rev=2363e32548f9ce1cce73d8d7157b54cd"></script>
 		<script src="node_modules/angular-hotkeys/build/hotkeys.min.js?rev=240f18a19501924691f17f6c3156d833"></script>
 		<script src="node_modules/angular-clipboard/angular-clipboard.js?rev=cdc29a4208a58a62d6ad2b062fd6cfd3"></script>
-		<script src="node_modules/angular-material-time-picker/dist/md-time-picker.js?rev=6d7df93347523439030c51b4af582d74"></script>
-		<script src="node_modules/ng-scroll-glue/dist/ng-scroll-glue.min.js?rev=6d7df93347523439030c51b4af582d74"></script>
+		<script src="node_modules/angular-material-time-picker/dist/md-time-picker.js?rev=5bd463ec22223766187c06a5fd6d6b9e"></script>
+		<script src="node_modules/ng-scroll-glue/dist/ng-scroll-glue.min.js?rev=a5ee61f2b4d4b67cb5691a22ee5e5604"></script>
+		<script src="node_modules/angular-local-storage/dist/angular-local-storage.min.js?rev=f23adfcb489f274a9d7821982df73955"></script>
+		<script src="node_modules/ng-csv/build/ng-csv.min.js?rev=1d9f04683efe06532e2a516d5071f3af"></script>
+		<script src="node_modules/socket.io-client/dist/socket.io.js?rev=7fa6141c17930b29470c0dd21d196cf9"></script>
+		<script src="node_modules/angular-socket-io/socket.min.js?rev=ce17074ff88ebcd1afbf0010a4c13b45"></script>
 
 		<!-- Main app -->
-		<script src="app.js?rev=bae45987047d26eb376698609ea37ddd"></script>
+		<script src="app.js?rev=50aa562dbb0e4d3ce0bd9f629b5254c6"></script>
 		<!-- App Routes -->
 		<script src="app.routing.js?rev=719d209fd1974f18b7404c51007e57f9"></script>
 		<!-- App Theme -->
@@ -70,24 +75,26 @@
 		
 		<!-- DATASERVICES -->
 		<script src="dataservices/dataservice.js?rev=5623f4e1e667788f7067d4fa31545964"></script>
-		<script src="dataservices/dataservices.js?rev=4c45992f02e7268caed446a8d37e510c"></script>
+		<script src="dataservices/dataservices.js?rev=088729536faa6cb1703a0de656a9eb6c"></script>
 
 		<!-- CONSTANTS -->
-		<script src="constants/constants.js?rev=b4eae3a6e378b34abfccdf15a5e30db8"></script>
+		<script src="constants/constants.js?rev=4a7d2450d8ac186074f0611c960dc926"></script>
 		<!-- DIRECTIVES -->
 		<script src="directives/directives.js?rev=5c15040c859659e78350bf1018d54330"></script>
 		<script src="directives/vip-color.js?rev=5c15040c859659e78350bf1018d54330"></script>
 		<script src="directives/activate-spinner.js?rev=5c15040c859659e78350bf1018d54330"></script>
 		<script src="directives/current-session.js?rev=5c15040c859659e78350bf1018d54330"></script>
 		<script src="directives/button-shrink.js?rev=5c15040c859659e78350bf1018d54330"></script>
+		<script src="directives/admin-only.js?rev=5c15040c859659e78350bf1018d54330"></script>
+
 		<!-- SERVICES -->
 		<script src="services/services.js?rev=948607cca6e28268291ba56b779309a6"></script>
 		<script src="services/hotkey.service.js?rev=398c940d304ef1f282f607017877a957"></script>
-		<script src="services/utils.service.js?rev=38e93f2adefc6b1d2ef401eb99521dfe"></script>
+		<script src="services/utils.service.js?rev=15f398d361c20863dfbee18ff05daa08"></script>
 
 
 		<!-- COMPONENTS -->
-		<script src="components/components.js?rev=2ec395001dab7b3888907a990f567b3d"></script>
+		<script src="components/components.js?rev=e78103c985ba1ad33c3ceaffa163d1ce"></script>
 
 		<!-- COMMON -->
 		<script src="components/common/app-header/app-header.js?rev=b30e93f53f00677a5999202cc5063cbd"></script>
@@ -95,7 +102,7 @@
 		<script src="components/common/client-search/client-search.js?rev=53d76da758dee7c2698471b1c2fdd032"></script>
 		<script src="components/common/app-loading/app-loading.js?rev=5f30da210665a2a2b916977eeecfeee9"></script>
 		<script src="components/common/confirm-dialog/confirm-dialog.js?rev=a5c2f344d9c975eaa2c19c14f1d5e169"></script>
-		<script src="components/common/time-picker/time-picker.js?rev=a5c2f344d9c975eaa2c19c14f1d5e169"></script>
+		<script src="components/common/time-picker/time-picker.js?rev=a0d39b438357a42b70ec1a39bde9a5ba"></script>
 
 		<!-- SETTINGS -->
 		<script src="components/settings/settings.js?rev=3ed1e7db8c9ca762c43c6bffc4a21e57"></script>
@@ -124,11 +131,11 @@
 		<script src="components/home/search-clients/search-clients.js?rev=83275c55e20b6cb48e63bdc844b035cb"></script>
 
 		<!-- CLIENT -->
-		<script src="components/client/client.js?rev=e4527ca0816f2953478e1b0b5ebdedfd"></script>
-		<script src="components/client/client-profile/client-profile.js?rev=f7322075e3737ff6c7ba27bd7dacd6b5"></script>
-		<script src="components/client/client-profile-dialog/client-profile-dialog.js?rev=c271e6386738c771a0d2a961dd267be1"></script>
-		<script src="components/client/client-history/client-history.js?rev=83f1c6b3e52d180a2f79701b5295a786"></script>
-		<script src="components/client/client-history-dialog/client-history-dialog.js?rev=2f8b0d5f472b4e2178d8c98cea857560"></script>
+		<script src="components/client/client.js?rev=1dfe732d1b06ece09f20531027a517f0"></script>
+		<script src="components/client/client-profile/client-profile.js?rev=51b3c6c7acde09448cd712024a24639c"></script>
+		<script src="components/client/client-profile-dialog/client-profile-dialog.js?rev=e59b1cb2532ac4e36098d92a1bc5ac40"></script>
+		<script src="components/client/client-history/client-history.js?rev=8145cd64cdce878fd04d9410a256587a"></script>
+		<script src="components/client/client-history-dialog/client-history-dialog.js?rev=71c68e53730ae81a94454677070b3e9c"></script>
 
 		<!-- SHOP -->
 		<script src="components/shop/shop.js?rev=1975195e25c3eeaaf99c31f0dd33d40c"></script>
@@ -139,11 +146,11 @@
 		<script src="components/bank-account/bank-account.js?rev=968dea68867ca9379745a2da25494c6f"></script>
 
 		<!-- CALENDAR -->
-		<script src="components/calendar/calendar.js?rev=faf7e0373c6c368052c1962f03842c04"></script>
-		<script src="components/calendar/add-appointment-dialog/add-appointment-dialog.js?rev=527aaf4a74c98f290d4918a8c27da7db"></script>
+		<script src="components/calendar/calendar.js?rev=f7c5adbebad2dfd02628f0e6dddd1cac"></script>
+		<script src="components/calendar/add-appointment-dialog/add-appointment-dialog.js?rev=4c32de504204b7433574ef4c85c42ac0"></script>
 
 		<!-- TEST page -->
-		<script src="components/test/test.js?rev=e55b05c016e18710528d3e4eb9e1193e"></script>
+		<script src="components/test/test.js?rev=e565d47aab230489011b8ef0d0947fea"></script>
 		
 	</body>
 </html>

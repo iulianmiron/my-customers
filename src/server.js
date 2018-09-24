@@ -1,12 +1,12 @@
 var express = require('express');
 var path = require('path');
 var app = express();
-var mongojs = require('mongojs');
 var bodyParser = require('body-parser');
 var logger = require('./api/utils/logging').logger;
 
 var PORT = require('./api/config').FE_PORT;
 var db = require('./api/config').db;
+var CORS = require('./api/config').CORS;
 
 var clients         = require('./api/routes/clients');
 var history         = require('./api/routes/history');
@@ -20,7 +20,8 @@ var roles           = require('./api/routes/roles');
 
 app.use(express.static(__dirname + '/'));
 app.use(bodyParser.json());
-app.use(logger);
+// app.use(CORS);
+// app.use(logger);
 
 // CLIENTS collection
 app.get('/api/clients', clients.getAll);
@@ -89,7 +90,7 @@ app.delete('/api/roles/:id', roles.delete);
 // kill server
 app.get('/api/stop', function(req, res) {
     console.info("\n┌─────────────────────────────┐");
-    console.info(  "│ ESTET STUDIO APP -> STOPPED │");
+    console.info(  "│ ELENA MIRON APP -> STOPPED  │");
     console.info(  "└─────────────────────────────┘\n");
 
 	setTimeout(() => process.exit(), 500);
@@ -100,11 +101,21 @@ app.get('*', function(req, res) {
     res.sendFile(path.resolve('./index.html'));
 });
 
-app.listen(PORT, function() {
+var server = app.listen(PORT, function() {
     console.info("\n┌─────────────────────────────┐");
-    console.info(  "│ ESTET STUDIO APP -> STARTED │");
+    console.info(  "│ ELENA MIRON APP -> STARTED  │");
     console.info(  "└─────────────────────────────┘\n");
     console.info("DO NOT CLOSE THIS WINDOW!");
     console.info("SERVER address: ", db);
     console.info("APP port: ", PORT);
 });
+
+var io = require('socket.io').listen(server);
+var socketFn = require('./api/ws/ws').socketFn;
+
+io.on('connection', socketFn(io));
+
+
+
+
+

@@ -36,7 +36,7 @@
         }
 
         function openClientPage(event) {
-            if(event.client._id || event.client._id === 0) {
+            if(event.client && (event.client._id || event.client._id === 0)) {
                 ctrl.status.showSearch = false;
                 $state.go('client', { id: event.client._id });
             }

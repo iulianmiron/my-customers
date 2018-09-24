@@ -11,117 +11,277 @@
 
     <md-dialog-content>
         <div class="md-dialog-content">
-            <form name="$ctrl.data.editHistoryItemForm">
-                <div layout="row" layout-align="start start" layout-wrap>
-                    <md-input-container>
-                        <label>Data sedintei</label>
-                        <md-datepicker name="date" required 
-                            ng-model="$ctrl.data.historyItem.date" 
-                            md-max-date="$ctrl.data.maxDate">
-                        </md-datepicker>
-                        <div ng-messages="$ctrl.data.editHistoryItemForm.date.$error">
-                            <div ng-message="valid">Valoarea introdusa nu este o data valida</div>
-                            <div ng-message="required">Data este necesara</div>
-                            <div ng-message="maxdate">Data nu poate fi mai mare decat data curenta</div>
-                        </div>
-                    </md-input-container>
+            
+            <!--ADD SERVICES BY STAFF FORM-->
+            <form name="$ctrl.data.addServicesByStaffForm">
+                <div ng-repeat="servicesByStaff in $ctrl.data.historyItem.performedServices">
+                    <md-card>
+                        <md-card-header layout="row" layout-align="start center">
+                            <md-card-header-text ng-click="$ctrl.actions.showCardContent($index)" layout="row" layout-align="start center">
+                                <span class="md-title" ng-hide="servicesByStaff.staff && servicesByStaff.services">
+                                    Alege persoana si serviciile efectuate 
+                                </span>
+                                <span class="md-title" ng-show="servicesByStaff.staff && servicesByStaff.services" layout="column">
+                                    <div>{{ servicesByStaff.staff.first_name + ' ' + servicesByStaff.staff.last_name }} </div>
+                                    <small>{{ servicesByStaff.services.length }} {{ servicesByStaff.services.length === 1 ? 'serviciu' : 'servicii'}}</small>
+                                </span>
+                                <span>
+                                    <md-button class="md-icon-button">
+                                        <md-icon>keyboard_arrow_{{$ctrl.data.showCardContent[$index] ? 'up' : 'down'}}</md-icon>
+                                    </md-button>
+                                </span>
+                            </md-card-header-text>
+                            <md-button ng-click="$ctrl.actions.deleteServicesByStaff($ctrl.data.historyItem.performedServices, $index)" button-shrink="gt-sm">
+                                <md-icon>delete</md-icon>
+                                Sterge
+                            </md-button>
+                        </md-card-header>
+                        <md-card-content ng-show="$ctrl.data.showCardContent[$index]">
+                            <div>
+                                
+                                <div layout="column" layout-gt-sm="row">
 
-                    <md-time-picker
-                        ng-model="$ctrl.data.historyItem.date" 
-                        message="$ctrl.data.timePickerMessages" 
-                        read-only="false" 
-                        mandatory="true" 
-                        no-meridiem>
-                    </md-time-picker>
+                                    <!--STAFF-->
+                                    <md-input-container flex>
+                                        <label>Servicii efectuate de:</label>
+                                        <md-select name="staff_{{$index}}" required
+                                            ng-model-options="{trackBy: '$value.id'}" 
+                                            ng-model="servicesByStaff.staff">
+                                            <md-option ng-value="user" ng-repeat="user in $ctrl.data.users track by user.id">
+                                                <md-icon>account_circle</md-icon> {{ user.first_name }} {{ user.last_name }}
+                                            </md-option>
+                                        </md-select>
+                                        <div ng-messages="$ctrl.data.addServicesByStaffForm['staff_' + $index].$error">
+                                            <div ng-message="required">O persoana trebuie selectata.</div>
+                                        </div>
+                                    </md-input-container>
 
-                    <md-input-container flex="50">
-                        <label>Interval (sapt.)</label>
-                        <md-icon>timelapse</md-icon>
-                        <input name="interval" ng-model="$ctrl.data.historyItem.interval" type="number" step="1">
-                    </md-input-container>
+                                    <!--SERVICES-->
+                                    <md-input-container flex>
+                                        <label>Alege Servicii</label>
+                                        <md-select 
+                                            name="services_{{$index}}" multiple required
+                                            ng-model-options="{trackBy: '$value._id'}" 
+                                            ng-model="servicesByStaff.services"  
+                                            md-on-close="$ctrl.data.searchServices = ''; $ctrl.actions.setTotalCost(servicesByStaff)" 
+                                            md-selected-text="$ctrl.actions.changeSelectedServicesText(servicesByStaff.services)"
+                                            data-md-container-class="container-select-header">
+                                            <md-select-header class="select-header">
+                                                <input ng-model="$ctrl.data.searchServices" placeholder="Cauta un serviciu" class="select-header-searchbox">
+                                            </md-select-header>
+                                            <md-optgroup label="{{serviceType.name}}" ng-repeat="serviceType in $ctrl.data.serviceTypes | orderBy:'name' track by serviceType._id">
+                                                <md-option ng-value="service" ng-repeat="service in filteredServices = ($ctrl.data.services | filter: {_serviceTypeId: serviceType._id, name: $ctrl.data.searchServices }) track by service._id">
+                                                    {{service.name}}
+                                                    <small>{{service.price}} RON ({{service.duration}} min.)</small>
+                                                </md-option>
+                                            </md-optgroup>
+                                        </md-select>
+                                        <div ng-messages="$ctrl.data.addServicesByStaffForm['services_' + $index].$error">
+                                            <div ng-message="required">Minim un serviciu trebuie introdus</div>
+                                        </div>
+                                    </md-input-container>
+                                </div>
+                            </div>
+                            <!--LISTA SERVICII ALESE-->
+                            <div ng-repeat="service in servicesByStaff.services track by service._id"
+                                ng-show="servicesByStaff.services.length" layout="column" layout-padding>
+                                {{ $index + 1 }}. {{ service.name }}
+                                <small>Pret: {{ service.price }} RON, Durata: {{ service.duration }} min.</small>
+                            </div>
+
+                            <div layout="row" layout-wrap ng-show="servicesByStaff.services.length">
+
+                                <!--PRET-->
+                                <md-input-container>
+                                    <label>Pret grup servicii</label>
+                                    <md-icon>attach_money</md-icon>
+                                    <input name="cost_{{$index}}" 
+                                        type="number" step="1" min="0"
+                                        ng-model="servicesByStaff.cost"
+                                        ng-change="$ctrl.actions.setTotalCostWithDiscount(servicesByStaff)"
+                                    >
+                                    <div ng-messages="$ctrl.data.addServicesByStaffForm['cost_' + $index].$error">
+                                        <div ng-message="min">Pretul nu poate fi negativ</div>
+                                    </div>
+                                </md-input-container>
+
+                                <!--DISCOUNT-->
+                                <md-input-container>
+                                    <label>Discount</label>
+                                    <md-icon>money_off</md-icon>
+                                    <input name="discount_{{$index}}" 
+                                        type="number" step="1" min="0"
+                                        ng-model="servicesByStaff.discount" 
+                                        ng-change="$ctrl.actions.setTotalCostWithDiscount(servicesByStaff)"
+                                    >
+                                    <div ng-messages="$ctrl.data.addServicesByStaffForm['discount_' + $index].$error">
+                                        <div ng-message="min">Discount-ul nu poate fi negativ</div>
+                                    </div>
+                                </md-input-container>
+
+                                <!--TOTAL-->
+                                <md-input-container>
+                                    <label>Total (RON)</label>
+                                    <md-icon>attach_money</md-icon>
+                                    <input name="total_{{$index}}" 
+                                        type="number" step="1" min="0" ng-readonly="true"
+                                        ng-model="servicesByStaff.total" 
+                                    >
+                                </md-input-container>
+                            </div>
+
+                            <md-button ng-click="showExtraDetails = !showExtraDetails">
+                                <md-icon>{{ showExtraDetails ? 'keyboard_arrow_up' : 'edit' }}</md-icon>
+                                {{ showExtraDetails ? 'ascunde' : 'editeaza' }} detalii
+                            </md-button>
+
+                            <fieldset ng-show="showExtraDetails">
+                                <legend>Detalii</legend>
+                                <div layout="row" layout-align="start center" layout-wrap>
+                                    <md-input-container class="no-validation">
+                                        <label>Data sedintei</label>
+                                        <md-datepicker name="date" required 
+                                            ng-model="servicesByStaff.date" 
+                                            md-max-date="$ctrl.data.maxDate">
+                                        </md-datepicker>
+                                    </md-input-container>
+                
+                                    <md-time-picker 
+                                        ng-model="servicesByStaff.date" 
+                                        message="$ctrl.data.timePickerMessages" 
+                                        read-only="false" 
+                                        mandatory="true" 
+                                        no-meridiem>
+                                    </md-time-picker>
+
+                                    <md-input-container class="margin-left no-validation">
+                                        <md-icon>face</md-icon>
+                                        <label>Interval (sapt.)</label>
+                                        <input name="interval"
+                                            type="number" step="1" min="0" 
+                                            ng-model="servicesByStaff.interval">
+                                    </md-input-container>
+                                </div>
+
+                                <md-input-container class="md-block">
+                                    <label>Produse vandute</label>
+                                    <textarea name="soldProducts" ng-model="servicesByStaff.soldProducts">
+                                    </textarea>
+                                </md-input-container>
+            
+                                <md-input-container class="md-block">
+                                    <label>Observatii</label>
+                                    <textarea name="observations" ng-model="servicesByStaff.observations">
+                                    </textarea>
+                                </md-input-container>
+            
+                                <md-checkbox
+                                    ng-model="servicesByStaff.photosTaken">
+                                    Poze
+                                </md-checkbox>
+                                <md-checkbox
+                                    ng-model="servicesByStaff.videosTaken"> 
+                                    Filmare
+                                </md-checkbox>
+                            </fieldset>
+                        </md-card-content>
+                    </md-card>
+                    
                 </div>
-    
+
                 <div layout="row" layout-align="start center">
-                    <md-input-container flex>
-                        <label>Sedinta efectuata de:</label>
-                        <md-select name="servicesPerformedBy" required
-                            ng-model-options="{trackBy: '$value.id'}" 
-                            ng-model="$ctrl.data.historyItem.servicesPerformedBy">
-                            <md-option ng-value="user" ng-repeat="user in $ctrl.data.users track by user.id">
-                                <md-icon>face</md-icon> {{ user.first_name }} {{ user.last_name }}
-                            </md-option>
-                        </md-select>
-                        <div ng-messages="$ctrl.data.editHistoryItemForm.servicesPerformedBy.$error">
-                            <div ng-message="required">O persoana trebuie selectata.</div>
+                    <!--BUTON ADAUGA SERVICII-->
+                    <div layout="row" layout-align="start center">
+                        <md-button class="md-raised"
+                            ng-click="$ctrl.actions.addServicesByStaff($ctrl.data.historyItem)">
+                            <md-icon>add</md-icon>
+                            Adauga servicii
+                        </md-button>
+                    </div>
+                </div>
+
+
+                <!--PLATA-->
+                <md-card ng-show="$ctrl.data.historyItem.payment.total || $ctrl.data.historyItem.payment.discount">
+                    <md-card-header ng-click="$ctrl.actions.showHidePaymentCard($ctrl.status.showPaymentCard)">
+                        <md-card-header-text layout="row" layout-align="start center">
+                            <span class="md-title">Plata</span>
+                            <span>
+                                <md-button class="md-icon-button">
+                                    <md-icon>keyboard_arrow_{{$ctrl.status.showPaymentCard ? 'up' : 'down'}}</md-icon>
+                                </md-button>
+                            </span>
+                        </md-card-header-text>
+                    </md-card-header>
+                    <md-card-content ng-show="$ctrl.status.showPaymentCard">
+                        <div layout="row" layout-align="start start" flex 
+                            ng-repeat="paidAmount in $ctrl.data.historyItem.payment.paidAmounts track by $index">
+                            <md-input-container flex>
+                                <label>Mod Plata:</label>
+                                <md-select name="paymentType_{{$index}}" required
+                                    ng-model="paidAmount.type">
+                                    <md-option ng-value="paymentMethod" ng-repeat="paymentMethod in $ctrl.data.paymentMethods track by paymentMethod.id">
+                                        <md-icon>{{ paymentMethod.icon }}</md-icon> {{ paymentMethod.name }}
+                                    </md-option>
+                                </md-select>
+                                <div ng-messages="$ctrl.data.addServicesByStaffForm['paymentType_' + $index].$error">
+                                    <div ng-message="required">Obligatoriu</div>
+                                </div>
+                            </md-input-container>
+
+                            <md-input-container flex>
+                                <label>Platit {{ paidAmount.type.name }}:</label>
+                                <input name="paymentValue_{{$index}}" 
+                                    type="number" min="0" step="1" 
+                                    ng-required="paidAmount.type.id"
+                                    ng-disabled="!paidAmount.type.id"
+                                    ng-model="paidAmount.total"
+                                    ng-change="$ctrl.actions.setTotalPaid($ctrl.data.historyItem.payment.paidAmounts)">
+                                    <div ng-messages="$ctrl.data.addServicesByStaffForm['paymentValue_' + $index].$error">
+                                        <div ng-message="min">Peste zero</div>
+                                        <div ng-message="required">Obligatoriu</div>
+                                    </div>
+                            </md-input-container>
+                            <md-button class="md-icon-button"
+                                ng-click="$ctrl.actions.deletePaymentMethod($ctrl.data.historyItem.payment.paidAmounts, $index)">
+                                <md-icon>delete</md-icon>
+                            </md-button>
                         </div>
-                    </md-input-container>
-                </div>
-
-                <div layout="row" layout-align="start center">
-                    <md-input-container flex>
-                        <label>Alege Servicii</label>
-                        <md-select 
-                            name="services" multiple required
-                            ng-model-options="{trackBy: '$value._id'}" 
-                            ng-model="$ctrl.data.historyItem.services"  
-                            md-on-close="$ctrl.data.searchServices = '';" 
-                            md-selected-text="$ctrl.actions.changeSelectedServicesText($ctrl.data.historyItem.services)"
-                            data-md-container-class="selectdemoSelectHeader">
-                            <md-select-header class="demo-select-header">
-                                <input ng-model="$ctrl.data.searchServices" placeholder="Cauta un serviciu" class="demo-header-searchbox md-text">
-                            </md-select-header>
-                            <md-optgroup label="{{serviceType.name}}" ng-repeat="serviceType in $ctrl.data.serviceTypes track by serviceType._id">
-                                <md-option ng-value="service" ng-repeat="service in filteredServices = ($ctrl.data.services | filter: {_serviceTypeId: serviceType._id, name: $ctrl.data.searchServices })  track by service._id">
-                                    {{service.name}}
-                                    <small>Pret: {{service.price}} RON  Durata: {{service.duration}} min.</small>
-                                </md-option>
-                            </md-optgroup>
-                        </md-select>
-                        <div ng-messages="$ctrl.data.editHistoryItemForm.services.$error">
-                            <div ng-message="required">Minim un serviciu trebuie introdus</div>
+                        <md-button 
+                            ng-hide="$ctrl.data.paymentMethods.length === $ctrl.data.historyItem.payment.paidAmounts.length"
+                            ng-click="$ctrl.actions.addPaymentMethod($ctrl.data.historyItem.payment.paidAmounts)">
+                            <md-icon>add</md-icon>
+                            mod plata
+                        </md-button>
+                        <div layout="column" layout-align="start end" layout-padding flex>
+                            <span>Discount Total: {{ $ctrl.data.historyItem.payment.discount }} RON</span>
+                            <span>Cost Total: {{ $ctrl.data.historyItem.payment.total }} RON</span>
+                            <span>Platit: {{ $ctrl.data.historyItem.payment.paidAmount || 0 }} RON</span>
+                            <span ng-class="$ctrl.status.isPaidInFull($ctrl.data.historyItem.payment.total, $ctrl.data.historyItem.payment.paidAmount)">
+                                Rest de Plata: {{ $ctrl.data.historyItem.payment.total - $ctrl.data.historyItem.payment.paidAmount }} RON
+                            </span>
                         </div>
-                    </md-input-container>
-                </div>
-                <div>
-                    <div>Servicii prestate:</div>
-                    <ul>
-                        <li ng-repeat="service in $ctrl.data.historyItem.services track by service._id">
-                            {{service.name}}
-                            <small>Pret: {{service.price}} RON  Durata: {{service.duration}} min.</small>
-                        </li>
-                    </ul>
-                </div>
+                    </md-card-content>
+                </md-card>
 
-                <md-input-container class="md-block">
-                    <label>Produse acasa</label>
-                    <textarea name="homeProducts" ng-model="$ctrl.data.historyItem.homeProducts">
-                    </textarea>
-                </md-input-container>
-
-                <md-input-container class="md-block">
-                    <label>Observatii</label>
-                    <textarea name="observations" ng-model="$ctrl.data.historyItem.observations">
-                    </textarea>
-                </md-input-container>
-
-                <md-checkbox
-                    ng-model="$ctrl.data.historyItem.photosTaken">
-                    Poze
-                </md-checkbox>
-                <md-checkbox
-                    ng-model="$ctrl.data.historyItem.videosTaken"> 
-                    Filmare
-                </md-checkbox>
             </form>
 
         </div>
     </md-dialog-content>
 
     <md-dialog-actions layout="row" layout-align="end center">
-        <md-button ng-click="$ctrl.actions.cancel()">
+        <md-button class="md-warn" admin-only ng-if="$ctrl.data.historyItem._id"
+            ng-click="$ctrl.actions.deleteSession($ctrl.data.historyItem)">
+            Delete
+        </md-button>
+        <div flex></div>
+        <md-button 
+            ng-click="$ctrl.actions.cancel()">
             Renunta
         </md-button>
-        <md-button class="md-raised md-primary" ng-click="$ctrl.actions.save($ctrl.data.historyItem)" ng-disabled="$ctrl.data.editHistoryItemForm.$invalid">
+        <md-button class="md-raised md-primary" 
+            ng-click="$ctrl.actions.save($ctrl.data.historyItem)" 
+            ng-disabled="!$ctrl.data.historyItem.performedServices.length || $ctrl.data.addServicesByStaffForm.$invalid">
             Salveaza Sedinta
         </md-button>
     </md-dialog-actions>
