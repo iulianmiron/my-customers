@@ -11,16 +11,16 @@
             }
         });
     ClientController.$inject = [
-        '$mdToast', '$q', '$state', '$log', '$mdDialog', '$rootElement',
+        '$q', '$state', '$mdDialog', '$rootElement',
         'ClientsDataService', 'HistoryDataService', 'ServicesDataService', 'ServiceTypesDataService', 'StaffDataService',
-        'CLIENT_VIP_LEVELS', 'CLIENT_VIP_TYPES', 'UtilsService',
-        'toastr'
+        'CLIENT_VIP_LEVELS', 'CLIENT_VIP_TYPES',
+        'toastr', 'socketService', 'localStorageService'
     ];
     function ClientController(
-        $mdToast, $q, $state, $log, $mdDialog, $rootElement,
+        $q, $state, $mdDialog, $rootElement,
         ClientsDataService, HistoryDataService, ServicesDataService, ServiceTypesDataService, StaffDataService,
-        CLIENT_VIP_LEVELS, CLIENT_VIP_TYPES, UtilsService,
-        toastr
+        CLIENT_VIP_LEVELS, CLIENT_VIP_TYPES,
+        toastr, socketService, localStorageService
     ) {
         var ctrl = this;
 
@@ -67,8 +67,30 @@
                 ]).then(function(data) {});
             } else {
                 addClient();
-            }     
+            }   
+            
+            // joinRoom(ctrl.data.clientId);
+
         }
+
+        ctrl.$onDestroy = function() {
+            // leaveRoom();
+        }
+
+        // function joinRoom(clientId) {
+        //     socketService.emit('c:enter-client-page', { roomId: clientId });
+        // }
+        // function leaveRoom() {
+        //     socketService.emit('c:leave-client-page', { roomId: ctrl.data.clientId });
+        // }
+        
+        // socketService.on('s:enter-client-page', function(data){
+        //     console.log('User joined: ', data);
+        // });
+
+        // socketService.on('s:leave-client-page', function(data){
+        //     console.log('User left: ', data);
+        // });
         
         function getAllServices()       { return ServicesDataService.getAll(); }
         function getAllServiceTypes()   { return ServiceTypesDataService.getAll(); }

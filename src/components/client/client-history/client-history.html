@@ -48,20 +48,22 @@
                 </md-card-header>
                 <md-divider></md-divider>
                 <md-card-content ng-show="showDetails || $last">
-                    <div>
-                        <div>Servicii prestate de {{ historyItem.servicesPerformedBy ? historyItem.servicesPerformedBy.first_name + ' ' + historyItem.servicesPerformedBy.last_name : '-' }}:</div>
-                        <ul>
-                            <li ng-repeat="service in historyItem.services track by service._id">
+                    <div ng-repeat="servicesByStaff in historyItem.performedServices track by $index">
+                        <div>
+                            <b>{{ servicesByStaff.staff.first_name + ' ' + servicesByStaff.staff.last_name }}</b>{{ servicesByStaff.interval ? ', interval ' +  servicesByStaff.interval + ' sapt.': ''}}:
+                        </div>
+                        <ol>
+                            <li ng-repeat="service in servicesByStaff.services track by service._id">
                                 {{service.name}}
-                                <small>Pret: {{service.price}} RON  Durata: {{service.duration}} min.</small>
+                                <small ng-hide="!service.price && !service.duration">{{service.price}} RON / {{service.duration}} min.</small>
                             </li>
-                        </ul>
+                        </ol>
+
+                        <p ng-show="servicesByStaff.soldProducts">Produse acasa: {{ servicesByStaff.soldProducts }}</p>
+                        <p ng-show="servicesByStaff.observations">Observatii: {{ servicesByStaff.observations }}</p>
+                        <p ng-show="servicesByStaff.videosTaken">Filmari: {{ servicesByStaff.videosTaken ? 'Da' : 'Nu' }}</p>
+                        <p ng-show="servicesByStaff.photosTaken">Poze: {{ servicesByStaff.photosTaken ? 'Da' : 'Nu' }}</p>
                     </div>
-                    <p ng-show="historyItem.interval">Interval: {{ historyItem.interval }}</p>
-                    <p ng-show="historyItem.homeProducts">Produse acasa: {{ historyItem.homeProducts }}</p>
-                    <p ng-show="historyItem.observations">Observatii: {{ historyItem.observations }}</p>
-                    <p ng-show="historyItem.videosTaken">Filmari: {{ historyItem.videosTaken }}</p>
-                    <p ng-show="historyItem.photosTaken">Poze: {{ historyItem.photosTaken }}</p>
                 </md-card-content>
             </md-card>
         </div>

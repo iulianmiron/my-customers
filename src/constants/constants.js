@@ -27,5 +27,9 @@
         .constant('USERS', [
             { id: 1, first_name: 'Elena', last_name: 'Miron' },
             { id: 2, first_name: 'Madalina', last_name: 'Mocanu' }
+        ])
+        .constant('PAYMENT_METHODS', [
+            { id: 1, name: 'Cash', icon: 'euro_symbol' },
+            { id: 2, name: 'Card', icon: 'credit_card' },
         ]);
 })();
