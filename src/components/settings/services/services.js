@@ -9,8 +9,8 @@
             bindings: {}
         });
 
-    ServicesController.$inject = ['$q', '$mdDialog', '$rootElement', 'ServicesDataService', 'ServiceTypesDataService', 'spinnerService', 'toastr'];
-    function ServicesController($q, $mdDialog, $rootElement, ServicesDataService, ServiceTypesDataService, spinnerService, toastr) {
+    ServicesController.$inject = ['$q', '$mdDialog', '$rootElement', 'ServicesDataService', 'ServiceTypesDataService', 'toastr'];
+    function ServicesController($q, $mdDialog, $rootElement, ServicesDataService, ServiceTypesDataService, toastr) {
         var ctrl = this;
         ctrl.data = {};
         ctrl.status = {};
@@ -37,8 +37,6 @@
             ]).then(function(data) {
                 ctrl.data.allServiceTypes = data[0];
                 ctrl.data.allServices = data[1];
-            }).finally(function() {
-                // spinnerService.hide('app-loading');
             });
         }
 

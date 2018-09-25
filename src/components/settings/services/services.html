@@ -50,7 +50,7 @@
     </md-card-title>
     <md-card-content class="overflow">
         <md-list 
-            ng-repeat="serviceType in $ctrl.data.allServiceTypes track by serviceType._id">
+            ng-repeat="serviceType in $ctrl.data.allServiceTypes | orderBy: 'name' track by serviceType._id">
             <md-subheader
                 ng-mouseover="showServiceTypeControls = true" 
                 ng-mouseleave="showServiceTypeControls = false"

@@ -31,5 +31,13 @@
         .constant('PAYMENT_METHODS', [
             { id: 1, name: 'Cash', icon: 'euro_symbol' },
             { id: 2, name: 'Card', icon: 'credit_card' },
+        ])
+        .constant('SALON_ROOMS', [
+            { id: 1, name: 'Baroc', type: 'service', max_clients: 2, icon: 'spa' },
+            { id: 2, name: 'Pastel', type: 'service', max_clients: 1, icon: 'spa' },
+            { id: 3, name: 'Romantic', type: 'service', max_clients: 1, icon: 'spa' },
+            { id: 4, name: 'Klimt', type: 'service', max_clients: 2, icon: 'spa' },
+            { id: 5, name: 'Waiting Room', type: 'waiting', icon: 'weekend' },
+            { id: 6, name: 'Office', type: 'administrative', icon: 'laptop' },
         ]);
 })();
