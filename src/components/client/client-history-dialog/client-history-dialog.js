@@ -5,8 +5,8 @@
         .module('cm.components.clientHistoryDialog', [])
         .controller('ClientHistoryDialogController', ClientHistoryDialogController);
         
-    ClientHistoryDialogController.$inject = ['$element', '$mdDialog', 'dialogData', 'USERS', 'PAYMENT_METHODS'];
-    function ClientHistoryDialogController($element, $mdDialog, dialogData, USERS, PAYMENT_METHODS) {
+    ClientHistoryDialogController.$inject = ['$element', '$mdDialog', 'dialogData', 'USERS', 'PAYMENT_METHODS', 'SALON_ROOMS'];
+    function ClientHistoryDialogController($element, $mdDialog, dialogData, USERS, PAYMENT_METHODS, SALON_ROOMS) {
         var ctrl = this;
         ctrl.data = {};
         ctrl.status = {};
@@ -16,13 +16,13 @@
         ctrl.data.maxDate = new Date();
         ctrl.data.users = USERS;
         ctrl.data.paymentMethods = PAYMENT_METHODS;
+        ctrl.data.salonRooms = SALON_ROOMS;
         ctrl.data.title = dialogData.title;
         ctrl.data.services = dialogData.services;
         ctrl.data.serviceTypes = dialogData.serviceTypes;
         ctrl.data.historyItem = dialogData.historyItem;
         ctrl.data.historyItem.performedServices = ctrl.data.historyItem.performedServices || addServicesByStaff(ctrl.data.historyItem);
         ctrl.data.historyItem.payment = ctrl.data.historyItem.payment || {paidAmounts: []};
-
         ctrl.data.historyItem.performedServices = fixDate(ctrl.data.historyItem.performedServices);
         
         ctrl.actions.changeSelectedServicesText = changeSelectedServicesText;
