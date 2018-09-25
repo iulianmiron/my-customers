@@ -64,6 +64,28 @@
                         <p ng-show="servicesByStaff.videosTaken">Filmari: {{ servicesByStaff.videosTaken ? 'Da' : 'Nu' }}</p>
                         <p ng-show="servicesByStaff.photosTaken">Poze: {{ servicesByStaff.photosTaken ? 'Da' : 'Nu' }}</p>
                     </div>
+                    <div layout="row" layout-align="start center">
+                        <div flex>
+                            <md-button
+                                ng-class="{'md-primary': historyItem.payment.total === historyItem.payment.paidAmount}"
+                                ng-click="showPaymentStatus = !showPaymentStatus">
+                                <md-icon>account_balance_wallet</md-icon>
+                                <span ng-show="showPaymentStatus">Platit: {{ historyItem.payment.total === historyItem.payment.paidAmount ? 'Da': 'Nu'}}</span>
+                            </md-button>
+                        </div>
+                        <div layout="row" ng-show="showPaymentStatus">
+
+                            <div flex layout="column" layout-align="start end">
+                                <div ng-show="historyItem.payment.total === historyItem.payment.paidAmount" 
+                                    ng-repeat="payment in historyItem.payment.paidAmounts track by $index">
+                                    {{ payment.type.name }}: {{ payment.total + 'RON' }}
+                                </div>
+                                <div>Total: {{historyItem.payment.total}}RON</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+
                 </md-card-content>
             </md-card>
         </div>
