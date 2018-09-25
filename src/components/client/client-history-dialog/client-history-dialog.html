@@ -17,7 +17,7 @@
                 <div ng-repeat="servicesByStaff in $ctrl.data.historyItem.performedServices">
                     <md-card>
                         <md-card-header layout="row" layout-align="start center">
-                            <md-card-header-text ng-click="$ctrl.actions.showCardContent($index)" layout="row" layout-align="start center">
+                            <md-card-header-text ng-click="$ctrl.actions.showCardContentServices($index)" layout="row" layout-align="start center">
                                 <span class="md-title" ng-hide="servicesByStaff.staff && servicesByStaff.services">
                                     Alege persoana si serviciile efectuate 
                                 </span>
@@ -27,7 +27,7 @@
                                 </span>
                                 <span>
                                     <md-button class="md-icon-button">
-                                        <md-icon>keyboard_arrow_{{$ctrl.data.showCardContent[$index] ? 'up' : 'down'}}</md-icon>
+                                        <md-icon>keyboard_arrow_{{$ctrl.data.showCardContentServices[$index] ? 'up' : 'down'}}</md-icon>
                                     </md-button>
                                 </span>
                             </md-card-header-text>
@@ -36,7 +36,7 @@
                                 Sterge
                             </md-button>
                         </md-card-header>
-                        <md-card-content ng-show="$ctrl.data.showCardContent[$index]">
+                        <md-card-content ng-show="$ctrl.data.showCardContentServices[$index]">
                             <div>
                                 
                                 <div layout="column" layout-gt-sm="row">
@@ -111,12 +111,13 @@
                                     <label>Pret grup servicii</label>
                                     <md-icon>attach_money</md-icon>
                                     <input name="cost_{{$index}}" 
-                                        type="number" step="1" min="0"
+                                        type="number" step="1" min="0" required
                                         ng-model="servicesByStaff.cost"
                                         ng-change="$ctrl.actions.setTotalCostWithDiscount(servicesByStaff)"
                                     >
                                     <div ng-messages="$ctrl.data.addServicesByStaffForm['cost_' + $index].$error">
                                         <div ng-message="min">Pretul nu poate fi negativ</div>
+                                        <div ng-message="required">Obligatoriu</div>
                                     </div>
                                 </md-input-container>
 
@@ -125,7 +126,7 @@
                                     <label>Discount</label>
                                     <md-icon>money_off</md-icon>
                                     <input name="discount_{{$index}}" 
-                                        type="number" step="1" min="0"
+                                        type="number" step="1" min="0" 
                                         ng-model="servicesByStaff.discount" 
                                         ng-change="$ctrl.actions.setTotalCostWithDiscount(servicesByStaff)"
                                     >
@@ -145,10 +146,14 @@
                                 </md-input-container>
                             </div>
 
-                            <md-button ng-click="showExtraDetails = !showExtraDetails">
-                                <md-icon>{{ showExtraDetails ? 'keyboard_arrow_up' : 'edit' }}</md-icon>
-                                {{ showExtraDetails ? 'ascunde' : 'editeaza' }} detalii
-                            </md-button>
+                            <div layout="row" layout-wrap>
+                                <!--BUTON ARATA DETALII-->
+                                <md-button ng-click="showExtraDetails = !showExtraDetails">
+                                    <md-icon>{{ showExtraDetails ? 'keyboard_arrow_up' : 'edit' }}</md-icon>
+                                    {{ showExtraDetails ? 'ascunde' : 'editeaza' }} detalii
+                                </md-button>
+                            </div>
+
 
                             <fieldset ng-show="showExtraDetails">
                                 <legend>Detalii</legend>
@@ -204,28 +209,212 @@
                     
                 </div>
 
-                <div layout="row" layout-align="start center" layout-wrap>
-                    <!--BUTON ADAUGA SERVICII-->
-                    <div layout="row" layout-align="start center">
-                        <md-button class="md-raised"
-                            ng-click="$ctrl.actions.addServicesByStaff($ctrl.data.historyItem)">
-                            <md-icon>add</md-icon>
-                            Adauga servicii
-                        </md-button>
+                <!--BUTON ADAUGA SERVICII-->
+                <div layout="row" layout-align="start center">
+                    <md-button class="md-raised"
+                        ng-hide="$ctrl.data.historyItem.performedServices.length === $ctrl.data.users.length"
+                        ng-click="$ctrl.actions.addServicesByStaff($ctrl.data.historyItem)">
+                        <md-icon>add</md-icon>
+                        Adauga servicii
+                    </md-button>
+                </div>
+
+                <md-divider></md-divider>
+                <md-divider></md-divider>
+
+                <!--ADD PRODUCTS FORM-->
+                <ng-form name="$ctrl.data.soldProductsByStaffForm">
+                    <div ng-repeat="soldProductsByStaff in $ctrl.data.historyItem.soldProducts track by $index">
+                        <md-card>
+                            <md-card-header layout="row" layout-align="start center">
+                                <md-card-header-text ng-click="$ctrl.actions.showCardContentProducts($index)" layout="row" layout-align="start center">
+                                    <span class="md-title" ng-hide="soldProductsByStaff.staff && soldProductsByStaff.products">
+                                        Alege persoana si produsele vandute 
+                                    </span>
+                                    <span class="md-title" ng-show="soldProductsByStaff.staff && soldProductsByStaff.products" layout="column">
+                                        <div>{{ soldProductsByStaff.staff.first_name + ' ' + soldProductsByStaff.staff.last_name }} </div>
+                                        <small>{{ soldProductsByStaff.products.length }} {{ soldProductsByStaff.products.length === 1 ? 'produs' : 'produse'}}</small>
+                                    </span>
+                                    <span>
+                                        <md-button class="md-icon-button">
+                                            <md-icon>keyboard_arrow_{{$ctrl.data.showCardContentProducts[$index] ? 'up' : 'down'}}</md-icon>
+                                        </md-button>
+                                    </span>
+                                </md-card-header-text>
+                                <md-button ng-click="$ctrl.actions.deleteSoldProductsByStaff($ctrl.data.historyItem.soldProducts, $index)" button-shrink="gt-sm">
+                                    <md-icon>delete</md-icon>
+                                    Sterge
+                                </md-button>
+                            </md-card-header>
+                            <md-card-content ng-show="$ctrl.data.showCardContentProducts[$index]">
+                                <div>
+                                    
+                                    <div layout="row">
+
+                                        <!--STAFF-->
+                                        <md-input-container flex>
+                                            <label>Produse vandute de:</label>
+                                            <md-select name="staff_{{$index}}" required
+                                                ng-model-options="{trackBy: '$value.id'}" 
+                                                ng-model="soldProductsByStaff.staff">
+                                                <md-option ng-value="user" ng-repeat="user in $ctrl.data.users track by user.id">
+                                                    <md-icon>account_circle</md-icon> {{ user.first_name }} {{ user.last_name }}
+                                                </md-option>
+                                            </md-select>
+                                            <div ng-messages="$ctrl.data.soldProductsByStaffForm['staff_' + $index].$error">
+                                                <div ng-message="required">O persoana trebuie selectata.</div>
+                                            </div>
+                                        </md-input-container>
+
+                                    </div>
+
+                                    <div ng-repeat="product in soldProductsByStaff.products track by $index">
+                                        <div layout="row" layout-align="start center">
+                                            <md-input-container>
+                                                <label>Cod:</label>
+                                                <input name="product_{{$index}}.code"
+                                                    type="text" required
+                                                    ng-model="product.code"
+                                                    >
+                                                <div ng-messages="$ctrl.data.soldProductsByStaffForm['product_' + $index+ '.code'].$error">
+                                                    <div ng-message="required">Obligatoriu.</div>
+                                                </div>
+                                            </md-input-container>
+                                            <md-input-container>
+                                                <label>Nume:</label>
+                                                <input name="product_{{$index}}.name"
+                                                    type="text" required
+                                                    ng-model="product.name"
+                                                    >
+                                                <div ng-messages="$ctrl.data.soldProductsByStaffForm['product_' + $index + '.name'].$error">
+                                                    <div ng-message="required">Obligatoriu</div>
+                                                </div>
+                                            </md-input-container>
+                                            <md-input-container>
+                                                <label>Cantitate:</label>
+                                                <input name="product_{{$index}}.quantity" 
+                                                    type="number" required min="1" step="1"
+                                                    ng-model="product.quantity"
+                                                    ng-change="$ctrl.actions.setTotalProductsCost(soldProductsByStaff)"
+                                                    >
+                                                <div ng-messages="$ctrl.data.soldProductsByStaffForm['product_' + $index + '.quantity'].$error">
+                                                    <div ng-message="required">Obligatoriu</div>
+                                                    <div ng-message="min"> > 1 </div>
+                                                </div>
+                                            </md-input-container>
+                                            <md-input-container>
+                                                <label>Pret:</label>
+                                                <input name="product_{{$index}}.price" 
+                                                    type="number" required min="1" step="1"
+                                                    ng-model="product.price"
+                                                    ng-change="$ctrl.actions.setTotalProductsCost(soldProductsByStaff)"
+                                                    >
+                                                <div ng-messages="$ctrl.data.soldProductsByStaffForm['product_' + $index + '.price'].$error">
+                                                    <div ng-message="required">Obligatoriu</div>
+                                                    <div ng-message="min"> > 1 </div>
+                                                </div>
+                                            </md-input-container>
+                                            <md-button class="md-icon-button" ng-hide="soldProductsByStaff.products.length === 1"
+                                                ng-click="$ctrl.actions.deleteSoldProduct(soldProductsByStaff.products, $index)">
+                                                <md-icon>delete</md-icon>
+                                            </md-button>
+                                        </div>
+                                    </div>
+                                    <md-button 
+                                        ng-click="$ctrl.actions.addSoldProduct(soldProductsByStaff.products)">
+                                        <md-icon>add</md-icon>
+                                        adauga produs
+                                    </md-button>
+                                </div>
+
+                                <div layout="row" layout-wrap ng-show="soldProductsByStaff.products.length">
+
+                                    <!--PRET-->
+                                    <md-input-container>
+                                        <label>Pret grup produse</label>
+                                        <md-icon>attach_money</md-icon>
+                                        <input name="cost_{{$index}}" 
+                                            type="number" step="1" min="0" required
+                                            ng-model="soldProductsByStaff.cost"
+                                            ng-change="$ctrl.actions.setTotalCostWithDiscount(soldProductsByStaff)"
+                                        >
+                                        <div ng-messages="$ctrl.data.soldProductsByStaffForm['cost_' + $index].$error">
+                                            <div ng-message="required">Obligatoriu</div>
+                                            <div ng-message="min">Pretul nu poate fi negativ</div>
+                                        </div>
+                                    </md-input-container>
+    
+                                    <!--DISCOUNT-->
+                                    <md-input-container>
+                                        <label>Discount</label>
+                                        <md-icon>money_off</md-icon>
+                                        <input name="discount_{{$index}}" 
+                                            type="number" step="1" min="0"
+                                            ng-model="soldProductsByStaff.discount" 
+                                            ng-change="$ctrl.actions.setTotalCostWithDiscount(soldProductsByStaff)"
+                                        >
+                                        <div ng-messages="$ctrl.data.soldProductsByStaffForm['discount_' + $index].$error">
+                                            <div ng-message="min">Discount-ul nu poate fi negativ</div>
+                                        </div>
+                                    </md-input-container>
+    
+                                    <!--TOTAL-->
+                                    <md-input-container>
+                                        <label>Total (RON)</label>
+                                        <md-icon>attach_money</md-icon>
+                                        <input name="total_{{$index}}" 
+                                            type="number" step="1" min="0" ng-readonly="true"
+                                            ng-model="soldProductsByStaff.total" 
+                                        >
+                                    </md-input-container>
+                                </div>
+    
+                                <div layout="row" layout-wrap>
+                                    <!--BUTON ARATA DETALII-->
+                                    <md-button ng-click="showExtraDetails = !showExtraDetails">
+                                        <md-icon>{{ showExtraDetails ? 'keyboard_arrow_up' : 'edit' }}</md-icon>
+                                        {{ showExtraDetails ? 'ascunde' : 'editeaza' }} detalii
+                                    </md-button>
+                                </div>
+    
+                                <fieldset ng-show="showExtraDetails">
+                                    <legend>Detalii</legend>
+                                    <div layout="row" layout-align="start center" layout-wrap>
+                                        <md-input-container class="no-validation">
+                                            <label>Data vanzarii</label>
+                                            <md-datepicker name="date" required 
+                                                ng-model="soldProductsByStaff.date" 
+                                                md-max-date="$ctrl.data.maxDate">
+                                            </md-datepicker>
+                                        </md-input-container>
+                    
+                                        <md-time-picker 
+                                            ng-model="soldProductsByStaff.date" 
+                                            message="$ctrl.data.timePickerMessages" 
+                                            read-only="false" 
+                                            mandatory="true" 
+                                            no-meridiem>
+                                        </md-time-picker>
+                                    </div>
+                                </fieldset>
+                            </md-card-content>
+                        </md-card>
+                        
                     </div>
-                    <!--BUTON ADAUGA PRODUSE-->
-                    <div layout="row" layout-align="start center">
-                        <md-button class="md-raised"
-                            ng-click="$ctrl.actions.addSoldProductsByStaff($ctrl.data.historyItem)">
-                            <md-icon>add</md-icon>
-                            Adauga produse
-                        </md-button>
-                    </div>
+                </ng-form>
+                <!--BUTON ADAUGA PRODUSE-->
+                <div layout="row" layout-align="start center">
+                    <md-button class="md-raised"
+                        ng-hide="$ctrl.data.historyItem.soldProducts.length === $ctrl.data.users.length"
+                        ng-click="$ctrl.actions.addSoldProductsByStaff($ctrl.data.historyItem)">
+                        <md-icon>add</md-icon>
+                        Adauga produse
+                    </md-button>
                 </div>
 
 
                 <!--PLATA-->
-                <md-card ng-show="$ctrl.data.historyItem.payment.total || $ctrl.data.historyItem.payment.discount">
+                <md-card ng-show="$ctrl.data.historyItem.payment.total || $ctrl.data.historyItem.payment.discountServices || $ctrl.data.historyItem.payment.discountProducts">
                     <md-card-header ng-click="$ctrl.actions.showHidePaymentCard($ctrl.status.showPaymentCard)">
                         <md-card-header-text layout="row" layout-align="start center">
                             <span class="md-title">Plata</span>
@@ -278,7 +467,8 @@
                             mod plata
                         </md-button>
                         <div layout="column" layout-align="start end" layout-padding flex>
-                            <span>Discount Total: {{ $ctrl.data.historyItem.payment.discount }} RON</span>
+                            <span>Discount Servicii: {{ $ctrl.data.historyItem.payment.discountServices }} RON</span>
+                            <span>Discount Produse: {{ $ctrl.data.historyItem.payment.discountProducts }} RON</span>
                             <span>Cost Total: {{ $ctrl.data.historyItem.payment.total }} RON</span>
                             <span>Platit: {{ $ctrl.data.historyItem.payment.paidAmount || 0 }} RON</span>
                             <span ng-class="$ctrl.status.isPaidInFull($ctrl.data.historyItem.payment.total, $ctrl.data.historyItem.payment.paidAmount)">
