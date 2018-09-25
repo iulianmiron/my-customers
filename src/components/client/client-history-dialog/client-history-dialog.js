@@ -33,8 +33,12 @@
 
         ctrl.actions.addPaymentMethod = addPaymentMethod;
         ctrl.actions.deletePaymentMethod = deletePaymentMethod;
+
         ctrl.actions.addServicesByStaff = addServicesByStaff;
         ctrl.actions.deleteServicesByStaff = deleteServicesByStaff;
+
+        ctrl.actions.addSoldProductsByStaff = addSoldProductsByStaff;
+        ctrl.actions.deleteSoldProductsByStaff = addSoldProductsByStaff;
 
         ctrl.actions.showCardContent = showCardContent;
         ctrl.status.isPaidInFull = isPaidInFull;
@@ -118,6 +122,22 @@
         function addServicesByStaff(historyItem) {
             historyItem.performedServices = angular.isArray(historyItem.performedServices) ? historyItem.performedServices : [];
             historyItem.performedServices.push({
+                services: null,
+                staff: null,
+                date: new Date()
+            });
+            historyItem.performedServices.map(function(item, index) {
+                var boolean = !!(index === historyItem.performedServices.length - 1);
+                showCardContent(index, boolean);
+            });
+
+            return historyItem.performedServices;
+        }
+
+        function addSoldProductsByStaff(historyItem) {
+            //TODO
+            historyItem.soldProducts = angular.isArray(historyItem.performedServices) ? historyItem.performedServices : [];
+            historyItem.soldProducts.push({
                 services: null,
                 staff: null,
                 date: new Date()
