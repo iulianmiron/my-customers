@@ -29,7 +29,7 @@
             if (changes.historyData && changes.historyData.currentValue) {                
                 ctrl.data.history = angular.copy(changes.historyData.currentValue);
                 angular.forEach(ctrl.data.history, function(iHistory) {
-                    iHistory.date = iHistory.performedServices[0].date;
+                    iHistory.date = moment(iHistory.performedServices[0].date);
                 });
                 ctrl.data.clientId = ctrl.data.history.length && ctrl.data.history[0]._clientId;
             }
