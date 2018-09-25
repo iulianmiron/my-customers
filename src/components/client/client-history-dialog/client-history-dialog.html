@@ -80,6 +80,21 @@
                                             <div ng-message="required">Minim un serviciu trebuie introdus</div>
                                         </div>
                                     </md-input-container>
+
+                                    <!--ROOM-->
+                                    <md-input-container flex>
+                                        <label>In camera:</label>
+                                        <md-select name="room_{{$index}}" required
+                                            ng-model-options="{trackBy: '$value.id'}" 
+                                            ng-model="servicesByStaff.room">
+                                            <md-option ng-value="room" ng-repeat="room in $ctrl.data.salonRooms | filter: {type: 'service'} track by room.id">
+                                                <md-icon>{{ room.icon }}</md-icon> {{ room.name }}
+                                            </md-option>
+                                        </md-select>
+                                        <div ng-messages="$ctrl.data.addServicesByStaffForm['room_' + $index].$error">
+                                            <div ng-message="required">O camera trebuie selectata.</div>
+                                        </div>
+                                    </md-input-container>
                                 </div>
                             </div>
                             <!--LISTA SERVICII ALESE-->

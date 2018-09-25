@@ -50,7 +50,7 @@
                 <md-card-content ng-show="showDetails || $last">
                     <div ng-repeat="servicesByStaff in historyItem.performedServices track by $index">
                         <div>
-                            <b>{{ servicesByStaff.staff.first_name + ' ' + servicesByStaff.staff.last_name }}</b>{{ servicesByStaff.interval ? ', interval ' +  servicesByStaff.interval + ' sapt.': ''}}:
+                            <div><b>{{ servicesByStaff.staff.first_name + ' ' + servicesByStaff.staff.last_name }}</b>{{servicesByStaff.room.name ? ' in ' + servicesByStaff.room.name: '' }}{{ servicesByStaff.interval ? ', la ' +  servicesByStaff.interval + ' sapt.': ''}}:</div>
                         </div>
                         <ol>
                             <li ng-repeat="service in servicesByStaff.services track by service._id">
