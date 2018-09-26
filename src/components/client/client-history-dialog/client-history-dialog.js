@@ -57,6 +57,11 @@
         ctrl.actions.cancel = cancel;
         ctrl.actions.save = save;
 
+
+        ctrl.actions.test = function(form) {
+            console.log(form);
+        }
+
         ctrl.data.timePickerMessages = {
             hour: 'Hour is required',
             minute: 'Minute is required',
@@ -124,8 +129,6 @@
                 servicesByStaff.cost = servicesByStaff.services.reduce(function(acc, curr) {
                     return acc + curr.price;
                 }, 0);
-            } else {
-                servicesByStaff.cost = 0;
             }
 
             setTotalCostWithDiscount(servicesByStaff);
@@ -144,18 +147,27 @@
         }
 
         function setTotalDiscountPerSession() {
-            ctrl.data.historyItem.payment.discountServices = ctrl.data.historyItem.performedServices.reduce(function(acc, curr) {
-                return acc + curr.discount;
-            }, 0);
-            ctrl.data.historyItem.payment.discountProducts = ctrl.data.historyItem.soldProducts.reduce(function(acc, curr) {
-                return acc + curr.discount;
-            }, 0);
+            if(ctrl.data.historyItem.performedServices && ctrl.data.historyItem.performedServices) {
+                ctrl.data.historyItem.payment.discountServices = ctrl.data.historyItem.performedServices.reduce(function(acc, curr) {
+                    return acc + curr.discount;
+                }, 0);
+            }
+
+            if(ctrl.data.historyItem.soldProducts && ctrl.data.historyItem.soldProducts.length) {
+                ctrl.data.historyItem.payment.discountProducts = ctrl.data.historyItem.soldProducts.reduce(function(acc, curr) {
+                    return acc + curr.discount;
+                }, 0);
+            }
         }
 
         function setTotalCostPerSession() {
-            ctrl.data.historyItem.payment.totalServices = ctrl.data.historyItem.performedServices.reduce(function(acc, curr) {
-                return acc + curr.total;
-            }, 0);
+            if(ctrl.data.historyItem.performedServices && ctrl.data.historyItem.performedServices.length) {
+                ctrl.data.historyItem.payment.totalServices = ctrl.data.historyItem.performedServices.reduce(function(acc, curr) {
+                    return acc + curr.total;
+                }, 0);
+            } else {
+                ctrl.data.historyItem.payment.totalServices = 0;
+            }
 
             if(ctrl.data.historyItem.soldProducts && ctrl.data.historyItem.soldProducts.length) {
                 ctrl.data.historyItem.payment.totalProducts = ctrl.data.historyItem.soldProducts.reduce(function(acc, curr) {
@@ -164,7 +176,6 @@
             } else {
                 ctrl.data.historyItem.payment.totalProducts = 0;
             }
-
             ctrl.data.historyItem.payment.total = ctrl.data.historyItem.payment.totalServices + ctrl.data.historyItem.payment.totalProducts;
         }
 

@@ -490,12 +490,16 @@
         </md-button>
         <div flex></div>
         <md-button 
+            ng-click="$ctrl.actions.test($ctrl.data.addServicesByStaffForm)">
+            test
+        </md-button>
+        <md-button 
             ng-click="$ctrl.actions.cancel()">
             Renunta
         </md-button>
         <md-button class="md-raised md-primary" 
             ng-click="$ctrl.actions.save($ctrl.data.historyItem)" 
-            ng-disabled="!$ctrl.data.historyItem.performedServices.length || $ctrl.data.addServicesByStaffForm.$invalid">
+            ng-disabled="$ctrl.data.addServicesByStaffForm.$invalid">
             Salveaza Sedinta
         </md-button>
     </md-dialog-actions>
