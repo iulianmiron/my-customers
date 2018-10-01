@@ -14,13 +14,13 @@
         '$q', '$state', '$mdDialog', '$rootElement',
         'ClientsDataService', 'HistoryDataService', 'ServicesDataService', 'ServiceTypesDataService', 'StaffDataService',
         'CLIENT_VIP_LEVELS', 'CLIENT_VIP_TYPES',
-        'toastr', 'socketService', 'localStorageService'
+        'toastr', 
     ];
     function ClientController(
         $q, $state, $mdDialog, $rootElement,
         ClientsDataService, HistoryDataService, ServicesDataService, ServiceTypesDataService, StaffDataService,
         CLIENT_VIP_LEVELS, CLIENT_VIP_TYPES,
-        toastr, socketService, localStorageService
+        toastr, 
     ) {
         var ctrl = this;
 

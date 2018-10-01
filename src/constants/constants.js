@@ -31,6 +31,7 @@
         .constant('PAYMENT_METHODS', [
             { id: 1, name: 'Cash', icon: 'euro_symbol' },
             { id: 2, name: 'Card', icon: 'credit_card' },
+            { id: 3, name: 'Transfer Cont', icon: 'account_balance' },
         ])
         .constant('SALON_ROOMS', [
             { id: 1, name: 'Baroc', type: 'service', max_clients: 2, icon: 'spa' },

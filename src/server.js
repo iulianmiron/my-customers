@@ -110,10 +110,10 @@ var server = app.listen(PORT, function() {
     console.info("APP port: ", PORT);
 });
 
-var io = require('socket.io').listen(server);
-var socketFn = require('./api/ws/ws').socketFn;
+// var io = require('socket.io').listen(server);
+// var socketFn = require('./api/ws/ws').socketFn;
 
-io.on('connection', socketFn(io));
+// io.on('connection', socketFn(io));
 
 
 

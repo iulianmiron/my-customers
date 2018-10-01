@@ -22,15 +22,19 @@
         ctrl.data.services = dialogData.services;
         ctrl.data.serviceTypes = dialogData.serviceTypes;
         ctrl.data.historyItem = dialogData.historyItem;
+
         ctrl.data.historyItem.performedServices = ctrl.data.historyItem.performedServices || addServicesByStaff(ctrl.data.historyItem);
-        ctrl.data.historyItem.payment = ctrl.data.historyItem.payment || {paidAmounts: []};
         ctrl.data.historyItem.performedServices = fixDate(ctrl.data.historyItem.performedServices);
         ctrl.data.historyItem.soldProducts = fixDate(ctrl.data.historyItem.soldProducts);
+        ctrl.data.historyItem.payment = ctrl.data.historyItem.payment || { paidAmounts: [] };
         
         ctrl.actions.changeSelectedServicesText = changeSelectedServicesText;
 
-        ctrl.actions.setTotalCost = setTotalCost;
-        ctrl.actions.setTotalCostWithDiscount = setTotalCostWithDiscount;
+
+        ctrl.actions.setServicesCost = setServicesCost;
+        ctrl.actions.setProductsCost = setProductsCost;
+        ctrl.actions.setDiscount = setDiscount;
+
         ctrl.actions.setTotalPaid = setTotalPaid;
 
         ctrl.actions.addPaymentMethod = addPaymentMethod;
@@ -43,9 +47,7 @@
         ctrl.actions.deleteSoldProductsByStaff = deleteSoldProductsByStaff;
 
         ctrl.actions.addSoldProduct = addSoldProduct;
-        ctrl.actions.deleteSoldProduct = deleteSoldProduct;
-
-        ctrl.actions.setTotalProductsCost = setTotalProductsCost;
+        ctrl.actions.deleteSoldProduct = deleteSoldProduct;        
 
         ctrl.actions.showCardContentServices = showCardContentServices;
         ctrl.actions.showCardContentProducts = showCardContentProducts;
@@ -56,6 +58,7 @@
         ctrl.actions.deleteSession = deleteSession;
         ctrl.actions.cancel = cancel;
         ctrl.actions.save = save;
+
 
         ctrl.data.timePickerMessages = {
             hour: 'Hour is required',
@@ -92,80 +95,83 @@
                 : 'Nu sunt servicii selectate';            
         };
 
-        function setTotalProductsCost(soldProducts) {
-            if(soldProducts.products && soldProducts.products.length) {
-                
-                soldProducts.cost = soldProducts.products.reduce(function(acc, curr) {
+
+
+        function setServicesCost(servicesStaff) {
+            if(servicesStaff.services && servicesStaff.services.length) {
+                servicesStaff.cost = servicesStaff.services.reduce(function(acc, curr) {
+                    return acc + curr.price;
+                }, 0);
+            } else {
+                servicesStaff.cost = 0;
+            }
+            setDiscount(servicesStaff);
+        }
+
+        function setProductsCost(productsStaff) {
+            if(productsStaff.products && productsStaff.products.length) {
+                productsStaff.cost = productsStaff.products.reduce(function(acc, curr) {
                     if(curr.price && curr.quantity) {
                         return acc + (curr.price * curr.quantity);
                     }
                     return acc;
                 }, 0);
             } else {
-                soldProducts.cost = 0;
+                productsStaff.cost = 0;
             }
-            setTotalProductsCostWithDiscount(soldProducts);
+            setDiscount(productsStaff);
         }
 
-        function setTotalProductsCostWithDiscount(soldProducts) {
-            var cost = soldProducts.cost || 0;
-            var discount = soldProducts.discount || 0;
-            
-            discount = discount > cost ? cost : discount;
-            soldProducts.discount = discount;
-            soldProducts.total = cost - discount;
+        function setDiscount(section) {
+            var cost = section.cost || 0;
+            var discount = section.discount || 0;
 
-            setTotalDiscountPerSession();
-            setTotalCostPerSession();
+            section.discount = discount > cost ? cost : discount;  
+            section.total = section.cost - section.discount;
+            setTotalDiscountPerSession(ctrl.data.historyItem);
+            setTotalCostPerSession(ctrl.data.historyItem);
         }
 
-        function setTotalCost(servicesByStaff) {
-            if(servicesByStaff.services) {
-                servicesByStaff.cost = servicesByStaff.services.reduce(function(acc, curr) {
-                    return acc + curr.price;
-                }, 0);
+        function setTotalDiscountPerSession(historyItem) {
+            if(historyItem.performedServices && historyItem.performedServices.length) {
+                historyItem.payment.discountServices = historyItem.performedServices.reduce(discountReducer, 0);
             } else {
-                servicesByStaff.cost = 0;
+                historyItem.payment.discountServices = 0;
             }
-
-            setTotalCostWithDiscount(servicesByStaff);
-        }
-
-        function setTotalCostWithDiscount(servicesByStaff) {
-            var cost = servicesByStaff.cost || 0;
-            var discount = servicesByStaff.discount || 0;
-            
-            discount = discount > cost ? cost : discount;
-            servicesByStaff.discount = discount;
-            servicesByStaff.total = cost - discount;
-
-            setTotalDiscountPerSession();
-            setTotalCostPerSession();
-        }
-
-        function setTotalDiscountPerSession() {
-            ctrl.data.historyItem.payment.discountServices = ctrl.data.historyItem.performedServices.reduce(function(acc, curr) {
-                return acc + curr.discount;
-            }, 0);
-            ctrl.data.historyItem.payment.discountProducts = ctrl.data.historyItem.soldProducts.reduce(function(acc, curr) {
-                return acc + curr.discount;
-            }, 0);
-        }
-
-        function setTotalCostPerSession() {
-            ctrl.data.historyItem.payment.totalServices = ctrl.data.historyItem.performedServices.reduce(function(acc, curr) {
-                return acc + curr.total;
-            }, 0);
-
-            if(ctrl.data.historyItem.soldProducts && ctrl.data.historyItem.soldProducts.length) {
-                ctrl.data.historyItem.payment.totalProducts = ctrl.data.historyItem.soldProducts.reduce(function(acc, curr) {
-                    return acc + curr.total;
-                }, 0);
+            if(historyItem.soldProducts && historyItem.soldProducts.length) {
+                historyItem.payment.discountProducts = historyItem.soldProducts.reduce(discountReducer, 0);
             } else {
-                ctrl.data.historyItem.payment.totalProducts = 0;
+                historyItem.payment.discountProducts = 0;
+            }
+            function discountReducer(acc, curr) {
+                return acc + curr.discount;
             }
 
-            ctrl.data.historyItem.payment.total = ctrl.data.historyItem.payment.totalServices + ctrl.data.historyItem.payment.totalProducts;
+            historyItem.payment.discountTotal = historyItem.payment.discountServices + historyItem.payment.discountProducts;
+        }
+
+        function setTotalCostPerSession(historyItem) {
+            if(historyItem.performedServices && historyItem.performedServices.length) {
+                historyItem.payment.costServices = historyItem.performedServices.reduce(costReducer, 0);
+            } else {
+                historyItem.payment.costServices = 0;
+            }
+            if(historyItem.soldProducts && historyItem.soldProducts.length) {
+                historyItem.payment.costProducts = historyItem.soldProducts.reduce(costReducer, 0);
+            } else {
+                historyItem.payment.costProducts = 0;
+            }
+            function costReducer(acc, curr) {
+                return acc + curr.cost;
+            }
+
+            historyItem.payment.total = historyItem.payment.costServices + historyItem.payment.costProducts - historyItem.payment.discountTotal;
+        }
+
+        function setTotalPaid(paidAmounts) {
+            ctrl.data.historyItem.payment.paidAmount = paidAmounts.reduce(function(acc, curr) {
+                return angular.isNumber(curr.total) ? (acc + curr.total) : acc;
+            }, 0);
         }
 
         function addServicesByStaff(historyItem) {
@@ -210,8 +216,9 @@
             });
         }
 
-        function deleteSoldProduct(soldProductsByStaffProducts, index) {
-            soldProductsByStaffProducts.splice(index, 1);
+        function deleteSoldProduct(soldProductsByStaff, index) {
+            soldProductsByStaff.products.splice(index, 1);
+            setProductsCost(soldProductsByStaff);
         }
 
         function addPaymentMethod(paidAmounts) {
@@ -256,24 +263,20 @@
 
         function deleteServicesByStaff(performedServices, index) {
             performedServices.splice(index, 1);
-            setTotalDiscountPerSession();
-            setTotalCostPerSession();
+            setTotalDiscountPerSession(ctrl.data.historyItem);
+            setTotalCostPerSession(ctrl.data.historyItem);
         }
 
         function deleteSoldProductsByStaff(soldProducts, index) {
             soldProducts.splice(index, 1);
-            setTotalDiscountPerSession();
-            setTotalCostPerSession();
-        }
-
-
-        function setTotalPaid(paidAmounts) {
-            ctrl.data.historyItem.payment.paidAmount = paidAmounts.reduce(function(acc, curr) {
-                return angular.isNumber(curr.total) ? (acc + curr.total) : acc;
-            }, 0);
+            setTotalDiscountPerSession(ctrl.data.historyItem);
+            setTotalCostPerSession(ctrl.data.historyItem);
         }
 
         function isPaidInFull(total, paid) {
+            if(total === 0) {
+                return 'vip-text very-high';
+            }
             return total === paid ? 'vip-text very-high' : 'vip-text low';
         }
     }
