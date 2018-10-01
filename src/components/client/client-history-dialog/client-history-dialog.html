@@ -78,14 +78,16 @@
                                             name="services_{{$index}}" multiple required
                                             ng-model-options="{trackBy: '$value._id'}" 
                                             ng-model="servicesByStaff.services"  
-                                            md-on-close="$ctrl.data.searchServices = ''; $ctrl.actions.setTotalCost(servicesByStaff)" 
+                                            md-on-close="$ctrl.data.searchServices = ''; $ctrl.actions.setServicesCost(servicesByStaff)" 
                                             md-selected-text="$ctrl.actions.changeSelectedServicesText(servicesByStaff.services)"
                                             data-md-container-class="container-select-header">
                                             <md-select-header class="select-header">
                                                 <input ng-model="$ctrl.data.searchServices" placeholder="Cauta un serviciu" class="select-header-searchbox">
                                             </md-select-header>
                                             <md-optgroup label="{{serviceType.name}}" ng-repeat="serviceType in $ctrl.data.serviceTypes | orderBy:'name' track by serviceType._id">
-                                                <md-option ng-value="service" ng-repeat="service in filteredServices = ($ctrl.data.services | filter: {_serviceTypeId: serviceType._id, name: $ctrl.data.searchServices }) track by service._id">
+                                                <md-option 
+                                                    ng-value="service" 
+                                                    ng-repeat="service in filteredServices = ($ctrl.data.services | filter: {_serviceTypeId: serviceType._id, name: $ctrl.data.searchServices }) track by service._id">
                                                     {{service.name}}
                                                     <small>{{service.price}} RON ({{service.duration}} min.)</small>
                                                 </md-option>
@@ -113,7 +115,8 @@
                                     <input name="cost_{{$index}}" 
                                         type="number" step="1" min="0" required
                                         ng-model="servicesByStaff.cost"
-                                        ng-change="$ctrl.actions.setTotalCostWithDiscount(servicesByStaff)"
+                                        ng-model-options="{debounce: '250'}"
+                                        ng-change="$ctrl.actions.setDiscount(servicesByStaff)"
                                     >
                                     <div ng-messages="$ctrl.data.addServicesByStaffForm['cost_' + $index].$error">
                                         <div ng-message="min">Pretul nu poate fi negativ</div>
@@ -127,8 +130,9 @@
                                     <md-icon>money_off</md-icon>
                                     <input name="discount_{{$index}}" 
                                         type="number" step="1" min="0" 
-                                        ng-model="servicesByStaff.discount" 
-                                        ng-change="$ctrl.actions.setTotalCostWithDiscount(servicesByStaff)"
+                                        ng-model="servicesByStaff.discount"
+                                        ng-model-options="{debounce: '250'}" 
+                                        ng-change="$ctrl.actions.setDiscount(servicesByStaff)"
                                     >
                                     <div ng-messages="$ctrl.data.addServicesByStaffForm['discount_' + $index].$error">
                                         <div ng-message="min">Discount-ul nu poate fi negativ</div>
@@ -219,9 +223,6 @@
                     </md-button>
                 </div>
 
-                <md-divider></md-divider>
-                <md-divider></md-divider>
-
                 <!--ADD PRODUCTS FORM-->
                 <ng-form name="$ctrl.data.soldProductsByStaffForm">
                     <div ng-repeat="soldProductsByStaff in $ctrl.data.historyItem.soldProducts track by $index">
@@ -295,7 +296,8 @@
                                                 <input name="product_{{$index}}.quantity" 
                                                     type="number" required min="1" step="1"
                                                     ng-model="product.quantity"
-                                                    ng-change="$ctrl.actions.setTotalProductsCost(soldProductsByStaff)"
+                                                    ng-model-options="{debounce: '250'}"
+                                                    ng-change="$ctrl.actions.setProductsCost(soldProductsByStaff)"
                                                     >
                                                 <div ng-messages="$ctrl.data.soldProductsByStaffForm['product_' + $index + '.quantity'].$error">
                                                     <div ng-message="required">Obligatoriu</div>
@@ -307,7 +309,8 @@
                                                 <input name="product_{{$index}}.price" 
                                                     type="number" required min="1" step="1"
                                                     ng-model="product.price"
-                                                    ng-change="$ctrl.actions.setTotalProductsCost(soldProductsByStaff)"
+                                                    ng-model-options="{debounce: '250'}"
+                                                    ng-change="$ctrl.actions.setProductsCost(soldProductsByStaff)"
                                                     >
                                                 <div ng-messages="$ctrl.data.soldProductsByStaffForm['product_' + $index + '.price'].$error">
                                                     <div ng-message="required">Obligatoriu</div>
@@ -315,7 +318,7 @@
                                                 </div>
                                             </md-input-container>
                                             <md-button class="md-icon-button" ng-hide="soldProductsByStaff.products.length === 1"
-                                                ng-click="$ctrl.actions.deleteSoldProduct(soldProductsByStaff.products, $index)">
+                                                ng-click="$ctrl.actions.deleteSoldProduct(soldProductsByStaff, $index)">
                                                 <md-icon>delete</md-icon>
                                             </md-button>
                                         </div>
@@ -336,7 +339,8 @@
                                         <input name="cost_{{$index}}" 
                                             type="number" step="1" min="0" required
                                             ng-model="soldProductsByStaff.cost"
-                                            ng-change="$ctrl.actions.setTotalCostWithDiscount(soldProductsByStaff)"
+                                            ng-model-options="{debounce: '250'}"
+                                            ng-change="$ctrl.actions.setDiscount(soldProductsByStaff)"
                                         >
                                         <div ng-messages="$ctrl.data.soldProductsByStaffForm['cost_' + $index].$error">
                                             <div ng-message="required">Obligatoriu</div>
@@ -350,8 +354,9 @@
                                         <md-icon>money_off</md-icon>
                                         <input name="discount_{{$index}}" 
                                             type="number" step="1" min="0"
-                                            ng-model="soldProductsByStaff.discount" 
-                                            ng-change="$ctrl.actions.setTotalCostWithDiscount(soldProductsByStaff)"
+                                            ng-model="soldProductsByStaff.discount"
+                                            ng-model-options="{debounce: '250'}" 
+                                            ng-change="$ctrl.actions.setDiscount(soldProductsByStaff)"
                                         >
                                         <div ng-messages="$ctrl.data.soldProductsByStaffForm['discount_' + $index].$error">
                                             <div ng-message="min">Discount-ul nu poate fi negativ</div>
@@ -414,7 +419,7 @@
 
 
                 <!--PLATA-->
-                <md-card ng-show="$ctrl.data.historyItem.payment.total || $ctrl.data.historyItem.payment.discountServices || $ctrl.data.historyItem.payment.discountProducts">
+                <md-card ng-show="$ctrl.data.historyItem.performedServices.length || $ctrl.data.historyItem.soldProducts.length">
                     <md-card-header ng-click="$ctrl.actions.showHidePaymentCard($ctrl.status.showPaymentCard)">
                         <md-card-header-text layout="row" layout-align="start center">
                             <span class="md-title">Plata</span>
@@ -442,13 +447,14 @@
                                 </div>
                             </md-input-container>
 
-                            <md-input-container flex>
-                                <label>Platit {{ paidAmount.type.name }}:</label>
+                            <md-input-container flex="33">
+                                <label>Platit:</label>
                                 <input name="paymentValue_{{$index}}" 
                                     type="number" min="0" step="1" 
                                     ng-required="paidAmount.type.id"
                                     ng-disabled="!paidAmount.type.id"
                                     ng-model="paidAmount.total"
+                                    ng-model-options="{debounce: '250'}"
                                     ng-change="$ctrl.actions.setTotalPaid($ctrl.data.historyItem.payment.paidAmounts)">
                                     <div ng-messages="$ctrl.data.addServicesByStaffForm['paymentValue_' + $index].$error">
                                         <div ng-message="min">Peste zero</div>
@@ -461,7 +467,7 @@
                             </md-button>
                         </div>
                         <md-button 
-                            ng-hide="$ctrl.data.paymentMethods.length === $ctrl.data.historyItem.payment.paidAmounts.length"
+                            ng-hide="$ctrl.data.historyItem.payment.paidAmounts.length === $ctrl.data.paymentMethods.length"
                             ng-click="$ctrl.actions.addPaymentMethod($ctrl.data.historyItem.payment.paidAmounts)">
                             <md-icon>add</md-icon>
                             mod plata
@@ -490,16 +496,12 @@
         </md-button>
         <div flex></div>
         <md-button 
-            ng-click="$ctrl.actions.test($ctrl.data.addServicesByStaffForm)">
-            test
-        </md-button>
-        <md-button 
             ng-click="$ctrl.actions.cancel()">
             Renunta
         </md-button>
         <md-button class="md-raised md-primary" 
             ng-click="$ctrl.actions.save($ctrl.data.historyItem)" 
-            ng-disabled="$ctrl.data.addServicesByStaffForm.$invalid">
+            ng-disabled="$ctrl.data.addServicesByStaffForm.$invalid || !($ctrl.data.historyItem.performedServices.length || $ctrl.data.historyItem.soldProducts.length)">
             Salveaza Sedinta
         </md-button>
     </md-dialog-actions>
