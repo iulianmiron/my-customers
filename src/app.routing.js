@@ -16,16 +16,16 @@
 		$urlRouterProvider.otherwise('/home');
 		
 		$stateProvider
-			.state('test', {
-				url: '/test',
-				component: 'test',
-				onEnter: function() { 
-					console.log('entering test');
-				},
-				onExit: function() { 
-					console.log('exiting test');
-				}
-			})
+			// .state('test', {
+			// 	url: '/test',
+			// 	component: 'test',
+			// 	onEnter: function() { 
+			// 		console.log('entering test');
+			// 	},
+			// 	onExit: function() { 
+			// 		console.log('exiting test');
+			// 	}
+			// })
 			.state('home', {
 				url: '/home',
 				component: 'home'
