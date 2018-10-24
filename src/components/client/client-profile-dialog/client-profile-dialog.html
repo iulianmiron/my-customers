@@ -145,8 +145,23 @@
                             </md-option>
                         </md-select>
                     </md-input-container>
+                    
+                    <md-input-container class="md-block">
+                            <label>Rating</label>
+                            <md-select name="rating" 
+                                ng-model-options="{trackBy: '$value.id'}" 
+                                ng-model="$ctrl.data.client.rating">
+                                <md-option ng-value="clientRating" ng-repeat="clientRating in $ctrl.data.clientRatings">
+                                    {{ clientRating.value }} - {{ clientRating.description }}
+                                </md-option>
+                            </md-select>
+                            <div ng-messages="$ctrl.data.clientProfileForm.clientRating.$error">
+                                <div ng-message="required">Rating-ul este necesar.</div>
+                            </div>
+                        </md-input-container>
 
                     <div layout="row" layout-wrap>
+                        
                         <md-input-container>
                             <md-checkbox layout="row" layout-align="start center"
                                 ng-model="$ctrl.data.client.isVip"

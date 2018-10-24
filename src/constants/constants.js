@@ -40,5 +40,17 @@
             { id: 4, name: 'Klimt', type: 'service', max_clients: 2, icon: 'spa' },
             { id: 5, name: 'Waiting Room', type: 'waiting', icon: 'weekend' },
             { id: 6, name: 'Office', type: 'administrative', icon: 'laptop' },
+        ])
+        .constant('CLIENT_RATINGS', [
+            { id: 1, value: 1, description: 'Niciodata nu mai luam', icon: 'spa' },
+            { id: 2, value: 2, description: 'Foarte rar o luam', icon: 'spa' },
+            { id: 3, value: 3, description: 'Problematic', icon: 'spa' },
+            { id: 4, value: 4, description: 'Cu mici probleme', icon: 'spa' },
+            { id: 5, value: 5, description: 'Normala', icon: 'spa' },
+            { id: 6, value: 6, description: 'Un pic mai fain', icon: 'spa' },
+            { id: 7, value: 7, description: 'Foarte ok', icon: 'spa' },
+            { id: 8, value: 8, description: 'Super ok', icon: 'spa' },
+            { id: 9, value: 9, description: 'Foarte bun', icon: 'spa' },
+            { id: 10, value: 10, description: 'Cel mai bun posibil', icon: 'spa' },
         ]);
 })();

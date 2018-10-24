@@ -6,8 +6,8 @@
         .controller('ClientProfileDialogController', ClientProfileDialogController);
 
         
-    ClientProfileDialogController.$inject = ['$rootElement', '$state', '$mdDialog', 'dialogData', 'ClientsDataService'];
-    function ClientProfileDialogController($rootElement, $state, $mdDialog, dialogData, ClientsDataService) {
+    ClientProfileDialogController.$inject = ['$rootElement', '$state', '$mdDialog', 'dialogData', 'ClientsDataService', 'CLIENT_RATINGS'];
+    function ClientProfileDialogController($rootElement, $state, $mdDialog, dialogData, ClientsDataService, CLIENT_RATINGS) {
         var ctrl = this;
         ctrl.data = {};
         ctrl.status = {};
@@ -19,6 +19,8 @@
         ctrl.data.client.age = ctrl.data.client.dateOfBirth ? calculateClientAge(ctrl.data.client.dateOfBirth): null;
         ctrl.data.clientVip = dialogData.clientVip;
         ctrl.data.maxDateOfBirth = new Date();
+        
+        ctrl.data.clientRatings = CLIENT_RATINGS;
                 
         ctrl.actions.setVIPData = setVIPData;
         ctrl.actions.calculateClientAge = calculateClientAge;
