@@ -212,7 +212,8 @@
                 },
                 title: 'Adaugati sedinta',
                 services: ctrl.data.allServices,
-                serviceTypes: ctrl.data.allServiceTypes
+                serviceTypes: ctrl.data.allServiceTypes,
+                lastHistoryItem: ctrl.data.history[ctrl.data.history.length - 1]
             };
             showHistoryDialog(event.event, dialogData, saveNewHistoryItem);
         }
