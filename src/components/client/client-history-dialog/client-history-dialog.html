@@ -108,6 +108,13 @@
                                             <div ng-message="required">Minim un serviciu trebuie introdus</div>
                                         </div>
                                     </md-input-container>
+                                    <md-input-container flex>
+                                        <md-icon>timelapse</md-icon>
+                                        <label>Interval (sapt.)</label>
+                                        <input name="interval"
+                                            type="number" step="1" min="0" 
+                                            ng-model="servicesByStaff.interval">
+                                    </md-input-container>
                                 </div>
                             </div>
                             <!--LISTA SERVICII ALESE-->
@@ -188,14 +195,6 @@
                                         mandatory="true" 
                                         no-meridiem>
                                     </md-time-picker>
-
-                                    <md-input-container class="margin-left no-validation">
-                                        <md-icon>face</md-icon>
-                                        <label>Interval (sapt.)</label>
-                                        <input name="interval"
-                                            type="number" step="1" min="0" 
-                                            ng-model="servicesByStaff.interval">
-                                    </md-input-container>
                                 </div>
 
                                 <md-input-container class="md-block">
