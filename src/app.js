@@ -64,8 +64,8 @@
         amMoment.changeLocale('ro');
     }
     
-    appCtrl.$inject = ['$state', 'HotkeyService', 'localStorageService'];
-    function appCtrl($state, HotkeyService, localStorageService) {
+    appCtrl.$inject = ['$state', 'toastr', 'HotkeyService', 'localStorageService'];
+    function appCtrl($state, toastr, HotkeyService, localStorageService) {
         var ctrl = this;
 
         ctrl.data = {};
@@ -77,9 +77,19 @@
         ctrl.status.showSidenav = false;
 
         HotkeyService.addClient(addNewClient);
+        HotkeyService.toggleAdmin(toggleAdmin);
 
         function addNewClient() {
             $state.go('client', { id: 0 });
+        }
+        function toggleAdmin() {
+            var adminMode = !localStorageService.get('show-admin-controls');
+            localStorageService.set('show-admin-controls', adminMode);
+
+            adminMode 
+                ? toastr.warning('Enabled', 'Admin Mode')
+                : toastr.success('Disabled', 'Admin Mode');
+            
         }
     }    
 })();

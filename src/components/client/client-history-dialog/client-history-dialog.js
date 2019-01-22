@@ -5,8 +5,8 @@
         .module('cm.components.clientHistoryDialog', [])
         .controller('ClientHistoryDialogController', ClientHistoryDialogController);
         
-    ClientHistoryDialogController.$inject = ['$element', '$mdDialog', 'dialogData', 'USERS', 'PAYMENT_METHODS', 'SALON_ROOMS'];
-    function ClientHistoryDialogController($element, $mdDialog, dialogData, USERS, PAYMENT_METHODS, SALON_ROOMS) {
+    ClientHistoryDialogController.$inject = ['$element', '$mdDialog', 'dialogData', 'USERS', 'PAYMENT_METHODS', 'SALON_ROOMS', 'HotkeyService'];
+    function ClientHistoryDialogController($element, $mdDialog, dialogData, USERS, PAYMENT_METHODS, SALON_ROOMS, HotkeyService) {
         var ctrl = this;
         ctrl.data = {};
         ctrl.status = {};
@@ -22,6 +22,7 @@
         ctrl.data.services = dialogData.services;
         ctrl.data.serviceTypes = dialogData.serviceTypes;
         ctrl.data.historyItem = dialogData.historyItem;
+        ctrl.data.lastHistoryItemPerformedServices = dialogData.lastHistoryItem && dialogData.lastHistoryItem.performedServices;
 
         ctrl.data.historyItem.performedServices = ctrl.data.historyItem.performedServices || addServicesByStaff(ctrl.data.historyItem);
         ctrl.data.historyItem.performedServices = fixDate(ctrl.data.historyItem.performedServices);
@@ -36,6 +37,7 @@
         ctrl.actions.setDiscount = setDiscount;
 
         ctrl.actions.setTotalPaid = setTotalPaid;
+        ctrl.actions.setTotalPayable = setTotalPayable;
 
         ctrl.actions.addPaymentMethod = addPaymentMethod;
         ctrl.actions.deletePaymentMethod = deletePaymentMethod;
@@ -52,6 +54,7 @@
         ctrl.actions.showCardContentServices = showCardContentServices;
         ctrl.actions.showCardContentProducts = showCardContentProducts;
 
+        ctrl.actions.copyLastSessionServices = copyLastSessionServices;
         ctrl.status.isPaidInFull = isPaidInFull;
         ctrl.actions.showHidePaymentCard = showHidePaymentCard;
         
@@ -68,6 +71,16 @@
 
         $element.find('input').on('keydown', function(ev) { ev.stopPropagation(); });
 
+        HotkeyService.save(saveClientHistoryItem);
+
+        function saveClientHistoryItem(event) {
+            event.preventDefault();
+            if(!(ctrl.data.addServicesByStaffForm.$invalid || !(ctrl.data.historyItem.performedServices.length || ctrl.data.historyItem.soldProducts.length))) {
+                ctrl.actions.save(ctrl.data.historyItem);
+            } 
+            
+        }
+
         function fixDate(performedServices) {
             return angular.forEach(performedServices, function(servicesByStaff) {
                 servicesByStaff.date = new Date(servicesByStaff.date);
@@ -83,7 +96,6 @@
         };
 
         function save(historyItem) {
-            console.log('$ctrl.data.historyItem:', historyItem);
             $mdDialog.hide(historyItem);
         };
 
@@ -94,8 +106,6 @@
                     : selectedServices.length + ' serviciu selectat'
                 : 'Nu sunt servicii selectate';            
         };
-
-
 
         function setServicesCost(servicesStaff) {
             if(servicesStaff.services && servicesStaff.services.length) {
@@ -172,6 +182,11 @@
             ctrl.data.historyItem.payment.paidAmount = paidAmounts.reduce(function(acc, curr) {
                 return angular.isNumber(curr.total) ? (acc + curr.total) : acc;
             }, 0);
+        }
+
+        function setTotalPayable(paidAmount, amountPayable) {
+            paidAmount.total = amountPayable;
+            ctrl.actions.setTotalPaid(ctrl.data.historyItem.payment.paidAmounts)
         }
 
         function addServicesByStaff(historyItem) {
@@ -273,11 +288,21 @@
             setTotalCostPerSession(ctrl.data.historyItem);
         }
 
-        function isPaidInFull(total, paid) {
-            if(total === 0) {
-                return 'vip-text very-high';
+        function isPaidInFull(payment) {
+            if(payment) {
+                return payment.total === payment.paidAmount ? 'vip-text very-high' : 'vip-text low';
             }
-            return total === paid ? 'vip-text very-high' : 'vip-text low';
+        }
+
+        function copyLastSessionServices(lastHistoryItemPerformedServices) {
+            ctrl.data.historyItem.performedServices = angular.copy(lastHistoryItemPerformedServices);
+            ctrl.data.historyItem.performedServices.map(function(serviceByStaff) {
+                serviceByStaff.date = new Date();
+                serviceByStaff.discount = 0;
+                serviceByStaff.total = serviceByStaff.cost;
+            });
+            setTotalDiscountPerSession(ctrl.data.historyItem);
+            setTotalCostPerSession(ctrl.data.historyItem);
         }
     }
 })();

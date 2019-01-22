@@ -64,24 +64,58 @@
                         <p ng-show="servicesByStaff.videosTaken">Filmari: {{ servicesByStaff.videosTaken ? 'Da' : 'Nu' }}</p>
                         <p ng-show="servicesByStaff.photosTaken">Poze: {{ servicesByStaff.photosTaken ? 'Da' : 'Nu' }}</p>
                     </div>
+
+                    <div ng-repeat="soldProductsByStaff in historyItem.soldProducts track by $index">
+                        <div>
+                            <div>Produse vandute de: <b>{{ soldProductsByStaff.staff.first_name + ' ' + soldProductsByStaff.staff.last_name }}</b></div>
+                        </div>
+                        <ul>
+                            <li ng-repeat="product in soldProductsByStaff.products track by $index">
+                                <md-icon>
+                                    code
+                                    <md-tooltip>Cod produs: {{product.code}}</md-tooltip>
+                                </md-icon>
+                                {{ product.name }}
+                                <small>{{ product.quantity }} x {{ product.price }} RON</small>
+                            </li>
+                        </ul>
+                    </div>
+
+
                     <div layout="row" layout-align="start center">
                         <div flex>
                             <md-button
-                                ng-class="{'md-primary': historyItem.payment.paidAmount && historyItem.payment.total === historyItem.payment.paidAmount}"
+                                ng-class="{'md-primary': $ctrl.status.isPaidInFull(historyItem.payment)}"
                                 ng-click="showPaymentStatus = !showPaymentStatus">
                                 <md-icon>account_balance_wallet</md-icon>
-                                <span ng-show="showPaymentStatus">Platit: {{historyItem.payment.paidAmount && historyItem.payment.total === historyItem.payment.paidAmount ? 'Da': 'Nu'}}</span>
+                                <md-tooltip>Total Platit: {{historyItem.payment.paidAmount || 0}} RON</md-tooltip>
+                                <span ng-show="showPaymentStatus">Platit: {{ $ctrl.status.isPaidInFull(historyItem.payment) ? 'Da': 'Nu'}}</span>
                             </md-button>
                         </div>
                         <div layout="row" ng-show="showPaymentStatus">
 
                             <div flex layout="column" layout-align="start end">
+                                <div ng-show="historyItem.payment.costServices && historyItem.payment.costServices !== 0">
+                                    Total servicii: {{historyItem.payment.costServices || 0}} RON
+                                </div>
+                                <div ng-show="historyItem.payment.discountServices || historyItem.payment.discountServices !== 0">
+                                    Discount servicii: -{{ historyItem.payment.discountServices || 0}} RON
+                                </div>
+                                <div>&nbsp;</div>
+                                <div ng-show="historyItem.payment.costProducts && historyItem.payment.costProducts !== 0">
+                                    Total produse: {{historyItem.payment.costProducts || 0}} RON
+                                </div>
+                                <div ng-show="historyItem.payment.discountProducts && historyItem.payment.discountProducts !== 0">
+                                    Discount produse: -{{historyItem.payment.discountProducts || 0}} RON
+                                </div>
+                                <div>&nbsp;</div>
+                                <div>Total de Plata: {{historyItem.payment.total || 0}}RON</div>
                                 <div ng-show="historyItem.payment.paidAmount && historyItem.payment.total" 
                                     ng-repeat="payment in historyItem.payment.paidAmounts track by $index">
-                                    {{ payment.type.name }}: {{ payment.total + 'RON' }}
+                                    {{ payment.type.name }}: {{ payment.total + ' RON' }}
                                 </div>
-                                <div>Total de Plata: {{historyItem.payment.total || 0}}RON</div>
-                                <div>Total Platit: {{historyItem.payment.paidAmount || 0}}RON</div>
+                                
+                                <div>Total Platit: {{historyItem.payment.paidAmount || 0}} RON</div>
                             </div>
 
                         </div>

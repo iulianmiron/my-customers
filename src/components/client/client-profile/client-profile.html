@@ -21,6 +21,7 @@
                     Data Nasterii: {{ $ctrl.data.client.dateOfBirth | amDateFormat:'DD/MM/YYYY' }}
                 </md-tooltip>
             </b>
+            <md-icon ng-if="$ctrl.status.hasRecentBirthday($ctrl.data.client.dateOfBirth)">star</md-icon>
         </p>
         <p>
             Telefon: 
