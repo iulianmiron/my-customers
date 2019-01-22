@@ -29,15 +29,27 @@
             if (changes.historyData && changes.historyData.currentValue) {                
                 ctrl.data.history = angular.copy(changes.historyData.currentValue);
                 angular.forEach(ctrl.data.history, function(iHistory) {
-                    iHistory.date = moment(iHistory.performedServices[0].date);
+                    iHistory.date = iHistory.performedServices.length 
+                        ? moment(iHistory.performedServices[0].date) 
+                        : moment(iHistory.soldProducts[0].date);
                 });
                 ctrl.data.clientId = ctrl.data.history.length && ctrl.data.history[0]._clientId;
             }
         }
         ctrl.$onInit = function() {
+            ctrl.status.isPaidInFull = isPaidInFull;
+
             ctrl.actions.addNewHistoryItem = addNewHistoryItem;
             ctrl.actions.editHistoryItem = editHistoryItem;
             ctrl.actions.refreshHistory = refreshHistory;
+        }
+
+        function isPaidInFull(payment) {
+            if(payment) {
+                var fullDiscount = payment.costProducts + payment.costServices === payment.discountTotal;
+                var paidInFull = payment.total === payment.paidAmount;
+                return fullDiscount || paidInFull;
+            }
         }
 
         function addNewHistoryItem(event) {

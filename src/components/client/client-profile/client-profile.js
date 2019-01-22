@@ -45,6 +45,7 @@
             ctrl.actions.copyToClipboard = copyToClipboard;
             ctrl.actions.editClient = editClient;
             ctrl.actions.calculateClientAge = calculateClientAge;
+            // ctrl.status.hasRecentBirthday = hasRecentBirthday;
         }
 
         function copyToClipboard(copiedItem) {
@@ -63,5 +64,11 @@
         function calculateClientAge(dateOfBirth) {
             return moment().diff(moment(dateOfBirth), 'years') + ' ani';
         }
+
+        // function hasRecentBirthday(clientDateOfBirth) {
+        //     var currentYear = moment().get('year');
+        //     var daysToBirthday = moment().diff(moment(clientDateOfBirth).year(currentYear), 'days');
+        //     return daysToBirthday >= 90;
+        // }
     }
 })();

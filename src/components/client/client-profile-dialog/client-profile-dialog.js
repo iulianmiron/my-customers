@@ -6,8 +6,8 @@
         .controller('ClientProfileDialogController', ClientProfileDialogController);
 
         
-    ClientProfileDialogController.$inject = ['$rootElement', '$state', '$mdDialog', 'dialogData', 'ClientsDataService'];
-    function ClientProfileDialogController($rootElement, $state, $mdDialog, dialogData, ClientsDataService) {
+    ClientProfileDialogController.$inject = ['$rootElement', '$state', '$mdDialog', 'dialogData', 'ClientsDataService', 'HotkeyService'];
+    function ClientProfileDialogController($rootElement, $state, $mdDialog, dialogData, ClientsDataService, HotkeyService) {
         var ctrl = this;
         ctrl.data = {};
         ctrl.status = {};
@@ -27,7 +27,16 @@
         ctrl.actions.checkIfDuplicate = checkIfDuplicate;
         ctrl.actions.deleteClient = deleteClient;
         ctrl.actions.cancel = cancel;
-        ctrl.actions.save = save;      
+        ctrl.actions.save = save;     
+        
+        HotkeyService.save(saveClient);
+
+        function saveClient(event) {
+            event.preventDefault();
+            if(!ctrl.data.clientProfileForm.$invalid) {
+                ctrl.actions.save(ctrl.data.client);
+            } 
+        }
 
         function calculateClientAge(dateOfBirth) {
             return ctrl.data.client.age = moment().diff(moment(dateOfBirth), 'years') + ' ani';
