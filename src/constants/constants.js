@@ -26,7 +26,7 @@
         ])
         .constant('USERS', [
             { id: 1, first_name: 'Elena', last_name: 'Miron' },
-            { id: 2, first_name: 'Madalina', last_name: 'Mocanu' }
+            { id: 2, first_name: 'Madalina', last_name: 'Marc' }
         ])
         .constant('PAYMENT_METHODS', [
             { id: 1, name: 'Cash', icon: 'euro_symbol' },

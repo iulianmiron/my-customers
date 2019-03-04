@@ -1,8 +1,36 @@
 <div layout="column">
 	<md-card>
 		<md-card-content>
-			<div>
-				<div ng-hide="$ctrl.status.showJoin">
+
+			<div layout="row" layout-align="start center">
+
+				<md-input-container>
+					<label>Data inceput</label>
+					<md-datepicker name="dateStart" 
+						ng-model="$ctrl.data.date.start">
+					</md-datepicker>
+				</md-input-container>
+	
+				<md-input-container>
+					<label>Data sfarsit</label>
+					<md-datepicker name="dateEnd" 
+						ng-model="$ctrl.data.date.end">
+					</md-datepicker>
+				</md-input-container>
+	
+				<md-button
+					ng-click="$ctrl.actions.searchByDate($ctrl.data.date)">
+					Cauta
+				</md-button>
+				
+			</div>
+
+			
+
+
+
+			<div ng-hide="true">
+				<div >
 					<div>
 						Current users in chat ({{$ctrl.data.usersInChat.length}}): <span ng-repeat="user in $ctrl.data.usersInChat track by $index">{{ user }}, </span>
 					</div>
