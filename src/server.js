@@ -34,6 +34,7 @@ app.delete('/api/clients/:id', clients.delete);
 // HISTORY collection
 app.get('/api/history', history.getAll);
 app.get('/api/history/client/:id', history.getClientHistory);
+app.get('/api/history/date-range/start/:start/end/:end', history.getByDateRange);
 app.post('/api/history', history.add);
 app.put('/api/history/:id', history.update);
 app.delete('/api/history/:id', history.delete);
