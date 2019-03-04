@@ -5,8 +5,7 @@
             <span class="md-headline">
                 Istoric client: {{ $ctrl.data.history.length || '0'}} sedinte
                 <md-button class="md-icon-button" 
-                    ng-click="$ctrl.actions.refreshHistory($event)"
-                    ng-if="$ctrl.data.clientId">
+                    ng-click="$ctrl.actions.refreshHistory($event)">
                     <md-icon>refresh</md-icon>
                     <md-tooltip>Refresh istoric</md-tooltip>
                 </md-button>
@@ -73,7 +72,7 @@
                             <li ng-repeat="product in soldProductsByStaff.products track by $index">
                                 <md-icon>
                                     code
-                                    <md-tooltip>Cod produs: {{product.code}}</md-tooltip>
+                                    <md-tooltip>Cod produs: {{ product.code }}</md-tooltip>
                                 </md-icon>
                                 {{ product.name }}
                                 <small>{{ product.quantity }} x {{ product.price }} RON</small>
@@ -109,7 +108,7 @@
                                     Discount produse: -{{historyItem.payment.discountProducts || 0}} RON
                                 </div>
                                 <div>&nbsp;</div>
-                                <div>Total de Plata: {{historyItem.payment.total || 0}}RON</div>
+                                <div>Total de Plata: {{historyItem.payment.total || 0}} RON</div>
                                 <div ng-show="historyItem.payment.paidAmount && historyItem.payment.total" 
                                     ng-repeat="payment in historyItem.payment.paidAmounts track by $index">
                                     {{ payment.type.name }}: {{ payment.total + ' RON' }}
