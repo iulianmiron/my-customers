@@ -1,42 +1,51 @@
 <md-card>
     <md-card-header>
-        <md-icon>history</md-icon>
-        <md-card-header-text layout="row" layout-align="space-between center">
-            <span class="md-headline">
-                Istoric client: {{ $ctrl.data.history.length || '0'}} sedinte
-                <md-button class="md-icon-button" 
-                    ng-click="$ctrl.actions.refreshHistory($event)">
-                    <md-icon>refresh</md-icon>
-                    <md-tooltip>Refresh istoric</md-tooltip>
-                </md-button>
-            </span>
-            <md-menu md-position-mode="target-right target">
-                <md-button md-menu-origin ng-click="$mdMenu.open($event)" class="md-primary" button-shrink="gt-sm">
-                    <md-icon>add_circle</md-icon>
-                    Adauga
-                </md-button>
-                <md-menu-content>
-                    <md-menu-item>
-                        <md-button ng-click="$ctrl.actions.addNewHistoryItem($event)">
-                            <md-icon>assignment</md-icon>
-                            Sedinta noua
-                        </md-button>
-                    </md-menu-item>
-                    <md-menu-item>
-                        <md-button ng-disabled="true">
-                            <md-icon>alarm_add</md-icon>
-                            Programare noua
-                        </md-button>
-                    </md-menu-item>
-                </md-menu-content>
-            </md-menu>
-        </md-card-header-text>
+            
+        
+            <md-icon>history</md-icon>
+            <md-card-header-text layout="row" layout-align="space-between center">
+                <span class="md-headline">
+                    Istoric client: {{ $ctrl.data.history.length || '0'}} sedinte
+                </span>
+                <md-menu md-position-mode="target-right target">
+                    <md-button md-menu-origin ng-click="$mdMenu.open($event)" class="md-primary" button-shrink="gt-sm">
+                        <md-icon>add_circle</md-icon>
+                        Adauga
+                    </md-button>
+                    <md-menu-content>
+                        <md-menu-item>
+                            <md-button ng-click="$ctrl.actions.addNewHistoryItem($event)">
+                                <md-icon>assignment</md-icon>
+                                Sedinta noua
+                            </md-button>
+                        </md-menu-item>
+                        <md-menu-item>
+                            <md-button ng-disabled="true">
+                                <md-icon>alarm_add</md-icon>
+                                Programare noua
+                            </md-button>
+                        </md-menu-item>
+                    </md-menu-content>
+                </md-menu>
+            </md-card-header-text>
     </md-card-header>
+    <div layout-padding>
+        <md-button class="md-icon-button" 
+            ng-click="$ctrl.actions.refreshHistory($event)">
+            <md-icon>refresh</md-icon>
+            <md-tooltip>Refresh istoric</md-tooltip>
+        </md-button>
+        <md-button class="md-icon-button" 
+            ng-click="$ctrl.actions.showHideAllHistoryItemDetails($ctrl.status.showAllHistoryItemDetails)">
+            <md-icon>unfold_{{ $ctrl.status.showAllHistoryItemDetails ? 'more' : 'less'}}</md-icon>
+            <md-tooltip>{{ $ctrl.status.showAllHistoryItemDetails ? 'Arata' : 'Ascunde'}} toate detaliile</md-tooltip>
+        </md-button>
+    </div>
     <md-card-content class="overflow" scroll-glue>
         <div ng-repeat="historyItem in $ctrl.data.history | orderBy: 'date' track by historyItem._id">
             <md-card current-session="historyItem.date" session-color>
                 <md-card-header>
-                    <md-card-header-text ng-click="showDetails = !showDetails">
+                    <md-card-header-text ng-click="$ctrl.actions.showHistoryItemDetails(historyItem._id)">
                         <span class="md-title">Sedinta {{ $index + 1 }}</span>
                         <span class="md-subhead">Data: {{ historyItem.date | amDateFormat:'Do/MM/YYYY, h:mm a' }}</span>
                     </md-card-header-text>
@@ -46,7 +55,7 @@
                     </md-button>
                 </md-card-header>
                 <md-divider></md-divider>
-                <md-card-content ng-show="showDetails || $last">
+                <md-card-content ng-show="$ctrl.data.showHistoryItemDetails[historyItem._id]">
                     <div ng-repeat="servicesByStaff in historyItem.performedServices track by $index">
                         <div>
                             <div><b>{{ servicesByStaff.staff.first_name + ' ' + servicesByStaff.staff.last_name }}</b>{{servicesByStaff.room.name ? ' in ' + servicesByStaff.room.name: '' }}{{ servicesByStaff.interval ? ', la ' +  servicesByStaff.interval + ' sapt.': ''}}:</div>
@@ -83,21 +92,41 @@
 
                     <div layout="row" layout-align="start center">
                         <div flex>
-                            <md-button
-                                ng-class="{'md-primary': $ctrl.status.isPaidInFull(historyItem.payment)}"
-                                ng-click="showPaymentStatus = !showPaymentStatus">
-                                <md-icon>account_balance_wallet</md-icon>
-                                <md-tooltip>Total Platit: {{historyItem.payment.paidAmount || 0}} RON</md-tooltip>
-                                <span ng-show="showPaymentStatus">Platit: {{ $ctrl.status.isPaidInFull(historyItem.payment) ? 'Da': 'Nu'}}</span>
-                            </md-button>
+                            <md-menu>
+                                <md-button 
+                                    class="md-icon-button" 
+                                    ng-class="{'md-primary': $ctrl.status.isPaidInFull(historyItem.payment)}"
+                                    ng-mouseenter="$mdMenu.open()"
+                                    ng-click="showPaymentStatus = !showPaymentStatus">
+                                    <md-icon md-menu-origin>account_balance_wallet</md-icon>
+                                </md-button>
+                                <md-menu-content ng-mouseleave="$mdMenu.close()">
+                                    <md-menu-item ng-repeat="paymentType in historyItem.payment.paidAmounts track by $index">
+                                        <md-button ng-click="$ctrl.actions.showHistoryItemPayment(historyItem._id)" ng-disabled="true">
+                                            <md-icon>
+                                                {{ paymentType.type.icon }}
+                                            </md-icon>
+                                            {{ paymentType.total || 0 }} RON
+                                        </md-button>
+                                    </md-menu-item>
+                                    <md-menu-item>
+                                        <md-button 
+                                            ng-class="{'md-primary': $ctrl.status.isPaidInFull(historyItem.payment)}"
+                                            ng-click="$ctrl.actions.showHistoryItemPayment(historyItem._id)">
+                                            <md-icon>account_balance_wallet</md-icon>
+                                            Total: {{ historyItem.payment.total || 0 }} RON
+                                        </md-button>
+                                    </md-menu-item>
+                                </md-menu-content>
+                            </md-menu>
                         </div>
-                        <div layout="row" ng-show="showPaymentStatus">
+                        <div layout="row" ng-show="$ctrl.data.showHistoryItemPayment[historyItem._id]">
 
                             <div flex layout="column" layout-align="start end">
                                 <div ng-show="historyItem.payment.costServices && historyItem.payment.costServices !== 0">
                                     Total servicii: {{historyItem.payment.costServices || 0}} RON
                                 </div>
-                                <div ng-show="historyItem.payment.discountServices || historyItem.payment.discountServices !== 0">
+                                <div ng-show="historyItem.payment.discountServices && historyItem.payment.discountServices !== 0">
                                     Discount servicii: -{{ historyItem.payment.discountServices || 0}} RON
                                 </div>
                                 <div>&nbsp;</div>
