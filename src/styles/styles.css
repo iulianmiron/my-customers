@@ -48,6 +48,32 @@ md-list-item p {
   padding: 15px;
 }
 
+md-autocomplete#product-template {
+  width: 200px;
+}
+.autocomplete-product-template li {
+  border-bottom: 1px solid #ccc;
+  height: auto;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  white-space: normal;
+}
+.autocomplete-product-template li:last-child {
+  border-bottom-width: 0;
+}
+.autocomplete-product-template .item-title,
+.autocomplete-product-template .item-metadata {
+  display: block;
+  line-height: 2;
+}
+.autocomplete-product-template .item-title md-icon {
+  height: 18px;
+  width: 18px;
+}
+/* .autocomplete-product-container {
+  min-width: 300px !important;
+} */
+
 /* .container-select-header {
   Please note: All these selectors are only applied to children of elements with the 'container-select-header' class
 } */

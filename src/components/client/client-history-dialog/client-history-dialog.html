@@ -281,7 +281,44 @@
 
                                     </div>
 
-                                    <div ng-repeat="product in soldProductsByStaff.products track by $index">
+                                    <div id="autocomplete-products">
+                                        <md-autocomplete flex required
+                                            md-input-name="productAutocomplete_{{$index}}"
+                                            md-input-minlength="1"
+                                            md-no-cache="true"
+                                            md-delay="500" 
+                                            md-clear-button="true"
+                                            md-selected-item="ctrl.selectedItem"
+                                            md-search-text="productQuery"
+                                            md-items="product in $ctrl.actions.searchProducts(productQuery)"
+                                            md-item-text="product.name"
+                                            md-require-match=""
+                                            md-floating-label="Alege Produs"
+                                            md-menu-class="autocomplete-product-template"
+                                            md-menu-container-class="autocomplete-product-container">
+                                            <md-item-template>
+                                                <span class="item-title">
+                                                    <md-icon>store</md-icon>
+                                                    <span md-highlight-text="productQuery"> {{ product.name }} </span>
+                                                </span>
+                                                <span class="item-metadata">
+                                                    <span>
+                                                        <strong md-highlight-text="productQuery">Cod: {{ product.code }}</strong> 
+                                                    </span>
+                                                    <span>
+                                                        <strong md-highlight-text="productQuery">PLU: {{ product.codeCashRegister }}</strong>
+                                                    </span>
+                                                </span>
+                                            </md-item-template>
+                                            <div ng-messages="$ctrl.data.soldProductsByStaffForm['productAutocomplete_' + $index].$error">
+                                                <div ng-message="required">Camp obligatoriu.</div>
+                                                <div ng-message="md-require-match">Alege un produs.</div>
+                                                <div ng-message="minlength">>1</div>
+                                            </div>
+                                        </md-autocomplete>
+                                    </div>
+
+                                    <div ng-repeat="product in soldProductsByStaff.products track by $index" ng-hide="true">
                                         <div layout="row" layout-align="start center">
                                             <md-input-container>
                                                 <label>Cod:</label>
@@ -360,7 +397,7 @@
                                             <div ng-message="min">Pretul nu poate fi negativ</div>
                                         </div>
                                     </md-input-container>
-    
+
                                     <!--DISCOUNT-->
                                     <md-input-container>
                                         <label>Discount</label>
@@ -375,7 +412,7 @@
                                             <div ng-message="min">Discount-ul nu poate fi negativ</div>
                                         </div>
                                     </md-input-container>
-    
+
                                     <!--TOTAL-->
                                     <md-input-container>
                                         <label>Total (RON)</label>
@@ -386,7 +423,7 @@
                                         >
                                     </md-input-container>
                                 </div>
-    
+
                                 <div layout="row" layout-wrap>
                                     <!--BUTON ARATA DETALII-->
                                     <md-button ng-click="showExtraDetails = !showExtraDetails">
@@ -394,7 +431,7 @@
                                         {{ showExtraDetails ? 'ascunde' : 'editeaza' }} detalii
                                     </md-button>
                                 </div>
-    
+
                                 <fieldset ng-show="showExtraDetails">
                                     <legend>Detalii</legend>
                                     <div layout="row" layout-align="start center" layout-wrap>
@@ -405,7 +442,7 @@
                                                 md-max-date="$ctrl.data.maxDate">
                                             </md-datepicker>
                                         </md-input-container>
-                    
+
                                         <md-time-picker 
                                             ng-model="soldProductsByStaff.date" 
                                             message="$ctrl.data.timePickerMessages" 

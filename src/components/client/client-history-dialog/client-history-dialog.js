@@ -5,8 +5,8 @@
         .module('cm.components.clientHistoryDialog', [])
         .controller('ClientHistoryDialogController', ClientHistoryDialogController);
         
-    ClientHistoryDialogController.$inject = ['$element', '$mdDialog', 'dialogData', 'USERS', 'PAYMENT_METHODS', 'SALON_ROOMS', 'HotkeyService'];
-    function ClientHistoryDialogController($element, $mdDialog, dialogData, USERS, PAYMENT_METHODS, SALON_ROOMS, HotkeyService) {
+    ClientHistoryDialogController.$inject = ['$q', '$element', '$mdDialog', 'dialogData', 'USERS', 'PAYMENT_METHODS', 'SALON_ROOMS', 'HotkeyService', 'ProductsDataService'];
+    function ClientHistoryDialogController($q, $element, $mdDialog, dialogData, USERS, PAYMENT_METHODS, SALON_ROOMS, HotkeyService, ProductsDataService) {
         var ctrl = this;
         ctrl.data = {};
         ctrl.status = {};
@@ -31,6 +31,7 @@
         
         ctrl.actions.changeSelectedServicesText = changeSelectedServicesText;
 
+        ctrl.actions.searchProducts = searchProducts;
 
         ctrl.actions.setServicesCost = setServicesCost;
         ctrl.actions.setProductsCost = setProductsCost;
@@ -77,8 +78,7 @@
             event.preventDefault();
             if(!(ctrl.data.addServicesByStaffForm.$invalid || !(ctrl.data.historyItem.performedServices.length || ctrl.data.historyItem.soldProducts.length))) {
                 ctrl.actions.save(ctrl.data.historyItem);
-            } 
-            
+            }
         }
 
         function fixDate(performedServices) {
@@ -106,6 +106,25 @@
                     : selectedServices.length + ' serviciu selectat'
                 : 'Nu sunt servicii selectate';            
         };
+
+        function searchProducts(query) {
+            var deferred = $q.defer();
+
+            ProductsDataService
+                .searchAll(query)
+                .then(handleSuccess)
+                .catch(handleError);
+
+            function handleSuccess(rProducts) {
+                deferred.resolve(rProducts);
+            }
+
+            function handleError(rErrorMessage) {
+                console.error('Could not get products', rErrorMessage);
+                deferred.reject(rErrorMessage);
+            }
+            return deferred.promise;
+        }
 
         function setServicesCost(servicesStaff) {
             if(servicesStaff.services && servicesStaff.services.length) {

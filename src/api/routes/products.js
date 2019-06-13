@@ -6,6 +6,7 @@ var db_products = mongojs(db + 'products', ['products']);
 
 module.exports = {
     getAll: getAll,
+    search: search,
     add: add,
     update: update,
     delete: deleteOne
@@ -19,6 +20,13 @@ function add(req, res) {
     req.body.updatedOn = new Date();
 
     db_products.products.insert(req.body, responseFn(res));
+};
+
+function search(req, res) {
+    db_products.products.aggregate([
+        { $match: { $text: { $search: req.params.query } } },
+        { $sort: { score: { $meta: "textScore" } } }
+    ], responseFn(res));
 };
 
 function update(req, res) {
