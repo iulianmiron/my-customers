@@ -99,8 +99,8 @@
                                                 <md-option 
                                                     ng-value="service" 
                                                     ng-repeat="service in filteredServices = ($ctrl.data.services | filter: {_serviceTypeId: serviceType._id, name: $ctrl.data.searchServices }) track by service._id">
-                                                    {{service.name}}
-                                                    <small>{{service.price}} RON ({{service.duration}} min.)</small>
+                                                    {{ service.name }}
+                                                    <small ng-hide="!service.price && !service.duration">{{ service.price }} RON ({{ service.duration }} min.)</small>
                                                 </md-option>
                                             </md-optgroup>
                                         </md-select>
@@ -108,6 +108,8 @@
                                             <div ng-message="required">Minim un serviciu trebuie introdus</div>
                                         </div>
                                     </md-input-container>
+
+                                    <!--INTERVAL-->
                                     <md-input-container flex>
                                         <md-icon>timelapse</md-icon>
                                         <label>Interval (sapt.)</label>
@@ -121,7 +123,7 @@
                             <div ng-repeat="service in servicesByStaff.services track by service._id"
                                 ng-show="servicesByStaff.services.length" layout="column" layout-padding>
                                 {{ $index + 1 }}. {{ service.name }}
-                                <small>Pret: {{ service.price }} RON, Durata: {{ service.duration }} min.</small>
+                                <small ng-hide="!service.price && !service.duration">Pret: {{ service.price }} RON, Durata: {{ service.duration }} min.</small>
                             </div>
 
                             <div layout="row" layout-wrap ng-show="servicesByStaff.services.length">
@@ -333,7 +335,8 @@
                                             </md-button>
                                         </div>
                                     </div>
-                                    <md-button 
+                                    <md-button
+                                        ng-hide="!soldProductsByStaff.staff"
                                         ng-click="$ctrl.actions.addSoldProduct(soldProductsByStaff.products)">
                                         <md-icon>add</md-icon>
                                         adauga produs
@@ -435,7 +438,7 @@
                             <span class="md-title">Plata</span>
                             <span>
                                 <md-button class="md-icon-button">
-                                    <md-icon>keyboard_arrow_{{$ctrl.status.showPaymentCard ? 'up' : 'down'}}</md-icon>
+                                    <md-icon>keyboard_arrow_{{ $ctrl.status.showPaymentCard ? 'up' : 'down' }}</md-icon>
                                 </md-button>
                             </span>
                         </md-card-header-text>
@@ -451,7 +454,7 @@
                                     <md-option 
                                         ng-value="paymentMethod" 
                                         ng-repeat="paymentMethod in $ctrl.data.paymentMethods track by paymentMethod.id"
-                                        ng-click="$ctrl.actions.setTotalPayable(paidAmount, $ctrl.data.historyItem.payment.total - $ctrl.data.historyItem.payment.paidAmount)">
+                                        ng-click="$ctrl.actions.setTotalPayable(paidAmount, $ctrl.data.historyItem.payment)">
                                         <md-icon>{{ paymentMethod.icon }}</md-icon> {{ paymentMethod.name }}
                                     </md-option>
                                 </md-select>

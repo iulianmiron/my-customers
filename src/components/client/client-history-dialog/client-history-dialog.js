@@ -184,9 +184,10 @@
             }, 0);
         }
 
-        function setTotalPayable(paidAmount, amountPayable) {
+        function setTotalPayable(paidAmount, payment) {
+            var amountPayable = payment.total - payment.paidAmount;
             paidAmount.total = amountPayable;
-            ctrl.actions.setTotalPaid(ctrl.data.historyItem.payment.paidAmounts)
+            setTotalPaid(ctrl.data.historyItem.payment.paidAmounts);
         }
 
         function addServicesByStaff(historyItem) {
