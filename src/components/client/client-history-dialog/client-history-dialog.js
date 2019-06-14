@@ -46,6 +46,10 @@
         ctrl.actions.addServicesByStaff = addServicesByStaff;
         ctrl.actions.deleteServicesByStaff = deleteServicesByStaff;
 
+        // new add product methods
+        ctrl.actions.addProduct = addProduct;
+        // new add product methods
+
         ctrl.actions.addSoldProductsByStaff = addSoldProductsByStaff;
         ctrl.actions.deleteSoldProductsByStaff = deleteSoldProductsByStaff;
 
@@ -126,6 +130,14 @@
             return deferred.promise;
         }
 
+        function addProduct(product, soldProductsByStaff, historyItem) {
+            if(product && product._id) {
+                product.quantity = product.quantity || 1;
+                soldProductsByStaff.products.push(product);
+                setProductsCost(soldProductsByStaff);
+            }
+        }
+
         function setServicesCost(servicesStaff) {
             if(servicesStaff.services && servicesStaff.services.length) {
                 servicesStaff.cost = servicesStaff.services.reduce(function(acc, curr) {
@@ -140,8 +152,8 @@
         function setProductsCost(productsStaff) {
             if(productsStaff.products && productsStaff.products.length) {
                 productsStaff.cost = productsStaff.products.reduce(function(acc, curr) {
-                    if(curr.price && curr.quantity) {
-                        return acc + (curr.price * curr.quantity);
+                    if(curr.priceToSell && curr.quantity) {
+                        return acc + (curr.priceToSell * curr.quantity);
                     }
                     return acc;
                 }, 0);

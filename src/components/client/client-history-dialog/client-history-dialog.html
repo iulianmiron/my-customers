@@ -281,19 +281,19 @@
 
                                     </div>
 
-                                    <div id="autocomplete-products">
-                                        <md-autocomplete flex required
+                                    <!--ADD PRODUCTS AUTOCOMPLETE-->
+                                    <div id="autocomplete-products" ng-hide="!soldProductsByStaff.staff">
+                                        <md-autocomplete flex
                                             md-input-name="productAutocomplete_{{$index}}"
-                                            md-input-minlength="1"
+                                            minlength="1"
+                                            md-floating-label="Cauta Produs"
                                             md-no-cache="true"
-                                            md-delay="500" 
                                             md-clear-button="true"
-                                            md-selected-item="ctrl.selectedItem"
-                                            md-search-text="productQuery"
+                                            md-delay="500" 
                                             md-items="product in $ctrl.actions.searchProducts(productQuery)"
-                                            md-item-text="product.name"
-                                            md-require-match=""
-                                            md-floating-label="Alege Produs"
+                                            md-selected-item-change="$ctrl.actions.addProduct(product, soldProductsByStaff, $ctrl.data.historyItem)" 
+                                            md-item-text="product.name + ' ' + product.description"
+                                            md-search-text="productQuery"
                                             md-menu-class="autocomplete-product-template"
                                             md-menu-container-class="autocomplete-product-container">
                                             <md-item-template>
@@ -311,15 +311,17 @@
                                                 </span>
                                             </md-item-template>
                                             <div ng-messages="$ctrl.data.soldProductsByStaffForm['productAutocomplete_' + $index].$error">
-                                                <div ng-message="required">Camp obligatoriu.</div>
-                                                <div ng-message="md-require-match">Alege un produs.</div>
                                                 <div ng-message="minlength">>1</div>
                                             </div>
                                         </md-autocomplete>
                                     </div>
 
-                                    <div ng-repeat="product in soldProductsByStaff.products track by $index" ng-hide="true">
+                                    <!--PRODUCTS LIST-->
+                                    <div ng-repeat="product in soldProductsByStaff.products track by $index">
                                         <div layout="row" layout-align="start center">
+                                            <div>
+                                                <span>{{ $index + 1 }}.</span>
+                                            </div>
                                             <md-input-container>
                                                 <label>Cod:</label>
                                                 <input name="product_{{$index}}.code"
@@ -357,7 +359,7 @@
                                                 <label>Pret:</label>
                                                 <input name="product_{{$index}}.price" 
                                                     type="number" required min="1" step="1"
-                                                    ng-model="product.price"
+                                                    ng-model="product.priceToSell"
                                                     ng-model-options="{debounce: '250'}"
                                                     ng-change="$ctrl.actions.setProductsCost(soldProductsByStaff)"
                                                     >
@@ -372,7 +374,7 @@
                                             </md-button>
                                         </div>
                                     </div>
-                                    <md-button
+                                    <md-button ng-hide="true"
                                         ng-hide="!soldProductsByStaff.staff"
                                         ng-click="$ctrl.actions.addSoldProduct(soldProductsByStaff.products)">
                                         <md-icon>add</md-icon>
