@@ -5,8 +5,8 @@
         .module('cm.components.clientHistoryDialog', [])
         .controller('ClientHistoryDialogController', ClientHistoryDialogController);
         
-    ClientHistoryDialogController.$inject = ['$element', '$mdDialog', 'dialogData', 'USERS', 'PAYMENT_METHODS', 'SALON_ROOMS', 'HotkeyService'];
-    function ClientHistoryDialogController($element, $mdDialog, dialogData, USERS, PAYMENT_METHODS, SALON_ROOMS, HotkeyService) {
+    ClientHistoryDialogController.$inject = ['$element', '$mdDialog', 'dialogData', 'clipboard', 'toastr', 'USERS', 'PAYMENT_METHODS', 'SALON_ROOMS', 'HotkeyService'];
+    function ClientHistoryDialogController($element, $mdDialog, dialogData, clipboard, toastr, USERS, PAYMENT_METHODS, SALON_ROOMS, HotkeyService) {
         var ctrl = this;
         ctrl.data = {};
         ctrl.status = {};
@@ -30,6 +30,9 @@
         ctrl.data.historyItem.payment = ctrl.data.historyItem.payment || { paidAmounts: [] };
         
         ctrl.actions.changeSelectedServicesText = changeSelectedServicesText;
+
+        ctrl.actions.showQRScanDialog = showQRScanDialog;
+        ctrl.actions.copyToClipboard = copyToClipboard;
 
 
         ctrl.actions.setServicesCost = setServicesCost;
@@ -72,6 +75,26 @@
         $element.find('input').on('keydown', function(ev) { ev.stopPropagation(); });
 
         HotkeyService.save(saveClientHistoryItem);
+
+        function showQRScanDialog(event) {
+            $mdDialog.show({
+                contentElement: '#QRCodeDialog',
+                parent: angular.element(document.body),
+                targetEvent: event,
+                multiple: true,
+                clickOutsideToClose: true
+            });
+        }
+
+        function copyToClipboard(copiedItem) {
+
+            if(copiedItem) {
+                clipboard.copyText(copiedItem);
+                toastr.success('Detalii cont copiate in clipboard!');
+            } else {
+                toastr.warning('Nimic de copiat!');
+            }
+        }
 
         function saveClientHistoryItem(event) {
             event.preventDefault();

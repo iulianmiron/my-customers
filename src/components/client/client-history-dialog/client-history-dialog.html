@@ -487,6 +487,11 @@
                             <md-icon>add</md-icon>
                             mod plata
                         </md-button>
+                        <md-button
+                            ng-click="$ctrl.actions.showQRScanDialog()">
+                            <md-icon>nfc</md-icon>
+                            cod qr
+                        </md-button>
                         <div layout="column" layout-align="start end" layout-padding flex>
                             <span>Discount Servicii: {{ $ctrl.data.historyItem.payment.discountServices }} RON</span>
                             <span>Discount Produse: {{ $ctrl.data.historyItem.payment.discountProducts }} RON</span>
@@ -522,3 +527,37 @@
     </md-dialog-actions>
 
 </md-dialog>
+
+<!--DIALOG QR CODE-->
+<div style="visibility: hidden">
+    <div class="md-dialog-container" id="QRCodeDialog">
+        <md-dialog layout-padding>
+            <div flex>
+                <img src="img/qr_code_bank_account_personal_elena.png" class="qr-code-bank-account" alt="image caption">
+                <div layout="row">            
+                    <md-button 
+                        class="md-default" 
+                        ng-click="$ctrl.actions.copyToClipboard('IBAN Beneficiar: RO15INGB0000999904637532\nNume Beneficiar: Elena Miron')">
+                        <md-icon>account_balance</md-icon>
+                        Copiaza Detalii Cont
+                    </md-button>
+                </div>
+
+                <div layout="row" flex="50">
+                    <div layout="column" flex layout-align="start end">
+                        <span>IBAN Beneficiar:</span>
+                        <span>Nume Beneficiar:</span>
+                        <span>Banca Beneficiar:</span>
+                        <span>Cod SWIFT:</span>
+                    </div>
+                    <div layout="column" flex flex-offset="10">
+                        <span>RO15INGB0000999904637532</span>
+                        <span>Elena Miron </span>
+                        <span>ING Bank Bucuresti Centrala </span>
+                        <span>INGBROBU</span> 
+                    </div>
+                </div> 
+            </div>
+        </md-dialog>
+    </div>
+</div>
