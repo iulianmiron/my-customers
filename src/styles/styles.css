@@ -86,6 +86,7 @@ md-list-item p {
 
 .qr-code-bank-account {
   max-width: 650px;
+  max-height: 650px;
   margin: auto;
 }
 
