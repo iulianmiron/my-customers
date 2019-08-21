@@ -111,7 +111,47 @@
         function getClientHistory(clientId) { 
             HistoryDataService.getAllById(clientId).then(function(rHistory) {
                 ctrl.data.history = rHistory;
+                // console.log(ctrl.data.history);
+                getPaymentHabit(ctrl.data.history);
             }); 
+        }
+
+        function getPaymentHabit(history) {
+            getLastThreeSessions(history);
+            getPaymentPercentageByType(history);
+        }
+
+        function getLastThreeSessions(history) {
+            var lastThreeSessions = history.slice(-3);
+
+            ctrl.data.lastThreeSessions = lastThreeSessions.map(historyPaymentExtract);
+            console.log('ctrl.data.lastThreeSessions', ctrl.data.lastThreeSessions);
+        }
+
+        function getPaymentPercentageByType(history) {
+            ctrl.data.allSessions = history.map(historyPaymentExtract);
+            console.log('ctrl.data.allSessions', ctrl.data.allSessions);
+
+            var test = [];
+
+            angular.forEach(ctrl.data.allSessions, function(session, key) {
+                angular.forEach(session, function(paymentType, id) {
+                    if(paymentType.id) {
+                        test[paymentType.id] = test[paymentType.id] ? test[paymentType.id] + 1 : 1;
+                    }
+                });
+
+            });
+            console.log(test);
+        }
+
+        function historyPaymentExtract(item) {
+            if(item.payment && item.payment.paidAmounts.length) {
+                var sessionPayment = item.payment.paidAmounts.map(function(itemPaidAmount) {
+                    return itemPaidAmount.type;
+                });
+                return sessionPayment;
+            }
         }
 
         function getSelectedStaff(selectedStaffId) {

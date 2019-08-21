@@ -218,7 +218,8 @@
             historyItem.performedServices.push({
                 services: null,
                 staff: null,
-                date: new Date()
+                date: new Date(),
+                interval: 4
             });
 
             hideAllCardContent();

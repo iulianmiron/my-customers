@@ -114,7 +114,7 @@
                                         <md-icon>timelapse</md-icon>
                                         <label>Interval (sapt.)</label>
                                         <input name="interval"
-                                            type="number" step="1" min="0" 
+                                            type="number" step="1" min="0"
                                             ng-model="servicesByStaff.interval">
                                     </md-input-container>
                                 </div>
@@ -228,7 +228,6 @@
                 <!--BUTON ADAUGA SERVICII-->
                 <div layout="row" layout-align="start center">
                     <md-button class="md-raised"
-                        ng-hide="$ctrl.data.historyItem.performedServices.length === $ctrl.data.users.length"
                         ng-click="$ctrl.actions.addServicesByStaff($ctrl.data.historyItem)">
                         <md-icon>add</md-icon>
                         Adauga servicii
