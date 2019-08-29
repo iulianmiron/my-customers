@@ -136,7 +136,8 @@
         function addNewAppointment(event) {
             var dialogData = {
                 appointment: {
-                    _clientId: ctrl.data.clientId
+                    _clientId: ctrl.data.clientId,
+                    date: ctrl.data.selectedDate
                 },
                 title: 'Adauga Programare',
                 staff: ctrl.data.allStaff,
@@ -166,7 +167,7 @@
         function saveEditedAppointment(appointment) {
             console.log('edit appointment', appointment);
             AppointmentsDataService.updateOne(appointment).then(function(rSuccess) {
-                toastr.success("Programare adaugata", "Succes");
+                toastr.success("Programare editata", "Succes");
             });
             init();
         }

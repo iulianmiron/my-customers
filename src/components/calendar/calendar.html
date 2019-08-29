@@ -80,9 +80,14 @@
                                 
                                 <div layout="column">
                                     <span>Servicii: </span>
-                                    <span ng-repeat="service in appointment.services track by $index">
-                                        {{ service.type.name }} 
-                                        <span ng-if="service.staff.firstName">({{ service.staff.firstName }})</span>
+                                    <span ng-repeat="service in appointment.services track by service._orderId">
+                                        <ul>
+                                            <li ng-repeat="serviceType in service.type track by serviceType._id">
+                                                {{ serviceType.name }}
+                                            </li>
+                                            {{ service.type.name }} 
+                                            <span ng-if="service.staff.firstName">({{ service.staff.firstName }})</span>
+                                        </ul>
                                     </span>
                                 </div>
                                     
