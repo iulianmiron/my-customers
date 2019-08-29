@@ -8,8 +8,10 @@
             controller: ClientSearchController,
             bindings: {
                 show: '<',
+                showClearButton: '<',
+                defaultSelection: '<',
                 onBlur: '&',
-                clientFn: '&'
+                onSelection: '&'
             }
         });
         
@@ -24,10 +26,16 @@
             if(changes.show && changes.show.currentValue) {
                 ctrl.status.show = angular.copy(changes.show.currentValue);
             }
+            if(changes.showClearButton && changes.showClearButton.currentValue) {
+                ctrl.status.showClearButton = angular.copy(changes.showClearButton.currentValue);
+            }
+            if(changes.defaultSelection && changes.defaultSelection.currentValue && !angular.equals(changes.defaultSelection.currentValue, changes.defaultSelection.previousValue)) {
+                ctrl.data.selectedItem = angular.copy(changes.defaultSelection.currentValue);
+            }
         }
         ctrl.$onInit = function() {
             ctrl.actions.searchClients = searchClients;
-            ctrl.actions.clientFn = clientFn;
+            ctrl.actions.onSelection = onSelection;
             ctrl.actions.hideSearch = hideSearch;
         }
 
@@ -50,8 +58,8 @@
             return deferred.promise;
         }
 
-        function clientFn(client) {
-            ctrl.clientFn({$event: {client: client}});
+        function onSelection(client) {
+            ctrl.onSelection({$event: {client: client}});
         }
 
         function hideSearch(hideSearch) {

@@ -2,13 +2,13 @@
 <html ng-app="cm" ng-strict-di>
 	<head>
 		<base href="/">
-		<title>Salon Elena Miron</title>
+		<title>Centru Estetic Elena Miron</title>
 
-		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 		
 		<link rel="icon" href="img/favicon.ico?rev=74b80f3f3513325a58333df8716ce36d">
 		<!-- MAIN STYLES -->
-		<link rel='stylesheet' href="styles/styles.css?rev=3c3730053f1bcd392301562d5c1b3adb" />
+		<link rel='stylesheet' href="styles/styles.css?rev=0286944a5a9005f2abb662c22034a6e7" />
 
 		<link rel='stylesheet' href="./node_modules/angular-material/angular-material.min.css?rev=67beef1f721ac8003ff25dccd6bf97db" />
 		<link rel='stylesheet' href="node_modules/material-design-icons-iconfont/dist/material-design-icons.css?rev=c25988089f59c8381e2b6c1cc1d627ab" />
@@ -35,14 +35,9 @@
 		</spinner>	
 
 		<!--MAIN VIEW -->
-    	<md-content flex ui-view>
+		<md-content ui-view>
 			Loading App...
 		</md-content>
-
-		<!-- test view -->
-		<!-- <md-content ui-view>
-			Loading App...
-		</md-content> -->
 
 		<!--EXTERNAL LIBS-->
 		<script src="node_modules/angular/angular.min.js?rev=ecac443e145a7684c1de1e3d67d1765b"></script>
@@ -69,7 +64,7 @@
 		<!-- Main app -->
 		<script src="app.js?rev=81789eeedbfba86ca154b503915ed4a9"></script>
 		<!-- App Routes -->
-		<script src="app.routing.js?rev=6234588528cdff1761cc9fdc56984b7b"></script>
+		<script src="app.routing.js?rev=719d209fd1974f18b7404c51007e57f9"></script>
 		<!-- App Theme -->
 		<script src="app.theming.js?rev=6b9e4d5150dd9f04259037ade2986526"></script>
 		
@@ -78,7 +73,7 @@
 		<script src="dataservices/dataservices.js?rev=c43e931cbeac1dc36917603cb4fc2dd3"></script>
 
 		<!-- CONSTANTS -->
-		<script src="constants/constants.js?rev=eb6e3c4f063f33442df5fffaa85940d6"></script>
+		<script src="constants/constants.js?rev=c9c35ae810acc830080338c48990557b"></script>
 		<!-- DIRECTIVES -->
 		<script src="directives/directives.js?rev=a80241fb4cc2e869c0f2789dfc508b58"></script>
 		<script src="directives/vip-color.js?rev=ce042cf7d7542545621b93d7ff9459de"></script>
@@ -94,15 +89,15 @@
 
 
 		<!-- COMPONENTS -->
-		<script src="components/components.js?rev=e78103c985ba1ad33c3ceaffa163d1ce"></script>
+		<script src="components/components.js?rev=49c94a519f1b56c16ed085a2efe98515"></script>
 
 		<!-- COMMON -->
-		<script src="components/common/app-header/app-header.js?rev=78634427c965438e8038c3a679e7c54c"></script>
+		<script src="components/common/app-header/app-header.js?rev=f19664e3aa5d22229a5be13f2fd56746"></script>
 		<script src="components/common/app-sidebar/app-sidebar.js?rev=d77df53fa4fc76c86654712647b65f43"></script>
-		<script src="components/common/client-search/client-search.js?rev=53d76da758dee7c2698471b1c2fdd032"></script>
+		<script src="components/common/client-search/client-search.js?rev=03a10fae5711e9e97a631c7fab0ebe02"></script>
 		<script src="components/common/app-loading/app-loading.js?rev=5f30da210665a2a2b916977eeecfeee9"></script>
 		<script src="components/common/confirm-dialog/confirm-dialog.js?rev=a5c2f344d9c975eaa2c19c14f1d5e169"></script>
-		<script src="components/common/time-picker/time-picker.js?rev=d021f0d6d41bb1abfcee7007a412926e"></script>
+		<script src="components/common/time-picker/time-picker.js?rev=014579b1be21771d75d5f1e496df7cbd"></script>
 
 		<!-- SETTINGS -->
 		<script src="components/settings/settings.js?rev=3ed1e7db8c9ca762c43c6bffc4a21e57"></script>
@@ -127,11 +122,10 @@
 		<script src="components/settings/roles/role-dialog/role-dialog.js?rev=284dfeb6bf06749a21c1f2027e09e61d"></script>
 
 		<!-- HOME -->
-		<script src="components/home/home.js?rev=a7ffd555845df698a6f27686fb3e65b5"></script>
-		<script src="components/home/search-clients/search-clients.js?rev=83275c55e20b6cb48e63bdc844b035cb"></script>
+		<script src="components/home/home.js?rev=58dfff3c13b517cbfbe83ce2906fc251"></script>
 
 		<!-- CLIENT -->
-		<script src="components/client/client.js?rev=875aa2f5ceb35ebe91b68c84f2b2ac56"></script>
+		<script src="components/client/client.js?rev=485a177820d3737603c40e49939e4516"></script>
 		<script src="components/client/client-profile/client-profile.js?rev=0cd1b46f326a195217b2bf95f83b5cfa"></script>
 		<script src="components/client/client-profile-dialog/client-profile-dialog.js?rev=100c4b0727b36a8b8e1b606b47a4bebe"></script>
 		<script src="components/client/client-history/client-history.js?rev=a39c79f556041be6b8d8f2037d52a2e7"></script>
@@ -146,8 +140,8 @@
 		<script src="components/bank-account/bank-account.js?rev=968dea68867ca9379745a2da25494c6f"></script>
 
 		<!-- CALENDAR -->
-		<script src="components/calendar/calendar.js?rev=f7c5adbebad2dfd02628f0e6dddd1cac"></script>
-		<script src="components/calendar/add-appointment-dialog/add-appointment-dialog.js?rev=4c32de504204b7433574ef4c85c42ac0"></script>
+		<script src="components/calendar/calendar.js?rev=307e90bef8304b6058207965c864e2af"></script>
+		<script src="components/calendar/appointment-dialog/appointment-dialog.js?rev=239fa934dc5b05aba2bf158c6bb64d97"></script>
 
 		<!-- TEST page -->
 		<script src="components/test/test.js?rev=b820918eeba8b4b49598a0105f6edf94"></script>

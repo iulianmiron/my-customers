@@ -13,6 +13,7 @@
 		service.getSelectedItems = getSelectedItems;
 		service.isToday = isToday;
 		service.isRouteDateToday = isRouteDateToday;
+		service.getAge = getAge;
 
 		function getSelectedItems(allItems, selectedItems) {
             if(allItems && selectedItems && angular.isArray(selectedItems)) {
@@ -36,7 +37,10 @@
 		
         function isRouteDateToday(routeDate) {
 			return routeDate === moment().format('DD-MM-Y');
-        }
+		}
+		function getAge(dateOfBirth) {
+			return moment().diff(moment(dateOfBirth), 'years');
+		}
 	}
 
 })();

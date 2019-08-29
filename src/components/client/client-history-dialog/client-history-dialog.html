@@ -199,7 +199,9 @@
                                     </md-time-picker>
                                 </div>
 
-                                <md-input-container class="md-block">
+                                <md-input-container 
+                                    class="md-block" 
+                                    ng-if="servicesByStaff.soldProducts">
                                     <label>Produse vandute</label>
                                     <textarea name="soldProducts" ng-model="servicesByStaff.soldProducts">
                                     </textarea>

@@ -19,24 +19,25 @@
             ng-hide="$ctrl.status.showSearch">
             <md-icon>menu</md-icon>
         </md-button>
-        <h2 
+        <h2
             flex="none"
             ng-hide="$ctrl.status.showSearch">
-            Salon Elena Miron
+            <span hide-gt-xs>C. E.</span> <span hide show-gt-xs>Centru Estetic </span> Elena Miron
         </h2>
 
         <client-search flex flex-offset="5"
             ng-show="$ctrl.status.showSearch"
             show="$ctrl.status.showSearch"
+            show-clear-button="$ctrl.status.showClearButton"
             on-blur="$ctrl.actions.hideSearch($event)"
-            client-fn="$ctrl.actions.openClientPage($event)">
+            on-selection="$ctrl.actions.openClientPage($event)">
         </client-search>
 
         <div flex ng-hide="$ctrl.status.showSearch"></div>
         
         <md-button class="md-icon-button"
             ng-hide="$ctrl.status.showSearch" 
-            ng-click="$ctrl.status.showSearch = true" >
+            ng-click="$ctrl.status.showSearch = true">
             <md-icon>search</md-icon>
             <md-tooltip hide show-gt-sm>Cauta Clienti</md-tooltip>
         </md-button>

@@ -54,7 +54,7 @@
 
             var dialogData = {
                 title: 'Angajatul cu: ' + staff[fieldName] + ' exista deja.',
-                textContent: 'Detalii angajat: ' + staff.firstName + ' ' + staff.lastName,
+                textContent: 'Detalii personal: ' + staff.firstName + ' ' + staff.lastName,
                 okText: 'OK'
             }
 
@@ -76,7 +76,7 @@
             });
 
         };
-       
+
         function cancel() {
             $mdDialog.cancel();
         };
@@ -86,7 +86,7 @@
         };
 
         function calculateStaffAge(dateOfBirth) {
-            return ctrl.data.staff.age = moment().diff(moment(dateOfBirth), 'years') + ' ani';
+            return ctrl.data.staff.age = UtilsService.getAge(dateOfBirth) + ' ani';
         }
     }
 })();

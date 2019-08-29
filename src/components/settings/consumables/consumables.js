@@ -61,7 +61,7 @@
             var consumable = consumable;
             var dialogData = {
                 consumable: consumable ? angular.copy(consumable) : null,
-                title: 'Editati consumabil'
+                title: 'Editeaza consumabil'
             };
 
             showDialog(event, dialogData, saveEditedConsumable);
@@ -71,7 +71,7 @@
             var consumable = consumable;
             var dialogData = {
                 consumable: consumable ? angular.copy(consumable) : null,
-                title: 'Adaugati consumabil nou'
+                title: 'Adauga consumabil nou'
             };
             showDialog(event, dialogData, saveNewConsumable);
         }

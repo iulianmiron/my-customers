@@ -10,7 +10,7 @@
         'cm.components.common.confirmDialog',
 
         'cm.components.calendar',
-        'cm.components.calendar.addAppointmentDialog',
+        'cm.components.calendar.appointmentDialog',
         
         'cm.components.settings',
         'cm.components.settings.services',
@@ -33,7 +33,6 @@
         'cm.components.settings.activities',
 
         'cm.components.home',
-        'cm.components.home.searchClients',
 
         'cm.components.client',
         'cm.components.clientProfile',

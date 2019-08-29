@@ -44,7 +44,7 @@
 
         function saveNewStaff(newStaff) {
             StaffDataService.addNew(newStaff).then(function(rSuccess) {
-                toastr.success("Angajat adaugat cu succes");
+                toastr.success("Personal adaugat cu succes");
                 return rSuccess.data;
             });
             getAllStaff();
@@ -52,7 +52,7 @@
         
         function saveEditedStaff(staff) {
             StaffDataService.updateOne(staff).then(function(rSuccess) {
-                toastr.success("Angajat editat cu succes");
+                toastr.success("Personal editat cu succes");
                 return rSuccess.data;
             });
             getAllStaff();
@@ -60,7 +60,7 @@
 
         function deleteStaff(staffId) {
             StaffDataService.deleteOne(staffId).then(function(rSuccess) {
-                toastr.success("Angajat sters cu succes");
+                toastr.success("Personal sters cu succes");
                 return rSuccess.data;
             });
             getAllStaff();
@@ -71,7 +71,7 @@
             var dialogData = {
                 staff: staff ? angular.copy(staff) : null,
                 roles: ctrl.data.allRoles,
-                title: 'Editati angajat'
+                title: 'Editeaza personal'
             };
 
             showDialog(event, dialogData, saveEditedStaff);
@@ -82,7 +82,7 @@
             var dialogData = {
                 staff: staff ? angular.copy(staff) : null,
                 roles: ctrl.data.allRoles,
-                title: 'Adaugati angajat nou'
+                title: 'Adauga personal nou'
             };
             showDialog(event, dialogData, saveNewStaff);
         }

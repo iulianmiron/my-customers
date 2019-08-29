@@ -324,6 +324,7 @@
             ctrl.data.historyItem.performedServices.map(function(serviceByStaff) {
                 serviceByStaff.date = new Date();
                 serviceByStaff.discount = 0;
+                serviceByStaff.observations = '';
                 serviceByStaff.total = serviceByStaff.cost;
             });
             setTotalDiscountPerSession(ctrl.data.historyItem);

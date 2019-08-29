@@ -36,6 +36,7 @@
                 ctrl.data.clientId = ctrl.data.history.length && ctrl.data.history[0]._clientId;
                 ctrl.data.showHistoryItemDetails = generateHistoryDetailsList(ctrl.data.history);
                 ctrl.data.showHistoryItemPayment = generateHistoryDetailsList(ctrl.data.history);
+                ctrl.data.showHistoryItemObservations = generateHistoryObservationList(ctrl.data.history);
             }
         }
         ctrl.$onInit = function() {
@@ -49,6 +50,22 @@
             ctrl.actions.addNewHistoryItem = addNewHistoryItem;
             ctrl.actions.editHistoryItem = editHistoryItem;
             ctrl.actions.refreshHistory = refreshHistory;
+        }
+
+        function generateHistoryObservationList(history) {
+            var list = {};
+
+            angular.forEach(history, function(iHistory, key) {
+                angular.forEach(iHistory.performedServices, function(iPerformedServices) {
+                    if(iPerformedServices.observations || list[key]) {
+                        list[key] = true; 
+                    } else {
+                        list[key] = false;
+                    }
+                });
+            });
+
+            return list;
         }
 
         function generateHistoryDetailsList(history) {

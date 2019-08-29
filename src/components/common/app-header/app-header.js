@@ -20,6 +20,7 @@
 
         ctrl.$onInit = function() {
             ctrl.status.showSearch = false;
+            ctrl.status.showClearButton = false;
             
             ctrl.actions.hideSearch = hideSearch; 
             ctrl.actions.openClientPage = openClientPage;

@@ -93,6 +93,7 @@
             }
 
             function updateTime(selectedTime) {
+                debugger;
                 if(selectedTime && !selectedTime.split(':').length){
                     selectedTime = processTime(selectedTime);
                 }

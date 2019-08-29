@@ -13,8 +13,8 @@
                 onEditClient: '&',
             }
         });
-    ClientProfileController.$inject = ['toastr', 'clipboard', 'CLIENT_VIP_LEVELS', 'CLIENT_VIP_TYPES'];
-    function ClientProfileController(toastr, clipboard, CLIENT_VIP_LEVELS, CLIENT_VIP_TYPES) {
+    ClientProfileController.$inject = ['toastr', 'clipboard', 'CLIENT_VIP_LEVELS', 'CLIENT_VIP_TYPES', 'UtilsService'];
+    function ClientProfileController(toastr, clipboard, CLIENT_VIP_LEVELS, CLIENT_VIP_TYPES, UtilsService) {
         var ctrl = this;
 
         ctrl.data = {};
@@ -62,7 +62,7 @@
         }
 
         function calculateClientAge(dateOfBirth) {
-            return moment().diff(moment(dateOfBirth), 'years') + ' ani';
+            return UtilsService.getAge(dateOfBirth) + ' ani';
         }
 
         // function hasRecentBirthday(clientDateOfBirth) {

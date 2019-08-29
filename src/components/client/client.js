@@ -103,7 +103,7 @@
                     goToPreviousState();
                     toastr.info('Clientul a fost sters', 'Client negasit');
                 } else if(ctrl.data.client._preferredStaffId) {
-                    getSelectedStaff(ctrl.data.client._preferredStaffId);
+                    getPreferredStaff(ctrl.data.client._preferredStaffId);
                 } 
             }); 
         }
@@ -116,6 +116,8 @@
             }); 
         }
 
+//////////////////PAYMENT HABIT START/////////////////////////////////
+
         function getPaymentHabit(history) {
             getLastThreeSessions(history);
             getPaymentPercentageByType(history);
@@ -125,12 +127,12 @@
             var lastThreeSessions = history.slice(-3);
 
             ctrl.data.lastThreeSessions = lastThreeSessions.map(historyPaymentExtract);
-            console.log('ctrl.data.lastThreeSessions', ctrl.data.lastThreeSessions);
+            // console.log('ctrl.data.lastThreeSessions', ctrl.data.lastThreeSessions);
         }
 
         function getPaymentPercentageByType(history) {
             ctrl.data.allSessions = history.map(historyPaymentExtract);
-            console.log('ctrl.data.allSessions', ctrl.data.allSessions);
+            // console.log('ctrl.data.allSessions', ctrl.data.allSessions);
 
             var test = [];
 
@@ -142,7 +144,7 @@
                 });
 
             });
-            console.log(test);
+            // console.log(test);
         }
 
         function historyPaymentExtract(item) {
@@ -154,7 +156,9 @@
             }
         }
 
-        function getSelectedStaff(selectedStaffId) {
+//////////////////PAYMENT HABIT END/////////////////////////////////
+
+        function getPreferredStaff(selectedStaffId) {
             StaffDataService.getOne(selectedStaffId).then(function(rPreferredStaff) {
                 ctrl.data.preferredStaff = rPreferredStaff;
             });
@@ -176,10 +180,13 @@
             toastr.success('Sedinte gasite: ' + ctrl.data.history.length, 'Succes');
         }
 
+
+//////////////////CLIENT/////////////////////////////////
+
         function addClient() {
             var dialogData = {
                 client: null,
-                title: 'Adaugati client',
+                title: 'Adauga client',
                 clientVip: ctrl.data.clientVip,
                 staff: ctrl.data.allStaff
             };
@@ -189,7 +196,7 @@
         function editClient(event) {
             var dialogData = {
                 client: event.client ? angular.copy(event.client) : null,
-                title: 'Editati client',
+                title: 'Editeaza client',
                 clientVip: ctrl.data.clientVip,
                 staff: ctrl.data.allStaff
             };
@@ -242,15 +249,14 @@
         }
 
 
-//////////////////history/////////////////////////////////
-
+//////////////////HISTORY/////////////////////////////////
 
         function addHistoryItem(event) {
             var dialogData = {
                 historyItem: {
                     _clientId: ctrl.data.clientId
                 },
-                title: 'Adaugati sedinta',
+                title: 'Adauga sedinta',
                 services: ctrl.data.allServices,
                 serviceTypes: ctrl.data.allServiceTypes,
                 lastHistoryItem: ctrl.data.history[ctrl.data.history.length - 1]
@@ -262,7 +268,7 @@
             var historyItem = event.historyItem;
             var dialogData = {
                 historyItem: historyItem ? angular.copy(historyItem) : null,
-                title: 'Editati sedinta',
+                title: 'Editeaza sedinta',
                 services: ctrl.data.allServices,
                 serviceTypes: ctrl.data.allServiceTypes
             };
@@ -272,21 +278,18 @@
         function saveNewHistoryItem(historyItem) {
             HistoryDataService.addNew(historyItem).then(function(rSuccess) {
                 toastr.success("Sedinta adaugata", "Succes");
-                getClientHistory(historyItem._clientId);
             });
         }
 
         function saveEditedHistoryItem(historyItem) {
             HistoryDataService.updateOne(historyItem).then(function(rSuccess) {
                 toastr.success("Sedinta editata", "Succes");
-                getClientHistory(historyItem._clientId);
             });
         }
 
         function deleteHistoryItem(historyItem) {
             HistoryDataService.deleteOne(historyItem._id).then(function(rSuccess) {
                 toastr.success("Sedinta stearsa", "Succes");
-                getClientHistory(historyItem._clientId);
             });
         }
 
@@ -304,9 +307,11 @@
                 fullscreen: true
             }).then(function(historyItem) {
                 saveCb(historyItem);
+                getClientHistory(historyItem._clientId);
             }, function(data) {
                 if(data && data.command === 'delete' && data.item._id) {
                     deleteCb(data.item);
+                    getClientHistory(historyItem._clientId);
                 }
             });
         }

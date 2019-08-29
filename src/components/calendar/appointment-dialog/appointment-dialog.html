@@ -11,35 +11,17 @@
 
     <md-dialog-content>
         <div class="md-dialog-content">
-            <form name="$ctrl.data.addNewAppointmentForm">
-                <!-- CLIENT -->
-                <div layout="row" layout-align="start center" ng-hide="$ctrl.data.appointment._clientId">
-                    <span>Client:</span>
-                    <client-search flex flex-offset="5"
-                        client-fn="$ctrl.actions.selectClient($event)">
-                    </client-search>
-                    <md-button ui-sref="client({id: 0})" class="md-icon-button">
-                        <md-icon>person_add</md-icon>
-                        <md-tooltip hide show-gt-sm>Adauga client nou</md-tooltip>
-                    </md-button>
-                </div>
-                <div layout="row" layout-align="start center" ng-show="$ctrl.data.appointment._clientId">
-                    <span>
-                        Client: 
-                        <md-button ng-click="$ctrl.actions.removeSelectedClient()">
-                            {{ $ctrl.data.selectedClient.firstName }} {{ $ctrl.data.selectedClient.lastName }} 
-                            <md-icon>clear</md-icon>
-                        </md-button>
-                        <md-icon ng-if="$ctrl.data.selectedClient._preferredStaffId">
-                            favorite
-                            <md-tooltip>
-                                Prefera pe: {{ $ctrl.data.preferredStaff.firstName }} {{ $ctrl.data.preferredStaff.lastName }}
-                            </md-tooltip>
-                        </md-icon>
-                    </span>
-                </div>
+            <form name="$ctrl.data.appointmentForm">
 
-                <div layout="row" layout-align="start center">
+                <client-search
+                    ng-show="true"
+                    show="true"
+                    show-clear-button="true"
+                    default-selection="$ctrl.data.selectedClient"
+                    on-selection="$ctrl.actions.selectClient($event)">
+                </client-search>
+
+                <!-- <div layout="row" layout-align="start center">
 
                     <time-picker
                         placeholder="Start time"
@@ -55,8 +37,8 @@
                         on-update="$ctrl.actions.updateEndTime($event)">
                     </time-picker>
 
-                </div>
-                <md-button ng-click="$ctrl.actions.showData()">click</md-button>
+                </div> -->
+                
 
 
 
@@ -71,7 +53,7 @@
                     <span>Ora: </span>
                     <!-- START TIME -->
                     <md-time-picker
-                        ng-model="$ctrl.data.appointment.startTime" 
+                        ng-model="$ctrl.data.appointment.startTime"
                         message="$ctrl.data.timePickerMessages"
                         read-only="false" 
                         mandatory="true" 
@@ -89,7 +71,7 @@
                 </div>
                 
                 <div layout="row" layout-align="start center" 
-                    ng-repeat="service in $ctrl.data.appointment.services track by $index">
+                    ng-repeat="service in $ctrl.data.appointment.services | orderBy:'_orderId'">
 
                     <!-- SERVICE TYPE -->
                     <md-input-container flex>
@@ -98,14 +80,15 @@
                         <md-select 
                             name="selectedServiceType_{{$index}}"
                             ng-model="service.type"
+                            ng-model-options="{trackBy: '$value._id'}"
                             required>
                             <md-option 
-                                ng-value="selectedServiceType._id" 
-                                ng-repeat="selectedServiceType in $ctrl.data.allServiceTypes track by selectedServiceType._id">
+                                ng-value="selectedServiceType" 
+                                ng-repeat="selectedServiceType in $ctrl.data.allServiceTypes | orderBy:'name' track by selectedServiceType._id">
                                 {{ selectedServiceType.name }}
                             </md-option>
                         </md-select>
-                        <div ng-messages="$ctrl.data.addNewAppointmentForm['selectedServiceType_' + $index].$error">
+                        <div ng-messages="$ctrl.data.appointmentForm['selectedServiceType_' + $index].$error">
                             <div ng-message="required">Un serviciu trebuie selectat.</div>
                         </div>
                     </md-input-container>
@@ -116,25 +99,40 @@
                         <md-select 
                             name="selectedStaff_{{$index}}"
                             ng-model="service.staff"
+                            ng-model-options="{trackBy: '$value._id'}"
+                            required="service.type"
                             >
-                            <md-option ng-value="null">–</md-option>
+                            <md-option ng-value="0">–</md-option>
                             <md-option 
-                                ng-value="selectedStaff._id" 
+                                ng-value="selectedStaff" 
                                 ng-repeat="selectedStaff in $ctrl.data.allStaff track by selectedStaff._id">
                                 {{ selectedStaff.firstName }} {{ selectedStaff.lastName }}
                             </md-option>
                         </md-select>
+                        <div ng-messages="$ctrl.data.appointmentForm['selectedStaff_' + $index].$error">
+                            <div ng-message="required">O persoana trebuie selectata.</div>
+                        </div>
                     </md-input-container>
 
                     <md-button class="md-icon-button" ng-click="$ctrl.actions.removeService(service)">
-                        <md-icon>delete</md-icon>
+                        <md-icon>remove_circle_outline</md-icon>
                         <md-tooltip hide show-gt-sm>Sterge serviciu</md-tooltip>
                     </md-button>
+                    <md-button 
+                        class="md-icon-button" 
+                        ng-click="$ctrl.actions.addService()"
+                        ng-if="$last && service.type">
+                        <md-icon>add_circle_outline</md-icon>
+                    </md-button>
                 </div>
-                <md-button ng-click="$ctrl.actions.addService()">
-                    <md-icon>add</md-icon>
-                    Adauga serviciu
-                </md-button>
+                <div layout="row" layout-align="end center">
+                    <md-button 
+                        ng-if="!$ctrl.data.appointment.services.length"
+                        ng-click="$ctrl.actions.addService()">
+                        <md-icon>add_circle_outline</md-icon>
+                        Adauga serviciu
+                    </md-button>
+                </div>
 
                 <!-- OBSERVATIONS -->
                 <md-input-container class="md-block">
@@ -147,12 +145,19 @@
     </md-dialog-content>
 
     <md-dialog-actions layout="row" layout-align="end center">
+
+        <md-button ng-click="$ctrl.actions.showData()">Data</md-button>
+
+        <md-button class="md-warn" admin-only ng-if="$ctrl.data.appointment._id"
+            ng-click="$ctrl.actions.deleteAppointment($ctrl.data.appointment)">
+            Delete
+        </md-button>
         <md-button ng-click="$ctrl.actions.cancel()">
             Renunta
         </md-button>
         <md-button class="md-raised md-primary" 
             ng-click="$ctrl.actions.save($ctrl.data.appointment)" 
-            ng-disabled="$ctrl.data.addNewAppointmentForm.$invalid || !$ctrl.data.appointment.services || !$ctrl.data.appointment.services.length || !$ctrl.data.appointment._clientId">
+            ng-disabled="$ctrl.data.appointmentForm.$invalid || !$ctrl.data.appointment.services || !$ctrl.data.appointment.services.length || !$ctrl.data.appointment._clientId">
             Salveaza Programarea
         </md-button>
     </md-dialog-actions>

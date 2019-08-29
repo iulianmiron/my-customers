@@ -9,13 +9,23 @@
             bindings: {}
         });
 
-    function HomeController() {
+    HomeController.$inject = ['$state'];
+    function HomeController($state) {
         var ctrl = this;
 
         ctrl.data = {};
         ctrl.status = {};
         ctrl.actions = {};
+
+        ctrl.$onInit = function () {
+            ctrl.actions.openClientPage = openClientPage;
+        }
+
+        function openClientPage(event) {
+            if(event.client && (event.client._id || event.client._id === 0)) {
+                $state.go('client', { id: event.client._id });
+            }
+        }
     }
 
-    HomeController.$inject = [];
 })();
