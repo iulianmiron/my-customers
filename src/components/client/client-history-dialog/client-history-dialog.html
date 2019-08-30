@@ -114,8 +114,11 @@
                                         <md-icon>timelapse</md-icon>
                                         <label>Interval (sapt.)</label>
                                         <input name="interval"
-                                            type="number" step="1" min="0"
+                                            type="number" step="1" min="0" required
                                             ng-model="servicesByStaff.interval">
+                                        <div ng-messages="$ctrl.data.addServicesByStaffForm.interval.$error">
+                                            <div ng-message="required">Interval obligatoriu</div>
+                                        </div>
                                     </md-input-container>
                                 </div>
                             </div>
