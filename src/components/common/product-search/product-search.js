@@ -2,10 +2,10 @@
     'use strict';
 
     angular
-        .module('cm.components.common.clientSearch', [])
-        .component('clientSearch', {
-            templateUrl: '/components/common/client-search/client-search.html',
-            controller: ClientSearchController,
+        .module('cm.components.common.productSearch', [])
+        .component('productSearch', {
+            templateUrl: '/components/common/product-search/product-search.html',
+            controller: ProductSearchController,
             bindings: {
                 show: '<',
                 showClearButton: '<',
@@ -15,8 +15,8 @@
             }
         });
         
-    ClientSearchController.$inject = ['$q', 'ClientsDataService'];
-    function ClientSearchController($q, ClientsDataService) {
+    ProductSearchController.$inject = ['$q', 'ProductsDataService'];
+    function ProductSearchController($q, ProductsDataService) {
         var ctrl = this;
         ctrl.data = {};
         ctrl.status = {};
@@ -34,32 +34,32 @@
             }
         }
         ctrl.$onInit = function() {
-            ctrl.actions.searchClients = searchClients;
+            ctrl.actions.searchProducts = searchProducts;
             ctrl.actions.onSelection = onSelection;
             ctrl.actions.hideSearch = hideSearch;
         }
 
-        function searchClients(query) {
+        function searchProducts(query) {
             var deferred = $q.defer();
 
-            ClientsDataService
+            ProductsDataService
                 .searchAll(query)
                 .then(handleSuccess)
                 .catch(handleError);
 
-            function handleSuccess(rClients) {
-                deferred.resolve(rClients);
+            function handleSuccess(rProducts) {
+                deferred.resolve(rProducts);
             }
 
             function handleError(rErrorMessage) {
-                console.error('Could not get clients', rErrorMessage);
+                console.error('Could not get products', rErrorMessage);
                 deferred.reject(rErrorMessage);
             }
             return deferred.promise;
         }
 
-        function onSelection(client) {
-            ctrl.onSelection({$event: {client: client}});
+        function onSelection(product) {
+            ctrl.onSelection({$event: {product: product}});
         }
 
         function hideSearch(hideSearch) {

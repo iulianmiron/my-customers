@@ -18,8 +18,7 @@
                     <input name="clientFirstName" ng-model="$ctrl.data.client.firstName"  minlength="2" md-maxlength="100" required>
                     <div ng-messages="$ctrl.data.clientProfileForm.clientFirstName.$error">
                         <div ng-message="required">Prenumele este obligatoriu</div>
-                        <div ng-message="md-maxlength">Prenumele trebuie sa aiba sub 100 de caractere</div>
-                        <div ng-message="minlength">Prenumele trebuie sa aiba mai mult de 1 caracter</div>
+                        <div ng-message="minlength, md-maxlength">Prenumele ttrebuie sa fie format din 2-100 caractere</div>
                     </div>
                 </md-input-container>
 
@@ -29,34 +28,32 @@
                     <input name="clientLastName" ng-model="$ctrl.data.client.lastName"  minlength="2" md-maxlength="100" required>
                     <div ng-messages="$ctrl.data.clientProfileForm.clientLastName.$error">
                         <div ng-message="required">Numele este obligatoriu</div>
-                        <div ng-message="md-maxlength">Numele trebuie sa aiba sub 100 de caractere</div>
-                        <div ng-message="minlength">Numele trebuie sa aiba mai mult de 1 caracter</div>
+                        <div ng-message="minlength, md-maxlength">Numele ttrebuie sa fie format din 2-100 caractere</div>
                     </div>
                 </md-input-container>
-
-                <md-input-container class="md-block">
-                    <label>Telefon</label>
-                    <md-icon>phone</md-icon>
-                    <input 
-                        name="clientPhoneNo" type="text" minlength="5" md-maxlength="20" required
-                        ng-model="$ctrl.data.client.phoneNumber" ng-model-options="{debounce: 500}" 
-                        ng-change="$ctrl.actions.checkIfDuplicate('phoneNumber', $ctrl.data.client.phoneNumber)"  
-                        >
-                    <div ng-messages="$ctrl.data.clientProfileForm.clientPhoneNo.$error">
-                        <div ng-message="required">Numarul de telefon este obligatoriu</div>
-                        <div ng-message="minlength, md-maxlength">Numarul de telefon trebuie sa inceapa cu zero si sa fie format din 5-20 cifre</div>
-                    </div>
-                </md-input-container>
-                <!--Alternate phone-->
-                <md-button ng-click="$ctrl.status.showAltPhone = !$ctrl.status.showAltPhone" ng-hide="$ctrl.data.client.altPhoneNumber || $ctrl.status.showAltPhone">
-                    <md-icon>add</md-icon>
-                    telefon alternativ
-                </md-button>
-                <div ng-if="$ctrl.data.client.altPhoneNumber || $ctrl.status.showAltPhone" layout="row" layout-align="start center">
-                    <md-button class="md-icon-button" ng-click="$ctrl.actions.removeAltPhone()">
-                        <md-icon>delete</md-icon>
-                        <md-tooltip hide show-gt-sm>Sterge numar de telefon alternativ</md-tooltip>
+                <div layout="row" class="md-block">
+                    <md-input-container flex>
+                        <label>Telefon</label>
+                        <md-icon>phone</md-icon>
+                        <input 
+                            name="clientPhoneNo" type="text" minlength="5" md-maxlength="20" required
+                            ng-model="$ctrl.data.client.phoneNumber" ng-model-options="{debounce: 500}" 
+                            ng-change="$ctrl.actions.checkIfDuplicate('phoneNumber', $ctrl.data.client.phoneNumber)">
+                        <div ng-messages="$ctrl.data.clientProfileForm.clientPhoneNo.$error">
+                            <div ng-message="required">Numarul de telefon este obligatoriu</div>
+                            <div ng-message="minlength, md-maxlength">Numarul de telefon trebuie sa fie format din 5-20 caractere</div>
+                        </div>
+                    </md-input-container>
+                    <md-button 
+                        class="md-icon-button md-input-button"
+                        ng-click="$ctrl.status.showAltPhone = !$ctrl.status.showAltPhone" 
+                        ng-hide="!$ctrl.data.client.phoneNumber || $ctrl.data.client.altPhoneNumber || $ctrl.status.showAltPhone">
+                        <md-icon>add_circle_outline</md-icon>
+                        <md-tooltip>Adauga telefon alternativ</md-tooltip>
                     </md-button>
+                </div>
+                <!--Alternate phone-->
+                <div ng-if="$ctrl.data.client.altPhoneNumber || $ctrl.status.showAltPhone" layout="row">
                     <md-input-container flex>
                         <label>Telefon alternativ</label>
                         <md-icon>phone</md-icon>
@@ -65,13 +62,15 @@
                             ng-model="$ctrl.data.client.altPhoneNumber" 
                             ng-mode-options="{debounce: 500}" 
                             ng-change="$ctrl.actions.updateClientRelation($ctrl.data.client.altPhoneNumber)"
+                            required="$ctrl.status.showAltPhone"
                             >
                         <div ng-messages="$ctrl.data.clientProfileForm.altPhoneNumber.$error">
-                            <div ng-message="minlength, md-maxlength">Numarul de telefon trebuie sa inceapa cu zero si sa fie format din 5-20 cifre</div>
+                                <div ng-message="required">Numarul de telefon alternativ este obligatoriu</div>
+                            <div ng-message="minlength, md-maxlength">Numarul de telefon trebuie sa fie format din 5-20 caractere</div>
                         </div>
                     </md-input-container>
-                    <md-input-container flex="40">
-                        <label>Relatie</label>
+                    <md-input-container flex="40" ng-hide="!$ctrl.data.client.altPhoneNumber">
+                        <label>Eticheta</label>
                         <md-icon>person</md-icon>
                         <input 
                             name="altPhoneNumberRelation" type="text" minlength="2" md-maxlength="100"
@@ -79,14 +78,23 @@
                             ng-required="$ctrl.data.client.altPhoneNumber" 
                             >
                         <div ng-messages="$ctrl.data.clientProfileForm.altPhoneNumberRelation.$error">
-                            <div ng-message="required">Relatia este obligatorie</div>
-                            <div ng-message="md-maxlength">Relatia trebuie sa aiba sub 100 de caractere</div>
-                            <div ng-message="minlength">Relatia trebuie sa aiba mai mult de 1 caracter</div>
+                            <div ng-message="required">Eticheta este obligatorie</div>
+                            <div ng-message="md-maxlength">Eticheta trebuie sa aiba sub 100 de caractere</div>
+                            <div ng-message="minlength">Eticheta trebuie sa aiba mai mult de 1 caracter</div>
                         </div>
                     </md-input-container>
+                    <md-button class="md-icon-button md-input-button" ng-click="$ctrl.actions.removeAltPhone()">
+                        <md-icon>remove_circle_outline</md-icon>
+                        <md-tooltip hide show-gt-sm>Sterge numar de telefon alternativ</md-tooltip>
+                    </md-button>
                 </div>
 
-                <div layout="column" layout-gt-md="row">
+                <div layout="row">
+                    <md-input-container flex>
+                        <label>Varsta</label>
+                        <md-icon>person</md-icon>
+                        <input name="clientAge" type="text" ng-model="$ctrl.data.client.age" ng-readonly="true">
+                    </md-input-container>
                     <md-input-container class="md-block">
                         <label>Data nasterii</label>
                         <md-datepicker flex
@@ -96,19 +104,9 @@
                             md-placeholder="Data Nasterii"
                             md-max-date="$ctrl.data.maxDateOfBirth"
                             md-open-on-focus
-                            required
                             ng-blur="$ctrl.actions.calculateClientAge($ctrl.data.client.dateOfBirth)"
                             >
                         </md-datepicker>
-                        <div ng-messages="$ctrl.data.clientProfileForm.clientDateOfBirth.$error">
-                            <div ng-message="required">Data nasterii este obligatorie</div>
-                        </div>
-                    </md-input-container>
-
-                    <md-input-container flex>
-                        <label>Varsta</label>
-                        <md-icon>person</md-icon>
-                        <input name="clientAge" type="text" ng-model="$ctrl.data.client.age" ng-readonly="true">
                     </md-input-container>
                 </div>
 
@@ -126,7 +124,8 @@
                 </md-input-container>
 
                 <md-button ng-click="$ctrl.status.showMoreProfileDetails = !$ctrl.status.showMoreProfileDetails">
-                    Caracteristici
+                    <md-icon>details</md-icon>
+                    Detalii
                     <md-icon>keyboard_arrow_{{$ctrl.status.showMoreProfileDetails ? "up" : 'down'}}</md-icon>
                 </md-button>
 

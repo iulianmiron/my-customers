@@ -1,0 +1,29 @@
+<md-autocomplete 
+    placeholder="Cauta produs dupa cod sau nume" 
+    md-select-on-focus
+    md-autofocus="true"
+    md-no-cache="true" 
+    md-delay="500" 
+    md-clear-button="$ctrl.status.showClearButton"
+    md-search-text="$ctrl.data.searchText"
+    md-selected-item="$ctrl.data.selectedItem" 
+    md-selected-item-change="$ctrl.actions.onSelection(product)" 
+    md-items="product in $ctrl.actions.searchProducts($ctrl.data.searchText)"
+    md-item-text="product.name + ' (' + product.code + ') ' + product.priceToSell + 'RON'">
+    <md-item-template>
+
+        <div layout="row" layout-align="start center">
+            <div 
+                md-highlight-text="$ctrl.data.searchText" 
+                md-highlight-flags="i">
+                {{ product.name }} ({{ product.code }}) - {{ product.priceToSell }}RON
+            </div>
+        </div>
+
+    </md-item-template>
+    <md-not-found>
+        <div layout="row" layout-align="space-between center">
+            <span>0 rezultate</span>
+        </div>
+    </md-not-found>
+</md-autocomplete>

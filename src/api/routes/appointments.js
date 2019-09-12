@@ -47,7 +47,8 @@ function add(req, res) {
 
 function update(req, res) {
     delete req.body._id;
-	req.body.updatedOn = new Date();
+    req.body.updatedOn = new Date();
+    req.body.date = new Date(req.body.date);
 
     db_clients.appointments.findAndModify({
         query: { _id: mongojs.ObjectId(req.params.id) },

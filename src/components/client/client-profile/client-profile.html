@@ -1,55 +1,122 @@
 <md-card class="vip-background {{ $ctrl.data.client.vip.level.label }}">
     <md-card-header>
         <md-icon>assignment_ind</md-icon>
-        <md-card-header-text layout="row" layout-align="space-between center">
-            <span class="md-headline">Profil client</span>
-            <div> 
-                <md-button class="md-primary" button-shrink="gt-sm"
-                    ng-click="$ctrl.actions.editClient($event, $ctrl.data.client)">
-                    <md-icon>edit</md-icon>
-                    Editeaza
-                </md-button>
-            </div>
+        <md-card-header-text 
+            layout-gt-sm="row" layout-align-gt-sm="start center">
+            <span 
+                hide show-gt-sm
+                class="md-headline">
+                Profil
+            </span>
+
+            <span 
+                hide-gt-sm
+                class="md-title">
+                {{ $ctrl.data.client.firstName }} {{ $ctrl.data.client.lastName }}                
+            </span> 
+            <span 
+                hide-gt-sm
+                class="md-subhead">
+                <span ng-if="$ctrl.data.client.age">
+                    ({{ $ctrl.data.client.age }})
+                    <md-tooltip ng-if="$ctrl.data.client.age">
+                        Data Nasterii: {{ $ctrl.data.client.dateOfBirth | amDateFormat:'DD/MM/YYYY' }}
+                    </md-tooltip>
+                </span>
+                {{ $ctrl.data.client.phoneNumber }}
+            </span>
         </md-card-header-text>
+
+        <!--RIGHT SIDE BUTTONS-->
+        <div> 
+            <md-button hide show-gt-xs
+                class="md-primary" button-shrink="gt-sm"
+                ng-click="$ctrl.actions.editClient($event, $ctrl.data.client)">
+                <md-icon>edit</md-icon>
+                Editeaza
+            </md-button>
+            <md-menu md-position-mode="target-right target" hide-gt-sm>
+                <md-button md-menu-origin ng-click="$mdMenu.open($event)" class="md-primary md-icon-button">
+                    <md-icon>more_vert</md-icon>
+                </md-button>
+                <md-menu-content>
+                    <md-menu-item hide-gt-sm>
+                        <md-button ng-click="$ctrl.status.showClientDetails = !$ctrl.status.showClientDetails">
+                            <md-icon>details</md-icon>
+                            {{ $ctrl.status.showClientDetails  ? 'Ascunde' : 'Arata' }} Date Client
+                        </md-button>
+                    </md-menu-item>
+                    <md-menu-item hide-gt-xs>
+                        <md-button ng-click="$ctrl.actions.editClient($event, $ctrl.data.client)">
+                            <md-icon>edit</md-icon>
+                            Editeaza Client
+                        </md-button>
+                    </md-menu-item>
+                    <md-menu-item>
+                        <md-button ng-click="$ctrl.actions.copyToClipboard($ctrl.data.client.phoneNumber, 'Telefon')">
+                            <md-icon>contact_phone</md-icon>
+                            Copiaza: {{ $ctrl.data.client.phoneNumber }}
+                        </md-button>
+                    </md-menu-item>
+                    <md-menu-item ng-if="$ctrl.data.client.email">
+                        <md-button ng-click="$ctrl.actions.copyToClipboard($ctrl.data.client.email, 'Email')">
+                            <md-icon>contact_mail</md-icon>
+                            Copiaza: {{ $ctrl.data.client.email }}
+                        </md-button>
+                    </md-menu-item>
+                    <md-menu-item hide-gt-xs>
+                        <md-button ng-href="tel:{{ $ctrl.data.client.phoneNumber }}">
+                            <md-icon>phone</md-icon>
+                            Apeleaza: {{ $ctrl.data.client.phoneNumber }}
+                        </md-button>
+                    </md-menu-item>
+                </md-menu-content>
+            </md-menu>
+        </div>
+        
     </md-card-header>
-    <md-card-content>
-        <p>
+    <md-card-content ng-show="$ctrl.status.showClientDetails">
+        <div>
             <b>{{ $ctrl.data.client.firstName }} {{ $ctrl.data.client.lastName }}</b> 
-            are varsta de 
+            <span >are varsta de</span>
             <b>{{ $ctrl.data.client.age || '- trebuie completata data de nastere -'}}.
                 <md-tooltip ng-if="$ctrl.data.client.age">
                     Data Nasterii: {{ $ctrl.data.client.dateOfBirth | amDateFormat:'DD/MM/YYYY' }}
                 </md-tooltip>
             </b>
             <md-icon ng-if="$ctrl.status.hasRecentBirthday($ctrl.data.client.dateOfBirth)">star</md-icon>
-        </p>
-        <p>
-            Telefon: 
-            <b ng-click="$ctrl.actions.copyToClipboard($ctrl.data.client.phoneNumber)">
-                {{ $ctrl.data.client.phoneNumber }}
-                <md-tooltip hide show-gt-sm md-direction="right">Copiaza</md-tooltip>
-            </b>
-        </p>
-        <p ng-if="$ctrl.data.client.altPhoneNumber">
-            Telefon alternativ: 
-            <b ng-click="$ctrl.actions.copyToClipboard($ctrl.data.client.altPhoneNumber)">
-                {{ $ctrl.data.client.altPhoneNumber }}
-                <md-tooltip hide show-gt-sm md-direction="right">Copiaza</md-tooltip>
-            </b>
-            ({{ $ctrl.data.client.altPhoneNumberRelation }})
-        </p>
-        <p>
-            e-mail: 
-            <b ng-click="$ctrl.actions.copyToClipboard($ctrl.data.client.email)">
-                {{ $ctrl.data.client.email || '- trebuie completat e-mailul -'}}
-                <md-tooltip hide show-gt-sm md-direction="right">Copiaza</md-tooltip>
-            </b>
-        </p>
+        </div>
+        <div>
+            <p>
+                Telefon: 
+                <b ng-click="$ctrl.actions.copyToClipboard($ctrl.data.client.phoneNumber, 'Telefon')">
+                    {{ $ctrl.data.client.phoneNumber }}
+                    <md-tooltip hide show-gt-sm md-direction="right">Copiaza</md-tooltip>
+                </b>
+            </p>
+            <p ng-if="$ctrl.data.client.altPhoneNumber">
+                Telefon alternativ: 
+                <b ng-click="$ctrl.actions.copyToClipboard($ctrl.data.client.altPhoneNumber, 'Telefon alternativ')">
+                    {{ $ctrl.data.client.altPhoneNumber }}
+                    <md-tooltip hide show-gt-sm md-direction="right">Copiaza</md-tooltip>
+                </b>
+                ({{ $ctrl.data.client.altPhoneNumberRelation }})
+            </p>
+            <p>
+                e-mail: 
+                <b ng-click="$ctrl.actions.copyToClipboard($ctrl.data.client.email, 'Email')">
+                    {{ $ctrl.data.client.email || '- trebuie completat e-mailul -'}}
+                    <md-tooltip hide show-gt-sm md-direction="right">Copiaza</md-tooltip>
+                </b>
+            </p>
 
-        <md-button ng-click="$ctrl.status.showMoreProfileDetails = !$ctrl.status.showMoreProfileDetails">
-            {{$ctrl.status.showMoreProfileDetails ? 'Ascunde' : 'Vezi'}} caracteristici
-            <md-icon>keyboard_arrow_{{$ctrl.status.showMoreProfileDetails ? "up" : 'down'}}</md-icon>
-        </md-button>
+            <md-button
+                ng-click="$ctrl.status.showMoreProfileDetails = !$ctrl.status.showMoreProfileDetails">
+                <md-icon>details</md-icon>
+                {{$ctrl.status.showMoreProfileDetails ? 'Ascunde' : 'Vezi'}} detalii
+                <md-icon>keyboard_arrow_{{$ctrl.status.showMoreProfileDetails ? "up" : 'down'}}</md-icon>
+            </md-button>
+        </div>
 
         <div ng-show="$ctrl.status.showMoreProfileDetails">
 
@@ -60,7 +127,7 @@
                         <span>Personal preferat: </span>
                     </div>
                     <div flex>
-                        <b>{{$ctrl.data.preferredStaff.firstName}} {{$ctrl.data.preferredStaff.lastName}}</b>
+                        <b>{{ $ctrl.data.preferredStaff.firstName }} {{ $ctrl.data.preferredStaff.lastName }}</b>
                     </div>
                 </div>
                 <div layout="row" ng-if="$ctrl.data.client.isVip">
@@ -68,7 +135,7 @@
                         <span>Tip VIP:</span>
                     </div>
                     <div flex>
-                        <b>{{ $ctrl.data.client.vip.type.label }}, {{ $ctrl.data.client.vip.level.label }}</b>
+                        <b>{{ $ctrl.data.client.vip.type.label }}, nivel: {{ $ctrl.data.client.vip.level.label }}</b>
                     </div>
                 </div>
                 <div layout="row">
@@ -115,9 +182,4 @@
 
         </div>
     </md-card-content>
-    <md-card-actions>
-        <div layout="row" layout-wrap layout-align="end center">
-
-        </div>
-    </md-card-actions>
 </md-card>

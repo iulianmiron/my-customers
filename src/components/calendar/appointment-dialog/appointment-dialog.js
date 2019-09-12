@@ -2,11 +2,11 @@
     'use strict';
 
     angular
-        .module('cm.components.calendar.addAppointmentDialog', [])
-        .controller('AddAppointmentDialogController', AddAppointmentDialogController);
+        .module('cm.components.calendar.appointmentDialog', [])
+        .controller('AppointmentDialogController', AppointmentDialogController);
         
-    AddAppointmentDialogController.$inject = ['$timeout', '$mdDialog', '$state', 'dialogData', 'UtilsService'];
-    function AddAppointmentDialogController($timeout, $mdDialog, $state, dialogData, UtilsService) {
+    AppointmentDialogController.$inject = ['$mdDialog', '$state', 'dialogData', 'UtilsService'];
+    function AppointmentDialogController($mdDialog, $state, dialogData, UtilsService) {
         var ctrl = this;
         ctrl.data = {};
         ctrl.status = {};
@@ -14,6 +14,8 @@
 
         ctrl.data.title = dialogData.title;
         ctrl.data.appointment = dialogData.appointment;
+        ctrl.data.selectedClient = dialogData.appointment.client;
+        ctrl.data.appointment.services = dialogData.appointment.services || [];
         ctrl.data.allStaff = dialogData.staff;
         ctrl.data.allServiceTypes = dialogData.serviceTypes;
         ctrl.data.appointment.date = ctrl.data.appointment.date ? new Date(ctrl.data.appointment.date) : new Date();
@@ -29,44 +31,41 @@
         ctrl.actions.addService = addService;
         ctrl.actions.removeService = removeService;
         ctrl.actions.selectClient = selectClient;
-        ctrl.actions.removeSelectedClient = removeSelectedClient;
 
+        ctrl.actions.changeSelectedServicesText = changeSelectedServicesText;
+        ctrl.actions.updateStartTime = updateStartTime;
+
+        ctrl.actions.deleteAppointment = deleteAppointment;
         ctrl.actions.cancel = cancel;
         ctrl.actions.save = save;
-
-        ctrl.actions.updateStartTime = updateStartTime;
-        ctrl.actions.updateEndTime = updateEndTime;
-
-        function updateStartTime(event) {
-            if(event.time) {
-                ctrl.data.appointment.startTime = event.time;
-                ctrl.data.appointment.endTime = new Date(moment(event.time).add(1, 'h'));
-            }
-        }
-
-        function updateEndTime(event) {
-            if(event.time) {
-                ctrl.data.appointment.endTime = event.time;
-            }
-        }
 
         ctrl.actions.showData = function() {
             console.log(ctrl.data.appointment);
         }
 
-        function removeSelectedClient() {
-            ctrl.data.appointment._clientId = null;
+        if(ctrl.data.appointment.services.length === 0) {
+            addService();
+        }
+
+        function updateStartTime(event) {
+            ctrl.data.appointment.startTime = event.time;
+            updateEndTime(event);
+        }
+
+        function updateEndTime(event) {
+            if(event.type === 'start') {
+                ctrl.data.appointment.endTime = moment(event.time).add(1, 'hour');
+            }
         }
 
         function addService() {
             var service = {
                 staff: null,
-                type: null
+                type: null,
+                _orderId: ctrl.data.appointment.services.length || 0
             };
 
-            ctrl.data.appointment.services 
-            ? ctrl.data.appointment.services.push(service)
-            : ctrl.data.appointment.services = [service];
+            ctrl.data.appointment.services.push(service);
         }
 
         function removeService(value) {
@@ -89,6 +88,18 @@
                 ctrl.data.selectedClient = event.client;
                 ctrl.data.preferredStaff = UtilsService.getSelectedItems(ctrl.data.allStaff, ctrl.data.selectedClient._preferredStaffId);
             }
+        }
+
+        function changeSelectedServicesText(selectedServices) {
+            return (selectedServices && selectedServices.length) 
+                ? selectedServices.length > 1 
+                    ? selectedServices.length + ' servicii selectate.'
+                    : selectedServices.length + ' serviciu selectat'
+                : 'Nu sunt servicii selectate';            
+        };
+
+        function deleteAppointment(appointment) {
+            $mdDialog.cancel({item: appointment, command: 'delete'});
         }
 
         function cancel() {

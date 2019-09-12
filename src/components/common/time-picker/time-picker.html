@@ -1,21 +1,18 @@
 <md-autocomplete
+    placeholder="{{ $ctrl.placeholder }}"
     ng-disabled="false"
+    ng-blur="$ctrl.actions.blur($ctrl.data.search)"
     md-no-cache="true"
-    md-clear-button="false"
-    md-selected-item="$ctrl.data.time"
-    md-search-text-change=""
-    md-search-text="$ctrl.data.searchTime"
-    md-selected-item-change="$ctrl.actions.updateTime($ctrl.data.time)"
-    ng-blur="$ctrl.actions.blur($ctrl.data.searchStartTime)"
-    md-items="time in $ctrl.actions.searchTime($ctrl.data.searchTime)"
-    md-item-text="time"
-    ng-model-options="{debounce: 500}"
+    md-delay="200"
     md-min-length="0"
-    placeholder="{{ $ctrl.placeholder }}">
+    md-clear-button="true"
+    md-search-text-change=""
+    md-search-text="$ctrl.data.search"
+    md-selected-item="$ctrl.data.selectedTime"
+    md-selected-item-change="$ctrl.actions.updateTime($ctrl.data.selectedTime)"
+    md-items="time in $ctrl.actions.search($ctrl.data.search)"
+    md-item-text="time">
     <md-item-template>
-        <span md-highlight-text="$ctrl.data.searchTime" md-highlight-flags="^i">{{ time }}</span>
+        <span md-highlight-text="$ctrl.data.search" md-highlight-flags="^i">{{ time }}</span>
     </md-item-template>
-    <!-- <md-not-found>
-        Hour not found
-    </md-not-found> -->
 </md-autocomplete>

@@ -73,7 +73,7 @@
             var dialogData = {
                 service: service ? angular.copy(service) : null,
                 serviceTypes: ctrl.data.allServiceTypes,
-                title: 'Adaugati serviciu nou'
+                title: 'Adauga serviciu nou'
             };
             showServiceDialog(event, dialogData, addNewService);
         }
@@ -83,7 +83,7 @@
             var dialogData = {
                 service: service ? angular.copy(service) : null,
                 serviceTypes: ctrl.data.allServiceTypes,
-                title: 'Editati serviciul: ' + service.name
+                title: 'Editeaza serviciul: ' + service.name
             };
             showServiceDialog(event, dialogData, saveEditedService);
         }
@@ -150,7 +150,7 @@
             var serviceType = serviceType;
             var dialogData = {
                 serviceType: serviceType ? angular.copy(serviceType) : null,
-                title: 'Editati tipul de serviciu: ' + serviceType.name
+                title: 'Editeaza tipul de serviciu: ' + serviceType.name
             };
             showServiceTypeDialog(event, dialogData, saveEditedServiceType);
         }

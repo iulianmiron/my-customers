@@ -1,5 +1,5 @@
-<div layout="column" layout-gt-sm="row" layout-align-gt-xs="start stretch" ng-hide="$ctrl.data.newClient">
-    <div flex>
+<div layout="column" layout-gt-sm="row" layout-align-gt-sm="start stretch" ng-hide="$ctrl.data.newClient" layout-fill>
+    <div flex-gt-sm="50">
         <client-profile 
             new-client="$ctrl.data.newClient" 
             client-data="$ctrl.data.client" 
@@ -7,8 +7,9 @@
             on-edit-client="$ctrl.actions.editClient($event)">
         </client-profile>
     </div>
+
     <div flex>
-        <client-history 
+        <client-history
             new-client="$ctrl.data.newClient"
             history-data="$ctrl.data.history" 
             on-add-history-item="$ctrl.actions.addHistoryItem($event)" 
@@ -17,3 +18,12 @@
         </client-history>
     </div>
 </div>
+
+<!-- <div>
+    <h2>payment habit</h2>
+    <div layout="row">
+        <div ng-repeat="historyItem in $ctrl.data.lastThreeSessions track by $index" layout="column">
+            <md-icon ng-repeat="paymentType in historyItem track by paymentType.id">{{ paymentType.icon }}</md-icon>
+        </div>
+    </div>
+</div> -->

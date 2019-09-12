@@ -62,7 +62,7 @@
             var role = role;
             var dialogData = {
                 role: role ? angular.copy(role) : null,
-                title: 'Editati rol'
+                title: 'Editeaza rol'
             };
 
             showDialog(event, dialogData, saveEditedRole);
@@ -72,7 +72,7 @@
             var role = role;
             var dialogData = {
                 role: role ? angular.copy(role) : null,
-                title: 'Adaugati rol nou'
+                title: 'Adauga rol nou'
             };
             showDialog(event, dialogData, saveNewRole);
         }

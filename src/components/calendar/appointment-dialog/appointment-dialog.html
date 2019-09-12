@@ -1,0 +1,153 @@
+<md-dialog aria-label="{{ $ctrl.data.title }}" flex="66">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>{{ $ctrl.data.title }}</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="$ctrl.actions.cancel()">
+                <md-icon>close</md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+
+    <md-dialog-content>
+        <div class="md-dialog-content">
+            <form name="$ctrl.data.appointmentForm">
+                <div layout="row" layout-align="start center">
+                    <md-icon class="auto-complete-icon-left">person</md-icon>
+                    <client-search flex
+                        ng-show="true"
+                        show="true"
+                        show-clear-button="true"
+                        default-selection="$ctrl.data.selectedClient"
+                        on-selection="$ctrl.actions.selectClient($event)">
+                    </client-search>
+                    <md-button ui-sref="client({id: 0})" class="md-default md-icon-button">
+                        <md-icon>person_add</md-icon>
+                        <md-tooltip hide show-gt-sm>Adauga client nou</md-tooltip>
+                    </md-button>
+                </div>
+
+                <div>&nbsp;</div>
+
+                <div layout="row" layout-align="start center">
+                    <md-icon class="auto-complete-icon-left">access_time</md-icon>
+                    <time-picker
+                        type="start"
+                        placeholder="Start time"
+                        selected-time="$ctrl.data.appointment.startTime"
+                        on-update="$ctrl.actions.updateStartTime($event)">
+                    </time-picker>
+
+                    <span>&nbsp;–&nbsp;</span>
+
+                    <time-picker flex
+                        type="end"
+                        placeholder="End time"
+                        start-time="$ctrl.data.appointment.startTime"
+                        selected-time="$ctrl.data.appointment.endTime"
+                        on-update="$ctrl.actions.updateEndTime($event)">
+                    </time-picker>
+
+                </div>
+                
+                <div>&nbsp;</div>   
+                
+                <div layout="row" layout-align="start center" 
+                    ng-repeat="service in $ctrl.data.appointment.services | orderBy:'_orderId'">
+
+                    <!-- SERVICE TYPE -->
+                    <md-input-container flex>
+                        <md-icon>work</md-icon>
+                        <label>Serviciul dorit:</label>
+                        <md-select 
+                            name="selectedServiceType_{{$index}}" multiple required
+                            ng-model="service.type"
+                            ng-model-options="{trackBy: '$value._id'}"
+                            md-selected-text="$ctrl.actions.changeSelectedServicesText(service.type)">
+                            <md-option 
+                                ng-value="selectedServiceType" 
+                                ng-repeat="selectedServiceType in $ctrl.data.allServiceTypes | orderBy:'name' track by selectedServiceType._id">
+                                {{ selectedServiceType.name }}
+                            </md-option>
+                        </md-select>
+                        <div ng-messages="$ctrl.data.appointmentForm['selectedServiceType_' + $index].$error">
+                            <div ng-message="required">Un serviciu trebuie selectat.</div>
+                        </div>
+                    </md-input-container>
+
+                    <!-- PERFORMED BY -->
+                    <md-input-container flex>
+                        <md-icon>person</md-icon>
+                        <label>Efectuat de:</label>
+                        <md-select 
+                            name="selectedStaff_{{$index}}"
+                            ng-model="service.staff"
+                            ng-model-options="{trackBy: '$value._id'}"
+                            required="service.type"
+                            >
+                            <md-option ng-value="0">–</md-option>
+                            <md-option 
+                                ng-value="selectedStaff" 
+                                ng-repeat="selectedStaff in $ctrl.data.allStaff track by selectedStaff._id">
+                                {{ selectedStaff.firstName }} {{ selectedStaff.lastName }}
+                            </md-option>
+                        </md-select>
+                        <div ng-messages="$ctrl.data.appointmentForm['selectedStaff_' + $index].$error">
+                            <div ng-message="required">O persoana trebuie selectata.</div>
+                        </div>
+                    </md-input-container>
+                    <div class="icon-button-group">
+                        <md-button 
+                            class="md-icon-button" 
+                            ng-click="$ctrl.actions.removeService(service)">
+                            <md-icon>remove_circle_outline</md-icon>
+                            <md-tooltip hide show-gt-sm>Sterge serviciu</md-tooltip>
+                        </md-button>
+                        <md-button 
+                            class="md-icon-button" 
+                            ng-click="$ctrl.actions.addService()"
+                            ng-if="$last && service.type">
+                            <md-icon>add_circle_outline</md-icon>
+                        </md-button>
+                    </div>
+
+                </div>
+                <div layout="row" layout-align="start center">
+                    <md-button 
+                        ng-if="!$ctrl.data.appointment.services.length"
+                        ng-click="$ctrl.actions.addService()">
+                        <md-icon>add_circle_outline</md-icon>
+                        Adauga serviciu
+                    </md-button>
+                </div>
+
+                <!-- OBSERVATIONS -->
+                <md-input-container class="md-block">
+                    <md-icon>description</md-icon>
+                    <label>Observatii</label>
+                    <textarea name="observations" ng-model="$ctrl.data.appointment.observations"></textarea>
+                </md-input-container>
+            </form>
+
+        </div>
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row" layout-align="end center">
+
+        <md-button ng-click="$ctrl.actions.showData()">Data</md-button>
+
+        <md-button class="md-warn" admin-only ng-if="$ctrl.data.appointment._id"
+            ng-click="$ctrl.actions.deleteAppointment($ctrl.data.appointment)">
+            Delete
+        </md-button>
+        <md-button ng-click="$ctrl.actions.cancel()">
+            Renunta
+        </md-button>
+        <md-button class="md-raised md-primary" 
+            ng-click="$ctrl.actions.save($ctrl.data.appointment)" 
+            ng-disabled="$ctrl.data.appointmentForm.$invalid || !$ctrl.data.appointment.services || !$ctrl.data.appointment.services.length || !$ctrl.data.appointment._clientId">
+            Salveaza Programarea
+        </md-button>
+    </md-dialog-actions>
+
+</md-dialog>

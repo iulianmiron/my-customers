@@ -6,8 +6,8 @@
         .controller('ClientProfileDialogController', ClientProfileDialogController);
 
         
-    ClientProfileDialogController.$inject = ['$rootElement', '$state', '$mdDialog', 'dialogData', 'ClientsDataService', 'HotkeyService'];
-    function ClientProfileDialogController($rootElement, $state, $mdDialog, dialogData, ClientsDataService, HotkeyService) {
+    ClientProfileDialogController.$inject = ['$rootElement', '$state', '$mdDialog', 'dialogData', 'ClientsDataService', 'HotkeyService', 'UtilsService'];
+    function ClientProfileDialogController($rootElement, $state, $mdDialog, dialogData, ClientsDataService, HotkeyService, UtilsService) {
         var ctrl = this;
         ctrl.data = {};
         ctrl.status = {};
@@ -16,7 +16,7 @@
         ctrl.data.title = dialogData.title;
         ctrl.data.staff = dialogData.staff;
         ctrl.data.client = dialogData.client || {};
-        ctrl.data.client.age = ctrl.data.client.dateOfBirth ? calculateClientAge(ctrl.data.client.dateOfBirth): null;
+        ctrl.data.client.age = ctrl.data.client.dateOfBirth ? calculateClientAge(ctrl.data.client.dateOfBirth) : null;
         ctrl.data.clientVip = dialogData.clientVip;
         ctrl.data.maxDateOfBirth = new Date();
                 
@@ -39,7 +39,7 @@
         }
 
         function calculateClientAge(dateOfBirth) {
-            return ctrl.data.client.age = moment().diff(moment(dateOfBirth), 'years') + ' ani';
+            return ctrl.data.client.age = UtilsService.getAge(dateOfBirth) + ' ani';
         }
 
         function setVIPData(client) {
