@@ -1,51 +1,52 @@
-<form name="$ctrl.searchClientForm" layout="row" layout-align="end center" ng-show="$ctrl.status.show">
-    <md-autocomplete flex ng-blur="$ctrl.actions.hideSearch(false)" 
-        placeholder="Cauta client dupa nume, prenume, telefon sau email" 
-        md-select-on-focus
-        md-autofocus="true"
-        md-no-cache="true" 
-        md-delay="500" 
-        md-clear-button="false"
-        md-search-text="$ctrl.data.searchText" 
-        md-selected-item-change="$ctrl.actions.clientFn(client)" 
-        md-items="client in $ctrl.actions.searchClients($ctrl.data.searchText)"
-        md-item-text="client.firstName + ' ' + client.lastName">
-        <md-item-template>
+<md-autocomplete 
+    ng-show="$ctrl.status.show"
+    ng-blur="$ctrl.actions.hideSearch(false)" 
+    placeholder="Cauta client dupa nume, prenume, telefon sau email" 
+    md-select-on-focus
+    md-autofocus="true"
+    md-no-cache="true" 
+    md-delay="500" 
+    md-clear-button="$ctrl.status.showClearButton"
+    md-search-text="$ctrl.data.searchText"
+    md-selected-item="$ctrl.data.selectedItem" 
+    md-selected-item-change="$ctrl.actions.onSelection(client)" 
+    md-items="client in $ctrl.actions.searchClients($ctrl.data.searchText)"
+    md-item-text="client.firstName + ' ' + client.lastName">
+    <md-item-template>
 
-            <div layout="row" layout-align="start center">
-                <div layout="column" layout-align="start start">
-                    <div 
-                        md-highlight-text="$ctrl.data.searchText" 
-                        md-highlight-flags="i">
-                        {{client.firstName}} {{client.lastName}}
-                    </div>
-                    <div md-highlight-text="$ctrl.data.searchText" md-highlight-flags="i" ng-if="client.email">
-                        {{client.email}} 
-                    </div>
-                    <div md-highlight-text="$ctrl.data.searchText" md-highlight-flags="i" ng-if="client.phoneNumber">
-                        {{client.phoneNumber}} 
-                    </div>
+        <div layout="row" layout-align="start center">
+            <div layout="column" layout-align="start start">
+                <div 
+                    md-highlight-text="$ctrl.data.searchText" 
+                    md-highlight-flags="i">
+                    {{client.firstName}} {{client.lastName}}
                 </div>
-                <div flex></div>
-                <div>
-                    <md-icon ng-if="client.isVip" ng-class="['vip-text', client.vip.level.label]">
-                        star
-                        <md-tooltip hide show-gt-sm>
-                            VIP: {{client.vip.type.label}}
-                        </md-tooltip>
-                    </md-icon>
+                <div md-highlight-text="$ctrl.data.searchText" md-highlight-flags="i" ng-if="client.email">
+                    {{client.email}} 
+                </div>
+                <div md-highlight-text="$ctrl.data.searchText" md-highlight-flags="i" ng-if="client.phoneNumber">
+                    {{client.phoneNumber}} 
                 </div>
             </div>
-
-        </md-item-template>
-        <md-not-found>
-            <div layout="row" layout-align="space-between center">
-                <span>0 rezultate</span>
-                <md-button ng-click="$ctrl.actions.clientFn({_id: 0})" class="md-primary">
-                    <md-icon>person_add</md-icon>
-                    Adauga client nou
-                </md-button>
+            <div flex></div>
+            <div>
+                <md-icon ng-if="client.isVip" ng-class="['vip-text', client.vip.level.label]">
+                    star
+                    <md-tooltip hide show-gt-sm>
+                        VIP: {{client.vip.type.label}}
+                    </md-tooltip>
+                </md-icon>
             </div>
-        </md-not-found>
-    </md-autocomplete>
-</form>
+        </div>
+
+    </md-item-template>
+    <md-not-found>
+        <div layout="row" layout-align="space-between center">
+            <span>0 rezultate</span>
+            <md-button ng-click="$ctrl.actions.onSelection({_id: 0})" class="md-primary">
+                <md-icon>person_add</md-icon>
+                Adauga client nou
+            </md-button>
+        </div>
+    </md-not-found>
+</md-autocomplete>

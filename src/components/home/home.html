@@ -1,1 +1,19 @@
-<search-clients></search-clients>
+<div layout="column" flex flex-gt-sm="50" flex-offset-gt-sm="25">
+    <div layout="row" layout-align="space-around center" layout-padding>
+        <span class="md-display-1">Cauta Clienti</span>
+    </div>
+    
+    <client-search
+        ng-show="true"
+        show="true"
+        show-clear-button="true"
+        on-selection="$ctrl.actions.openClientPage($event)">
+    </client-search>
+
+    <div layout="row" layout-align="end center">
+        <md-button ng-click="$ctrl.actions.openClientPage({ client: { _id: 0 } })" class="md-primary">
+            <md-icon>person_add</md-icon>
+            Adauga client nou
+        </md-button>
+    </div>
+</div>

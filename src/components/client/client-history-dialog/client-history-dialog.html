@@ -114,8 +114,11 @@
                                         <md-icon>timelapse</md-icon>
                                         <label>Interval (sapt.)</label>
                                         <input name="interval"
-                                            type="number" step="1" min="0" 
+                                            type="number" step="1" min="0" required
                                             ng-model="servicesByStaff.interval">
+                                        <div ng-messages="$ctrl.data.addServicesByStaffForm.interval.$error">
+                                            <div ng-message="required">Interval obligatoriu</div>
+                                        </div>
                                     </md-input-container>
                                 </div>
                             </div>
@@ -199,7 +202,9 @@
                                     </md-time-picker>
                                 </div>
 
-                                <md-input-container class="md-block">
+                                <md-input-container 
+                                    class="md-block" 
+                                    ng-if="servicesByStaff.soldProducts">
                                     <label>Produse vandute</label>
                                     <textarea name="soldProducts" ng-model="servicesByStaff.soldProducts">
                                     </textarea>
@@ -228,7 +233,6 @@
                 <!--BUTON ADAUGA SERVICII-->
                 <div layout="row" layout-align="start center">
                     <md-button class="md-raised"
-                        ng-hide="$ctrl.data.historyItem.performedServices.length === $ctrl.data.users.length"
                         ng-click="$ctrl.actions.addServicesByStaff($ctrl.data.historyItem)">
                         <md-icon>add</md-icon>
                         Adauga servicii
@@ -265,7 +269,7 @@
                                     <div layout="row">
 
                                         <!--STAFF-->
-                                        <md-input-container flex>
+                                        <md-input-container flex flex-gt-xs="initial">
                                             <label>Produse vandute de:</label>
                                             <md-select name="staff_{{$index}}" required
                                                 ng-model-options="{trackBy: '$value.id'}" 
@@ -280,10 +284,20 @@
                                         </md-input-container>
 
                                     </div>
-
+                                    <!--PRODUCT SEARCH AUTOCOMPLETE-->
+                                    <div layout="row" 
+                                        ng-show="soldProductsByStaff.staff">
+                                        <product-search flex
+                                            show-clear-button="true"
+                                            on-blur="$ctrl.actions.hideSearch($event)"
+                                            on-selection="$ctrl.actions.addSelectedProduct($event, soldProductsByStaff)">
+                                        </product-search>
+                                    </div>
+                                    <div>&nbsp;</div>
                                     <div ng-repeat="product in soldProductsByStaff.products track by $index">
                                         <div layout="row" layout-align="start center">
-                                            <md-input-container>
+                                            <md-input-container flex="20"
+                                                class="no-validation">
                                                 <label>Cod:</label>
                                                 <input name="product_{{$index}}.code"
                                                     type="text" required
@@ -293,7 +307,8 @@
                                                     <div ng-message="required">Obligatoriu.</div>
                                                 </div>
                                             </md-input-container>
-                                            <md-input-container>
+                                            <md-input-container flex
+                                                class="no-validation">
                                                 <label>Nume:</label>
                                                 <input name="product_{{$index}}.name"
                                                     type="text" required
@@ -303,7 +318,8 @@
                                                     <div ng-message="required">Obligatoriu</div>
                                                 </div>
                                             </md-input-container>
-                                            <md-input-container>
+                                            <md-input-container flex="15"
+                                                class="no-validation">
                                                 <label>Cantitate:</label>
                                                 <input name="product_{{$index}}.quantity" 
                                                     type="number" required min="1" step="1"
@@ -316,7 +332,8 @@
                                                     <div ng-message="min"> > 1 </div>
                                                 </div>
                                             </md-input-container>
-                                            <md-input-container>
+                                            <md-input-container flex="15"
+                                                class="no-validation">
                                                 <label>Pret:</label>
                                                 <input name="product_{{$index}}.price" 
                                                     type="number" required min="1" step="1"
@@ -329,18 +346,24 @@
                                                     <div ng-message="min"> > 1 </div>
                                                 </div>
                                             </md-input-container>
-                                            <md-button class="md-icon-button" ng-hide="soldProductsByStaff.products.length === 1"
-                                                ng-click="$ctrl.actions.deleteSoldProduct(soldProductsByStaff, $index)">
-                                                <md-icon>delete</md-icon>
-                                            </md-button>
+                                            <div class="icon-button-group">
+                                                <md-button class="md-icon-button"
+                                                    ng-click="$ctrl.actions.deleteSoldProduct(soldProductsByStaff, $index)">
+                                                    <md-icon>remove_circle_outline</md-icon>
+                                                    <md-tooltip hide show-gt-sm>Sterge produs</md-tooltip>
+                                                </md-button>
+                                                <md-button 
+                                                    class="md-icon-button" 
+                                                    ng-hide="!soldProductsByStaff.staff || $ctrl.data.soldProductsByStaffForm.$invalid || !$last"
+                                                    ng-click="$ctrl.actions.addSoldProduct(soldProductsByStaff.products)">
+                                                    <md-icon>add_circle_outline</md-icon>
+                                                    <md-tooltip hide show-gt-sm>Adauga produs</md-tooltip>
+                                                </md-button>
+                                            </div>
                                         </div>
+                                        <div>&nbsp;</div>
                                     </div>
-                                    <md-button
-                                        ng-hide="!soldProductsByStaff.staff"
-                                        ng-click="$ctrl.actions.addSoldProduct(soldProductsByStaff.products)">
-                                        <md-icon>add</md-icon>
-                                        adauga produs
-                                    </md-button>
+
                                 </div>
 
                                 <div layout="row" layout-wrap ng-show="soldProductsByStaff.products.length">
@@ -444,9 +467,9 @@
                         </md-card-header-text>
                     </md-card-header>
                     <md-card-content ng-show="$ctrl.status.showPaymentCard">
-                        <div layout="row" layout-align="start start" flex 
+                        <div layout="row" layout-align="start center" 
                             ng-repeat="paidAmount in $ctrl.data.historyItem.payment.paidAmounts track by $index">
-                            <md-input-container flex>
+                            <md-input-container flex="50">
                                 <label>Mod Plata:</label>
                                 <md-select name="paymentType_{{$index}}" required
                                     ng-model-options="{trackBy: '$value.id'}"
@@ -463,7 +486,8 @@
                                 </div>
                             </md-input-container>
 
-                            <md-input-container flex="33">
+                            <md-input-container flex
+                                class="no-validation">
                                 <label>Platit:</label>
                                 <input name="paymentValue_{{$index}}" 
                                     type="number" min="1" step="1" 
@@ -477,21 +501,34 @@
                                         <div ng-message="required">Obligatoriu</div>
                                     </div>
                             </md-input-container>
-                            <md-button class="md-icon-button"
-                                ng-click="$ctrl.actions.deletePaymentMethod($ctrl.data.historyItem.payment.paidAmounts, $index)">
-                                <md-icon>delete</md-icon>
+                            
+                            <div class="icon-button-group">
+                                <md-button class="md-icon-button"
+                                    ng-click="$ctrl.actions.deletePaymentMethod($ctrl.data.historyItem.payment.paidAmounts, $index)">
+                                    <md-icon>remove_circle_outline</md-icon>
+                                    <md-tooltip hide show-gt-sm>Sterge mod plata</md-tooltip>
+                                </md-button>
+                                <md-button 
+                                    class="md-icon-button" 
+                                    ng-click="$ctrl.actions.addPaymentMethod($ctrl.data.historyItem.payment.paidAmounts)"
+                                    ng-if="$last && paidAmount.type && paidAmount.total">
+                                    <md-icon>add_circle_outline</md-icon>
+                                </md-button>
+                            </div>
+                        </div>
+                        <div layout="row" layout-align="space-between center">
+                            <md-button
+                                ng-click="$ctrl.actions.showQRScanDialog()">
+                                <md-icon>nfc</md-icon>
+                                cod qr
+                            </md-button>
+                            <md-button ng-if="!$ctrl.data.historyItem.payment.paidAmounts.length"
+                                ng-click="$ctrl.actions.addPaymentMethod($ctrl.data.historyItem.payment.paidAmounts)">
+                                <md-icon>add_circle_outline</md-icon>
+                                mod plata
                             </md-button>
                         </div>
-                        <md-button
-                            ng-click="$ctrl.actions.addPaymentMethod($ctrl.data.historyItem.payment.paidAmounts)">
-                            <md-icon>add</md-icon>
-                            mod plata
-                        </md-button>
-                        <md-button
-                            ng-click="$ctrl.actions.showQRScanDialog()">
-                            <md-icon>nfc</md-icon>
-                            cod qr
-                        </md-button>
+
                         <div layout="column" layout-align="start end" layout-padding flex>
                             <span>Discount Servicii: {{ $ctrl.data.historyItem.payment.discountServices }} RON</span>
                             <span>Discount Produse: {{ $ctrl.data.historyItem.payment.discountProducts }} RON</span>
@@ -503,7 +540,7 @@
                         </div>
                     </md-card-content>
                 </md-card>
-
+                <!--PLATA END-->
             </form>
 
         </div>
@@ -537,7 +574,7 @@
                 <div layout="row">            
                     <md-button 
                         class="md-default" 
-                        ng-click="$ctrl.actions.copyToClipboard('IBAN Beneficiar: RO15INGB0000999904637532\nNume Beneficiar: Elena Miron')">
+                        ng-click="$ctrl.actions.copyToClipboard('IBAN Beneficiar: RO15INGB0000999904637532\nNume Beneficiar: Elena Miron', 'Date Cont')">
                         <md-icon>account_balance</md-icon>
                         Copiaza Detalii Cont
                     </md-button>

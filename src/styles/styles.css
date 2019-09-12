@@ -17,6 +17,10 @@ md-list-item p {
   white-space: normal!important;
 }
 
+md-dialog .md-dialog-content {
+  padding: 16px!important;
+}
+
 .md-dialog-content md-input-container .md-input-message-animation:not(.ng-animate) { 
   opacity: 1 !important; 
   margin-top: 0px !important; 
@@ -73,7 +77,6 @@ md-list-item p {
 }
 
 .overflow {
-  max-height: 60vh;
   overflow-y: auto;
 }
 
@@ -146,14 +149,6 @@ md-datepicker.hide-input-container .md-icon-button+.md-datepicker-input-containe
   overflow: hidden;
 }
 
-/* .sticky-toolbar {
-  position: fixed;
-}
-
-.app-content {
-  padding-top: 56px;
-} */
-
 .active-link,
 .active-link md-icon {
   color:rgb(156,39,176);
@@ -190,4 +185,21 @@ md-datepicker.hide-input-container .md-icon-button+.md-datepicker-input-containe
 
 .margin-left {
   margin-left: 12px;
+}
+
+time-picker md-autocomplete {
+  min-width: 110px!important;
+  max-width: 110px!important;
+}
+
+.md-input-button {
+  margin-top: 18px!important;
+}
+
+.icon-button-group button.md-icon-button {
+  margin:0!important;
+}
+
+.auto-complete-icon-left {
+  margin: 0 11px 0 2px;
 }

@@ -19,6 +19,7 @@
 
         ctrl.$onInit = function() {
             ctrl.data.sidebarMenuItems = SIDEBAR_MENU_ITEMS;
+            ctrl.data.currentYear = moment().format('YYYY');
         }
 
     }

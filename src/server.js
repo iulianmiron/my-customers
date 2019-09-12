@@ -63,6 +63,7 @@ app.delete('/api/service-types/:id', service_types.delete);
 
 // PRODUCTS collection
 app.get('/api/products', products.getAll);
+app.get('/api/products/search/:query', products.search);
 app.post('/api/products', products.add);
 app.put('/api/products/:id', products.update);
 app.delete('/api/products/:id', products.delete);

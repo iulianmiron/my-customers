@@ -10,12 +10,12 @@
                     ng-click="$ctrl.status.showSearch = true" 
                     ng-hide="$ctrl.status.showSearch">
                     <md-icon>search</md-icon>
-                    <md-tooltip hide show-gt-sm>Cauta angajat</md-tooltip>
+                    <md-tooltip hide show-gt-sm>Cauta personal</md-tooltip>
                 </md-button>
 
                 <md-input-container ng-show="$ctrl.data.allStaff.length && $ctrl.status.showSearch" flex class="no-validation">
                     <md-icon>search</md-icon>
-                    <label>Cauta angajat</label>
+                    <label>Cauta personal</label>
                     <input 
                         ng-model="searchStaff" 
                         ng-model-options="{debounce: 400}" 
@@ -34,7 +34,7 @@
                         <md-menu-item>
                             <md-button ng-click="$ctrl.actions.addStaff($event)">
                                 <md-icon>person</md-icon>
-                                Angajat nou
+                                Personal nou
                             </md-button>
                         </md-menu-item>
                     </md-menu-content>
@@ -49,7 +49,7 @@
                 ng-click="$ctrl.actions.editStaff($event, staff)" 
                 ng-mouseover="showControl = true" 
                 ng-mouseleave="showControl = false">
-                <img ng-src="{{ $ctrl.data.noPicture }}" class="md-avatar" alt="poza angajat" />
+                <img ng-src="{{ $ctrl.data.noPicture }}" class="md-avatar" alt="poza personal" />
                 <div class="md-list-item-text" layout="column">
                     <h3>Nume: {{ staff.firstName }} {{ staff.lastName }}</h3>
                     <h4>email: {{ staff.email }}</h4>
@@ -67,6 +67,6 @@
         </md-list>
     </md-card-content>
     <md-card-footer ng-show="!$ctrl.data.allStaff.length" layout="row" layout-align="center center">
-        <h2>Adauga un angajat apasand butonul din dreapta sus</h2>
+        <h2>Adauga un personal apasand butonul din dreapta sus</h2>
     </md-card-footer>
 </md-card>

@@ -1,34 +1,38 @@
-<md-sidenav class="md-sidenav-left" md-component-id="left" md-whiteframe="4" md-is-open="$ctrl.showSidenav">
+<md-sidenav layout="column"
+    class="md-sidenav-left" 
+    md-component-id="left" 
+    md-whiteframe="4" 
+    md-is-open="$ctrl.showSidenav">
     <md-toolbar class="md-tall">
-            <div layout="column" layout-align="start start" layout-margin>
-                <div>
-                    <md-icon class="md-48">account_circle</md-icon>
-                </div>
-
-                <div flex></div>
-
-                <div layout="row" layout-align="space-between start">
-                    <div layout="column">
-                        <div>Elena Miron</div>
-                        <small>elena@elenamiron.ro</small>
-                    </div>
-                    <md-menu>
-                        <md-button class="md-icon-button" ng-click="$mdMenu.open($event)" ng-disabled="true">
-                            <md-icon md-menu-origin>arrow_drop_down</md-icon>
-                        </md-button>
-                        <md-menu-content>
-                            <md-menu-item>
-                                <md-button ng-click="">  
-                                    <md-icon md-menu-align-target>exit_to_app</md-icon>
-                                    Logout
-                                </md-button>
-                            </md-menu-item>
-                        </md-menu-content>
-                    </md-menu>
-                </div>
+        <div layout="column" layout-align="start start" layout-margin>
+            <div>
+                <md-icon class="md-48">account_circle</md-icon>
             </div>
+
+            <div flex></div>
+
+            <div layout="row" layout-align="space-between start">
+                <div layout="column">
+                    <div>Elena Miron</div>
+                    <small>elena@elenamiron.ro</small>
+                </div>
+                <md-menu>
+                    <md-button class="md-icon-button" ng-click="$mdMenu.open($event)" ng-disabled="true">
+                        <md-icon md-menu-origin>arrow_drop_down</md-icon>
+                    </md-button>
+                    <md-menu-content>
+                        <md-menu-item>
+                            <md-button ng-click="">  
+                                <md-icon md-menu-align-target>exit_to_app</md-icon>
+                                Logout
+                            </md-button>
+                        </md-menu-item>
+                    </md-menu-content>
+                </md-menu>
+            </div>
+        </div>
     </md-toolbar>
-    <md-list>
+    <md-list flex>
         <md-list-item class="sidebar-menu-item" ui-sref="{{ menuItem.url }}" ui-sref-active="active-link"
             ng-click="$ctrl.showSidenav = false" 
             ng-repeat="menuItem in $ctrl.data.sidebarMenuItems">
@@ -38,4 +42,10 @@
             </div>
         </md-list-item>
     </md-list>
+    <div layout="row" layout-align="start center" layout-margin>
+        <small>
+            <md-icon class="md-18">copyright</md-icon>
+            {{ $ctrl.data.currentYear }} Elena Miron - Centru Estetic 
+        </small>
+    </div>
 </md-sidenav>

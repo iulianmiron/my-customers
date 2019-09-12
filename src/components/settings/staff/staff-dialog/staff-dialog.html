@@ -55,8 +55,14 @@
                         <md-button ng-show="$ctrl.status.showButton">duplicat</md-button>
                     </div>
 
-                    <div layout="column" layout-gt-sm="row">
-                        <md-input-container class="md-block">
+                    <div layout="row">
+                        <md-input-container flex>
+                            <label>Varsta</label>
+                            <md-icon>person</md-icon>
+                            <input name="staffAge" type="text" ng-model="$ctrl.data.staff.age" ng-readonly="true">
+                        </md-input-container>
+
+                        <md-input-container>
                             <label>Data nasterii</label>
                             <md-datepicker flex
                                 name="staffDateOfBirth"
@@ -73,12 +79,6 @@
                                 <div ng-message="required">Data nasterii este obligatorie</div>
                             </div>
                         </md-input-container>
-                
-                        <md-input-container flex>
-                            <label>Varsta</label>
-                            <md-icon>person</md-icon>
-                            <input name="staffAge" type="text" ng-model="$ctrl.data.staff.age" ng-readonly="true">
-                        </md-input-container>
                     </div>
 
 
@@ -91,7 +91,7 @@
                                 <md-option 
                                     ng-value="role._id" 
                                     ng-repeat="role in $ctrl.data.roles track by role._id">
-                                    {{ role.name }}
+                                    {{ role.name }} {{ role.description }}
                                 </md-option>
                             </md-select>
                             <div ng-messages="$ctrl.data.staffForm.roles.$error">
@@ -132,7 +132,7 @@
             class="md-raised md-primary" 
             ng-click="$ctrl.actions.save($ctrl.data.staff)" 
             ng-disabled="$ctrl.data.staffForm.$invalid">
-            Salveaza Angajat
+            Salveaza Personal
         </md-button>
     </md-dialog-actions>
 

@@ -16,22 +16,30 @@
 		$urlRouterProvider.otherwise('/home');
 		
 		$stateProvider
-			// .state('test', {
-			// 	url: '/test',
-			// 	component: 'test',
-			// 	onEnter: function() { 
-			// 		console.log('entering test');
-			// 	},
-			// 	onExit: function() { 
-			// 		console.log('exiting test');
-			// 	}
-			// })
+			.state('test', {
+				url: '/test',
+				component: 'test',
+				onEnter: function() { 
+					console.log('entering test');
+				},
+				onExit: function() { 
+					console.log('exiting test');
+				}
+			})
 			.state('home', {
 				url: '/home',
 				component: 'home'
 			})
 			.state('client', {
 				url: '/client/:id',
+				component: 'client'
+			})
+			.state('client-edit', {
+				url: '/client/:id/edit/client',
+				component: 'client'
+			})
+			.state('session-edit', {
+				url: '/client/:id/edit/session/:sessionId',
 				component: 'client'
 			})
 			.state('settings', {

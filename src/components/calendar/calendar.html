@@ -1,82 +1,121 @@
-<div flex>
-    <md-card>
-        <md-card-header>
-            <!-- <md-icon>today</md-icon> -->
-            <md-card-header-text layout="row" layout-align="space-between center">
-                <div layout="row" layout-align="start center">
-                    <span class="md-headline" class="md-accent">
-                        Programari
-                    </span>
+<div layout="row" layout-fill layout-padding>
+    <div flex>
+        <md-card layout-fill>
+            <md-card-header>
+                <md-card-header-text layout="row" layout-align="space-between center">
+                    <div layout="row" layout-align="start center">
+                        <span class="md-headline" class="md-accent">
+                            Programari
+                        </span>
 
-                    <md-button hide show-gt-sm ng-click="$ctrl.actions.goToDate($ctrl.data.today, 0)">
-                        Azi
-                        <md-tooltip hide show-gt-sm>
-                            {{ $ctrl.data.today | amDateFormat: 'dddd, Do MMMM YYYY' }}
-                        </md-tooltip>
-                    </md-button>
+                        <md-button hide show-gt-xs ng-click="$ctrl.actions.goToDate($ctrl.data.today, 0)">
+                            Azi
+                            <md-tooltip hide show-gt-xs>
+                                {{ $ctrl.data.today | amDateFormat: 'dddd, Do MMMM YYYY' }}
+                            </md-tooltip>
+                        </md-button>
 
-                    <md-button hide show-gt-sm ng-click="$ctrl.actions.goToDate($ctrl.data.selectedDate, -1)" class="md-icon-button">
-                        <md-icon>chevron_left</md-icon>
-                        <md-tooltip>Ziua precedenta</md-tooltip>
-                    </md-button>
+                        <md-button hide show-gt-xs ng-click="$ctrl.actions.goToDate($ctrl.data.selectedDate, -1)" class="md-icon-button">
+                            <md-icon>chevron_left</md-icon>
+                            <md-tooltip>Ziua precedenta</md-tooltip>
+                        </md-button>
 
-                    <md-button hide show-gt-sm ng-click="$ctrl.actions.goToDate($ctrl.data.selectedDate, 1)" class="md-icon-button">
-                        <md-icon>chevron_right</md-icon>
-                        <md-tooltip>Ziua urmatoare</md-tooltip>
-                    </md-button>
+                        <md-button hide show-gt-xs ng-click="$ctrl.actions.goToDate($ctrl.data.selectedDate, 1)" class="md-icon-button">
+                            <md-icon>chevron_right</md-icon>
+                            <md-tooltip>Ziua urmatoare</md-tooltip>
+                        </md-button>
 
-                    <md-datepicker
-                        ng-model="$ctrl.data.selectedDate" 
-                        md-placeholder="Alege o data" 
-                        md-open-on-focus
-                        ng-change="$ctrl.actions.goToDate($ctrl.data.selectedDate, 0)"
-                        class="hide-input-container">
-                    </md-datepicker>
+                        <md-datepicker
+                            ng-model="$ctrl.data.selectedDate" 
+                            md-placeholder="Alege o data" 
+                            md-open-on-focus
+                            ng-change="$ctrl.actions.goToDate($ctrl.data.selectedDate, 0)"
+                            class="hide-input-container">
+                        </md-datepicker>
 
-                    <span hide show-gt-sm>{{$ctrl.data.selectedDate | amDateFormat:'dddd, Do MMMM YYYY'}}</span>
-                    <span hide-gt-sm>{{$ctrl.data.selectedDate | amDateFormat:'D-M-Y'}}</span>
+                        <span hide show-gt-xs>{{$ctrl.data.selectedDate | amDateFormat:'dddd, Do MMMM YYYY'}}</span>
+                        <span hide-gt-xs>{{$ctrl.data.selectedDate | amDateFormat:'D-M-Y'}}</span>
 
-                </div>
-                
-                <md-menu md-position-mode="target-right target">
-                    <md-button md-menu-origin ng-click="$mdMenu.open($event)" class="md-primary">
-                        <md-icon>add_circle</md-icon>
-                        Adauga
-                    </md-button>
-                    <md-menu-content>
-                        <md-menu-item>
-                            <md-button ng-click="$ctrl.actions.addNewAppointment($event)">
-                                <md-icon>alarm_add</md-icon>
-                                Programare noua
-                            </md-button>
-                        </md-menu-item>
-                    </md-menu-content>
-                </md-menu>
-            </md-card-header-text>
-        </md-card-header>
-        <md-card-content>
-            <div layout="column" layout-gt-sm="row">
-
-                <div>
-                    <md-list flex>
-                        <md-subheader class="md-no-sticky">Programari</md-subheader>
-                        <md-list-item class="md-3-line" ng-repeat="appointment in $ctrl.data.appointments | orderBy: 'startTime'" ng-click="null">
-                            <div class="md-list-item-text" layout="column">
-                                <h3>{{ appointment.client.firstName }} {{ appointment.client.lastName }} ({{ appointment.client.phoneNumber }})</h3>
-                                <h4>Servicii: 
-                                    <span ng-repeat="service in appointment.services track by $index">
-                                        {{ service.type.name }} 
-                                        <span ng-if="service.staff.firstName">({{ service.staff.firstName }})</span>
-                                    </span>
-                                </h4>
-                                <p>{{ appointment.startTime | amDateFormat:'HH:mma'}} – {{ appointment.endTime | amDateFormat:'HH:mma'}}</p>
-                            </div>
-                        </md-list-item>
-                    </md-list>
+                    </div>
                     
-                </div>
+                    <md-button 
+                        class="md-primary" button-shrink="gt-sm"
+                        ng-click="$ctrl.actions.addNewAppointment($event)">
+                        <md-icon>alarm_add</md-icon>
+                        Programare noua
+                    </md-button>
+                </md-card-header-text>
+            </md-card-header>
+            <md-card-content class="overflow">
+                <div layout="column">
 
-            </div>
-        </md-card-content>
-    </md-card>
+                    <div ng-repeat="appointment in $ctrl.data.appointments | orderBy: 'startTime' track by appointment._id">
+                        <md-card>
+                            <md-card-header>
+                                <md-card-header-text ng-click="$ctrl.actions.showAppointmentItemDetails(appointment._id)" layout="row" layout-align="start center">
+                                    <div layout="column">
+                                        <span class="md-headline">{{ appointment.client.firstName }} {{ appointment.client.lastName }}</span>
+                                        <span class="md-subhead">{{ appointment.startTime | amDateFormat:'HH:mma'}} – {{ appointment.endTime | amDateFormat:'HH:mma'}}</span>
+                                    </div>
+                                    <span>
+                                        <md-button class="md-icon-button">
+                                            <md-icon>keyboard_arrow_{{$ctrl.data.showAppointmentItemDetails[appointment._id] ? 'up' : 'down'}}</md-icon>
+                                        </md-button>
+                                    </span>
+                                </md-card-header-text> 
+                            </md-card-header>
+                            <md-divider></md-divider>
+                            <md-card-content 
+                                ng-show="$ctrl.data.showAppointmentItemDetails[appointment._id]">
+                                
+                                <span>Telefon: </span>{{ appointment.client.phoneNumber }}
+                                
+                                <div layout="column">
+                                    <span>Servicii: </span>
+                                    <span ng-repeat="service in appointment.services track by service._orderId">
+                                        <ul>
+                                            <span>{{ service.staff.firstName || 'nespecificat'}}</span>
+                                            <li ng-repeat="serviceType in service.type track by serviceType._id">
+                                                {{ serviceType.name }}
+                                            </li>
+                                            {{ service.type.name }} 
+                                        </ul>
+                                    </span>
+                                </div>
+                                    
+                            </md-card-content>
+                            <md-divider ng-show="$ctrl.data.showAppointmentItemDetails[appointment._id]"></md-divider>
+                            <md-card-actions layout="row" layout-align="space-between center">
+                                <div>
+                                    <md-button ng-click="$ctrl.actions.editAppointment(event, appointment)" button-shrink="gt-sm">
+                                        <md-icon>edit</md-icon>
+                                        editeaza
+                                    </md-button>
+                                </div>
+                                <div>
+                                    <md-button ng-href="tel:{{appointment.client.phoneNumber}}" class="md-icon-button" hide-gt-xs>
+                                        <md-icon>phone</md-icon>
+                                        <md-tooltip>Apeleaza</md-tooltip>
+                                    </md-button>
+                                    <md-button ui-sref="client({id: appointment.client._id})" button-shrink="gt-xs">
+                                        <md-icon>assignment_ind</md-icon>
+                                        Profil
+                                    </md-button>
+                                </div>
+                            </md-card-actions>
+                        </md-card>
+                    </div>
+                </div>
+            </md-card-content>
+            <md-card-footer ng-if="!$ctrl.data.appointments.length" layout="column" layout-align="start center">
+                <span class="md-headline">Fara Programari</span>
+                <md-button class="md-primary"
+                    ng-click="$ctrl.actions.addNewAppointment($event)">
+                    <md-icon>alarm_add</md-icon>
+                    Adauga programare
+                </md-button>
+            </md-card-footer>
+        </md-card>
+    </div>
 </div>
+
