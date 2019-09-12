@@ -39,7 +39,7 @@
 
             ctrl.data.previousState = setPreviousState(ctrl.transition);
 
-            ctrl.data.goToPreviousState     = goToPreviousState;
+            ctrl.actions.goToPreviousState  = goToPreviousState;
 
             ctrl.actions.getClientProfile   = getClientProfile;
             ctrl.actions.refreshHistory     = refreshHistory;
@@ -104,7 +104,8 @@
                     toastr.info('Clientul a fost sters', 'Client negasit');
                 } else if(ctrl.data.client._preferredStaffId) {
                     getPreferredStaff(ctrl.data.client._preferredStaffId);
-                } 
+                }
+
             }); 
         }
 
@@ -114,6 +115,7 @@
                 // console.log(ctrl.data.history);
                 getPaymentHabit(ctrl.data.history);
             }); 
+
         }
 
 //////////////////PAYMENT HABIT START/////////////////////////////////
@@ -206,14 +208,12 @@
         function addNewClient(client) {
             ClientsDataService.addNew(client).then(function(rClientAdded) {
                 toastr.success("Client adaugat", "Succes");
-                $state.go('client', { id: rClientAdded._id });
             });
         }
 
         function updateClient(client) {
             ClientsDataService.updateOne(client).then(function(rSuccess) {
                 toastr.success("Client editat", "Succes");
-                getClientProfile(client._id);
             });
         }
 
@@ -311,7 +311,7 @@
             }, function(data) {
                 if(data && data.command === 'delete' && data.item._id) {
                     deleteCb(data.item);
-                    getClientHistory(historyItem._clientId);
+                    getClientHistory(data.item._clientId);
                 }
             });
         }

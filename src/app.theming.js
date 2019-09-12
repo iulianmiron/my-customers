@@ -9,7 +9,7 @@
 	function appTheming($mdThemingProvider) {
 		$mdThemingProvider.theme('default')
 			.primaryPalette('purple')
-			.accentPalette('orange');
+			.accentPalette('blue');
 
 		// red, 
 		// pink, 

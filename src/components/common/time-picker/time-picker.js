@@ -7,7 +7,9 @@
             templateUrl: '/components/common/time-picker/time-picker.html',
             controller: TimePickerController,
             bindings: {
+                type: '@',
                 placeholder: '@',
+                startTime: '<',
                 selectedTime: '<',
                 onUpdate: '&'
             }
@@ -22,25 +24,40 @@
     
             ctrl.$onChanges = function(changes) {
                 if(changes.selectedTime && changes.selectedTime.currentValue) {
-                    ctrl.data.time = angular.copy(changes.selectedTime.currentValue);
+                    ctrl.data.selectedTime = angular.copy(changes.selectedTime.currentValue);
                     ctrl.data.initialDate = angular.copy(changes.selectedTime.currentValue);
+                    ctrl.data.selectedTime = processTime(ctrl.data.selectedTime);
+                }
+                if(changes.startTime && changes.startTime.currentValue) {
+                    ctrl.data.startTime = angular.copy(changes.startTime.currentValue);
                 }
             }
             ctrl.$onInit = function() {
+                ctrl.data.startHour = 8;
+                ctrl.data.endHour = 22;
                 
                 ctrl.actions.generateTimeList = generateTimeList;
                 ctrl.actions.updateTime = updateTime;
                 ctrl.actions.blur = blur;
-                ctrl.actions.searchTime = searchTime;
+                ctrl.actions.search = search;
 
-                ctrl.data.times = generateTimeList(8, 22);
-                ctrl.data.time = processTime(ctrl.data.time);
+                ctrl.data.times = generateTimeList(ctrl.data.startHour, ctrl.data.endHour);
+                
             }
 
-            function processTime(selectedTime) {
-                var hour = moment(selectedTime).hour();
-                var minute = moment(selectedTime).minute();
+            function processTime(time) {
+                var hour = moment(time).hour();
+                var minute = moment(time).minutes();
+
+                if(minute < 10) { minute = '0' + minute; }
+                if(hour < 10) { hour = '0' + hour; }
+
                 return hour + ':' + minute;
+            }
+
+            function nearestMinutes(interval, someMoment){
+                var roundedMinutes = Math.round(someMoment.clone().minute() / interval) * interval;
+                return someMoment.clone().minute(roundedMinutes).second(0);
             }
         
             function generateTimeList(startHour, endHour) {
@@ -48,52 +65,36 @@
                 var endHour = endHour || 24;
                 var times = [];
 
-                for(var i = startHour; i < endHour; i++) {
+                for(var i = startHour; i <= endHour; i++) {
                     var hour = i;
 
                     hour = (i < 10) ? '0' + hour.toString() : hour.toString();
-                    times.push(hour + ':00', hour + ':15', hour + ':30', hour + ':45');
+
+                    if(i === endHour) {
+                        times.push(hour + ':00');
+                    } else {
+                        times.push(hour + ':00', hour + ':15', hour + ':30', hour + ':45');
+                    }
                 }
                 return times;
             }
 
-            function searchTime(query) {
+            function search(query) {
                 return ctrl.data.times.filter(function(time) { return time.startsWith(query); });
             }
 
             function blur(query) {
                 if(query) {
-                    if(query.length === 1) {
-                        query = '0' + query;
-                    }
-                    if(query.includes(':')) {
-                        var hour = query.split(':')[0];
-                        var minute = query.split(':')[1];
-        
-                        if(minute.length && minute.length === 1) {
-                            if(minute.startsWith('1') || minute.startsWith('4')){
-                                minute = minute + '5';
-                            }
-                            if(minute.startsWith('0') || minute.startsWith('3')) {
-                                minute = minute + '0';
-                            }
-                        } else {
-                            minute = '00';
-                        }
-        
-                        query = hour + ':' + minute;
-                    } else {
-                        query = query + ':00';
-                    }
-                    
-                    ctrl.data.time = ctrl.data.times.filter(function(time) {
+                    ctrl.data.selectedTime = ctrl.data.times.filter(function(time) {
                         return time === query;
                     })[0];
+                }
+                if(!ctrl.data.selectedTime) {
+                    ctrl.data.selectedTime = processTime(ctrl.data.initialDate);
                 }
             }
 
             function updateTime(selectedTime) {
-                debugger;
                 if(selectedTime && !selectedTime.split(':').length){
                     selectedTime = processTime(selectedTime);
                 }
@@ -103,7 +104,7 @@
     
                     var time = new Date(moment(ctrl.data.initialDate).hour(hour).minute(minute).second(0));
 
-                    ctrl.onUpdate({$event: {time: time}});
+                    ctrl.onUpdate({$event: {time: time, type: ctrl.type}});
                 }
             }
 

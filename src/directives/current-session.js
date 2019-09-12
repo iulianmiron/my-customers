@@ -10,13 +10,13 @@
             restrict: 'A',
             scope: { currentSession: '<' },
             link: function($scope, element, attributes) {
-                if($scope.currentSession && isToday($scope.currentSession)) {
-                    var color = attributes.sessionColor || '#9c27b0';
-                    element.css('border', color + ' 2px solid');
-                }
-
-                function isToday(date) {
-                    return moment().diff(date, 'days') === 0;
+                var color = attributes.sessionColor || '#9c27b0';
+                if($scope.currentSession && $scope.currentSession.isSame(new Date(), "day")) {
+                    // element.css('border', color + ' 2px solid');
+                    // element.css('border-left', color + ' 4px solid');
+                    element.css('box-shadow', '0px 0px 0px 3px ' + color);
+                } else {
+                    element.css('border-left', color + ' 2px solid');
                 }
             }
         }

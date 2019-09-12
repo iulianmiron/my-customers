@@ -149,10 +149,6 @@ md-datepicker.hide-input-container .md-icon-button+.md-datepicker-input-containe
   overflow: hidden;
 }
 
-.md-input-button {
-  margin-top: 18px!important;
-}
-
 .active-link,
 .active-link md-icon {
   color:rgb(156,39,176);
@@ -189,4 +185,21 @@ md-datepicker.hide-input-container .md-icon-button+.md-datepicker-input-containe
 
 .margin-left {
   margin-left: 12px;
+}
+
+time-picker md-autocomplete {
+  min-width: 110px!important;
+  max-width: 110px!important;
+}
+
+.md-input-button {
+  margin-top: 18px!important;
+}
+
+.icon-button-group button.md-icon-button {
+  margin:0!important;
+}
+
+.auto-complete-icon-left {
+  margin: 0 11px 0 2px;
 }

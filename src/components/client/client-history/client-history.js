@@ -15,8 +15,8 @@
             }
         });
 
-    ClientHistoryController.$inject = [];
-    function ClientHistoryController() {
+    ClientHistoryController.$inject = ['UtilsService'];
+    function ClientHistoryController(UtilsService) {
         var ctrl = this;
         ctrl.data = {};
         ctrl.status = {};
@@ -50,6 +50,8 @@
             ctrl.actions.addNewHistoryItem = addNewHistoryItem;
             ctrl.actions.editHistoryItem = editHistoryItem;
             ctrl.actions.refreshHistory = refreshHistory;
+
+            ctrl.actions.copyToClipboard = copyToClipboard;
         }
 
         function generateHistoryObservationList(history) {
@@ -64,7 +66,6 @@
                     }
                 });
             });
-
             return list;
         }
 
@@ -106,6 +107,10 @@
                 ctrl.data.showHistoryItemDetails[key] = boolean;
             });
             ctrl.status.showAllHistoryItemDetails = !boolean;
+        }
+
+        function copyToClipboard(data, title) {
+            UtilsService.copyToClipboard(data, title);
         }
 
         function addNewHistoryItem(event) {

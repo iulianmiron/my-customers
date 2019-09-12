@@ -32,6 +32,9 @@
         ctrl.actions.removeService = removeService;
         ctrl.actions.selectClient = selectClient;
 
+        ctrl.actions.changeSelectedServicesText = changeSelectedServicesText;
+        ctrl.actions.updateStartTime = updateStartTime;
+
         ctrl.actions.deleteAppointment = deleteAppointment;
         ctrl.actions.cancel = cancel;
         ctrl.actions.save = save;
@@ -42,6 +45,17 @@
 
         if(ctrl.data.appointment.services.length === 0) {
             addService();
+        }
+
+        function updateStartTime(event) {
+            ctrl.data.appointment.startTime = event.time;
+            updateEndTime(event);
+        }
+
+        function updateEndTime(event) {
+            if(event.type === 'start') {
+                ctrl.data.appointment.endTime = moment(event.time).add(1, 'hour');
+            }
         }
 
         function addService() {
@@ -75,6 +89,14 @@
                 ctrl.data.preferredStaff = UtilsService.getSelectedItems(ctrl.data.allStaff, ctrl.data.selectedClient._preferredStaffId);
             }
         }
+
+        function changeSelectedServicesText(selectedServices) {
+            return (selectedServices && selectedServices.length) 
+                ? selectedServices.length > 1 
+                    ? selectedServices.length + ' servicii selectate.'
+                    : selectedServices.length + ' serviciu selectat'
+                : 'Nu sunt servicii selectate';            
+        };
 
         function deleteAppointment(appointment) {
             $mdDialog.cancel({item: appointment, command: 'delete'});

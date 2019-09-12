@@ -13,8 +13,8 @@
                 onEditClient: '&',
             }
         });
-    ClientProfileController.$inject = ['toastr', 'clipboard', 'CLIENT_VIP_LEVELS', 'CLIENT_VIP_TYPES', 'UtilsService'];
-    function ClientProfileController(toastr, clipboard, CLIENT_VIP_LEVELS, CLIENT_VIP_TYPES, UtilsService) {
+    ClientProfileController.$inject = ['$scope', '$mdMedia', 'UtilsService', 'CLIENT_VIP_LEVELS', 'CLIENT_VIP_TYPES'];
+    function ClientProfileController($scope, $mdMedia, UtilsService, CLIENT_VIP_LEVELS, CLIENT_VIP_TYPES) {
         var ctrl = this;
 
         ctrl.data = {};
@@ -48,13 +48,8 @@
             // ctrl.status.hasRecentBirthday = hasRecentBirthday;
         }
 
-        function copyToClipboard(copiedItem) {
-            if(copiedItem) {
-                clipboard.copyText(copiedItem);
-                toastr.success(copiedItem + ' copiat in clipboard!');
-            } else {
-                toastr.warning('Nimic de copiat!');
-            }
+        function copyToClipboard(data, title) {
+            UtilsService.copyToClipboard(data, title);
         }
 
         function editClient(event, client) {
@@ -64,6 +59,10 @@
         function calculateClientAge(dateOfBirth) {
             return UtilsService.getAge(dateOfBirth) + ' ani';
         }
+
+        $scope.$watch(function() { return $mdMedia('gt-sm'); }, function(boolean) {
+            ctrl.status.showClientDetails = boolean;
+        });
 
         // function hasRecentBirthday(clientDateOfBirth) {
         //     var currentYear = moment().get('year');

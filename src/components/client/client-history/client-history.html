@@ -28,7 +28,7 @@
                 </md-menu>
             </md-card-header-text>
         </md-card-header>
-        <div layout-padding>
+        <div class="icon-button-group" layout-padding>
             <md-button class="md-icon-button" 
                 ng-click="$ctrl.actions.refreshHistory($event)">
                 <md-icon>refresh</md-icon>
@@ -40,15 +40,15 @@
                 <md-tooltip>{{ $ctrl.status.showAllHistoryItemDetails ? 'Arata' : 'Ascunde'}} toate detaliile</md-tooltip>
             </md-button>
         </div>
+        <md-divider></md-divider>
         <md-card-content scroll-glue class="overflow">
             <div ng-repeat="historyItem in $ctrl.data.history | orderBy: 'date' track by historyItem._id">
                 <md-card current-session="historyItem.date" session-color>
                     <md-card-header>
                         <md-card-header-text ng-click="$ctrl.actions.showHistoryItemDetails(historyItem._id)">
-                                <span class="md-title">
-                                    Sedinta {{ $index + 1 }} 
-                                    <md-icon class="md-18" ng-show="$ctrl.data.showHistoryItemObservations[$index]">error_outline</md-icon>
-                                </span> 
+                            <span class="md-title">
+                                Sedinta {{ $index + 1 }}
+                            </span> 
                             <span class="md-subhead">Data: {{ historyItem.date | amDateFormat:'Do/MM/YYYY, h:mm a' }}</span>
                         </md-card-header-text>
                         <md-button ng-click="$ctrl.actions.editHistoryItem($event, historyItem)" button-shrink="gt-sm">
@@ -65,16 +65,36 @@
                             <ol>
                                 <li ng-repeat="service in servicesByStaff.services track by service._id">
                                     {{service.name}}
-                                    <small ng-hide="!service.price && !service.duration">{{service.price}} RON / {{service.duration}} min.</small>
+                                    <small ng-hide="!service.price && !service.duration"> - {{service.price}} RON / {{service.duration}} min.</small>
                                 </li>
                             </ol>
 
-                            <p ng-show="servicesByStaff.soldProducts">Produse acasa: {{ servicesByStaff.soldProducts }}</p>
+                            <p ng-if="servicesByStaff.soldProducts">Produse acasa: {{ servicesByStaff.soldProducts }}</p>
+                            <div layout="row" layout-align="start center">
+                                <div>
+                                    <md-button class="md-icon-button"
+                                        ng-show="servicesByStaff.observations" 
+                                        ng-click="showObs = !showObs">
+                                        <md-icon class="md-primary">info_outline</md-icon>
+                                        <md-tooltip md-direction="right">{{ showObs ? 'Ascunde' : 'Arata' }} Observatii</md-tooltip>
+                                    </md-button>
+                                    <md-button class="md-icon-button"
+                                        ng-if="servicesByStaff.videosTaken" >
+                                        <md-icon>
+                                            videocam
+                                            <md-tooltip>Filmare facuta</md-tooltip>
+                                        </md-icon>
+                                    </md-button>
+                                    <md-button class="md-icon-button" 
+                                        ng-if="servicesByStaff.photosTaken" >
+                                        <md-icon>
+                                            photo
+                                            <md-tooltip>Poze facute</md-tooltip>
+                                        </md-icon>
+                                    </md-button>
+                                </div>
+                            </div>
 
-                            <md-button ng-show="servicesByStaff.observations" ng-click="showObs = !showObs">
-                                <md-icon>error_outline</md-icon>
-                                Arata Observatii
-                            </md-button>
                             <md-input-container ng-show="servicesByStaff.observations && showObs" class="md-block">
                                 <label>Observatii</label>
                                 <textarea
@@ -84,28 +104,53 @@
                                     ng-readonly="true">
                                 </textarea>
                             </md-input-container>
-
-                            <p ng-show="servicesByStaff.videosTaken">Filmari: {{ servicesByStaff.videosTaken ? 'Da' : 'Nu' }}</p>
-                            <p ng-show="servicesByStaff.photosTaken">Poze: {{ servicesByStaff.photosTaken ? 'Da' : 'Nu' }}</p>
+                            <span>&nbsp;</span>
                         </div>
 
                         <div ng-repeat="soldProductsByStaff in historyItem.soldProducts track by $index">
                             <div>
-                                <div>Produse vandute de: <b>{{ soldProductsByStaff.staff.first_name + ' ' + soldProductsByStaff.staff.last_name }}</b></div>
+                                <div layout="column">
+                                    <b>{{ soldProductsByStaff.staff.first_name + ' ' + soldProductsByStaff.staff.last_name }}:</b>
+                                    <span>{{ soldProductsByStaff.products.length }} {{ soldProductsByStaff.products.length === 1 ? 'produs vandut' : 'produse vandute'}}</span>
+                                </div>
                             </div>
-                            <ul>
-                                <li ng-repeat="product in soldProductsByStaff.products track by $index">
-                                    <md-icon>
-                                        code
-                                        <md-tooltip>Cod produs: {{ product.code }}</md-tooltip>
-                                    </md-icon>
-                                    {{ product.name }}
-                                    <small>{{ product.quantity }} x {{ product.price }} RON</small>
-                                </li>
-                            </ul>
+
+                            <div layout="row" layout-wrap>
+                                <div ng-repeat="product in soldProductsByStaff.products track by $index">
+                                    <md-card>
+                                        <md-card-content>
+                                                <b>{{ $index + 1 }}. {{ product.name }}</b>
+                                                <p>
+                                                    <small ng-click="$ctrl.actions.copyToClipboard(product.code, 'Cod Produs')">
+                                                        <md-icon>info_outline</md-icon>
+                                                        (Cod: {{ product.code }})
+                                                    </small>
+                                                </p>
+                                                <p> {{ product.quantity }} x {{ product.price }} RON </p>
+                                        </md-card-content>
+                                    </md-card>
+                                </div>
+
+                            </div>
+                            <!-- <md-list>
+                                <md-list-item
+                                    class="md-2-line"
+                                    ng-repeat="product in soldProductsByStaff.products track by $index">
+                                    <div class="md-list-item-text">
+                                        <h3>
+                                            {{ $index + 1 }}. {{ product.name }} 
+                                            <small ng-click="$ctrl.actions.copyToClipboard(product.code, 'Cod Produs')">
+                                                (Cod: {{ product.code }})
+                                            </small>
+                                        </h3>
+                                        <p> {{ product.quantity }} x {{ product.price }} RON </p>
+                                    </div>
+                                </md-list-item>
+                            </md-list> -->
                         </div>
-
-
+                    </md-card-content>
+                    <md-divider></md-divider>
+                    <md-card-footer>
                         <div layout="row" layout-align="start center">
                             <div flex>
                                 <md-menu>
@@ -135,6 +180,17 @@
                                         </md-menu-item>
                                     </md-menu-content>
                                 </md-menu>
+                                <!--OTHER ICONS-->
+                                <md-icon class="md-primary" 
+                                    ng-show="$ctrl.data.showHistoryItemObservations[$index]">
+                                    error_outline
+                                    <md-tooltip>Are observatii</md-tooltip>
+                                </md-icon>
+                                <md-icon class="md-primary" 
+                                    ng-if="historyItem.soldProducts.length">
+                                    shopping_basket
+                                    <md-tooltip>Produse cumparate</md-tooltip>
+                                </md-icon>
                             </div>
                             <div layout="row" ng-show="$ctrl.data.showHistoryItemPayment[historyItem._id]">
 
@@ -164,7 +220,7 @@
 
                             </div>
                         </div>
-                    </md-card-content>
+                    </md-card-footer>
                 </md-card>
             </div>
         </md-card-content>

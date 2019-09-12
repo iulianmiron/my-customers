@@ -34,6 +34,14 @@
 				url: '/client/:id',
 				component: 'client'
 			})
+			.state('client-edit', {
+				url: '/client/:id/edit/client',
+				component: 'client'
+			})
+			.state('session-edit', {
+				url: '/client/:id/edit/session/:sessionId',
+				component: 'client'
+			})
 			.state('settings', {
 				url: '/settings',
 				views: {

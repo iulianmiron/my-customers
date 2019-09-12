@@ -66,7 +66,7 @@
                             >
                         <div ng-messages="$ctrl.data.clientProfileForm.altPhoneNumber.$error">
                                 <div ng-message="required">Numarul de telefon alternativ este obligatoriu</div>
-                            <div ng-message="minlength, md-maxlength">Numarul de telefon trebuie sa inceapa cu zero si sa fie format din 5-20 cifre</div>
+                            <div ng-message="minlength, md-maxlength">Numarul de telefon trebuie sa fie format din 5-20 caractere</div>
                         </div>
                     </md-input-container>
                     <md-input-container flex="40" ng-hide="!$ctrl.data.client.altPhoneNumber">
@@ -78,9 +78,9 @@
                             ng-required="$ctrl.data.client.altPhoneNumber" 
                             >
                         <div ng-messages="$ctrl.data.clientProfileForm.altPhoneNumberRelation.$error">
-                            <div ng-message="required">Relatia este obligatorie</div>
-                            <div ng-message="md-maxlength">Relatia trebuie sa aiba sub 100 de caractere</div>
-                            <div ng-message="minlength">Relatia trebuie sa aiba mai mult de 1 caracter</div>
+                            <div ng-message="required">Eticheta este obligatorie</div>
+                            <div ng-message="md-maxlength">Eticheta trebuie sa aiba sub 100 de caractere</div>
+                            <div ng-message="minlength">Eticheta trebuie sa aiba mai mult de 1 caracter</div>
                         </div>
                     </md-input-container>
                     <md-button class="md-icon-button md-input-button" ng-click="$ctrl.actions.removeAltPhone()">

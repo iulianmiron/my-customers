@@ -5,8 +5,8 @@
         .module('cm.components.clientHistoryDialog', [])
         .controller('ClientHistoryDialogController', ClientHistoryDialogController);
         
-    ClientHistoryDialogController.$inject = ['$element', '$mdDialog', 'dialogData', 'clipboard', 'toastr', 'USERS', 'PAYMENT_METHODS', 'SALON_ROOMS', 'HotkeyService'];
-    function ClientHistoryDialogController($element, $mdDialog, dialogData, clipboard, toastr, USERS, PAYMENT_METHODS, SALON_ROOMS, HotkeyService) {
+    ClientHistoryDialogController.$inject = ['$element', '$mdDialog', 'dialogData', 'UtilsService', 'USERS', 'PAYMENT_METHODS', 'SALON_ROOMS', 'HotkeyService'];
+    function ClientHistoryDialogController($element, $mdDialog, dialogData, UtilsService, USERS, PAYMENT_METHODS, SALON_ROOMS, HotkeyService) {
         var ctrl = this;
         ctrl.data = {};
         ctrl.status = {};
@@ -51,6 +51,17 @@
         ctrl.actions.addSoldProductsByStaff = addSoldProductsByStaff;
         ctrl.actions.deleteSoldProductsByStaff = deleteSoldProductsByStaff;
 
+        ctrl.actions.addSelectedProduct = function addSelectedProduct(event, soldProductsByStaff) {
+            var selectedProduct = event.product;
+
+            if(selectedProduct && soldProductsByStaff) {
+                selectedProduct.quantity = 1;
+                selectedProduct.price = selectedProduct.priceToSell;
+
+                soldProductsByStaff.products.push(selectedProduct);
+                ctrl.actions.setProductsCost(soldProductsByStaff);
+            }
+        }
         ctrl.actions.addSoldProduct = addSoldProduct;
         ctrl.actions.deleteSoldProduct = deleteSoldProduct;        
 
@@ -86,14 +97,8 @@
             });
         }
 
-        function copyToClipboard(copiedItem) {
-
-            if(copiedItem) {
-                clipboard.copyText(copiedItem);
-                toastr.success('Detalii cont copiate in clipboard!');
-            } else {
-                toastr.warning('Nimic de copiat!');
-            }
+        function copyToClipboard(data, title) {
+            UtilsService.copyToClipboard(data, title);
         }
 
         function saveClientHistoryItem(event) {

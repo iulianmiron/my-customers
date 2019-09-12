@@ -5,8 +5,8 @@
 		.module('cm.services.utilsService', [])
 		.service('UtilsService', UtilsService);
 
-	UtilsService.$inject = [];
-	function UtilsService() {
+	UtilsService.$inject = ['clipboard', 'toastr'];
+	function UtilsService(clipboard, toastr) {
 		
 		var service = this;
 
@@ -14,6 +14,7 @@
 		service.isToday = isToday;
 		service.isRouteDateToday = isRouteDateToday;
 		service.getAge = getAge;
+		service.copyToClipboard = copyToClipboard;
 
 		function getSelectedItems(allItems, selectedItems) {
             if(allItems && selectedItems && angular.isArray(selectedItems)) {
@@ -40,6 +41,16 @@
 		}
 		function getAge(dateOfBirth) {
 			return moment().diff(moment(dateOfBirth), 'years');
+		}
+
+		function copyToClipboard(data, title) {
+			title = title || 'Info';
+            if(data) {
+                clipboard.copyText(data);
+                toastr.success(title + ' copiat in clipboard!');
+            } else {
+                toastr.warning('Nimic de copiat!');
+            }
 		}
 	}
 
