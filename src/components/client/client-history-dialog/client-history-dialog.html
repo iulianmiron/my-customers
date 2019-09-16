@@ -516,16 +516,16 @@
                                 </md-button>
                             </div>
                         </div>
-                        <div layout="row" layout-align="space-between center">
-                            <md-button
-                                ng-click="$ctrl.actions.showQRScanDialog()">
-                                <md-icon>nfc</md-icon>
-                                cod qr
-                            </md-button>
+                        <div layout="row" layout-align="start center">
                             <md-button ng-if="!$ctrl.data.historyItem.payment.paidAmounts.length"
                                 ng-click="$ctrl.actions.addPaymentMethod($ctrl.data.historyItem.payment.paidAmounts)">
                                 <md-icon>add_circle_outline</md-icon>
                                 mod plata
+                            </md-button>
+                            <md-button
+                                ng-click="$ctrl.actions.showQRScanDialog()">
+                                <md-icon>nfc</md-icon>
+                                cod qr
                             </md-button>
                         </div>
 
