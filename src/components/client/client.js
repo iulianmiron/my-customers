@@ -208,19 +208,23 @@
         function addNewClient(client) {
             ClientsDataService.addNew(client).then(function(rClientAdded) {
                 toastr.success("Client adaugat", "Succes");
+                $state.go('client', {id: rClientAdded._id});
             });
+
         }
 
         function updateClient(client) {
-            ClientsDataService.updateOne(client).then(function(rSuccess) {
+            ClientsDataService.updateOne(client).then(function(rClientUpdated) {
                 toastr.success("Client editat", "Succes");
+                $state.reload();
             });
         }
 
         function deleteClient(client) {
-            ClientsDataService.deleteOne(client._id).then(function(rSuccess) {
+            ClientsDataService.deleteOne(client._id).then(function(rClientDeleted) {
                 toastr.success("Client sters", "Succes");
             });
+            $state.go('home');
         }
 
         function showClientProfileDialog(event, dialogData, saveCb, deleteCb) {
