@@ -21,11 +21,11 @@
                     md-highlight-flags="i">
                     {{client.firstName}} {{client.lastName}}
                 </div>
-                <div md-highlight-text="$ctrl.data.searchText" md-highlight-flags="i" ng-if="client.email">
+                <div md-highlight-text="$ctrl.data.searchText" md-highlight-flags="i" ng-if="client.email" admin-only>
                     {{client.email}} 
                 </div>
                 <div md-highlight-text="$ctrl.data.searchText" md-highlight-flags="i" ng-if="client.phoneNumber">
-                    {{client.phoneNumber}} 
+                    {{client.phoneNumber | telThreeDigits}} 
                 </div>
             </div>
             <div flex></div>
