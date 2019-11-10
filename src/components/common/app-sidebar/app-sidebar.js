@@ -11,7 +11,8 @@
             }
         });
 
-    function AppSidebarController(SIDEBAR_MENU_ITEMS) {
+    AppSidebarController.$inject = ['SIDEBAR_MENU_ITEMS', 'localStorageService'];
+    function AppSidebarController(SIDEBAR_MENU_ITEMS, localStorageService) {
         var ctrl = this;
         ctrl.data = {};
         ctrl.status = {};
@@ -20,9 +21,9 @@
         ctrl.$onInit = function() {
             ctrl.data.sidebarMenuItems = SIDEBAR_MENU_ITEMS;
             ctrl.data.currentYear = moment().format('YYYY');
+
+            ctrl.data.adminMode = localStorageService.get('show-admin-controls');
         }
 
     }
-
-    AppSidebarController.$inject = ['SIDEBAR_MENU_ITEMS'];
 })();

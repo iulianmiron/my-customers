@@ -33,7 +33,8 @@
         </div>
     </md-toolbar>
     <md-list flex>
-        <md-list-item class="sidebar-menu-item" ui-sref="{{ menuItem.url }}" ui-sref-active="active-link"
+        <md-list-item class="sidebar-menu-item" ng-hide="menuItem.adminOnly && !$ctrl.data.adminMode"
+            ui-sref="{{ menuItem.url }}" ui-sref-active="active-link"
             ng-click="$ctrl.showSidenav = false" 
             ng-repeat="menuItem in $ctrl.data.sidebarMenuItems">
             <div layout="row" layout-align="start center">
