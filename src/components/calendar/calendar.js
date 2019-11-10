@@ -14,11 +14,13 @@
     CalendarController.$inject = [
         '$q', '$rootElement', '$mdDialog', '$state', 
         'StaffDataService', 'ServiceTypesDataService', 'AppointmentsDataService', 'ClientsDataService',
+        'SALON_ROOMS', 'CLIENT_SESSION_STATUS',
         'toastr', 'UtilsService'
     ];
     function CalendarController(
         $q, $rootElement, $mdDialog, $state, 
         StaffDataService, ServiceTypesDataService, AppointmentsDataService, ClientsDataService,
+        SALON_ROOMS, CLIENT_SESSION_STATUS,
         toastr, UtilsService
     ) {
         var ctrl = this;
@@ -27,6 +29,8 @@
         ctrl.actions = {};
 
         ctrl.$onInit = function() {
+            ctrl.data.rooms = SALON_ROOMS;
+            ctrl.data.clientSessionStatus = CLIENT_SESSION_STATUS;
 
             ctrl.data.today = new Date();
             ctrl.data.selectedDate = setRouteDate(ctrl.transition.params('to'));
@@ -79,6 +83,12 @@
 
             return list;
         }
+
+        // ctrl.status.isServiceOrWaiting = function isServiceOrWaiting(room) {
+        //     debugger;
+        //     console.log('test', room.type === ('service' || 'waiting'));
+        //     return room.type === ('service' || 'waiting');
+        // }
 
         function showAppointmentItemDetails(id, boolean) {
             ctrl.data.showAppointmentItemDetails[id] = 

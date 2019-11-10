@@ -82,6 +82,29 @@
                                         </ul>
                                     </span>
                                 </div>
+                                <!--APPOINTMENT STATUS-->
+                                <div layout="row">
+                                    <md-input-container>
+                                        <label>Status</label>
+                                        <md-select ng-model="appointment.status">
+                                            <md-option 
+                                                ng-value="clientStatus" 
+                                                ng-repeat="clientStatus in $ctrl.data.clientSessionStatus track by clientStatus.id">
+                                                {{ clientStatus.name }}
+                                            </md-option>
+                                        </md-select>
+                                    </md-input-container>
+                                    <md-input-container ng-if="appointment.status.id === 4">
+                                        <label>Sala</label>
+                                        <md-select ng-model="appointment.room">
+                                            <md-option 
+                                                ng-value="room"
+                                                ng-repeat="room in $ctrl.data.rooms | isRoomType: 'service':'waiting' track by room.id">
+                                                {{ room.name }}
+                                            </md-option>
+                                        </md-select>
+                                    </md-input-container>
+                                </div>
                                     
                             </md-card-content>
                             <md-divider ng-show="$ctrl.data.showAppointmentItemDetails[appointment._id]"></md-divider>
@@ -115,6 +138,37 @@
                     Adauga programare
                 </md-button>
             </md-card-footer>
+        </md-card>
+    </div>
+    <!--CAMERE-->
+    <div flex hide show-gt-md>
+        <md-card layout-fill>
+            <md-card-header>
+                <md-card-header-text layout="row" layout-align="space-between center">
+                    <div layout="row" layout-align="start center">
+                        <span class="md-headline" class="md-accent">
+                            Situatie Salon
+                        </span>
+                    </div>
+                </md-card-header-text>
+            </md-card-header>
+            <md-card-content>
+                <div layout="row" layout-wrap>
+                    <div flex="50" ng-repeat="room in $ctrl.data.rooms | isRoomType: 'service':'waiting' track by room.id">               
+                        <md-card>
+                            <md-card-header>
+                                <md-icon>{{ room.icon }}</md-icon>
+                                <md-card-header-text>
+                                    <md-title>{{ room.name }}</md-title>
+                                </md-card-header-text>
+                            </md-card-header>
+                            <md-card-content>
+                                Clienta: 
+                            </md-card-content>
+                        </md-card>
+                    </div>
+                </div>
+            </md-card-content>
         </md-card>
     </div>
 </div>

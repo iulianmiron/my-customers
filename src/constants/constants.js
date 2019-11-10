@@ -40,5 +40,15 @@
             { id: 4, name: 'Klimt', type: 'service', max_clients: 2, icon: 'spa' },
             { id: 5, name: 'Waiting Room', type: 'waiting', icon: 'weekend' },
             { id: 6, name: 'Office', type: 'administrative', icon: 'laptop' },
+        ])
+        .constant('CLIENT_SESSION_STATUS', [
+            { id: 1, name: 'Programat' },
+            { id: 2, name: 'Intarziat' },
+            { id: 3, name: 'In Asteptare' },
+            { id: 4, name: 'Preluat' },
+            { id: 5, name: 'Efectuat' },
+            { id: 6, name: 'Achitat' },
+            { id: 7, name: 'Anulat' },
+            { id: 8, name: 'Fara Programare' },
         ]);
 })();

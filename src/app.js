@@ -20,6 +20,7 @@
 
             'cm.dataservice',
 
+            'cm.filters',
             'cm.constants',
             'cm.directives',
             'cm.services',
