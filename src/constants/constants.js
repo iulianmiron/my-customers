@@ -5,11 +5,11 @@
         .module('cm.constants', [])
         .constant('NO_PICTURE', 'img/no-picture.png')
         .constant('SIDEBAR_MENU_ITEMS', [
-            { icon: 'search', label: 'Cauta Clienti', url: 'home'}, 
-            { icon: 'today', label: 'Programari', url: 'calendar'}, 
-            { icon: 'store', label: 'Shop', url: 'shop'}, 
-            { icon: 'settings', label: 'Settings', url: 'services'},
-            { icon: 'account_balance', label: 'Plata', url: 'bankAccount'}
+            { icon: 'search', label: 'Cauta Clienti', url: 'home', adminOnly: false}, 
+            { icon: 'today', label: 'Programari', url: 'calendar', adminOnly: true}, 
+            { icon: 'store', label: 'Shop', url: 'shop', adminOnly: true}, 
+            { icon: 'settings', label: 'Settings', url: 'services', adminOnly: true},
+            { icon: 'account_balance', label: 'Plata', url: 'bankAccount', adminOnly: true}
         ])
         .constant('CLIENT_VIP_TYPES', [
             { id: 1, label: 'Membru Familie' },

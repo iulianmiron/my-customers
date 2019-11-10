@@ -23,7 +23,8 @@
             'cm.constants',
             'cm.directives',
             'cm.services',
-            'cm.components'
+            'cm.components',
+            'cm.filters'
         ])
         .config(appConfig)
         .run(appRun)
@@ -72,19 +73,23 @@
         ctrl.status = {};
         ctrl.actions = {};
 
-        localStorageService.set('show-admin-controls', false);
+        if(!localStorageService.get('adminTrigger')) {
+            localStorageService.set('adminTrigger', false);
+            localStorageService.set('show-admin-controls', false);
+        }
 
         ctrl.status.showSidenav = false;
 
         HotkeyService.addClient(addNewClient);
-        HotkeyService.toggleAdmin(toggleAdmin);
+        HotkeyService.toggleAdmin(toggleAdminFn);
 
         function addNewClient() {
             $state.go('client', { id: 0 });
         }
-        function toggleAdmin() {
+        function toggleAdminFn() {
             var adminMode = !localStorageService.get('show-admin-controls');
             localStorageService.set('show-admin-controls', adminMode);
+            localStorageService.set('adminTrigger', true);
 
             adminMode 
                 ? toastr.warning('Enabled', 'Admin Mode')

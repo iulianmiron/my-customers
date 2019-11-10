@@ -154,7 +154,7 @@
                         <div layout="row" layout-align="start center">
                             <div flex>
                                 <md-menu>
-                                    <md-button 
+                                    <md-button admin-only
                                         class="md-icon-button" 
                                         ng-class="{'md-primary': $ctrl.status.isPaidInFull(historyItem.payment)}"
                                         ng-mouseenter="$mdMenu.open()"
@@ -192,7 +192,7 @@
                                     <md-tooltip>Produse cumparate</md-tooltip>
                                 </md-icon>
                             </div>
-                            <div layout="row" ng-show="$ctrl.data.showHistoryItemPayment[historyItem._id]">
+                            <div layout="row" ng-show="$ctrl.data.showHistoryItemPayment[historyItem._id]" admin-only>
 
                                 <div flex layout="column" layout-align="start end">
                                     <div ng-show="historyItem.payment.costServices && historyItem.payment.costServices !== 0">
