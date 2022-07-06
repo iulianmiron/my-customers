@@ -52,7 +52,7 @@
     "ip": "^1.1.5",
     "material-design-icons-iconfont": "^3.0.3",
     "method-override": "^3.0.0",
-    "moment": "^2.22.2",
+    "moment": "^2.29.4",
     "mongojs": "^2.6.0",
     "mongoose": "^5.2.15",
     "morgan": "^1.9.1",
