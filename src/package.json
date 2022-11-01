@@ -63,7 +63,7 @@
     "socket.io-client": "^2.1.1"
   },
   "devDependencies": {
-    "gulp": "^3.9.1",
+    "gulp": "^4.0.2",
     "gulp-rev": "^8.1.1",
     "gulp-rev-append": "^0.1.8",
     "openurl": "^1.1.1"
