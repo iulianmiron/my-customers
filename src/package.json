@@ -48,7 +48,7 @@
     "angular-spinners": "^3.1.2",
     "angular-toastr": "^2.1.1",
     "body-parser": "^1.18.3",
-    "express": "^4.16.3",
+    "express": "^4.17.3",
     "ip": "^1.1.5",
     "material-design-icons-iconfont": "^3.0.3",
     "method-override": "^3.0.0",
